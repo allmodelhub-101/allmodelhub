@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPublicId } from "@/lib/security/ids";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 const schema = z.object({
@@ -18,7 +19,7 @@ export async function GET() {
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const admin = createAdminClient();
   const { data: tickets, error } = await admin.from("support_tickets").select("*").eq("user_id", data.user.id).order("created_at", { ascending: false }).limit(50);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("support-list", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load support tickets." }, { status: 500 }); }
   return NextResponse.json({ tickets: tickets ?? [] });
 }
 
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
     public_id: createPublicId("AMH-TKT"), user_id: data.user.id, category: parsed.data.category,
     subject: parsed.data.subject, message: parsed.data.message, related_reference: parsed.data.relatedReference
   }).select("*").single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) { logServerError("support-create", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not create support ticket." }, { status: 500 }); }
   await admin.from("ticket_messages").insert({ ticket_id: ticket.id, user_id: data.user.id, author_role: "user", body: parsed.data.message });
   return NextResponse.json({ ticket }, { status: 201 });
 }

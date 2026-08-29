@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +28,6 @@ export async function GET(request: Request) {
     .order("pinned", { ascending: false }).order("updated_at", { ascending: false }).limit(100);
   if (q) query = query.ilike("title", `%${q.replace(/[%_]/g, "")}%`);
   const { data: conversations, error } = await query;
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("conversation-list", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load conversations." }, { status: 500 }); }
   return NextResponse.json({ conversations: conversations ?? [] });
 }

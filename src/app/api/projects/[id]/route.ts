@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 const schema = z.object({
   name: z.string().min(2).max(80).optional(),
@@ -31,7 +32,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   if (parsed.data.preferredTier !== undefined) patch.preferred_tier = parsed.data.preferredTier;
   if (parsed.data.preferredLanguage !== undefined) patch.preferred_language = parsed.data.preferredLanguage;
   const { data: project, error } = await auth.admin!.from("projects").update(patch).eq("id", id).select("*").single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) { logServerError("project-update", error, { projectId: id, userId: auth.user?.id }); return NextResponse.json({ error: "Could not update project." }, { status: 500 }); }
   return NextResponse.json({ project });
 }
 
@@ -39,6 +40,6 @@ export async function DELETE(_: Request, context: { params: Promise<{ id: string
   const { id } = await context.params;
   const auth = await authProject(id); if (auth.error) return auth.error;
   const { error } = await auth.admin!.from("projects").delete().eq("id", id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) { logServerError("project-delete", error, { projectId: id, userId: auth.user?.id }); return NextResponse.json({ error: "Could not delete project." }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }
