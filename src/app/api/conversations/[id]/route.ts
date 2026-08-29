@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 const patchSchema = z.object({ title: z.string().min(1).max(120).optional(), pinned: z.boolean().optional(), archived: z.boolean().optional() });
@@ -20,7 +21,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   if (!parsed.success) return NextResponse.json({ error: "Invalid update" }, { status: 400 });
   const admin = createAdminClient();
   const { data, error } = await admin.from("conversations").update({ ...parsed.data, updated_at: new Date().toISOString() }).eq("id", id).eq("user_id", user.id).select("*").maybeSingle();
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("conversation-update", error, { userId: user.id, conversationId: id }); return NextResponse.json({ error: "Could not update conversation." }, { status: 500 }); }
   if (!data) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json({ conversation: data });
 }
@@ -31,6 +32,6 @@ export async function DELETE(_request: Request, context: { params: Promise<{ id:
   const { id } = await context.params;
   const admin = createAdminClient();
   const { error } = await admin.from("conversations").delete().eq("id", id).eq("user_id", user.id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("conversation-delete", error, { userId: user.id, conversationId: id }); return NextResponse.json({ error: "Could not delete conversation." }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }

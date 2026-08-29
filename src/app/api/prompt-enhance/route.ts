@@ -10,6 +10,7 @@ import { createIdempotencyKey } from "@/lib/security/ids";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
+import { logServerError } from "@/lib/public-error";
 
 const schema = z.object({ requestId: z.string().uuid(), prompt: z.string().min(3).max(20_000) });
 export const runtime = "nodejs";
@@ -68,9 +69,11 @@ export async function POST(request: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Wallet error";
     await finalizeRequest(claimId, "failed");
+    logServerError("prompt-enhance-wallet", error, { userId: data.user.id, modelId: model.id });
+    const insufficient = message.includes("INSUFFICIENT_CREDITS");
     return NextResponse.json(
-      { error: message.includes("INSUFFICIENT_CREDITS") ? "Insufficient credits." : message },
-      { status: message.includes("INSUFFICIENT_CREDITS") ? 402 : 500 }
+      { error: insufficient ? "Insufficient credits." : "Could not reserve credits." },
+      { status: insufficient ? 402 : 500 }
     );
   }
 
@@ -134,8 +137,9 @@ export async function POST(request: Request) {
   } catch (error) {
     await releaseWalletHold(holdId, "prompt_enhancer_failed").catch(() => undefined);
     await finalizeRequest(claimId, "failed").catch(() => undefined);
+    logServerError("prompt-enhance-provider", error, { userId: data.user.id, modelId: model.id });
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Prompt enhancer failed." },
+      { error: "Prompt enhancement is temporarily unavailable." },
       { status: 503 }
     );
   }

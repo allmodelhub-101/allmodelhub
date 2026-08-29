@@ -11,6 +11,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { signedFileUrl } from "@/lib/file-extract";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -78,7 +79,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   } catch (error) {
     const message = error instanceof Error ? error.message : "Wallet error";
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: message.includes("INSUFFICIENT_CREDITS") ? "Insufficient credits for this generation." : message }, { status: message.includes("INSUFFICIENT_CREDITS") ? 402 : 500 });
+    const insufficient = message.includes("INSUFFICIENT_CREDITS");
+    if (!insufficient) logServerError("generation-wallet", error, { userId: user.id, modelId: model.id, modality });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : "Could not reserve credits for this generation." }, { status: insufficient ? 402 : 500 });
   }
 
   const admin = createAdminClient();
@@ -132,7 +135,8 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   if (insertError) {
     await releaseWalletHold(holdId, "job_insert_failed").catch(() => undefined);
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: insertError.message }, { status: 500 });
+    logServerError("generation-job-insert", insertError, { userId: user.id, modelId: model.id, modality });
+    return NextResponse.json({ error: "Could not create generation job." }, { status: 500 });
   }
 
   try {
@@ -142,8 +146,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     return NextResponse.json({ job: { ...job, status: task.state, providerTaskId: task.taskId }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
   } catch (error) {
     await releaseWalletHold(holdId, "provider_create_failed").catch(() => undefined);
-    await admin.from("generation_jobs").update({ status: "failed", error_message: error instanceof Error ? error.message : "Provider request failed", updated_at: new Date().toISOString() }).eq("id", job.id);
+    logServerError("generation-provider-create", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });
+    await admin.from("generation_jobs").update({ status: "failed", error_message: "Provider request failed", updated_at: new Date().toISOString() }).eq("id", job.id);
     await finalizeRequest(claimId, "failed", { resourceId: job.id });
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Provider request failed" }, { status: 502 });
+    return NextResponse.json({ error: "Generation provider is temporarily unavailable." }, { status: 502 });
   }
 }

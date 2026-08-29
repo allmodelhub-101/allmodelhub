@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 const schema = z.object({
   active: z.boolean().optional(), featured: z.boolean().optional(), autoEligible: z.boolean().optional(),
@@ -25,7 +26,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   if (v.inputUsdPerMillion !== undefined) patch.input_usd_per_million = v.inputUsdPerMillion; if (v.outputUsdPerMillion !== undefined) patch.output_usd_per_million = v.outputUsdPerMillion;
   if (v.flatUsd !== undefined) patch.flat_usd = v.flatUsd; if (v.perSecondUsd !== undefined) patch.per_second_usd = v.perSecondUsd; if (v.per1kCharsUsd !== undefined) patch.per_1k_chars_usd = v.per1kCharsUsd;
   if (priceFieldsChanged) patch.price_version = nextVersion;
-  const { data: model, error } = await admin.from("models").update(patch).eq("id", id).select("*").single(); if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  const { data: model, error } = await admin.from("models").update(patch).eq("id", id).select("*").single(); if (error) { logServerError("admin-model-update", error, { actorId: user.id, modelId: id }); return NextResponse.json({ error: "Could not update model." }, { status: 500 }); }
   if (priceFieldsChanged) await admin.from("model_price_history").insert({ model_id: id, version: nextVersion, created_by: user.id, pricing: { input_usd_per_million: model.input_usd_per_million, output_usd_per_million: model.output_usd_per_million, flat_usd: model.flat_usd, per_second_usd: model.per_second_usd, per_1k_chars_usd: model.per_1k_chars_usd, markup: model.markup } });
   await admin.from("audit_logs").insert({ actor_user_id: user.id, action: "model.updated", entity_type: "model", entity_id: id, metadata: patch });
   return NextResponse.json({ model });

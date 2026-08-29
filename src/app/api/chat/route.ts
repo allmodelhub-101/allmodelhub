@@ -12,6 +12,7 @@ import { createIdempotencyKey } from "@/lib/security/ids";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -112,7 +113,8 @@ export async function POST(request: Request) {
     const insufficient = message.includes("INSUFFICIENT_CREDITS");
     const safety = message.includes("SPEND_LIMIT");
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: insufficient ? "Insufficient credits. Add credits to continue." : safety ? "This request exceeds your spending safety limit. Update it in Settings to continue." : message }, { status: insufficient ? 402 : safety ? 403 : 500 });
+    if (!insufficient && !safety) logServerError("chat-wallet", error, { userId: user.id, modelId: selected.id });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits. Add credits to continue." : safety ? "This request exceeds your spending safety limit. Update it in Settings to continue." : "Could not reserve credits for chat." }, { status: insufficient ? 402 : safety ? 403 : 500 });
   }
 
   let conversationId: string | null = body.private ? null : (body.conversationId ?? null);
@@ -138,7 +140,8 @@ export async function POST(request: Request) {
   } catch (error) {
     await releaseWalletHold(holdId, "conversation_persistence_failed").catch(() => undefined);
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
+    logServerError("chat-persistence", error, { userId: user.id, conversationId });
+    return NextResponse.json({ error: "Could not save chat conversation." }, { status: 500 });
   }
 
   let upstream;
@@ -147,14 +150,16 @@ export async function POST(request: Request) {
   } catch (error) {
     await releaseWalletHold(holdId, "provider_unavailable").catch(() => undefined);
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: errorMessage(error) }, { status: 503 });
+    logServerError("chat-provider-connect", error, { userId: user.id, modelId: selected.id });
+    return NextResponse.json({ error: "Chat provider is temporarily unavailable." }, { status: 503 });
   }
 
   if (!upstream.response.ok || !upstream.response.body) {
     const providerBody = await upstream.response.text().catch(() => "");
     await releaseWalletHold(holdId, `provider_http_${upstream.response.status}`).catch(() => undefined);
     await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: "AI provider request failed.", providerStatus: upstream.response.status, providerMessage: providerBody.slice(0, 500) }, { status: upstream.response.status >= 500 ? 503 : 400 });
+    logServerError("chat-provider-http", new Error(`Provider returned HTTP ${upstream.response.status}`), { userId: user.id, modelId: selected.id, providerStatus: upstream.response.status, providerBody: providerBody.slice(0, 500) });
+    return NextResponse.json({ error: "AI provider request failed." }, { status: upstream.response.status >= 500 ? 503 : 400 });
   }
 
   const encoder = new TextEncoder();
@@ -210,7 +215,8 @@ export async function POST(request: Request) {
       } catch (error) {
         if (!finalized) await releaseWalletHold(holdId!, "chat_stream_failed").catch(() => undefined);
         await finalizeRequest(claimId, "failed").catch(() => undefined);
-        emit({ type: "error", error: errorMessage(error) });
+        logServerError("chat-stream", error, { userId: user.id, modelId: selected.id, conversationId });
+        emit({ type: "error", error: "Chat stream interrupted. Please try again." });
       } finally {
         controller.close();
       }
