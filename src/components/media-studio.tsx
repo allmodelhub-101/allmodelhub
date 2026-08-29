@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Modality = "image"|"video"|"audio";
-type Model = {id:string;name:string;tier:string;modality:string;description:string;retail:any;capabilities:string[]};
+type Retail = { flatCredits?: number; perSecondCredits?: number };
+type Model = {id:string;name:string;tier:string;modality:string;description:string;retail:Retail;capabilities:string[]};
 
 type Props = { modality: Modality; title:string; subtitle:string };
 
@@ -14,9 +16,9 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const [modelId,setModelId]=useState("");
   const [prompt,setPrompt]=useState("");
   const [duration,setDuration]=useState(5);
-  const [resolution,setResolution]=useState(modality==="video"?"720p":"");
+  const [resolution]=useState(modality==="video"?"720p":"");
   const [aspect,setAspect]=useState("16:9");
-  const [job,setJob]=useState<any>(null);
+  const [job,setJob]=useState<{ id?: string; status?: string; result_urls?: string[]; public_id?: string; error_message?: string; charged_credits?: number; estimated_credits?: number } | null>(null);
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState("");
   const [confirmed,setConfirmed]=useState(false);
@@ -24,15 +26,15 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const [uploading,setUploading]=useState(false);
 
   useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.id==="eleven-tts-flash"));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
-  useEffect(()=>{ if(modality!=="video") return; if(modelId==="veo-3-1-fast-fhd"){setDuration(8);setResolution("1080p");} else {setResolution("720p"); if(duration===8) setDuration(5);} setConfirmed(false); },[modelId,modality]);
   const model=models.find(m=>m.id===modelId);
   const veoFixed = modelId === "veo-3-1-fast-fhd";
   const estimate=useMemo(()=>{if(!model)return 0;if(model.retail.flatCredits)return Number(model.retail.flatCredits);if(model.retail.perSecondCredits)return Number(model.retail.perSecondCredits)*duration;return 0},[model,duration]);
+  const effectiveDuration = veoFixed ? 8 : duration;
   const expensive=modality==="video"||estimate>=50;
 
   async function uploadReference(file:File){setUploading(true);setError("");try{if(!file.type.startsWith("image/"))throw new Error("Reference files must be images.");const form=new FormData();form.set("file",file);const r=await fetch("/api/files",{method:"POST",body:form});const d=await r.json().catch(()=>({}));if(!r.ok||!d.file?.id)throw new Error(d.error||"Reference upload failed.");setReferenceFileIds(ids=>[...ids,d.file.id].slice(0,10));}catch(err){setError(err instanceof Error?err.message:"Reference upload failed.");}finally{setUploading(false);}}
 
-  async function submit(e:FormEvent){e.preventDefault();if(expensive&&!confirmed){setError("Confirm the estimated maximum cost before generating.");return;}setBusy(true);setError("");setJob(null);const r=await fetch(`/api/generations/${modality}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestId:crypto.randomUUID(),modelId,prompt,duration:modality==="video"?duration:modality==="audio"?duration:undefined,resolution:resolution||undefined,aspectRatio:aspect||undefined,imageFileIds:referenceFileIds,confirmedCost:confirmed||!expensive})});const d=await r.json().catch(()=>({}));setBusy(false);if(!r.ok){setError(d.error||"Generation request failed.");return;}setJob(d.job);poll(d.job.id);}
+  async function submit(e:FormEvent){e.preventDefault();if(expensive&&!confirmed){setError("Confirm the estimated maximum cost before generating.");return;}setBusy(true);setError("");setJob(null);const r=await fetch(`/api/generations/${modality}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({requestId:crypto.randomUUID(),modelId,prompt,duration:modality==="video"?effectiveDuration:modality==="audio"?duration:undefined,resolution:resolution||undefined,aspectRatio:aspect||undefined,imageFileIds:referenceFileIds,confirmedCost:confirmed||!expensive})});const d=await r.json().catch(()=>({}));setBusy(false);if(!r.ok){setError(d.error||"Generation request failed.");return;}setJob(d.job);poll(d.job.id);}
 
   async function poll(id:string){for(let attempt=0;attempt<120;attempt++){await new Promise(r=>setTimeout(r,modality==="video"?7000:3000));const res=await fetch(`/api/jobs/${id}`);if(!res.ok)continue;const d=await res.json();if(d.job){setJob(d.job);if(["completed","failed","cancelled","expired"].includes(d.job.status))return;}}}
 
@@ -56,7 +58,7 @@ export function MediaStudio({modality,title,subtitle}:Props){
         {!job&&<div><div style={{fontSize:50,opacity:.7}}>{modality==="image"?"▧":modality==="video"?"▶":"♫"}</div><h3>Your result will appear here</h3><p className="muted small">Expensive generations are protected by a wallet reservation before the provider task starts.</p></div>}
         {job&&job.status!=="completed"&&job.status!=="failed"&&<div><div className="kicker">{job.status}</div><h3>Generation in progress…</h3><p className="muted small">Job {job.public_id||job.id}</p></div>}
         {job?.status==="failed"&&<div><h3 style={{color:"var(--danger)"}}>Generation failed</h3><p className="muted">{job.error_message||"Provider returned a failure."}</p><p className="small">Eligible reserved credits are released automatically.</p></div>}
-        {job?.status==="completed"&&<div style={{width:"100%"}}>{modality==="image"&&resultUrl?<img src={resultUrl} alt="Generated result"/>:modality==="video"&&resultUrl?<video controls src={resultUrl}/>:resultUrl?<audio controls src={resultUrl}/>:<p>Generation completed. Open the result URL from history.</p>}<div className="soft-card small" style={{padding:12,marginTop:14}}>Charged {Number(job.charged_credits||job.estimated_credits||0).toFixed(2)} Credits</div>{resultUrl&&<a className="btn" href={resultUrl} target="_blank" rel="noreferrer" style={{marginTop:10}}>Open result ↗</a>}</div>}
+        {job?.status==="completed"&&<div style={{width:"100%"}}>{modality==="image"&&resultUrl?<Image src={resultUrl} alt="Generated result" width={1024} height={1024} unoptimized/>:modality==="video"&&resultUrl?<video controls src={resultUrl}/>:resultUrl?<audio controls src={resultUrl}/>:<p>Generation completed. Open the result URL from history.</p>}<div className="soft-card small" style={{padding:12,marginTop:14}}>Charged {Number(job.charged_credits||job.estimated_credits||0).toFixed(2)} Credits</div>{resultUrl&&<a className="btn" href={resultUrl} target="_blank" rel="noreferrer" style={{marginTop:10}}>Open result ↗</a>}</div>}
       </section>
     </div>
   </div>;

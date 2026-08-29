@@ -3,8 +3,10 @@
 import { FormEvent, useEffect, useState } from "react";
 
 type Method = { id:string; label:string; accountTitle:string; accountNumber:string; iban?:string; instructions:string };
+type Wallet = { available: number; purchased: number; promo: number; reserved: number };
+type Transaction = { id: string; created_at: string; type: string; amount: number; balance_after?: number | null; reference_id?: string | null };
 
-export function WalletClient({ initialWallet, initialTransactions }: { initialWallet:any; initialTransactions:any[] }) {
+export function WalletClient({ initialWallet, initialTransactions }: { initialWallet: Wallet; initialTransactions: Transaction[] }) {
   const [wallet,setWallet] = useState(initialWallet);
   const [transactions,setTransactions] = useState(initialTransactions);
   const [methods,setMethods] = useState<Method[]>([]);
@@ -37,6 +39,6 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
       </section>
       <section className="card studio-panel"><div className="kicker">Wallet protection</div><h2 style={{margin:"8px 0 10px"}}>Transparent by design.</h2><div style={{display:"grid",gap:10}}><div className="soft-card" style={{padding:14}}><b>Purchased credits never expire</b><div className="muted small" style={{marginTop:5}}>Promotional credits stay separate from paid balance.</div></div><div className="soft-card" style={{padding:14}}><b>Expensive jobs reserve first</b><div className="muted small" style={{marginTop:5}}>Media generation can’t silently push your wallet negative.</div></div><div className="soft-card" style={{padding:14}}><b>Every charge has a ledger record</b><div className="muted small" style={{marginTop:5}}>No arbitrary hidden balance editing.</div></div></div></section>
     </div>
-    <section><h2 className="page-title" style={{marginBottom:14}}>Recent transactions</h2><div className="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance after</th><th>Reference</th></tr></thead><tbody>{transactions.length?transactions.map((t:any)=><tr key={t.id}><td>{new Date(t.created_at).toLocaleString()}</td><td>{t.type}</td><td style={{color:Number(t.amount)>=0?"var(--success)":"var(--text)"}}>{Number(t.amount)>=0?"+":""}{Number(t.amount).toFixed(4)}</td><td>{t.balance_after==null?"—":Number(t.balance_after).toFixed(4)}</td><td>{t.reference_id||"—"}</td></tr>):<tr><td colSpan={5} className="muted">No transactions yet.</td></tr>}</tbody></table></div></section>
+    <section><h2 className="page-title" style={{marginBottom:14}}>Recent transactions</h2><div className="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance after</th><th>Reference</th></tr></thead><tbody>{transactions.length?transactions.map((t: Transaction)=><tr key={t.id}><td>{new Date(t.created_at).toLocaleString()}</td><td>{t.type}</td><td style={{color:Number(t.amount)>=0?"var(--success)":"var(--text)"}}>{Number(t.amount)>=0?"+":""}{Number(t.amount).toFixed(4)}</td><td>{t.balance_after==null?"—":Number(t.balance_after).toFixed(4)}</td><td>{t.reference_id||"—"}</td></tr>):<tr><td colSpan={5} className="muted">No transactions yet.</td></tr>}</tbody></table></div></section>
   </div>;
 }

@@ -21,12 +21,8 @@ export async function extractText(file: File): Promise<{ text: string | null; st
       const parsed = await mammoth.extractRawText({ buffer });
       return { text: parsed.value.slice(0, 1_500_000), status: "ready" };
     }
-    if (/\.(xlsx|xls)$/i.test(file.name)) {
-      const XLSX = await import("xlsx");
-      const workbook = XLSX.read(buffer, { type: "buffer" });
-      const parts = workbook.SheetNames.map((name) => `# ${name}\n${XLSX.utils.sheet_to_csv(workbook.Sheets[name])}`);
-      return { text: parts.join("\n\n").slice(0, 1_500_000), status: "ready" };
-    }
+    // Spreadsheet parsing is intentionally unsupported until a maintained, audited parser is selected.
+    if (/\.(xlsx|xls)$/i.test(file.name)) return { text: null, status: "unsupported" };
     return { text: null, status: "unsupported" };
   } catch {
     return { text: null, status: "failed" };

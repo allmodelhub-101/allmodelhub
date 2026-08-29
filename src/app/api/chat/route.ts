@@ -53,6 +53,8 @@ export async function POST(request: Request) {
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid chat request", details: parsed.error.flatten() }, { status: 400 });
   const body = parsed.data;
+  const totalInputLength = body.messages.reduce((total, message) => total + message.content.length, 0);
+  if (totalInputLength > 400_000) return NextResponse.json({ error: "Chat input is too large." }, { status: 413 });
   const claim = await claimRequest(user.id, "chat", body.requestId);
   if (!claim.claimed) return NextResponse.json({ error: "This chat request was already submitted." }, { status: 409 });
   const claimId = claim.id;
@@ -85,8 +87,11 @@ export async function POST(request: Request) {
   }
 
   if (body.attachmentIds.length) {
-    const { data: files, error } = await admin.from("user_files").select("id,name,extracted_text,extraction_status").eq("user_id", user.id).in("id", body.attachmentIds);
+    let attachmentQuery = admin.from("user_files").select("id,name,extracted_text,extraction_status,project_id").eq("user_id", user.id).in("id", body.attachmentIds);
+    if (body.projectId) attachmentQuery = attachmentQuery.eq("project_id", body.projectId);
+    const { data: files, error } = await attachmentQuery;
     if (error) { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "Could not load attachments." }, { status: 500 }); }
+    if ((files ?? []).length !== body.attachmentIds.length) { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "One or more attachments are not available for this project." }, { status: 404 }); }
     const fileContext = (files ?? []).filter((f) => f.extraction_status === "ready" && f.extracted_text).map((f) => `### File: ${f.name}\n${String(f.extracted_text).slice(0, 45_000)}`).join("\n\n").slice(0, 120_000);
     if (fileContext) systemParts.push(`Use these user-provided files as context. If the answer is not supported by them, say so rather than inventing file content.\n\n${fileContext}`);
   }
@@ -96,7 +101,7 @@ export async function POST(request: Request) {
   const maxTokens = body.deepThink ? Math.max(body.maxTokens, 4096) : body.maxTokens;
   const fxRate = await getInternalUsdPkr();
   const holdAmount = estimateTextHold(selected, combinedInput, maxTokens, fxRate);
-  const holdKey = createIdempotencyKey("chat-hold", user.id);
+  const holdKey = createIdempotencyKey("chat-hold", user.id, body.requestId);
   let holdId: string | null = null;
 
   try {
@@ -155,7 +160,7 @@ export async function POST(request: Request) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
   const providerReader = upstream.response.body.getReader();
-  const captureKey = createIdempotencyKey("chat-capture", user.id);
+  const captureKey = createIdempotencyKey("chat-capture", user.id, body.requestId);
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {

@@ -4,6 +4,6 @@ export function createPublicId(prefix: string) {
   return `${prefix}-${suffix}`;
 }
 
-export function createIdempotencyKey(scope: string, userId: string) {
-  return `${scope}:${userId}:${crypto.randomUUID()}`;
+export function createIdempotencyKey(scope: string, userId: string, requestId?: string) {
+  return `${scope}:${userId}:${requestId ?? crypto.randomUUID()}`;
 }

@@ -33,7 +33,8 @@ export async function updateSession(request: NextRequest) {
 
   if (user && path === "/auth/login") {
     const next = request.nextUrl.searchParams.get("next") || "/chat";
-    return NextResponse.redirect(new URL(next, request.url));
+    const safeNext = next.startsWith("/") && !next.startsWith("//") && !next.includes("\\") ? next : "/chat";
+    return NextResponse.redirect(new URL(safeNext, request.url));
   }
 
   return response;

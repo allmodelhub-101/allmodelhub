@@ -6,6 +6,7 @@ import { getManualPaymentMethods } from "@/lib/payment-config";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { notifyUser } from "@/lib/notifications";
 import { getMinimumTopupPkr } from "@/lib/system-settings";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,7 +54,7 @@ export async function POST(request: Request) {
   const path = `${user.id}/${publicId}/proof.${ext}`;
   const bytes = new Uint8Array(await proof.arrayBuffer());
   const { error: uploadError } = await admin.storage.from("payment-proofs").upload(path, bytes, { contentType: proof.type, upsert: false });
-  if (uploadError) return NextResponse.json({ error: `Could not store payment proof: ${uploadError.message}` }, { status: 500 });
+  if (uploadError) { logServerError("manual-payment-proof-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not store payment proof. Try again." }, { status: 500 }); }
 
   const { data: payment, error } = await admin.from("manual_payments").insert({
     public_id: publicId,
@@ -69,7 +70,9 @@ export async function POST(request: Request) {
 
   if (error) {
     await admin.storage.from("payment-proofs").remove([path]).catch(() => undefined);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    logServerError("manual-payment-create", error, { userId: user.id, method });
+    const duplicate = error.code === "23505";
+    return NextResponse.json({ error: duplicate ? "This transaction/reference ID has already been submitted." : "Could not submit payment. Try again." }, { status: duplicate ? 409 : 500 });
   }
 
   await notifyUser(user.id, { type: "payment", title: "Payment submitted", body: `${publicId} for PKR ${amount.toLocaleString()} is pending verification.`, href: "/wallet" });

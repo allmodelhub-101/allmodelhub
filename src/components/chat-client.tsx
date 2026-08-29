@@ -10,6 +10,8 @@ type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; m
 type Project = { id: string; name: string };
 type Model = { id: string; name: string; modality: string; tier: string; description?: string };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
+type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
+type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
 
 const modes: Array<[Mode, string]> = [
   ["auto", "Auto Best"], ["budget", "Budget"], ["balanced", "Balanced"], ["premium", "Premium"], ["flagship", "Flagship"]
@@ -46,12 +48,12 @@ export function ChatClient() {
       setFiles((fileData.files || []).filter((f: UserFile) => f.extraction_status === "ready"));
       if (!qs.get("model") && !qs.get("conversation") && settingsData.profile?.default_tier) setMode(settingsData.profile.default_tier as Mode);
     }).catch(() => setError("Could not load workspace data."));
-  }, []);
+  }, [qs]);
 
   useEffect(() => {
     if (!conversationId) return;
     fetch(`/api/conversations?id=${conversationId}`).then((r) => r.json()).then((data) => {
-      if (data.messages) setMessages(data.messages.filter((m: any) => m.role !== "system").map((m: any) => ({
+      if (data.messages) setMessages(data.messages.filter((m: ConversationMessage) => m.role !== "system").map((m: ConversationMessage) => ({
         id: m.id, role: m.role, content: m.content,
         credits: m.credits_charged == null ? undefined : Number(m.credits_charged),
         meta: m.credits_charged == null ? undefined : `${m.model_id || "AI"} · ${Number(m.credits_charged).toFixed(4)} Credits`
@@ -109,7 +111,7 @@ export function ChatClient() {
         const frames = buffer.split("\n\n"); buffer = frames.pop() || "";
         for (const frame of frames) {
           const line = frame.split("\n").find((x) => x.startsWith("data:")); if (!line) continue;
-          let evt: any; try { evt = JSON.parse(line.slice(5).trim()); } catch { continue; }
+          let evt: StreamEvent; try { evt = JSON.parse(line.slice(5).trim()) as StreamEvent; } catch { continue; }
           if (evt.type === "meta" && evt.conversationId && !privateMode) {
             setConversationId(evt.conversationId);
             window.history.replaceState(null, "", `/chat?conversation=${evt.conversationId}`);
