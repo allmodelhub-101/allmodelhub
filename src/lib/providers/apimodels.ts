@@ -7,8 +7,9 @@ function headers() {
   return { Authorization: `Bearer ${env.APIMODELS_API_KEY}`, "Content-Type": "application/json" };
 }
 
-function normalizeTask(json: any): AsyncTaskResult {
-  const data = json?.data ?? json;
+function normalizeTask(json: unknown): AsyncTaskResult {
+  const root = json as Record<string, unknown>;
+  const data = (root.data && typeof root.data === "object" ? root.data : root) as { taskId?: string; task_id?: string; id?: string; state?: AsyncTaskResult["state"]; status?: AsyncTaskResult["state"]; resultUrls?: string[]; result_urls?: string[]; urls?: string[]; resultJson?: string; failMsg?: string; fail_message?: string; error?: string };
   let resultUrls = data?.resultUrls ?? data?.result_urls ?? data?.urls;
   if (!resultUrls && typeof data?.resultJson === "string") {
     try { resultUrls = JSON.parse(data.resultJson)?.resultUrls; } catch { /* provider returned non-JSON result */ }
