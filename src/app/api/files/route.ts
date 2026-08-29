@@ -44,10 +44,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "File must be between 1 byte and 50 MB." }, { status: 400 });
   }
 
-  const allowedExtension = /\.(pdf|docx|txt|md|csv|xlsx|xls|json|xml|png|jpe?g|webp|gif|js|jsx|ts|tsx|py|php|css|html)$/i;
-  if (!allowedExtension.test(file.name)) {
-    return NextResponse.json({ error: "Unsupported file type." }, { status: 400 });
-  }
+  const extension = file.name.match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase();
+  const allowedExtensions = new Set(["pdf", "docx", "txt", "md", "csv", "xlsx", "xls", "json", "xml", "png", "jpg", "jpeg", "webp", "gif", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
+  if (!extension || !allowedExtensions.has(extension)) return NextResponse.json({ error: "Unsupported file type." }, { status: 400 });
+
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  const textExtensions = new Set(["txt", "md", "csv", "json", "xml", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
+  const signature = new TextDecoder().decode(bytes.slice(0, 16));
+  const validBinary = extension === "pdf" ? signature.startsWith("%PDF-") : extension === "png" ? bytes.slice(0, 8).every((v, i) => v === [137,80,78,71,13,10,26,10][i]) : extension === "jpg" || extension === "jpeg" ? bytes[0] === 0xff && bytes[1] === 0xd8 : true;
+  if (!validBinary || (!textExtensions.has(extension) && file.type === "text/plain")) return NextResponse.json({ error: "File contents do not match the selected type." }, { status: 400 });
 
   const admin = createAdminClient();
   if (projectId) {
@@ -57,7 +62,6 @@ export async function POST(request: Request) {
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-140);
   const path = `${user.id}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${safeName}`;
-  const bytes = new Uint8Array(await file.arrayBuffer());
   const { error: uploadError } = await admin.storage.from("user-files").upload(path, bytes, {
     contentType: file.type || "application/octet-stream",
     upsert: false

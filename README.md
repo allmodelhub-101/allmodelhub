@@ -23,8 +23,10 @@ This repository implements the locked V1 architecture: premium marketing site, S
 1. Create a Supabase project.
 2. Run `supabase/migrations/001_init.sql`.
 3. Run `supabase/migrations/002_seed_models.sql`.
-4. Create an Upstash Redis database (optional in local development, recommended in production).
-5. Create a Vercel project linked to this GitHub repository.
+4. Run `supabase/migrations/003_completion.sql`.
+5. Run `supabase/migrations/004_final_release.sql`.
+6. Create an Upstash Redis database (optional in local development, recommended in production).
+7. Create a Vercel project linked to this GitHub repository.
 
 ## 2. Configure environment
 
