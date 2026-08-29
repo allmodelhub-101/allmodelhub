@@ -1,0 +1,1 @@
+import { AppShell } from "@/components/app-shell";import { SupportClient } from "@/components/simple-forms";export const dynamic="force-dynamic";export default function Page(){return <AppShell><div style={{marginBottom:20}}><div className="kicker">Help center</div><h1 className="page-title">Support</h1></div><SupportClient/></AppShell>}

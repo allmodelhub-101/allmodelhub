@@ -1,0 +1,1 @@
+import { AppShell } from "@/components/app-shell";import { ModelBattle } from "@/components/model-battle";export const dynamic="force-dynamic";export default function Page(){return <AppShell><ModelBattle/></AppShell>}

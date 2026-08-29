@@ -1,0 +1,1 @@
+import { AppShell } from "@/components/app-shell";import { FilesClient } from "@/components/simple-forms";export const dynamic="force-dynamic";export default function Page(){return <AppShell><div style={{marginBottom:20}}><div className="kicker">Knowledge</div><h1 className="page-title">Files</h1></div><FilesClient/></AppShell>}
