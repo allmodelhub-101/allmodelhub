@@ -8,8 +8,14 @@ import { notifyUser } from "@/lib/notifications";
 
 export const dynamic = "force-dynamic";
 
-async function clientJob(job: any) {
-  const paths = Array.isArray(job?.result_json?.amhStoredPaths) ? job.result_json.amhStoredPaths : [];
+type GenerationJob = {
+  result_json?: { amhStoredPaths?: unknown } | null;
+  result_urls?: string[] | null;
+  [key: string]: unknown;
+};
+
+async function clientJob(job: GenerationJob) {
+  const paths = Array.isArray(job.result_json?.amhStoredPaths) && job.result_json.amhStoredPaths.every((path): path is string => typeof path === "string") ? job.result_json.amhStoredPaths : [];
   const signed = await signGeneratedPaths(paths);
   return { ...job, result_urls: signed.length ? signed : (job.result_urls ?? []) };
 }

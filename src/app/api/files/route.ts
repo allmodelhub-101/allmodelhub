@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { enforceRateLimit } from "@/lib/rate-limit";
-import { extractText, signedFileUrl } from "@/lib/file-extract";
+import { extractText } from "@/lib/file-extract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({
-    files: (files ?? []).map(({ storage_path: _path, ...file }) => file)
+    files: (files ?? []).map((file) => { const safeFile = { ...file }; delete safeFile.storage_path; return safeFile; })
   });
 }
 

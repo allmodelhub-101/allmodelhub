@@ -24,10 +24,10 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const [uploading,setUploading]=useState(false);
 
   useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.id==="eleven-tts-flash"));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
-  useEffect(()=>{ if(modality!=="video") return; if(modelId==="veo-3-1-fast-fhd"){setDuration(8);setResolution("1080p");} else {setResolution("720p"); if(duration===8) setDuration(5);} setConfirmed(false); },[modelId,modality]);
   const model=models.find(m=>m.id===modelId);
   const veoFixed = modelId === "veo-3-1-fast-fhd";
   const estimate=useMemo(()=>{if(!model)return 0;if(model.retail.flatCredits)return Number(model.retail.flatCredits);if(model.retail.perSecondCredits)return Number(model.retail.perSecondCredits)*duration;return 0},[model,duration]);
+  const effectiveDuration = veoFixed ? 8 : duration;
   const expensive=modality==="video"||estimate>=50;
 
   async function uploadReference(file:File){setUploading(true);setError("");try{if(!file.type.startsWith("image/"))throw new Error("Reference files must be images.");const form=new FormData();form.set("file",file);const r=await fetch("/api/files",{method:"POST",body:form});const d=await r.json().catch(()=>({}));if(!r.ok||!d.file?.id)throw new Error(d.error||"Reference upload failed.");setReferenceFileIds(ids=>[...ids,d.file.id].slice(0,10));}catch(err){setError(err instanceof Error?err.message:"Reference upload failed.");}finally{setUploading(false);}}

@@ -8,7 +8,7 @@ export function ProjectsClient() {
   const [instructions, setInstructions] = useState("");
   const [status, setStatus] = useState("");
   async function load() { const r = await fetch("/api/projects"); if (r.ok) setProjects((await r.json()).projects || []); }
-  useEffect(() => { void load(); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => { void load(); }, 0); return () => window.clearTimeout(timer); }, []);
   async function submit(e: FormEvent) {
     e.preventDefault(); setStatus("Creating…");
     const r = await fetch("/api/projects", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, instructions }) });
@@ -22,7 +22,7 @@ export function FilesClient() {
   const [files, setFiles] = useState<any[]>([]), [projects, setProjects] = useState<any[]>([]);
   const [file, setFile] = useState<File | null>(null), [projectId, setProjectId] = useState(""), [status, setStatus] = useState("");
   async function load() { const [fr, pr] = await Promise.all([fetch("/api/files"), fetch("/api/projects")]); if (fr.ok) setFiles((await fr.json()).files || []); if (pr.ok) setProjects((await pr.json()).projects || []); }
-  useEffect(() => { void load(); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => { void load(); }, 0); return () => window.clearTimeout(timer); }, []);
   async function upload(e: FormEvent) {
     e.preventDefault(); if (!file) return; const fd = new FormData(); fd.append("file", file); if (projectId) fd.append("projectId", projectId); setStatus("Uploading and preparing context…");
     const r = await fetch("/api/files", { method: "POST", body: fd }); const d = await r.json().catch(() => ({})); setStatus(r.ok ? "Uploaded successfully." : d.error || "Upload failed.");
@@ -44,7 +44,7 @@ export function SupportClient() {
   const [tickets, setTickets] = useState<any[]>([]), [active, setActive] = useState<any | null>(null), [thread, setThread] = useState<any[]>([]);
   const [category, setCategory] = useState("technical"), [subject, setSubject] = useState(""), [message, setMessage] = useState(""), [reply, setReply] = useState(""), [status, setStatus] = useState("");
   async function load() { const r = await fetch("/api/support"); if (r.ok) setTickets((await r.json()).tickets || []); }
-  useEffect(() => { void load(); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => { void load(); }, 0); return () => window.clearTimeout(timer); }, []);
   async function open(ticket: any) { setActive(ticket); const r = await fetch(`/api/support/${ticket.id}`); if (r.ok) setThread((await r.json()).messages || []); }
   async function submit(e: FormEvent) { e.preventDefault(); const r = await fetch("/api/support", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ category, subject, message }) }); const d = await r.json().catch(() => ({})); setStatus(r.ok ? `Created ${d.ticket.public_id}` : d.error || "Ticket failed."); if (r.ok) { setSubject(""); setMessage(""); await load(); await open(d.ticket); } }
   async function sendReply(e: FormEvent) { e.preventDefault(); if (!active || !reply.trim()) return; const r = await fetch(`/api/support/${active.id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: reply }) }); if (r.ok) { setReply(""); await open(active); } }

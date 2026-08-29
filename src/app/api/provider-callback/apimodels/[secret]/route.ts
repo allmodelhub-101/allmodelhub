@@ -25,8 +25,10 @@ function safeSecretEqual(value: string, expected: string) {
 
 export async function POST(request: Request, context: { params: Promise<{ secret: string }> }) {
   const { secret } = await context.params;
-  const expected = process.env.CALLBACK_SECRET;
-  if (!expected || !safeSecretEqual(secret, expected)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const secrets = [process.env.CALLBACK_SECRET, process.env.CALLBACK_SECRET_PREVIOUS].filter((value): value is string => Boolean(value));
+  if (!secrets.some((expected) => safeSecretEqual(secret, expected))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const contentLength = Number(request.headers.get("content-length") || 0);
+  if (contentLength > 1_000_000) return NextResponse.json({ error: "Payload too large" }, { status: 413 });
   const payload = await request.json().catch(() => null);
   const raw = payload?.data ?? payload;
   const parsed = callbackSchema.safeParse({ ...raw, taskId: raw?.taskId ?? raw?.task_id });
