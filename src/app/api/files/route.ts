@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { extractText } from "@/lib/file-extract";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
     .limit(200);
   if (projectId) query = query.eq("project_id", projectId);
   const { data: files, error } = await query;
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("files-list", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load files." }, { status: 500 }); }
 
   return NextResponse.json({
     files: (files ?? []).map((file) => { const safeFile = { ...file }; delete safeFile.storage_path; return safeFile; })
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
     contentType: file.type || "application/octet-stream",
     upsert: false
   });
-  if (uploadError) return NextResponse.json({ error: uploadError.message }, { status: 500 });
+  if (uploadError) { logServerError("file-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not upload file." }, { status: 500 }); }
 
   const extraction = await extractText(file);
   const { data: record, error: dbError } = await admin.from("user_files").insert({
@@ -82,7 +83,8 @@ export async function POST(request: Request) {
 
   if (dbError) {
     await admin.storage.from("user-files").remove([path]).catch(() => undefined);
-    return NextResponse.json({ error: dbError.message }, { status: 500 });
+    logServerError("file-record-create", dbError, { userId: user.id });
+    return NextResponse.json({ error: "Could not save file." }, { status: 500 });
   }
 
   return NextResponse.json({ file: record }, { status: 201 });

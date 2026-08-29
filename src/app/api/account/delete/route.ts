@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 const schema = z.object({ confirmation: z.literal("DELETE MY ACCOUNT") });
 export async function POST(request: Request) {
@@ -13,6 +14,6 @@ export async function POST(request: Request) {
   const admin = createAdminClient();
   await admin.from("audit_logs").insert({ actor_user_id: data.user.id, action: "account_delete_requested", entity_type: "user", entity_id: data.user.id });
   const { error } = await admin.auth.admin.deleteUser(data.user.id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("account-delete", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not delete account." }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }

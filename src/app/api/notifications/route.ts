@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,7 @@ export async function GET() {
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const admin = createAdminClient();
   const { data: notifications, error } = await admin.from("notifications").select("*").eq("user_id", data.user.id).order("created_at", { ascending: false }).limit(100);
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("notifications-read", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load notifications." }, { status: 500 }); }
   return NextResponse.json({ notifications: notifications ?? [] });
 }
 
@@ -26,6 +27,6 @@ export async function PATCH(request: Request) {
   let query = admin.from("notifications").update({ read_at: new Date().toISOString() }).eq("user_id", data.user.id).is("read_at", null);
   if (parsed.data.id) query = query.eq("id", parsed.data.id);
   const { error } = await query;
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("notifications-read", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load notifications." }, { status: 500 }); }
   return NextResponse.json({ ok: true });
 }

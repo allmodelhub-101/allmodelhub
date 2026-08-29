@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 const schema = z.object({
   modelId: z.string().min(1),
@@ -15,7 +16,7 @@ export async function GET() {
   await requireAdmin();
   const admin = createAdminClient();
   const { data, error } = await admin.from("provider_models").select("*").order("model_id").order("priority");
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("admin-provider-list", error); return NextResponse.json({ error: "Could not load provider routes." }, { status: 500 }); }
   return NextResponse.json({ routes: data ?? [] });
 }
 
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
     priority: input.priority,
     active: input.active
   }, { onConflict: "model_id,provider_key" }).select("*").single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) { logServerError("admin-provider-update", error, { actorId: user.id, modelId: input.modelId }); return NextResponse.json({ error: "Could not update provider route." }, { status: 500 }); }
   await admin.from("audit_logs").insert({ actor_user_id: user.id, action: "provider_route.updated", entity_type: "provider_model", entity_id: data.id, metadata: data });
   return NextResponse.json({ route: data });
 }

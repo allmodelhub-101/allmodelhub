@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 const schema = z.object({
@@ -19,7 +20,7 @@ export async function GET() {
   const supabase = await createClient(); const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const admin = createAdminClient(); const { data: profile, error } = await admin.from("profiles").select("*").eq("id", data.user.id).single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("settings-read", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load settings." }, { status: 500 }); }
   return NextResponse.json({ profile });
 }
 
@@ -38,6 +39,6 @@ export async function PATCH(request: Request) {
   if (v.singleGenerationLimit !== undefined) patch.single_generation_limit = v.singleGenerationLimit;
   if (v.customInstructions !== undefined) patch.custom_instructions = v.customInstructions;
   const admin = createAdminClient(); const { data: profile, error } = await admin.from("profiles").update(patch).eq("id", data.user.id).select("*").single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) { logServerError("settings-update", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not save settings." }, { status: 500 }); }
   return NextResponse.json({ profile });
 }

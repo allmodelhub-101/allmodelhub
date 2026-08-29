@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { logServerError } from "@/lib/public-error";
 
 export const dynamic = "force-dynamic";
 const messageSchema = z.object({ message: z.string().min(1).max(5000) });
@@ -35,7 +36,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
   if (!ticket) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
   const admin = createAdminClient();
   const { data: message, error } = await admin.from("ticket_messages").insert({ ticket_id: id, user_id: data.user.id, author_role: "user", body: parsed.data.message }).select("*").single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) { logServerError("support-reply", error, { userId: data.user.id, ticketId: id }); return NextResponse.json({ error: "Could not send support reply." }, { status: 500 }); }
   await admin.from("support_tickets").update({ status: "open", updated_at: new Date().toISOString() }).eq("id", id);
   return NextResponse.json({ message }, { status: 201 });
 }

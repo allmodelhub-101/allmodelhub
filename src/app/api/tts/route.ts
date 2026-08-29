@@ -8,6 +8,7 @@ import { apimodelsTtsStream } from "@/lib/providers/apimodels";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -78,6 +79,7 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : "TTS failed";
     const insufficient = message.includes("INSUFFICIENT_CREDITS");
     const safety = message.includes("SPEND_LIMIT");
-    return NextResponse.json({ error: insufficient ? "Insufficient credits." : safety ? "This request exceeds your spending safety limit." : message }, { status: insufficient ? 402 : safety ? 403 : 500 });
+    if (!insufficient && !safety) logServerError("tts-request", error, { userId: user.id, modelId: model.id });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits." : safety ? "This request exceeds your spending safety limit." : "Voice generation is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 500 });
   }
 }
