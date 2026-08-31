@@ -27,5 +27,7 @@ export function ThemeToggle() {
     document.documentElement.dataset.theme = next;
   }
 
-  return <button className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">{theme === "dark" ? "☀ Light" : "◐ Dark"}</button>;
+  const label = !mounted ? "Theme" : theme === "dark" ? "☀ Light" : "◐ Dark";
+
+  return <button className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">{label}</button>;
 }
