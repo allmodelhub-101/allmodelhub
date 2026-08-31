@@ -21,7 +21,11 @@ function getLimiter() {
 
 export async function enforceRateLimit(identifier: string) {
   const instance = getLimiter();
-  if (!instance) return { success: true, remaining: 999 };
-  const result = await instance.limit(identifier);
-  return { success: result.success, remaining: result.remaining, reset: result.reset };
+  if (!instance) return { success: false, unavailable: true, remaining: 0 };
+  try {
+    const result = await instance.limit(identifier);
+    return { success: result.success, unavailable: false, remaining: result.remaining, reset: result.reset };
+  } catch {
+    return { success: false, unavailable: true, remaining: 0 };
+  }
 }

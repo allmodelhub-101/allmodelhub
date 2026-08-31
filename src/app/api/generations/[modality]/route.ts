@@ -38,6 +38,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   if (!["image", "video", "audio"].includes(modality)) return NextResponse.json({ error: "Invalid modality." }, { status: 404 });
 
   const limit = await enforceRateLimit(`generation:${modality}:${user.id}`);
+  if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many generation requests." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));

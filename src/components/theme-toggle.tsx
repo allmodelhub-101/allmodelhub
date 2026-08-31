@@ -9,6 +9,8 @@ export function ThemeToggle() {
   useEffect(() => {
     const savedTheme = localStorage.getItem("amh-theme");
     const nextTheme = savedTheme === "light" ? "light" : "dark";
+    // The browser preference is intentionally read after hydration to keep SSR markup deterministic.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(nextTheme);
     document.documentElement.dataset.theme = nextTheme;
     setMounted(true);
