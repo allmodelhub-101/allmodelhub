@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { PremiumSelect } from "@/components/premium-select";
 
 type Method = { id:string; label:string; accountTitle:string; accountNumber:string; iban?:string; instructions:string };
 type Wallet = { available: number; purchased: number; promo: number; reserved: number };
@@ -29,7 +30,7 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
       <section className="card studio-panel"><div className="kicker">Add credits</div><h2 style={{margin:"8px 0 6px"}}>Manual top-up</h2><p className="muted small" style={{lineHeight:1.6}}>1 Credit = PKR 1. Minimum top-up is PKR 500. Credits are added only after payment proof is reviewed.</p>
         <form onSubmit={submit} style={{display:"grid",gap:13,marginTop:18}}>
           <label className="label">Amount (PKR)<input className="input" type="number" min={500} step={100} value={amount} onChange={e=>setAmount(Number(e.target.value))}/></label>
-          <label className="label">Payment method<select className="select" value={method} onChange={e=>setMethod(e.target.value)}><option value="easypaisa">Easypaisa</option><option value="meezan">Meezan Bank</option></select></label>
+          <label className="label">Payment method<PremiumSelect value={method} onChange={setMethod} options={[{value:"easypaisa",label:"Easypaisa"},{value:"meezan",label:"Meezan Bank"}]} /></label>
           {selected&&<div className="soft-card" style={{padding:14,lineHeight:1.65}}><b>{selected.label}</b><div className="muted small">Account title: {selected.accountTitle}</div><div className="muted small">Account: {selected.accountNumber}</div>{selected.iban&&<div className="muted small">IBAN: {selected.iban}</div>}<div className="small" style={{marginTop:8}}>{selected.instructions}</div></div>}
           <label className="label">Transaction / reference ID<input className="input" value={reference} onChange={e=>setReference(e.target.value)} required minLength={4}/></label>
           <label className="label">Payment proof<input className="input" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={e=>setProof(e.target.files?.[0]||null)} required/></label>

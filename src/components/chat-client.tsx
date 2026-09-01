@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { PremiumSelect } from "@/components/premium-select";
 
 type Mode = "auto" | "budget" | "balanced" | "premium" | "flagship";
 type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; meta?: string; credits?: number };
@@ -155,10 +156,8 @@ export function ChatClient() {
     <div className="chat-toolbar">
       <button className="mode-pill" onClick={newChat}>＋ New</button>
       {modes.map(([id, label]) => <button key={id} className={`mode-pill ${mode === id && !modelId ? "active" : ""}`} onClick={() => { setMode(id); setModelId(""); }}>{label}</button>)}
-      <select className="select mini-select" aria-label="Exact model" value={modelId} onChange={(e) => setModelId(e.target.value)}>
-        <option value="">Exact model…</option>{models.map((m) => <option value={m.id} key={m.id}>{m.name} · {m.tier}</option>)}
-      </select>
-      {projects.length > 0 && <select className="select mini-select" aria-label="Project" value={projectId} onChange={(e) => { setProjectId(e.target.value); setAttachmentIds([]); }}><option value="">No project</option>{projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select>}
+      <PremiumSelect className="mini-select" aria-label="Exact model" value={modelId} onChange={setModelId} options={[{ value: "", label: "Exact model…" }, ...models.map((m) => ({ value: m.id, label: `${m.name} · ${m.tier}` }))]} />
+      {projects.length > 0 && <PremiumSelect className="mini-select" aria-label="Project" value={projectId} onChange={(value) => { setProjectId(value); setAttachmentIds([]); }} options={[{ value: "", label: "No project" }, ...projects.map((p) => ({ value: p.id, label: p.name }))]} />}
       <button className={`mode-pill ${deepThink ? "active" : ""}`} onClick={() => setDeepThink((v) => !v)}>Deep Think</button>
       <button className={`mode-pill ${privateMode ? "active" : ""}`} onClick={() => { setPrivateMode((v) => !v); setConversationId(""); }}>Private</button>
       {messages.length > 0 && <button className="mode-pill" onClick={exportChat}>Export</button>}
