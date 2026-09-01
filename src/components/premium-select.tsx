@@ -17,7 +17,9 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(() => Math.max(0, options.findIndex((option) => option.value === value)));
   const selected = options.find((option) => option.value === value);
+  const available = options.map((option, index) => ({ option, index })).filter(({ option }) => !option.disabled);
 
   useEffect(() => {
     function close(event: MouseEvent) {
@@ -33,24 +35,34 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
     setOpen(false);
   }
 
+  function move(step: number) {
+    const current = available.findIndex(({ index }) => index === activeIndex);
+    const next = available[(current + step + available.length) % available.length];
+    if (next) setActiveIndex(next.index);
+  }
+
   function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === "Escape") setOpen(false);
-    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+    if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
-      setOpen(true);
+      if (!open) setOpen(true);
+      move(event.key === "ArrowDown" ? 1 : -1);
+      return;
     }
-    if (event.key === "ArrowUp") {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      setOpen(true);
+      if (!open) { setOpen(true); return; }
+      const option = options[activeIndex];
+      if (option) choose(option);
     }
   }
 
   return <div ref={rootRef} className={`premium-select ${className}`}>
     <button type="button" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={() => setOpen((current) => !current)} onKeyDown={handleKeyDown} {...props}>
-      <span>{selected?.label || "Select an option"}</span><span className="premium-select-chevron" aria-hidden="true">⌄</span>
+      <span className="premium-select-value">{selected?.label || "Select an option"}</span><span className="premium-select-chevron" aria-hidden="true">⌄</span>
     </button>
-    {open && <div className="premium-select-menu" role="listbox" aria-labelledby={id}>
-      {options.map((option) => <button type="button" role="option" aria-selected={option.value === value} className={`premium-select-option ${option.value === value ? "selected" : ""}`} key={option.value} disabled={option.disabled} onClick={() => choose(option)}>{option.label}{option.value === value && <span aria-hidden="true">✓</span>}</button>)}
+    {open && <div className="premium-select-menu" role="listbox" aria-labelledby={id} tabIndex={-1}>
+      {options.map((option, index) => <button type="button" role="option" aria-selected={option.value === value} className={`premium-select-option ${option.value === value ? "selected" : ""} ${index === activeIndex ? "active" : ""}`} key={option.value} disabled={option.disabled} onMouseEnter={() => setActiveIndex(index)} onClick={() => choose(option)}>{option.label}{option.value === value && <span aria-hidden="true">✓</span>}</button>)}
     </div>}
   </div>;
 }
@@ -60,3 +72,4 @@ export function selectOptions(values: Array<[string, string]>): Option[] {
 }
 
 export type { Option };
+
