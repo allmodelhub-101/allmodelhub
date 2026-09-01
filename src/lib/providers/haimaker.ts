@@ -1,14 +1,39 @@
 import { getServerEnv } from "@/lib/env";
-import type { ProviderChatRequest } from "@/lib/providers/types";
+import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
 
 export function haimakerModelFor(amhModelId: string) {
   const env = getServerEnv();
   try {
     const map = JSON.parse(env.HAIMAKER_MODEL_MAP_JSON) as Record<string, string>;
-    return map[amhModelId];
+    return map[amhModelId] ?? amhModelId;
   } catch {
-    return undefined;
+    return amhModelId;
   }
+}
+
+export async function haimakerCreateTask(modality: "image" | "video", body: Record<string, unknown>): Promise<AsyncTaskResult> {
+  const env = getServerEnv();
+  if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
+  const endpoint = modality === "image" ? "images/generations" : "videos";
+  const response = await fetch(`${env.HAIMAKER_BASE_URL}/${endpoint}`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store"
+  });
+  const json = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(`Haimaker ${modality} request failed (${response.status}).`);
+  const root = json as Record<string, unknown>;
+  const data = (root.data && typeof root.data === "object" ? root.data : root) as Record<string, unknown>;
+  const urls = Array.isArray(data.data) ? data.data.map((item) => typeof item === "object" && item ? String((item as Record<string, unknown>).url || "") : "").filter(Boolean) : [data.url, data.video_url, data.output_url].filter((value): value is string => typeof value === "string" && value.length > 0);
+  const taskId = String(data.id || data.task_id || crypto.randomUUID());
+  return { taskId, state: urls.length ? "completed" : "processing", resultUrls: urls, raw: json };
+}
+
+export async function haimakerTtsStream(body: { model: string; input: string; voice: string }) {
+  const env = getServerEnv();
+  if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
+  return fetch(`${env.HAIMAKER_BASE_URL}/audio/speech`, { method: "POST", headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" });
 }
 
 export async function haimakerChatStream(request: ProviderChatRequest & { modelId: string; upstreamOverride?: string }) {

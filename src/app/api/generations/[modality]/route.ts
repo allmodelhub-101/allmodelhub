@@ -6,7 +6,7 @@ import { getRuntimeModel } from "@/lib/model-store";
 import { estimateMediaCredits, getInternalUsdPkr, mediaSupplierUsd } from "@/lib/pricing";
 import { createWalletHold, releaseWalletHold } from "@/lib/wallet";
 import { createIdempotencyKey, createPublicId } from "@/lib/security/ids";
-import { apimodelsCreateTask } from "@/lib/providers/apimodels";
+import { providerCreateTask } from "@/lib/providers";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { signedFileUrl } from "@/lib/file-extract";
@@ -141,8 +141,10 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   }
 
   try {
-    const task = await apimodelsCreateTask(modality as "image" | "video" | "audio", providerBody);
-    await admin.from("generation_jobs").update({ provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
+    if (modality === "audio") throw new Error("Audio generation uses the TTS endpoint.");
+    const result = await providerCreateTask({ modelId: model.id, modality: modality as "image" | "video", body: providerBody, allowFallback: true });
+    const task = result.task;
+    await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
     await finalizeRequest(claimId, "completed", { resourceId: job.id, response: { publicId: job.public_id, status: task.state } });
     return NextResponse.json({ job: { ...job, status: task.state, providerTaskId: task.taskId }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
   } catch (error) {
