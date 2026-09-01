@@ -29,13 +29,19 @@ export function LoginForm({ nextPath = "/chat" }: { nextPath?: string }) {
 
   async function submit(e: FormEvent) {
     e.preventDefault(); setLoading(true); setMessage("");
-    const supabase = createClient();
     if (mode === "signup") {
+      const supabase = createClient();
       const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` } });
       setMessage(error ? error.message : "Check your email to verify your account.");
     } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) setMessage(error.message); else window.location.href = nextPath;
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) setMessage(result.error || "Unable to sign in right now.");
+      else window.location.href = nextPath;
     }
     setLoading(false);
   }
