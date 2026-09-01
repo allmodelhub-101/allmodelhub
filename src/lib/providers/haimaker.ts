@@ -1,6 +1,11 @@
 import { getServerEnv } from "@/lib/env";
 import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
 
+function apiUrl(path: string) {
+  const base = getServerEnv().HAIMAKER_BASE_URL.replace(/\/+$/, "").replace(/\/v1$/i, "");
+  return `${base}/v1/${path.replace(/^\/+/, "")}`;
+}
+
 export function haimakerModelFor(amhModelId: string) {
   const env = getServerEnv();
   try {
@@ -15,7 +20,7 @@ export async function haimakerCreateTask(modality: "image" | "video", body: Reco
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
   const endpoint = modality === "image" ? "images/generations" : "videos";
-  const response = await fetch(`${env.HAIMAKER_BASE_URL}/${endpoint}`, {
+  const response = await fetch(apiUrl(endpoint), {
     method: "POST",
     headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -33,7 +38,7 @@ export async function haimakerCreateTask(modality: "image" | "video", body: Reco
 export async function haimakerTtsStream(body: { model: string; input: string; voice: string }) {
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
-  return fetch(`${env.HAIMAKER_BASE_URL}/audio/speech`, { method: "POST", headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" });
+  return fetch(apiUrl("audio/speech"), { method: "POST", headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" });
 }
 
 export async function haimakerChatStream(request: ProviderChatRequest & { modelId: string; upstreamOverride?: string }) {
@@ -42,7 +47,7 @@ export async function haimakerChatStream(request: ProviderChatRequest & { modelI
   const mapped = request.upstreamOverride || haimakerModelFor(request.modelId);
   if (!mapped) throw new Error(`No Haimaker fallback mapping configured for ${request.modelId}.`);
 
-  return fetch(`${env.HAIMAKER_BASE_URL}/chat/completions`, {
+  return fetch(apiUrl("chat/completions"), {
     method: "POST",
     headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({

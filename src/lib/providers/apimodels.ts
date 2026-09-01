@@ -10,6 +10,11 @@ export class ProviderRequestError extends Error {
   }
 }
 
+function apiUrl(path: string) {
+  const base = getServerEnv().APIMODELS_BASE_URL.replace(/\/+$/, "").replace(/\/v1$/i, "");
+  return `${base}/v1/${path.replace(/^\/+/, "")}`;
+}
+
 function headers() {
   const env = getServerEnv();
   if (!env.APIMODELS_API_KEY) throw new Error("APIMODELS_API_KEY is not configured.");
@@ -52,8 +57,7 @@ function providerFailure(status: number) {
 }
 
 export async function apimodelsChatStream(request: ProviderChatRequest) {
-  const env = getServerEnv();
-  const response = await fetch(`${env.APIMODELS_BASE_URL}/chat/completions`, {
+  const response = await fetch(apiUrl("chat/completions"), {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(openAiBody(request)),
@@ -63,9 +67,8 @@ export async function apimodelsChatStream(request: ProviderChatRequest) {
 }
 
 export async function apimodelsCreateTask(modality: "image" | "video" | "audio", body: Record<string, unknown>) {
-  const env = getServerEnv();
   const plural = modality === "image" ? "images" : modality;
-  const response = await fetch(`${env.APIMODELS_BASE_URL}/${plural}/generations`, {
+  const response = await fetch(apiUrl(`${plural}/generations`), {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(body),
@@ -77,9 +80,8 @@ export async function apimodelsCreateTask(modality: "image" | "video" | "audio",
 }
 
 export async function apimodelsPollTask(modality: "image" | "video" | "audio", taskId: string) {
-  const env = getServerEnv();
   const plural = modality === "image" ? "images" : modality;
-  const response = await fetch(`${env.APIMODELS_BASE_URL}/${plural}/generations?task_id=${encodeURIComponent(taskId)}`, {
+  const response = await fetch(`${apiUrl(`${plural}/generations`)}?task_id=${encodeURIComponent(taskId)}`, {
     headers: headers(),
     cache: "no-store"
   });
@@ -89,8 +91,7 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
 }
 
 export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
-  const env = getServerEnv();
-  return fetch(`${env.APIMODELS_BASE_URL}/audio/generations`, {
+  return fetch(apiUrl("audio/generations"), {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(body),
