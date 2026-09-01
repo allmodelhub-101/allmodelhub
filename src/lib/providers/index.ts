@@ -1,5 +1,5 @@
-import { apimodelsChatStream } from "@/lib/providers/apimodels";
-import { haimakerChatStream, haimakerModelFor } from "@/lib/providers/haimaker";
+import { apimodelsChatStream, apimodelsCreateTask } from "@/lib/providers/apimodels";
+import { haimakerChatStream, haimakerCreateTask, haimakerModelFor } from "@/lib/providers/haimaker";
 import type { ProviderChatRequest, ProviderChatResult } from "@/lib/providers/types";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -29,6 +29,18 @@ async function routesForModel(modelId: string, defaultUpstream: string): Promise
 
 function retryable(status: number) {
   return [408, 409, 425, 429, 500, 502, 503, 504].includes(status);
+}
+
+export async function providerCreateTask(input: { modelId: string; modality: "image" | "video"; body: Record<string, unknown>; allowFallback?: boolean }) {
+  const fallback = haimakerModelFor(input.modelId);
+  try {
+    const task = await apimodelsCreateTask(input.modality, input.body);
+    return { task, provider: "apimodels" as const };
+  } catch (primaryError) {
+    if (!input.allowFallback || !fallback || !process.env.HAIMAKER_API_KEY) throw primaryError;
+    const task = await haimakerCreateTask(input.modality, { ...input.body, model: fallback });
+    return { task, provider: "haimaker" as const };
+  }
 }
 
 export async function providerChatStream(input: ProviderChatRequest & { modelId: string; allowFallback: boolean }): Promise<ProviderChatResult> {

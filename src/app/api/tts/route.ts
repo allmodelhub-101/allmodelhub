@@ -5,6 +5,7 @@ import { getRuntimeModel } from "@/lib/model-store";
 import { estimateMediaCredits, getInternalUsdPkr } from "@/lib/pricing";
 import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
 import { apimodelsTtsStream } from "@/lib/providers/apimodels";
+import { haimakerTtsStream } from "@/lib/providers/haimaker";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
@@ -57,7 +58,10 @@ export async function POST(request: Request) {
   try {
     await assertSpendingAllowed(user.id, reserve);
     holdId = await createWalletHold(user.id, reserve, `tts-hold:${user.id}:${input.requestId}`, { model_id: model.id, request_id: input.requestId });
-    const response = await apimodelsTtsStream({ model: model.upstreamModel, text: input.text, voice_id: input.voiceId });
+    let response = await apimodelsTtsStream({ model: model.upstreamModel, text: input.text, voice_id: input.voiceId });
+    if ((!response.ok || !response.body) && process.env.HAIMAKER_API_KEY) {
+      response = await haimakerTtsStream({ model: model.upstreamModel, input: input.text, voice: input.voiceId });
+    }
     if (!response.ok || !response.body) {
       await releaseWalletHold(holdId, `tts_http_${response.status}`);
       await finalizeRequest(claimId, "failed");
