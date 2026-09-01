@@ -55,12 +55,14 @@ export async function POST(request: Request) {
   const signature = new TextDecoder().decode(bytes.slice(0, 16));
   const startsWith = (...values: number[][]) => values.some((value) => value.every((byte, index) => bytes[index] === byte));
   const zipContainer = startsWith([0x50, 0x4b, 0x03, 0x04], [0x50, 0x4b, 0x05, 0x06], [0x50, 0x4b, 0x07, 0x08]);
+  const oleContainer = startsWith([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]);
   const validBinary = extension === "pdf" ? signature.startsWith("%PDF-")
     : extension === "png" ? startsWith([137, 80, 78, 71, 13, 10, 26, 10])
     : extension === "jpg" || extension === "jpeg" ? startsWith([0xff, 0xd8, 0xff])
     : extension === "gif" ? signature.startsWith("GIF87a") || signature.startsWith("GIF89a")
     : extension === "webp" ? signature.slice(0, 4) === "RIFF" && signature.slice(8, 12) === "WEBP"
-    : extension === "docx" || extension === "xlsx" || extension === "xls" ? zipContainer
+    : extension === "docx" || extension === "xlsx" ? zipContainer
+    : extension === "xls" ? oleContainer
     : textExtensions.has(extension) ? !bytes.slice(0, 4096).some((byte) => byte === 0)
     : false;
   if (!validBinary || (textExtensions.has(extension) && !String(file.type).startsWith("text/") && file.type !== "application/json" && file.type !== "application/xml")) return NextResponse.json({ error: "File contents do not match the selected type." }, { status: 400 });
