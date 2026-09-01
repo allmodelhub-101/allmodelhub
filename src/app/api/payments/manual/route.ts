@@ -28,6 +28,7 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const limit = await enforceRateLimit(`manual-payment:${user.id}`);
+  if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many payment submissions." }, { status: 429 });
 
   const form = await request.formData();

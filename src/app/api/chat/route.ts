@@ -49,6 +49,7 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const limit = await enforceRateLimit(`chat:${user.id}`);
+  if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
