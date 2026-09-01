@@ -1,5 +1,14 @@
 import { getServerEnv } from "@/lib/env";
-import type { AsyncTaskResult, ProviderChatRequest, ProviderProtocol } from "@/lib/providers/types";
+import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
+
+export type ProviderFailureKind = "authentication" | "model_unavailable" | "temporary" | "configuration";
+
+export class ProviderRequestError extends Error {
+  constructor(public readonly kind: ProviderFailureKind, message = "Provider request failed") {
+    super(message);
+    this.name = "ProviderRequestError";
+  }
+}
 
 function headers() {
   const env = getServerEnv();
@@ -23,42 +32,6 @@ function normalizeTask(json: unknown): AsyncTaskResult {
   };
 }
 
-function protocolFor(model: string): ProviderProtocol {
-  if (model.startsWith("claude-")) return "anthropic";
-  if (model.startsWith("gemini-")) return "gemini";
-  return "openai";
-}
-
-function anthropicBody(request: ProviderChatRequest) {
-  const systems = request.messages.filter((m) => m.role === "system").map((m) => m.content).join("\n\n");
-  return {
-    model: request.upstreamModel,
-    system: systems || undefined,
-    messages: request.messages.filter((m) => m.role !== "system").map((m) => ({ role: m.role, content: m.content })),
-    max_tokens: request.maxTokens ?? 2048,
-    temperature: request.temperature ?? 0.7,
-    stream: true
-  };
-}
-
-function geminiBody(request: ProviderChatRequest) {
-  const systems = request.messages.filter((m) => m.role === "system").map((m) => m.content).join("\n\n");
-  return {
-    model: request.upstreamModel,
-    systemInstruction: systems ? { parts: [{ text: systems }] } : undefined,
-    contents: request.messages.filter((m) => m.role !== "system").map((m) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }]
-    })),
-    generationConfig: {
-      maxOutputTokens: request.maxTokens ?? 2048,
-      temperature: request.temperature ?? 0.7,
-      ...(request.deepThink ? { thinkingConfig: { includeThoughts: false } } : {})
-    },
-    stream: true
-  };
-}
-
 function openAiBody(request: ProviderChatRequest) {
   return {
     model: request.upstreamModel,
@@ -71,17 +44,22 @@ function openAiBody(request: ProviderChatRequest) {
   };
 }
 
+function providerFailure(status: number) {
+  if (status === 401 || status === 403) return new ProviderRequestError("authentication", "Provider authentication failed");
+  if (status === 400 || status === 404) return new ProviderRequestError("model_unavailable", "Model unavailable");
+  if (status === 409 || status === 429 || status >= 500) return new ProviderRequestError("temporary", "Provider temporarily unavailable");
+  return new ProviderRequestError("configuration", "Invalid model configuration");
+}
+
 export async function apimodelsChatStream(request: ProviderChatRequest) {
   const env = getServerEnv();
-  const protocol = protocolFor(request.upstreamModel);
-  const body = protocol === "anthropic" ? anthropicBody(request) : protocol === "gemini" ? geminiBody(request) : openAiBody(request);
-  const response = await fetch(`${env.APIMODELS_BASE_URL}/messages`, {
+  const response = await fetch(`${env.APIMODELS_BASE_URL}/chat/completions`, {
     method: "POST",
     headers: headers(),
-    body: JSON.stringify(body),
+    body: JSON.stringify(openAiBody(request)),
     cache: "no-store"
   });
-  return { response, protocol };
+  return { response, protocol: "openai" as const };
 }
 
 export async function apimodelsCreateTask(modality: "image" | "video" | "audio", body: Record<string, unknown>) {
@@ -94,7 +72,7 @@ export async function apimodelsCreateTask(modality: "image" | "video" | "audio",
     cache: "no-store"
   });
   const json = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(json?.message || json?.msg || `APIMODELS ${modality} request failed (${response.status}).`);
+  if (!response.ok) throw providerFailure(response.status);
   return normalizeTask(json);
 }
 
@@ -112,7 +90,7 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
 
 export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
   const env = getServerEnv();
-  return fetch(`${env.APIMODELS_BASE_URL}/tts/stream`, {
+  return fetch(`${env.APIMODELS_BASE_URL}/audio/generations`, {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(body),
