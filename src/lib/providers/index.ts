@@ -27,10 +27,6 @@ async function routesForModel(modelId: string, defaultUpstream: string): Promise
   return routes;
 }
 
-function retryable(status: number) {
-  return [408, 409, 425, 429, 500, 502, 503, 504].includes(status);
-}
-
 export async function providerCreateTask(input: { modelId: string; modality: "image" | "video"; body: Record<string, unknown>; allowFallback?: boolean }) {
   const fallback = haimakerModelFor(input.modelId);
   try {
@@ -57,12 +53,12 @@ export async function providerChatStream(input: ProviderChatRequest & { modelId:
       if (route.provider_key === "apimodels") {
         const result = await apimodelsChatStream({ ...input, upstreamModel: route.upstream_model });
         lastResponse = result.response; lastProvider = "apimodels"; lastProtocol = result.protocol;
-        if (result.response.ok || !retryable(result.response.status)) return { response: result.response, provider: "apimodels", protocol: result.protocol };
+        if (result.response.ok) return { response: result.response, provider: "apimodels", protocol: result.protocol };
       } else if (route.provider_key === "haimaker") {
         if (!process.env.HAIMAKER_API_KEY) continue;
         const response = await haimakerChatStream({ ...input, upstreamOverride: route.upstream_model });
         lastResponse = response; lastProvider = "haimaker"; lastProtocol = "openai";
-        if (response.ok || !retryable(response.status)) return { response, provider: "haimaker", protocol: "openai" };
+        if (response.ok) return { response, provider: "haimaker", protocol: "openai" };
       }
     } catch (error) {
       lastError = error;
