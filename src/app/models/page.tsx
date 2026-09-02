@@ -7,5 +7,5 @@ export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const [models, fxRate] = await Promise.all([listRuntimeModels(), getInternalUsdPkr()]);
-  return <AppShell><div className="marketplace-intro"><div className="kicker">Model marketplace</div><h1 className="page-title">Choose intelligence that fits the work</h1><p className="muted">Compare the active runtime catalog by capability, modality, tier, and transparent usage pricing.</p></div><ModelsMarketplace models={models} fxRate={fxRate} /></AppShell>;
+  return <AppShell><div className="marketplace-intro"><div className="kicker">Model marketplace</div><h1 className="page-title">Choose intelligence that fits the work</h1><p className="muted">A focused catalog of capable models for writing, images, motion, and sound. Pick a tier, choose a tool, and get straight to work.</p></div><ModelsMarketplace models={models} fxRate={fxRate} /></AppShell>;
 }
