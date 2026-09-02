@@ -15,6 +15,17 @@ function apiUrl(path: string) {
   return `${base}/v1/${path.replace(/^\/+/, "")}`;
 }
 
+function logProviderResponse(provider: string, endpoint: string, model: string | undefined, response: Response) {
+  if (response.ok) return;
+  void response.clone().text().then((body) => {
+    console.error("[v0] provider diagnostic", JSON.stringify({
+      environment: { apimodelsKeyPresent: Boolean(process.env.APIMODELS_API_KEY), apimodelsBaseUrlPresent: Boolean(process.env.APIMODELS_BASE_URL) },
+      outgoing: { provider, endpoint, model, method: "POST" },
+      incoming: { status: response.status, body: body.replace(/(api[_-]?key|authorization|token|secret)\s*[:=]\s*[\"']?[^,\"' }]+/gi, "$1:[REDACTED]").slice(0, 1000) }
+    }));
+  }).catch(() => undefined);
+}
+
 function headers() {
   const env = getServerEnv();
   if (!env.APIMODELS_API_KEY) throw new Error("APIMODELS_API_KEY is not configured.");
@@ -63,6 +74,7 @@ export async function apimodelsChatStream(request: ProviderChatRequest) {
     body: JSON.stringify(openAiBody(request)),
     cache: "no-store"
   });
+  logProviderResponse("apimodels", apiUrl("chat/completions"), request.upstreamModel, response);
   return { response, protocol: "openai" as const };
 }
 
@@ -74,6 +86,7 @@ export async function apimodelsCreateTask(modality: "image" | "video" | "audio",
     body: JSON.stringify(body),
     cache: "no-store"
   });
+  logProviderResponse("apimodels", apiUrl(`${plural}/generations`), String(body.model ?? ""), response);
   const json = await response.json().catch(() => ({}));
   if (!response.ok) throw providerFailure(response.status);
   return normalizeTask(json);
@@ -91,10 +104,12 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
 }
 
 export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
-  return fetch(apiUrl("audio/generations"), {
+  const response = await fetch(apiUrl("audio/generations"), {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(body),
     cache: "no-store"
   });
+  logProviderResponse("apimodels", apiUrl("audio/generations"), body.model, response);
+  return response;
 }
