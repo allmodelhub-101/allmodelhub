@@ -11,11 +11,19 @@ export const dynamic = "force-dynamic";
 
 const callbackSchema = z.object({
   taskId: z.string().min(1).max(200),
-  state: z.enum(["completed", "failed", "processing", "submitted"]),
+  state: z.string().min(1).max(40),
   resultUrls: z.array(z.string().url().refine((value) => ["https:", "http:"].includes(new URL(value).protocol))).max(20).optional(),
   resultJson: z.string().max(100_000).optional(),
   failMsg: z.string().max(2_000).optional()
 });
+
+function normalizeCallbackState(value: string, urls?: string[]) {
+  const state = value.toLowerCase().replace(/[ -]/g, "_");
+  if (["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) || urls?.length) return "completed" as const;
+  if (["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)) return "failed" as const;
+  if (["processing", "running", "in_progress", "inprogress"].includes(state)) return "processing" as const;
+  return "submitted" as const;
+}
 
 function extractResultUrls(value: unknown): string[] | undefined {
   if (!value || typeof value !== "object") return undefined;
@@ -44,20 +52,20 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   const contentLength = Number(request.headers.get("content-length") || 0);
   if (contentLength > 1_000_000) return NextResponse.json({ error: "Payload too large" }, { status: 413 });
   const payload = await request.json().catch(() => null);
-  const raw = payload?.data ?? payload;
-  const parsed = callbackSchema.safeParse({ ...raw, taskId: raw?.taskId ?? raw?.task_id });
+  const raw = payload?.data && typeof payload.data === "object" ? { ...payload, ...payload.data } : payload;
+  const parsed = callbackSchema.safeParse({ ...raw, taskId: raw?.taskId ?? raw?.task_id ?? raw?.id, state: raw?.state ?? raw?.status ?? raw?.task_status ?? "processing" });
   if (!parsed.success) return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
   const data = parsed.data;
   const taskId = data.taskId;
+  const resultUrls = data.resultUrls ?? extractResultUrls(raw);
+  const callbackState = normalizeCallbackState(data.state, resultUrls);
+  console.info("[v0] media callback", JSON.stringify({ taskId, state: callbackState, outputUrlCount: resultUrls?.length ?? 0 }));
   const admin = createAdminClient();
   const { data: job } = await admin.from("generation_jobs").select("*").eq("provider_task_id", taskId).maybeSingle();
   if (!job || ["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) return NextResponse.json({ ok: true });
 
-  let resultUrls = data.resultUrls;
-  if (!resultUrls && typeof data.resultJson === "string") { try { resultUrls = extractResultUrls(JSON.parse(data.resultJson)); } catch { /* preserve status-only callback */ } }
-  if (!resultUrls) resultUrls = extractResultUrls(payload);
-  if (data.state !== "completed" && data.state !== "failed") {
-    await admin.from("generation_jobs").update({ status: data.state === "processing" ? "processing" : "submitted", result_json: payload, updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["queued", "submitted", "processing"]);
+  if (callbackState !== "completed" && callbackState !== "failed") {
+    await admin.from("generation_jobs").update({ status: callbackState === "processing" ? "processing" : "submitted", result_json: payload, updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["queued", "submitted", "processing"]);
     return NextResponse.json({ ok: true });
   }
 
@@ -66,7 +74,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   if (!claimed) return NextResponse.json({ ok: true });
 
 
-  if (data?.state === "completed") {
+  if (callbackState === "completed") {
     const charge = Number(job.estimated_credits);
     if (job.hold_id) {
       try {
@@ -77,9 +85,11 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       }
     }
     const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls ?? []);
-    await admin.from("generation_jobs").update({ status: "completed", result_json: { provider: payload, amhStoredPaths: storedPaths }, result_urls: resultUrls ?? [], charged_credits: charge, updated_at: new Date().toISOString(), completed_at: new Date().toISOString() }).eq("id", job.id);
+    const { error: updateError } = await admin.from("generation_jobs").update({ status: "completed", result_json: { provider: payload, amhStoredPaths: storedPaths }, result_urls: resultUrls ?? [], charged_credits: charge, updated_at: new Date().toISOString(), completed_at: new Date().toISOString() }).eq("id", job.id);
+    console.info("[v0] media callback database update", JSON.stringify({ jobId: job.id, status: "completed", outputUrlCount: resultUrls?.length ?? 0, ok: !updateError, error: updateError?.message }));
+    if (updateError) throw updateError;
     await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.` });
-  } else if (data?.state === "failed") {
+  } else if (callbackState === "failed") {
     if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_callback_failed").catch(() => undefined);
     await admin.from("generation_jobs").update({ status: "failed", result_json: payload, error_message: data?.failMsg || "Generation failed", updated_at: new Date().toISOString() }).eq("id", job.id);
     await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });

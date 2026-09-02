@@ -62,6 +62,7 @@ export async function POST(request: Request) {
     if ((!response.ok || !response.body) && process.env.HAIMAKER_API_KEY) {
       response = await haimakerTtsStream({ model: model.upstreamModel, input: input.text, voice: input.voiceId });
     }
+    console.info("[v0] tts provider response", JSON.stringify({ primary: response.url.includes("audio/speech") ? "apimodels" : "haimaker", ok: response.ok, status: response.status, hasBody: Boolean(response.body), model: model.upstreamModel }));
     if (!response.ok || !response.body) {
       await releaseWalletHold(holdId, `tts_http_${response.status}`);
       await finalizeRequest(claimId, "failed");
