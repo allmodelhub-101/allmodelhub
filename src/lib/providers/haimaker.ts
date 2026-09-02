@@ -35,6 +35,22 @@ export async function haimakerCreateTask(modality: "image" | "video", body: Reco
   return { taskId, state: urls.length ? "completed" : "processing", resultUrls: urls, raw: json };
 }
 
+export async function haimakerPollTask(modality: "image" | "video", taskId: string) {
+  const env = getServerEnv();
+  if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
+  const endpoint = modality === "image" ? "images/generations" : "videos";
+  const response = await fetch(`${apiUrl(endpoint)}?task_id=${encodeURIComponent(taskId)}`, { headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}` }, cache: "no-store" });
+  const json = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(`Haimaker ${modality} poll failed (${response.status}).`);
+  const root = json as Record<string, unknown>;
+  const data = (root.data && typeof root.data === "object" ? root.data : root) as Record<string, unknown>;
+  const status = String(data.status || data.state || "processing").toLowerCase();
+  const items = Array.isArray(data.data) ? data.data : [];
+  const urls = items.map((item) => typeof item === "object" && item ? String((item as Record<string, unknown>).url || "") : "").filter(Boolean);
+  const direct = [data.url, data.video_url, data.output_url].filter((value): value is string => typeof value === "string" && value.length > 0);
+  return { taskId, state: (status === "completed" || status === "succeeded" || urls.length || direct.length ? "completed" : status === "failed" || status === "error" ? "failed" : "processing") as "completed" | "failed" | "processing", resultUrls: [...urls, ...direct], failMsg: typeof data.error === "string" ? data.error : undefined, raw: json };
+}
+
 export async function haimakerTtsStream(body: { model: string; input: string; voice: string }) {
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");

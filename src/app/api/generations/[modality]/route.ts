@@ -146,7 +146,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     const task = result.task;
     await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
     await finalizeRequest(claimId, "completed", { resourceId: job.id, response: { publicId: job.public_id, status: task.state } });
-    return NextResponse.json({ job: { ...job, status: task.state, providerTaskId: task.taskId }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
+    return NextResponse.json({ job: { ...job, status: task.state, provider_key: result.provider, provider_task_id: task.taskId, providerTaskId: task.taskId, result_urls: task.resultUrls ?? [], result_json: task.raw }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
   } catch (error) {
     await releaseWalletHold(holdId, "provider_create_failed").catch(() => undefined);
     logServerError("generation-provider-create", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });

@@ -1,5 +1,5 @@
-import { apimodelsChatStream, apimodelsCreateTask } from "@/lib/providers/apimodels";
-import { haimakerChatStream, haimakerCreateTask, haimakerModelFor } from "@/lib/providers/haimaker";
+import { apimodelsChatStream, apimodelsCreateTask, apimodelsPollTask } from "@/lib/providers/apimodels";
+import { haimakerChatStream, haimakerCreateTask, haimakerModelFor, haimakerPollTask } from "@/lib/providers/haimaker";
 import type { ProviderChatRequest, ProviderChatResult } from "@/lib/providers/types";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -43,6 +43,12 @@ export async function providerCreateTask(input: { modelId: string; modality: "im
     const task = await haimakerCreateTask(input.modality, { ...input.body, model: fallback });
     return { task, provider: "haimaker" as const };
   }
+}
+
+export async function providerPollTask(input: { provider: string; modality: "image" | "video" | "audio"; taskId: string }) {
+  const key = input.provider.toLowerCase().replace(/[-_.]/g, "");
+  if ((key === "haimaker" || key === "haimakerai") && input.modality !== "audio") return haimakerPollTask(input.modality, input.taskId);
+  return apimodelsPollTask(input.modality, input.taskId);
 }
 
 export async function providerChatStream(input: ProviderChatRequest & { modelId: string; allowFallback: boolean }): Promise<ProviderChatResult> {

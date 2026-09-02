@@ -17,6 +17,20 @@ const callbackSchema = z.object({
   failMsg: z.string().max(2_000).optional()
 });
 
+function extractResultUrls(value: unknown): string[] | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const root = value as Record<string, unknown>;
+  const candidates = [root.resultUrls, root.result_urls, root.urls, root.output, root.result, (root.data as Record<string, unknown> | undefined)?.resultUrls, (root.data as Record<string, unknown> | undefined)?.urls];
+  for (const candidate of candidates) {
+    if (Array.isArray(candidate)) {
+      const urls = candidate.filter((item): item is string => typeof item === "string" && /^https?:\/\//.test(item));
+      if (urls.length) return urls;
+    }
+    if (typeof candidate === "string" && /^https?:\/\//.test(candidate)) return [candidate];
+  }
+  return undefined;
+}
+
 function safeSecretEqual(value: string, expected: string) {
   const a = Buffer.from(value);
   const b = Buffer.from(expected);
@@ -39,12 +53,19 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   const { data: job } = await admin.from("generation_jobs").select("*").eq("provider_task_id", taskId).maybeSingle();
   if (!job || ["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) return NextResponse.json({ ok: true });
 
-  // Claim the terminal transition before charging, storage, or notifications.
+  let resultUrls = data.resultUrls;
+  if (!resultUrls && typeof data.resultJson === "string") { try { resultUrls = extractResultUrls(JSON.parse(data.resultJson)); } catch { /* preserve status-only callback */ } }
+  if (!resultUrls) resultUrls = extractResultUrls(payload);
+  if (data.state !== "completed" && data.state !== "failed") {
+    await admin.from("generation_jobs").update({ status: data.state === "processing" ? "processing" : "submitted", result_json: payload, updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["queued", "submitted", "processing"]);
+    return NextResponse.json({ ok: true });
+  }
+
+  // Claim terminal settlement before charging, storage, or notifications.
   const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["submitted", "processing"]).select("id").maybeSingle();
   if (!claimed) return NextResponse.json({ ok: true });
 
-  let resultUrls = data.resultUrls;
-  if (!resultUrls && typeof data?.resultJson === "string") { try { resultUrls = JSON.parse(data.resultJson)?.resultUrls; } catch { /* no result URLs */ } }
+
   if (data?.state === "completed") {
     const charge = Number(job.estimated_credits);
     if (job.hold_id) {

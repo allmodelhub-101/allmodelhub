@@ -39,9 +39,11 @@ function normalizeTask(json: unknown): AsyncTaskResult {
   if (!resultUrls && typeof data?.resultJson === "string") {
     try { resultUrls = JSON.parse(data.resultJson)?.resultUrls; } catch { /* provider returned non-JSON result */ }
   }
+  const rawState = String(data?.state ?? data?.status ?? "pending").toLowerCase();
+  const state = rawState === "completed" || rawState === "complete" || rawState === "succeeded" || rawState === "success" || (resultUrls?.length ?? 0) > 0 ? "completed" : rawState === "failed" || rawState === "error" || rawState === "cancelled" ? "failed" : rawState === "processing" || rawState === "running" || rawState === "in_progress" ? "processing" : "pending";
   return {
     taskId: data?.taskId ?? data?.task_id ?? data?.id ?? "",
-    state: data?.state ?? data?.status ?? "pending",
+    state,
     resultUrls,
     failMsg: data?.failMsg ?? data?.fail_message ?? data?.error,
     raw: json

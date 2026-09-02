@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { apimodelsPollTask } from "@/lib/providers/apimodels";
+import { providerPollTask } from "@/lib/providers";
 import { captureWalletHold, releaseWalletHold } from "@/lib/wallet";
 import { persistGeneratedAssets, signGeneratedPaths } from "@/lib/generated-assets";
 import { notifyUser } from "@/lib/notifications";
@@ -35,7 +35,7 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
   }
 
   try {
-    const task = await apimodelsPollTask(job.modality, job.provider_task_id);
+    const task = await providerPollTask({ provider: String(job.provider_key || "apimodels"), modality: job.modality as "image" | "video" | "audio", taskId: job.provider_task_id });
     if (task.state === "completed") {
       const claim = await admin.from("generation_jobs").update({ status: "settling", updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["submitted", "processing"]).select("id").maybeSingle();
       if (!claim.data) return NextResponse.json({ job: await clientJob(job), warning: "Generation completion is being finalized." });
