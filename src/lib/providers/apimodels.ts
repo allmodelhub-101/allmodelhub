@@ -16,7 +16,10 @@ function apiUrl(path: string) {
 }
 
 function logProviderResponse(provider: string, endpoint: string, model: string | undefined, response: Response) {
-  if (response.ok) return;
+  if (response.ok) {
+    console.info("[v0] provider request succeeded", JSON.stringify({ provider, endpoint, model, status: response.status }));
+    return;
+  }
   void response.clone().text().then((body) => {
     console.error("[v0] provider diagnostic", JSON.stringify({
       environment: { apimodelsKeyPresent: Boolean(process.env.APIMODELS_API_KEY), apimodelsBaseUrlPresent: Boolean(process.env.APIMODELS_BASE_URL) },
@@ -106,12 +109,13 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
 }
 
 export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
-  const response = await fetch(apiUrl("audio/generations"), {
+  const endpoint = apiUrl("audio/speech");
+  const response = await fetch(endpoint, {
     method: "POST",
     headers: headers(),
-    body: JSON.stringify(body),
+    body: JSON.stringify({ model: body.model, input: body.text, voice: body.voice_id, ...(body.language_code ? { language: body.language_code } : {}) }),
     cache: "no-store"
   });
-  logProviderResponse("apimodels", apiUrl("audio/generations"), body.model, response);
+  logProviderResponse("apimodels", endpoint, body.model, response);
   return response;
 }
