@@ -15,8 +15,7 @@ children:React.ReactNode
 
 const supabase = await createClient();
 
-
-const {data} = await supabase.auth.getUser();
+const {data}=await supabase.auth.getUser();
 
 
 if(!data.user){
@@ -35,30 +34,19 @@ redirect("/");
 
 return (
 
-<div
-className="
-flex
-min-h-screen
-bg-gray-50
-dark:bg-black
-"
->
+<div className="app-shell">
 
 
 <AdminSidebar />
 
 
-<div
-className="
-flex-1
-"
->
+<div className="app-main">
 
 
 <AdminHeader />
 
 
-<main>
+<main className="app-content">
 
 {children}
 
