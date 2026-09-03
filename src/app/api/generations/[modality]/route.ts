@@ -103,8 +103,6 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     referenceImages = await Promise.all(imageFiles.map((file) => signedFileUrl(admin, file.storage_path)));
 }
 
-const publicId = createPublicId("AMH-GEN");
-
 const baseUrl = (
   process.env.APP_URL ||
   process.env.NEXT_PUBLIC_APP_URL ||
@@ -117,6 +115,8 @@ const callbackUrl = process.env.CALLBACK_SECRET
 
 console.info("[generation] callback url", callbackUrl);
 
+const publicId = createPublicId("AMH-GEN");
+  
   const providerBody: Record<string, unknown> = {
     model: model.upstreamModel,
     prompt: input.prompt,
