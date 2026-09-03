@@ -1,11 +1,111 @@
+const cards = [
+
+{
+title:"Total Revenue",
+value:"PKR 0"
+},
+
+{
+title:"Total Profit",
+value:"PKR 0"
+},
+
+{
+title:"Total Users",
+value:"0"
+},
+
+{
+title:"AI Generations",
+value:"0"
+},
+
+{
+title:"Provider Cost",
+value:"PKR 0"
+},
+
+{
+title:"Failed Jobs",
+value:"0"
+}
+
+]
+
+
 export default function AdminDashboard(){
-return <main className="p-8">
-<h1 className="text-4xl font-bold">All Model Hub Control Center</h1>
-<div className="grid md:grid-cols-3 gap-5 mt-8">
-{["Revenue","Profit","Provider Cost","Users","Generations","Failed Jobs"].map(x=>
-<div className="border rounded-2xl p-6" key={x}>
-<h2>{x}</h2><strong>0</strong>
-</div>)}
+
+return (
+
+<div className="p-8">
+
+
+<h1 className="text-4xl font-bold mb-8">
+
+All Model Hub Admin
+
+</h1>
+
+
+<div className="
+grid
+grid-cols-1
+md:grid-cols-3
+gap-6
+">
+
+
+{
+cards.map(card=>(
+
+<div
+
+key={card.title}
+
+className="
+rounded-2xl
+border
+p-6
+shadow-sm
+bg-white
+dark:bg-black
+"
+
+>
+
+
+<p className="
+text-gray-500
+">
+
+{card.title}
+
+</p>
+
+
+<h2 className="
+text-3xl
+font-bold
+mt-3
+">
+
+{card.value}
+
+</h2>
+
+
 </div>
-</main>
+
+))
+
+}
+
+
+</div>
+
+
+</div>
+
+)
+
 }
