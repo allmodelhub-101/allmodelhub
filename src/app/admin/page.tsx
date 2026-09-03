@@ -1,65 +1,115 @@
-const cards = [
-  {
-    title: "Total Revenue",
-    value: "PKR 0"
-  },
-  {
-    title: "Total Profit",
-    value: "PKR 0"
-  },
-  {
-    title: "Total Users",
-    {
-title:"Total Users",
-value:stats.users
-}
-  },
-  {
-    title: "AI Generations",
-    {
-title:"Total Users",
-value:stats.users
-}
-  },
-  {
-    title: "Provider Cost",
-    value: "PKR 0"
-  },
-  {
-    title: "Failed Jobs",
-    {
-title:"Total Users",
-value:stats.users
-}
-  }
-];
-
-
 import { getAdminStats } from "@/lib/admin/dashboard";
 
 
 export default async function AdminDashboard(){
 
 const stats = await getAdminStats();
+
+
+// Profit Calculation
+const totalProfit =
+stats.jobs.reduce(
+(sum,job)=>{
+
+const charged =
+Number(job.charged_credits || job.estimated_credits || 0);
+
+const cost =
+Number(job.internal_cost_pkr || 0);
+
+
+return sum + (charged - cost);
+
+},0
+);
+
+
+// Failed jobs
+const failedJobs =
+stats.jobs.filter(
+(job)=>job.status==="failed"
+).length;
+
+
+// Provider cost
+const providerCost =
+stats.jobs.reduce(
+(sum,job)=>{
+
+return sum + Number(job.internal_cost_pkr || 0);
+
+},0
+);
+
+
+
+const cards = [
+
+{
+title:"Total Revenue",
+value:`PKR ${stats.transactions.reduce(
+(sum,t)=>sum + Number(t.amount || 0),
+0
+).toFixed(2)}`
+},
+
+
+{
+title:"Total Profit",
+value:`PKR ${totalProfit.toFixed(2)}`
+},
+
+
+{
+title:"Total Users",
+value:stats.users
+},
+
+
+{
+title:"AI Generations",
+value:stats.jobs.length
+},
+
+
+{
+title:"Provider Cost",
+value:`PKR ${providerCost.toFixed(2)}`
+},
+
+
+{
+title:"Failed Jobs",
+value:failedJobs
+}
+
+
+];
+
+
 return (
 
 <div className="p-8">
 
-<h1 className="
+<h1
+className="
 text-4xl
 font-bold
 mb-8
-">
+"
+>
 All Model Hub Admin
 </h1>
 
 
-<div className="
+<div
+className="
 grid
 grid-cols-1
 md:grid-cols-3
 gap-6
-">
+"
+>
 
 
 {
@@ -77,21 +127,26 @@ shadow-sm
 "
 >
 
-<p className="
+
+<p
+className="
 text-gray-500
 dark:text-gray-400
-">
+"
+>
 
 {card.title}
 
 </p>
 
 
-<h2 className="
+<h2
+className="
 text-3xl
 font-bold
 mt-3
-">
+"
+>
 
 {card.value}
 
