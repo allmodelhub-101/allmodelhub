@@ -1,72 +1,6 @@
 import Link from "next/link";
 
 
-const menu = [
-
-{
-name:"Dashboard",
-href:"/admin"
-},
-
-{
-name:"Revenue",
-href:"/admin/revenue"
-},
-
-{
-name:"Profit Analytics",
-href:"/admin/profit"
-},
-
-{
-name:"Users",
-href:"/admin/users"
-},
-
-{
-name:"Wallet",
-href:"/admin/wallet"
-},
-
-{
-name:"Payments",
-href:"/admin/payments"
-},
-
-{
-name:"AI Generations",
-href:"/admin/generations"
-},
-
-{
-name:"Models",
-href:"/admin/models"
-},
-
-{
-name:"Providers",
-href:"/admin/providers"
-},
-
-{
-name:"Storage",
-href:"/admin/storage"
-},
-
-{
-name:"System Logs",
-href:"/admin/logs"
-},
-
-{
-name:"Settings",
-href:"/admin/settings"
-}
-
-
-];
-
-
 export default function AdminSidebar(){
 
 return (
@@ -78,7 +12,7 @@ min-h-screen
 border-r
 bg-white
 dark:bg-black
-dark:text-white
+dark:border-gray-800
 p-6
 "
 >
@@ -86,7 +20,7 @@ p-6
 
 <h2
 className="
-text-2xl
+text-xl
 font-bold
 mb-8
 "
@@ -95,44 +29,82 @@ All Model Hub
 </h2>
 
 
-
-<nav
-className="
-space-y-3
-"
->
-
-
-{
-menu.map((item)=>(
+<nav className="space-y-3">
 
 
 <Link
-
-key={item.href}
-
-href={item.href}
-
+href="/admin"
 className="
 block
-rounded-xl
-px-4
-py-3
+rounded-lg
+px-3
+py-2
 hover:bg-gray-100
 dark:hover:bg-gray-900
 "
-
 >
-
-{item.name}
-
+Dashboard
 </Link>
 
 
-))
+<Link
+href="/admin/payments"
+className="
+block
+rounded-lg
+px-3
+py-2
+hover:bg-gray-100
+dark:hover:bg-gray-900
+"
+>
+Payments
+</Link>
 
-}
 
+<Link
+href="/admin/models"
+className="
+block
+rounded-lg
+px-3
+py-2
+hover:bg-gray-100
+dark:hover:bg-gray-900
+"
+>
+Models
+</Link>
+
+
+<Link
+href="/admin/users"
+className="
+block
+rounded-lg
+px-3
+py-2
+hover:bg-gray-100
+dark:hover:bg-gray-900
+"
+>
+Users
+</Link>
+
+
+<Link
+href="/admin/settings"
+className="
+block
+rounded-lg
+px-3
+py-2
+hover:bg-gray-100
+dark:hover:bg-gray-900
+"
+>
+Settings
+</Link>
 
 
 </nav>
