@@ -123,7 +123,13 @@ export async function POST(
     return NextResponse.json({ error: "Payload too large" }, { status: 413 });
   }
 
-  const payload = await request.json().catch(() => null);
+const payload = await request.json().catch(() => null);
+
+console.log(
+  "========== APIMODELS CALLBACK RAW ==========",
+  JSON.stringify(payload, null, 2)
+);
+  
   if (!payload || typeof payload !== "object") {
     return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
   }
