@@ -102,10 +102,17 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     }
     referenceImages = await Promise.all(imageFiles.map((file) => signedFileUrl(admin, file.storage_path)));
   }
-  const publicId = createPublicId("AMH-GEN");
-  const callbackUrl = process.env.CALLBACK_SECRET && process.env.NEXT_PUBLIC_APP_URL
-    ? `${process.env.NEXT_PUBLIC_APP_URL}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
-    : undefined;
+  const baseUrl = (
+  process.env.APP_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  "https://allmodelhub-eta.vercel.app"
+).replace(/\/+$/, "");
+
+const callbackUrl = process.env.CALLBACK_SECRET
+  ? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
+  : undefined;
+
+console.info("[generation] callback url", callbackUrl);
 
   const providerBody: Record<string, unknown> = {
     model: model.upstreamModel,
