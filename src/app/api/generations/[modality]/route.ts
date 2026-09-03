@@ -101,13 +101,16 @@ export async function POST(request: Request, context: { params: Promise<{ modali
       return NextResponse.json({ error: "Reference files must be images." }, { status: 400 });
     }
     referenceImages = await Promise.all(imageFiles.map((file) => signedFileUrl(admin, file.storage_path)));
-  }
-  const baseUrl = (
+}
+
+const publicId = createPublicId("AMH-GEN");
+
+const baseUrl = (
   process.env.APP_URL ||
   process.env.NEXT_PUBLIC_APP_URL ||
   "https://allmodelhub-eta.vercel.app"
 ).replace(/\/+$/, "");
-
+  
 const callbackUrl = process.env.CALLBACK_SECRET
   ? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
   : undefined;
