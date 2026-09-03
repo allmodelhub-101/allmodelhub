@@ -7,54 +7,90 @@ className="
 w-64
 min-h-screen
 border-r
-border-gray-800
+border-gray-200
+dark:border-gray-800
 bg-white
-dark:bg-black
+dark:bg-gray-950
 p-6
 "
 >
 
-
 <h2
 className="
-text-xl
+text-2xl
 font-bold
-mb-8
+mb-10
 "
 >
 All Model Hub
 </h2>
 
 
-
 <nav
 className="
-space-y-4
+flex
+flex-col
+gap-5
 "
 >
 
 
-<a href="/admin">
+<a
+className="
+text-gray-700
+dark:text-gray-300
+hover:text-blue-500
+"
+href="/admin"
+>
 Dashboard
 </a>
 
 
-<a href="/admin/payments">
+<a
+className="
+text-gray-700
+dark:text-gray-300
+hover:text-blue-500
+"
+href="/admin/payments"
+>
 Payments
 </a>
 
 
-<a href="/admin/models">
+<a
+className="
+text-gray-700
+dark:text-gray-300
+hover:text-blue-500
+"
+href="/admin/models"
+>
 Models
 </a>
 
 
-<a href="/admin/users">
+<a
+className="
+text-gray-700
+dark:text-gray-300
+hover:text-blue-500
+"
+href="/admin/users"
+>
 Users
 </a>
 
 
-<a href="/admin/settings">
+<a
+className="
+text-gray-700
+dark:text-gray-300
+hover:text-blue-500
+"
+href="/admin/settings"
+>
 Settings
 </a>
 
@@ -62,9 +98,7 @@ Settings
 </nav>
 
 
-
 </aside>
-
 
 )
 
