@@ -1,98 +1,41 @@
-import { createClient } from "@/lib/supabase/server";
-
-
-export default async function PaymentsPage(){
-
-
-const supabase =
-await createClient();
-
-
-
-const {data:payments}=await supabase
-.from("manual_payments")
-.select("*")
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-
+export default function PaymentsPage(){
 
 return (
 
-<div className="p-8">
+<div>
 
 
-<h1 className="text-3xl font-bold mb-8">
+<div className="page-head">
 
+<div>
+
+<h1 className="page-title">
 Payment Approvals
-
 </h1>
 
 
-
-<div className="space-y-4">
-
-
-{
-payments?.map((payment)=>(
-
-
-<div
-key={payment.id}
-className="
-border
-rounded-xl
-p-5
-bg-white
-dark:bg-black
-"
->
-
-
-<p>
-User:
-{payment.user_id}
+<p className="muted">
+Review deposits, approve payments and manage wallet credits.
 </p>
-
-
-<p>
-Amount:
-PKR {payment.amount}
-</p>
-
-
-<p>
-Status:
-{payment.status}
-</p>
-
-
-<button
-className="
-mt-4
-px-5
-py-2
-rounded-lg
-bg-green-600
-text-white
-"
->
-
-Approve
-
-</button>
-
 
 
 </div>
 
+</div>
 
-))
-}
+
+
+<div className="card panel-block">
+
+
+<h2>
+Pending Payments
+</h2>
+
+
+<p className="muted">
+Payment requests, transaction references and approval actions will appear here.
+</p>
 
 
 </div>
