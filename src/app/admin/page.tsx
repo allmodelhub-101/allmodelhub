@@ -26,8 +26,12 @@ const cards = [
 ];
 
 
-export default function AdminDashboard(){
+import { getAdminStats } from "@/lib/admin/dashboard";
 
+
+export default async function AdminDashboard(){
+
+const stats = await getAdminStats();
 return (
 
 <div className="p-8">
