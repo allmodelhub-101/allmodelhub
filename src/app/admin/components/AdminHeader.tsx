@@ -3,35 +3,44 @@ export default function AdminHeader(){
 return (
 
 <header
+
 className="
-h-16
+h-20
 border-b
+border-gray-800
 flex
 items-center
 justify-between
-px-6
+px-8
 bg-white
 dark:bg-black
-dark:border-gray-800
 "
+
 >
 
 
-<h3 className="font-semibold">
+<h1
+className="
+text-xl
+font-bold
+"
+>
+
 Admin Control Center
-</h3>
+
+</h1>
+
 
 
 <div>
 
-<span>
 allmodelhub@gmail.com
-</span>
 
 </div>
 
 
 </header>
+
 
 )
 
