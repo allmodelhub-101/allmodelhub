@@ -1,11 +1,20 @@
-export default function AdminDashboard(){
-return <main className="p-8">
-<h1 className="text-4xl font-bold">All Model Hub Control Center</h1>
-<div className="grid md:grid-cols-3 gap-5 mt-8">
-{["Revenue","Profit","Provider Cost","Users","Generations","Failed Jobs"].map(x=>
-<div className="border rounded-2xl p-6" key={x}>
-<h2>{x}</h2><strong>0</strong>
-</div>)}
-</div>
-</main>
+import { AdminOverview } from "@/components/admin-overview";
+import { requireAdmin } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+
+export const dynamic = "force-dynamic";
+
+export default async function AdminDashboard() {
+  await requireAdmin();
+  const admin = createAdminClient();
+  const [{ count: users }, { count: generations }, { count: failed }, { count: models }, { count: pending }, { data: payments }] = await Promise.all([
+    admin.from("profiles").select("id", { count: "exact", head: true }),
+    admin.from("generation_jobs").select("id", { count: "exact", head: true }),
+    admin.from("generation_jobs").select("id", { count: "exact", head: true }).eq("status", "failed"),
+    admin.from("models").select("id", { count: "exact", head: true }).eq("active", true),
+    admin.from("manual_payments").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    admin.from("manual_payments").select("amount_pkr,status").eq("status", "approved")
+  ]);
+  const revenue = (payments ?? []).reduce((sum, payment) => sum + Number(payment.amount_pkr ?? 0), 0);
+  return <main className="admin-page"><AdminOverview metrics={{ users: users ?? 0, generations: generations ?? 0, failed: failed ?? 0, models: models ?? 0, pending: pending ?? 0, revenue }} /></main>;
 }

@@ -1,3 +1,2 @@
-export default function Page(){
-return <main className="p-8"><h1>AI Models Management</h1></main>
-}
+import { AdminPageFrame } from "@/components/admin-overview";
+export default function Page(){return <AdminPageFrame eyebrow="Model operations" title="AI models management"><div className="admin-panel"><div className="admin-panel-head"><div><span className="admin-eyebrow">Inference catalog</span><h2>Model routing and pricing</h2></div><span className="admin-live"><i /> Runtime healthy</span></div><p className="muted">Control availability, provider routes, model tiers, and customer-facing economics from one workspace.</p><a className="btn btn-primary" href="/admin">Return to overview ↗</a></div></AdminPageFrame>}
