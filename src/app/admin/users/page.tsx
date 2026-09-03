@@ -2,32 +2,39 @@ export default function UsersPage(){
 
 return (
 
-<div className="p-8">
+<div>
 
 
-<h1
-className="
-text-3xl
-font-bold
-mb-6
-"
->
+<div className="page-head">
+
+<div>
+
+<h1 className="page-title">
 User Management
 </h1>
 
 
-<div
-className="
-rounded-2xl
-border
-p-6
-bg-white
-dark:bg-black
-"
->
+<p className="muted">
+Manage customer accounts, wallets and activity.
+</p>
 
-<p>
-User analytics, accounts and activity management will appear here.
+
+</div>
+
+</div>
+
+
+
+<div className="card panel-block">
+
+
+<h2>
+Users
+</h2>
+
+
+<p className="muted">
+User table, wallet balance and activity logs will appear here.
 </p>
 
 
