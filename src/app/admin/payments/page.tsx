@@ -1,2 +1,3 @@
-import { AdminPageFrame } from "@/components/admin-overview";
-export default function Page(){return <AdminPageFrame eyebrow="Finance operations" title="Payment approval center"><div className="admin-panel"><div className="admin-panel-head"><div><span className="admin-eyebrow">Review queue</span><h2>Manual payment workflows</h2></div><span className="admin-live"><i /> Connected</span></div><p className="muted">Approve, reject, and audit manual deposits without leaving the control center.</p><a className="btn btn-primary" href="/admin">Return to overview ↗</a></div></AdminPageFrame>}
+export default function Page(){
+return <main className="p-8"><h1>Payment Approval Center</h1></main>
+}
