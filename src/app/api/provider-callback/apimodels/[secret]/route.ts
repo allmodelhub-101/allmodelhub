@@ -203,7 +203,7 @@ console.log(
     return NextResponse.json({ ok: true });
   }
 
-  if (["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) {
+  if (["completed", "failed", "cancelled", "expired"].includes(job.status))
     return NextResponse.json({ ok: true });
   }
 
