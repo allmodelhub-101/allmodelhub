@@ -2,94 +2,69 @@ export default function AdminSidebar(){
 
 return (
 
-<aside
-className="
-w-64
-min-h-screen
-border-r
-border-gray-200
-dark:border-gray-800
-bg-white
-dark:bg-gray-950
-p-6
-"
->
+<aside className="app-sidebar">
 
-<h2
-className="
-text-2xl
-font-bold
-mb-10
-"
->
+
+<div className="sidebar-brand">
+
+<div className="brand">
+
+<div className="brand-mark"></div>
+
+<span>
 All Model Hub
-</h2>
+</span>
+
+</div>
+
+</div>
 
 
-<nav
-className="
-flex
-flex-col
-gap-5
-"
->
+
+<div className="sidebar-section">
+Admin
+</div>
 
 
-<a
-className="
-text-gray-700
-dark:text-gray-300
-hover:text-blue-500
-"
+
+<nav className="sidebar-nav">
+
+
+<a 
 href="/admin"
+className="sidebar-link"
 >
 Dashboard
 </a>
 
 
 <a
-className="
-text-gray-700
-dark:text-gray-300
-hover:text-blue-500
-"
 href="/admin/payments"
+className="sidebar-link"
 >
 Payments
 </a>
 
 
 <a
-className="
-text-gray-700
-dark:text-gray-300
-hover:text-blue-500
-"
 href="/admin/models"
+className="sidebar-link"
 >
 Models
 </a>
 
 
 <a
-className="
-text-gray-700
-dark:text-gray-300
-hover:text-blue-500
-"
 href="/admin/users"
+className="sidebar-link"
 >
 Users
 </a>
 
 
 <a
-className="
-text-gray-700
-dark:text-gray-300
-hover:text-blue-500
-"
 href="/admin/settings"
+className="sidebar-link"
 >
 Settings
 </a>
