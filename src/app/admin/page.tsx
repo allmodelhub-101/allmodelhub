@@ -89,7 +89,7 @@ value:failedJobs
 
 return (
 
-<div className="p-8">
+<div className="p-8 space-y-8">
 
 <h1
 className="
