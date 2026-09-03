@@ -2,32 +2,39 @@ export default function SettingsPage(){
 
 return (
 
-<div className="p-8">
+<div>
 
 
-<h1
-className="
-text-3xl
-font-bold
-mb-6
-"
->
+<div className="page-head">
+
+<div>
+
+<h1 className="page-title">
 System Settings
 </h1>
 
 
-<div
-className="
-rounded-2xl
-border
-p-6
-bg-white
-dark:bg-black
-"
->
+<p className="muted">
+Configure platform preferences and admin controls.
+</p>
 
-<p>
-Platform configuration and admin controls will appear here.
+
+</div>
+
+</div>
+
+
+
+<div className="card panel-block">
+
+
+<h2>
+Settings
+</h2>
+
+
+<p className="muted">
+Platform configuration, API settings and security controls will appear here.
 </p>
 
 
