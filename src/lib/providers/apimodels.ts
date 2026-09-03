@@ -35,20 +35,33 @@ function headers() {
   return { Authorization: `Bearer ${env.APIMODELS_API_KEY}`, "Content-Type": "application/json" };
 }
 
-function normalizeTask(json: unknown): AsyncTaskResult {
-  const root = json as Record<string, unknown>;
-  const data = (root.data && typeof root.data === "object" ? root.data : root) as { taskId?: string; task_id?: string; id?: string; state?: AsyncTaskResult["state"]; status?: AsyncTaskResult["state"]; resultUrls?: string[]; result_urls?: string[]; urls?: string[]; resultJson?: string; failMsg?: string; fail_message?: string; error?: string };
-  let resultUrls = data?.resultUrls ?? data?.result_urls ?? data?.urls;
-  if (!resultUrls && typeof data?.resultJson === "string") {
-    try { resultUrls = JSON.parse(data.resultJson)?.resultUrls; } catch { /* provider returned non-JSON result */ }
+function extractResultUrls(value: unknown): string[] {
+  const urls = new Set<string>();
+  function visit(node: unknown, depth = 0) {
+    if (depth > 5 || node === null || node === undefined) return;
+    if (typeof node === "string") { if (/^https?:\/\//i.test(node)) urls.add(node); return; }
+    if (Array.isArray(node)) { node.forEach((item) => visit(item, depth + 1)); return; }
+    if (typeof node !== "object") return;
+    const object = node as Record<string, unknown>;
+    for (const [key, child] of Object.entries(object)) {
+      if (["result_urls", "resultUrls", "urls", "url", "output", "data", "result", "images", "videos", "audio"].includes(key)) visit(child, depth + 1);
+    }
   }
-  const rawState = String(data?.state ?? data?.status ?? "pending").toLowerCase();
+  visit(value);
+  return [...urls].slice(0, 20);
+}
+
+function normalizeTask(json: unknown): AsyncTaskResult {
+  const root = (json && typeof json === "object" ? json : {}) as Record<string, unknown>;
+  const data = (root.data && typeof root.data === "object" ? root.data : root) as Record<string, unknown>;
+  const resultUrls = extractResultUrls(json);
+  const rawState = String(data.state ?? data.status ?? root.state ?? root.status ?? "pending").toLowerCase();
   const state = rawState === "completed" || rawState === "complete" || rawState === "succeeded" || rawState === "success" || (resultUrls?.length ?? 0) > 0 ? "completed" : rawState === "failed" || rawState === "error" || rawState === "cancelled" ? "failed" : rawState === "processing" || rawState === "running" || rawState === "in_progress" ? "processing" : "pending";
   return {
-    taskId: data?.taskId ?? data?.task_id ?? data?.id ?? "",
+    taskId: String(data.taskId ?? data.task_id ?? data.id ?? root.taskId ?? root.task_id ?? root.id ?? ""),
     state,
-    resultUrls,
-    failMsg: data?.failMsg ?? data?.fail_message ?? data?.error,
+    resultUrls: resultUrls.length ? resultUrls : undefined,
+    failMsg: typeof (data.failMsg ?? data.fail_message ?? data.error ?? root.error) === "string" ? String(data.failMsg ?? data.fail_message ?? data.error ?? root.error) : undefined,
     raw: json
   };
 }

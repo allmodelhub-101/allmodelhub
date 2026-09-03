@@ -26,17 +26,19 @@ function normalizeCallbackState(value: string, urls?: string[]) {
 }
 
 function extractResultUrls(value: unknown): string[] | undefined {
-  if (!value || typeof value !== "object") return undefined;
-  const root = value as Record<string, unknown>;
-  const candidates = [root.resultUrls, root.result_urls, root.urls, root.output, root.result, (root.data as Record<string, unknown> | undefined)?.resultUrls, (root.data as Record<string, unknown> | undefined)?.urls];
-  for (const candidate of candidates) {
-    if (Array.isArray(candidate)) {
-      const urls = candidate.filter((item): item is string => typeof item === "string" && /^https?:\/\//.test(item));
-      if (urls.length) return urls;
+  const urls = new Set<string>();
+  const visit = (node: unknown, depth = 0) => {
+    if (depth > 5 || node === null || node === undefined) return;
+    if (typeof node === "string") { if (/^https?:\/\//i.test(node)) urls.add(node); return; }
+    if (Array.isArray(node)) { node.forEach((item) => visit(item, depth + 1)); return; }
+    if (typeof node !== "object") return;
+    for (const [key, child] of Object.entries(node as Record<string, unknown>)) {
+      if (["resultUrls", "result_urls", "urls", "url", "output", "data", "result", "images", "videos", "audio"].includes(key)) visit(child, depth + 1);
     }
-    if (typeof candidate === "string" && /^https?:\/\//.test(candidate)) return [candidate];
-  }
-  return undefined;
+  };
+  visit(value);
+  const result = [...urls].slice(0, 20);
+  return result.length ? result : undefined;
 }
 
 function safeSecretEqual(value: string, expected: string) {
