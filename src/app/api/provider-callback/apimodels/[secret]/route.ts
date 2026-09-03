@@ -291,10 +291,30 @@ if (callbackState !== "completed" && callbackState !== "failed") {
 
     if (job.hold_id) {
       try {
-        await captureWalletHold(job.hold_id, charge, `generation-capture:${job.id}`, {
-          callback: true,
-          provider_task_id: taskId
-        });
+        const profit =
+Number(job.estimated_credits)
+-
+Number(job.internal_cost_pkr);
+
+
+await admin
+.from("admin_profit_logs")
+.insert({
+
+job_id: job.id,
+
+user_id: job.user_id,
+
+revenue_credits:
+Number(job.estimated_credits),
+
+provider_cost_pkr:
+Number(job.internal_cost_pkr),
+
+profit_pkr:
+profit
+
+});
       } catch (error) {
         await admin
           .from("generation_jobs")
