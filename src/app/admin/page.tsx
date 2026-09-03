@@ -9,11 +9,17 @@ const cards = [
   },
   {
     title: "Total Users",
-    value: "0"
+    {
+title:"Total Users",
+value:stats.users
+}
   },
   {
     title: "AI Generations",
-    value: "0"
+    {
+title:"Total Users",
+value:stats.users
+}
   },
   {
     title: "Provider Cost",
@@ -21,7 +27,10 @@ const cards = [
   },
   {
     title: "Failed Jobs",
-    value: "0"
+    {
+title:"Total Users",
+value:stats.users
+}
   }
 ];
 
