@@ -197,16 +197,28 @@ console.log(
     console.info("[callback] job lookup error", jobError.message);
     return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
   }
+if (!job) {
+  console.info("[callback] no matching job", JSON.stringify({ taskId }));
+  return NextResponse.json({ ok: true });
+}
 
-  if (!job) {
-    console.info("[callback] no matching job", JSON.stringify({ taskId }));
-    return NextResponse.json({ ok: true });
-  }
+if (["completed", "failed", "cancelled", "expired"].includes(job.status)) {
+  return NextResponse.json({ ok: true });
+}
 
-  if (["completed", "failed", "cancelled", "expired"].includes(job.status))
-    return NextResponse.json({ ok: true });
-  }
 
+if (callbackState !== "completed" && callbackState !== "failed") {
+  const { error: progressError } = await admin
+    .from("generation_jobs")
+    .update({
+      status: callbackState === "processing" ? "processing" : "submitted",
+      result_json: payload,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", job.id);
+
+  return NextResponse.json({ ok: true });
+}
   if (callbackState !== "completed" && callbackState !== "failed") {
     const { error: progressError } = await admin
       .from("generation_jobs")
