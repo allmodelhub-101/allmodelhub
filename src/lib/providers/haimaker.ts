@@ -16,6 +16,29 @@ export function haimakerModelFor(amhModelId: string) {
   }
 }
 
+function extractUrls(value: unknown): string[] {
+  const urls = new Set<string>();
+  const visit = (node: unknown, depth = 0) => {
+    if (depth > 5 || node === null || node === undefined) return;
+    if (typeof node === "string") { if (/^https?:\/\//i.test(node)) urls.add(node); return; }
+    if (Array.isArray(node)) { node.forEach((item) => visit(item, depth + 1)); return; }
+    if (typeof node !== "object") return;
+    for (const [key, child] of Object.entries(node as Record<string, unknown>)) {
+      if (["result_urls", "resultUrls", "urls", "url", "output", "data", "result", "images", "videos"].includes(key)) visit(child, depth + 1);
+    }
+  };
+  visit(value);
+  return [...urls].slice(0, 20);
+}
+
+function normalizeState(value: unknown, urls: string[]): AsyncTaskResult["state"] {
+  const state = String(value || "processing").toLowerCase().replace(/[ -]/g, "_");
+  if (["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) || urls.length) return "completed";
+  if (["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)) return "failed";
+  if (["processing", "running", "in_progress", "inprogress"].includes(state)) return "processing";
+  return "pending";
+}
+
 export async function haimakerCreateTask(modality: "image" | "video", body: Record<string, unknown>): Promise<AsyncTaskResult> {
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
@@ -28,11 +51,11 @@ export async function haimakerCreateTask(modality: "image" | "video", body: Reco
   });
   const json = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(`Haimaker ${modality} request failed (${response.status}).`);
-  const root = json as Record<string, unknown>;
+  const root = (json && typeof json === "object" ? json : {}) as Record<string, unknown>;
   const data = (root.data && typeof root.data === "object" ? root.data : root) as Record<string, unknown>;
-  const urls = Array.isArray(data.data) ? data.data.map((item) => typeof item === "object" && item ? String((item as Record<string, unknown>).url || "") : "").filter(Boolean) : [data.url, data.video_url, data.output_url].filter((value): value is string => typeof value === "string" && value.length > 0);
-  const taskId = String(data.id || data.task_id || crypto.randomUUID());
-  return { taskId, state: urls.length ? "completed" : "processing", resultUrls: urls, raw: json };
+  const urls = extractUrls(json);
+  const taskId = String(data.id || data.task_id || data.taskId || root.id || root.task_id || crypto.randomUUID());
+  return { taskId, state: normalizeState(data.status || data.state || root.status || root.state, urls), resultUrls: urls.length ? urls : undefined, raw: json };
 }
 
 export async function haimakerPollTask(modality: "image" | "video", taskId: string) {
@@ -42,13 +65,11 @@ export async function haimakerPollTask(modality: "image" | "video", taskId: stri
   const response = await fetch(`${apiUrl(endpoint)}?task_id=${encodeURIComponent(taskId)}`, { headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}` }, cache: "no-store" });
   const json = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(`Haimaker ${modality} poll failed (${response.status}).`);
-  const root = json as Record<string, unknown>;
+  const root = (json && typeof json === "object" ? json : {}) as Record<string, unknown>;
   const data = (root.data && typeof root.data === "object" ? root.data : root) as Record<string, unknown>;
-  const status = String(data.status || data.state || "processing").toLowerCase();
-  const items = Array.isArray(data.data) ? data.data : [];
-  const urls = items.map((item) => typeof item === "object" && item ? String((item as Record<string, unknown>).url || "") : "").filter(Boolean);
-  const direct = [data.url, data.video_url, data.output_url].filter((value): value is string => typeof value === "string" && value.length > 0);
-  return { taskId, state: (status === "completed" || status === "succeeded" || urls.length || direct.length ? "completed" : status === "failed" || status === "error" ? "failed" : "processing") as "completed" | "failed" | "processing", resultUrls: [...urls, ...direct], failMsg: typeof data.error === "string" ? data.error : undefined, raw: json };
+  const urls = extractUrls(json);
+  const state = normalizeState(data.status || data.state || root.status || root.state, urls);
+  return { taskId, state, resultUrls: urls.length ? urls : undefined, failMsg: typeof data.error === "string" ? data.error : undefined, raw: json };
 }
 
 export async function haimakerTtsStream(body: { model: string; input: string; voice: string }) {
