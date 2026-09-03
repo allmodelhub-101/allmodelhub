@@ -1,6 +1,3 @@
-import Link from "next/link";
-
-
 export default function AdminSidebar(){
 
 return (
@@ -10,9 +7,9 @@ className="
 w-64
 min-h-screen
 border-r
+border-gray-800
 bg-white
 dark:bg-black
-dark:border-gray-800
 p-6
 "
 >
@@ -29,88 +26,45 @@ All Model Hub
 </h2>
 
 
-<nav className="space-y-3">
 
-
-<Link
-href="/admin"
+<nav
 className="
-block
-rounded-lg
-px-3
-py-2
-hover:bg-gray-100
-dark:hover:bg-gray-900
+space-y-4
 "
 >
+
+
+<a href="/admin">
 Dashboard
-</Link>
+</a>
 
 
-<Link
-href="/admin/payments"
-className="
-block
-rounded-lg
-px-3
-py-2
-hover:bg-gray-100
-dark:hover:bg-gray-900
-"
->
+<a href="/admin/payments">
 Payments
-</Link>
+</a>
 
 
-<Link
-href="/admin/models"
-className="
-block
-rounded-lg
-px-3
-py-2
-hover:bg-gray-100
-dark:hover:bg-gray-900
-"
->
+<a href="/admin/models">
 Models
-</Link>
+</a>
 
 
-<Link
-href="/admin/users"
-className="
-block
-rounded-lg
-px-3
-py-2
-hover:bg-gray-100
-dark:hover:bg-gray-900
-"
->
+<a href="/admin/users">
 Users
-</Link>
+</a>
 
 
-<Link
-href="/admin/settings"
-className="
-block
-rounded-lg
-px-3
-py-2
-hover:bg-gray-100
-dark:hover:bg-gray-900
-"
->
+<a href="/admin/settings">
 Settings
-</Link>
+</a>
 
 
 </nav>
 
 
+
 </aside>
+
 
 )
 
