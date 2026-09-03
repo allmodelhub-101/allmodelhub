@@ -6,7 +6,7 @@ export default async function AdminDashboard(){
 const stats = await getAdminStats();
 
 
-// Profit Calculation
+
 const totalProfit =
 stats.jobs.reduce(
 (sum,job)=>{
@@ -24,14 +24,14 @@ return sum + (charged - cost);
 );
 
 
-// Failed jobs
+
 const failedJobs =
 stats.jobs.filter(
 (job)=>job.status==="failed"
 ).length;
 
 
-// Provider cost
+
 const providerCost =
 stats.jobs.reduce(
 (sum,job)=>{
@@ -43,14 +43,20 @@ return sum + Number(job.internal_cost_pkr || 0);
 
 
 
-const cards = [
+const revenue =
+stats.transactions.reduce(
+(sum,t)=>sum + Number(t.amount || 0),
+0
+);
+
+
+
+const cards=[
+
 
 {
 title:"Total Revenue",
-value:`PKR ${stats.transactions.reduce(
-(sum,t)=>sum + Number(t.amount || 0),
-0
-).toFixed(2)}`
+value:`PKR ${revenue.toFixed(2)}`
 },
 
 
@@ -87,30 +93,34 @@ value:failedJobs
 ];
 
 
+
 return (
 
-<div className="p-8 space-y-8">
+<div>
 
-<h1
-className="
-text-4xl
-font-bold
-mb-8
-"
->
+
+<div className="page-head">
+
+<div>
+
+<h1 className="page-title">
 All Model Hub Admin
 </h1>
 
 
-<div
-className="
-grid
-grid-cols-1
-sm:grid-cols-2
-xl:grid-cols-3
-gap-6
-"
->
+<p className="muted">
+Platform overview and business analytics
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<div className="stats-grid">
 
 
 {
@@ -118,48 +128,24 @@ cards.map((card)=>(
 
 <div
 key={card.title}
-className="
-rounded-2xl
-border
-border-gray-200
-dark:border-gray-800
-p-6
-bg-white
-dark:bg-gray-900
-shadow-lg
-"
+className="card stat-card"
 >
 
 
-<p
-className="
-text-gray-500
-dark:text-gray-400
-"
->
-
+<span>
 {card.title}
+</span>
 
-</p>
 
-
-<h2
-className="
-text-3xl
-font-bold
-mt-3
-"
->
-
+<strong>
 {card.value}
-
-</h2>
+</strong>
 
 
 </div>
 
-))
 
+))
 }
 
 
@@ -169,5 +155,6 @@ mt-3
 </div>
 
 )
+
 
 }
