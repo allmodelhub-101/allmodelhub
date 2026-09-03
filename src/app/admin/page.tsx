@@ -121,10 +121,12 @@ key={card.title}
 className="
 rounded-2xl
 border
+border-gray-200
+dark:border-gray-800
 p-6
 bg-white
-dark:bg-black
-shadow-sm
+dark:bg-gray-900
+shadow-lg
 "
 >
 
