@@ -234,7 +234,7 @@ console.log(
   const { data: claimed, error: claimError } = await admin
     .from("generation_jobs")
     .update({
-      status: "processing"
+      status: "processing",
       updated_at: new Date().toISOString()
     })
     .eq("id", job.id)
