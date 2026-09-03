@@ -11,35 +11,9 @@ export const dynamic = "force-dynamic";
 
 const callbackSchema = z.object({
   taskId: z.string().min(1).max(200),
-  state: z.string().min(1).max(40),
-  resultUrls: z.array(z.string().url().refine((value) => ["https:", "http:"].includes(new URL(value).protocol))).max(20).optional(),
-  resultJson: z.string().max(100_000).optional(),
-  failMsg: z.string().max(2_000).optional()
+  state: z.string().min(1).max(60),
+  failMsg: z.string().max(2000).optional()
 });
-
-function normalizeCallbackState(value: string, urls?: string[]) {
-  const state = value.toLowerCase().replace(/[ -]/g, "_");
-  if (["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) || urls?.length) return "completed" as const;
-  if (["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)) return "failed" as const;
-  if (["processing", "running", "in_progress", "inprogress"].includes(state)) return "processing" as const;
-  return "submitted" as const;
-}
-
-function extractResultUrls(value: unknown): string[] | undefined {
-  const urls = new Set<string>();
-  const visit = (node: unknown, depth = 0) => {
-    if (depth > 5 || node === null || node === undefined) return;
-    if (typeof node === "string") { if (/^https?:\/\//i.test(node)) urls.add(node); return; }
-    if (Array.isArray(node)) { node.forEach((item) => visit(item, depth + 1)); return; }
-    if (typeof node !== "object") return;
-    for (const [key, child] of Object.entries(node as Record<string, unknown>)) {
-      if (["resultUrls", "result_urls", "urls", "url", "output", "data", "result", "images", "videos", "audio"].includes(key)) visit(child, depth + 1);
-    }
-  };
-  visit(value);
-  const result = [...urls].slice(0, 20);
-  return result.length ? result : undefined;
-}
 
 function safeSecretEqual(value: string, expected: string) {
   const a = Buffer.from(value);
@@ -47,56 +21,355 @@ function safeSecretEqual(value: string, expected: string) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-export async function POST(request: Request, context: { params: Promise<{ secret: string }> }) {
+function isHttpUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+function normalizeCallbackState(value: string, urls?: string[]) {
+  const state = String(value || "")
+    .toLowerCase()
+    .replace(/[ -]/g, "_");
+
+  if (
+    ["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) ||
+    (urls && urls.length > 0)
+  ) {
+    return "completed" as const;
+  }
+
+  if (
+    ["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)
+  ) {
+    return "failed" as const;
+  }
+
+  if (
+    ["processing", "running", "in_progress", "inprogress", "pending", "queued"].includes(state)
+  ) {
+    return "processing" as const;
+  }
+
+  return "submitted" as const;
+}
+
+function extractResultUrls(value: unknown): string[] | undefined {
+  const urls = new Set<string>();
+
+  const visit = (node: unknown, depth = 0) => {
+    if (depth > 8 || node === null || node === undefined) return;
+
+    if (typeof node === "string") {
+      const trimmed = node.trim();
+
+      if (isHttpUrl(trimmed)) {
+        urls.add(trimmed);
+        return;
+      }
+
+      if (
+        (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+        (trimmed.startsWith("[") && trimmed.endsWith("]"))
+      ) {
+        try {
+          visit(JSON.parse(trimmed), depth + 1);
+        } catch {
+          // ignore invalid JSON string
+        }
+      }
+
+      return;
+    }
+
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item, depth + 1);
+      return;
+    }
+
+    if (typeof node === "object") {
+      for (const child of Object.values(node as Record<string, unknown>)) {
+        visit(child, depth + 1);
+      }
+    }
+  };
+
+  visit(value);
+
+  const result = [...urls].filter(isHttpUrl).slice(0, 20);
+  return result.length ? result : undefined;
+}
+
+export async function POST(
+  request: Request,
+  context: { params: Promise<{ secret: string }> }
+) {
   const { secret } = await context.params;
-  const secrets = [process.env.CALLBACK_SECRET, process.env.CALLBACK_SECRET_PREVIOUS].filter((value): value is string => Boolean(value));
-  if (!secrets.some((expected) => safeSecretEqual(secret, expected))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const secrets = [
+    process.env.CALLBACK_SECRET,
+    process.env.CALLBACK_SECRET_PREVIOUS
+  ].filter((value): value is string => Boolean(value));
+
+  if (!secrets.some((expected) => safeSecretEqual(secret, expected))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > 1_000_000) return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  if (contentLength > 1_000_000) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  }
+
   const payload = await request.json().catch(() => null);
-  const raw = payload?.data && typeof payload.data === "object" ? { ...payload, ...payload.data } : payload;
-  const parsed = callbackSchema.safeParse({ ...raw, taskId: raw?.taskId ?? raw?.task_id ?? raw?.id, state: raw?.state ?? raw?.status ?? raw?.task_status ?? "processing" });
-  if (!parsed.success) return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
+  if (!payload || typeof payload !== "object") {
+    return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
+  }
+
+  const base = payload as Record<string, any>;
+  const nestedData =
+    base.data && typeof base.data === "object" ? (base.data as Record<string, any>) : undefined;
+
+  const raw = nestedData ? { ...base, ...nestedData } : base;
+
+  const parsed = callbackSchema.safeParse({
+    taskId:
+      raw.taskId ??
+      raw.task_id ??
+      raw.id ??
+      raw.task?.id ??
+      raw.data?.taskId ??
+      raw.data?.task_id,
+    state:
+      raw.state ??
+      raw.status ??
+      raw.task_status ??
+      raw.taskState ??
+      raw.task?.state ??
+      raw.data?.state ??
+      raw.data?.status ??
+      "processing",
+    failMsg:
+      raw.failMsg ??
+      raw.fail_msg ??
+      raw.failMessage ??
+      raw.error_message ??
+      raw.message
+  });
+
+  if (!parsed.success) {
+    console.info("[callback] invalid payload", JSON.stringify(raw));
+    return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
+  }
+
   const data = parsed.data;
   const taskId = data.taskId;
-  const resultUrls = data.resultUrls ?? extractResultUrls(raw);
+  const resultUrls = extractResultUrls(payload);
   const callbackState = normalizeCallbackState(data.state, resultUrls);
-  console.info("[v0] media callback", JSON.stringify({ taskId, state: callbackState, outputUrlCount: resultUrls?.length ?? 0 }));
-  const admin = createAdminClient();
-  const { data: job } = await admin.from("generation_jobs").select("*").eq("provider_task_id", taskId).maybeSingle();
-  if (!job || ["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) return NextResponse.json({ ok: true });
 
-  if (callbackState !== "completed" && callbackState !== "failed") {
-    await admin.from("generation_jobs").update({ status: callbackState === "processing" ? "processing" : "submitted", result_json: payload, updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["queued", "submitted", "processing"]);
+  console.info(
+    "[callback] received",
+    JSON.stringify({
+      taskId,
+      providerState: data.state,
+      normalizedState: callbackState,
+      outputUrlCount: resultUrls?.length ?? 0
+    })
+  );
+
+  const admin = createAdminClient();
+
+  const { data: job, error: jobError } = await admin
+    .from("generation_jobs")
+    .select("*")
+    .eq("provider_task_id", taskId)
+    .maybeSingle();
+
+  if (jobError) {
+    console.info("[callback] job lookup error", jobError.message);
+    return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
+  }
+
+  if (!job) {
+    console.info("[callback] no matching job", JSON.stringify({ taskId }));
     return NextResponse.json({ ok: true });
   }
 
-  // Claim terminal settlement before charging, storage, or notifications.
-  const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["submitted", "processing"]).select("id").maybeSingle();
-  if (!claimed) return NextResponse.json({ ok: true });
+  if (["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) {
+    return NextResponse.json({ ok: true });
+  }
 
+  if (callbackState !== "completed" && callbackState !== "failed") {
+    const { error: progressError } = await admin
+      .from("generation_jobs")
+      .update({
+        status: callbackState === "processing" ? "processing" : "submitted",
+        result_json: payload,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", job.id)
+      .in("status", ["queued", "submitted", "processing"]);
+
+    console.info(
+      "[callback] progress update",
+      JSON.stringify({
+        jobId: job.id,
+        nextStatus: callbackState === "processing" ? "processing" : "submitted",
+        ok: !progressError,
+        error: progressError?.message
+      })
+    );
+
+    return NextResponse.json({ ok: true });
+  }
+
+  const { data: claimed, error: claimError } = await admin
+    .from("generation_jobs")
+    .update({
+      status: "settling",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", job.id)
+    .in("status", ["queued", "submitted", "processing"])
+    .select("id")
+    .maybeSingle();
+
+  if (claimError) {
+    console.info("[callback] settlement claim error", claimError.message);
+    return NextResponse.json({ error: "Settlement claim failed" }, { status: 500 });
+  }
+
+  if (!claimed) {
+    return NextResponse.json({ ok: true });
+  }
 
   if (callbackState === "completed") {
+    if (!resultUrls?.length) {
+      const { error: noUrlUpdateError } = await admin
+        .from("generation_jobs")
+        .update({
+          status: "processing",
+          result_json: payload,
+          error_message: "Provider marked job complete without output URLs.",
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", job.id);
+
+      console.info(
+        "[callback] completed without urls",
+        JSON.stringify({
+          jobId: job.id,
+          ok: !noUrlUpdateError,
+          error: noUrlUpdateError?.message
+        })
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
     const charge = Number(job.estimated_credits);
+
     if (job.hold_id) {
       try {
-        await captureWalletHold(job.hold_id, charge, `generation-capture:${job.id}`, { callback: true, provider_task_id: taskId });
-      } catch {
-        await admin.from("generation_jobs").update({ status: "processing", error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id);
+        await captureWalletHold(job.hold_id, charge, `generation-capture:${job.id}`, {
+          callback: true,
+          provider_task_id: taskId
+        });
+      } catch (error) {
+        await admin
+          .from("generation_jobs")
+          .update({
+            status: "processing",
+            error_message: "Wallet settlement pending reconciliation.",
+            updated_at: new Date().toISOString()
+          })
+          .eq("id", job.id);
+
+        console.info(
+          "[callback] wallet capture failed",
+          JSON.stringify({
+            jobId: job.id,
+            taskId,
+            error: error instanceof Error ? error.message : "Unknown wallet capture error"
+          })
+        );
+
         return NextResponse.json({ error: "Settlement pending" }, { status: 503 });
       }
     }
-    const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls ?? []);
-    const { error: updateError } = await admin.from("generation_jobs").update({ status: "completed", result_json: { provider: payload, amhStoredPaths: storedPaths }, result_urls: resultUrls ?? [], charged_credits: charge, updated_at: new Date().toISOString(), completed_at: new Date().toISOString() }).eq("id", job.id);
-    console.info("[v0] media callback database update", JSON.stringify({ jobId: job.id, status: "completed", outputUrlCount: resultUrls?.length ?? 0, ok: !updateError, error: updateError?.message }));
-    if (updateError) throw updateError;
-    await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.` });
-  } else if (callbackState === "failed") {
-    if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_callback_failed").catch(() => undefined);
-    await admin.from("generation_jobs").update({ status: "failed", result_json: payload, error_message: data?.failMsg || "Generation failed", updated_at: new Date().toISOString() }).eq("id", job.id);
-    await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });
-  } else {
-    await admin.from("generation_jobs").update({ status: data?.state === "processing" ? "processing" : "submitted", result_json: payload, updated_at: new Date().toISOString() }).eq("id", job.id);
+
+    const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
+
+    const { error: updateError } = await admin
+      .from("generation_jobs")
+      .update({
+        status: "completed",
+        result_json: {
+          provider: payload,
+          amhStoredPaths: storedPaths
+        },
+        result_urls: resultUrls,
+        charged_credits: charge,
+        error_message: null,
+        updated_at: new Date().toISOString(),
+        completed_at: new Date().toISOString()
+      })
+      .eq("id", job.id);
+
+    console.info(
+      "[callback] completed update",
+      JSON.stringify({
+        jobId: job.id,
+        outputUrlCount: resultUrls.length,
+        chargedCredits: charge,
+        ok: !updateError,
+        error: updateError?.message
+      })
+    );
+
+    if (updateError) {
+      return NextResponse.json({ error: "Database settlement failed" }, { status: 500 });
+    }
+
+    await notifyUser(job.user_id, {
+      type: "generation",
+      title: `${job.modality} generation completed`,
+      body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`
+    });
+
+    return NextResponse.json({ ok: true });
   }
+
+  if (job.hold_id) {
+    await releaseWalletHold(job.hold_id, "provider_callback_failed").catch(() => undefined);
+  }
+
+  const { error: failedUpdateError } = await admin
+    .from("generation_jobs")
+    .update({
+      status: "failed",
+      result_json: payload,
+      error_message: data.failMsg || "Generation failed",
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", job.id);
+
+  console.info(
+    "[callback] failed update",
+    JSON.stringify({
+      jobId: job.id,
+      ok: !failedUpdateError,
+      error: failedUpdateError?.message
+    })
+  );
+
+  await notifyUser(job.user_id, {
+    type: "generation",
+    title: `${job.modality} generation failed`,
+    body: `${job.public_id} failed. Eligible reserved Credits were released.`
+  });
+
   return NextResponse.json({ ok: true });
 }
