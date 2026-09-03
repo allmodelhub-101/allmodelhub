@@ -1,375 +1,169 @@
 import { NextResponse } from "next/server";
-import { timingSafeEqual } from "node:crypto";
 import { z } from "zod";
+import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { captureWalletHold, releaseWalletHold } from "@/lib/wallet";
-import { persistGeneratedAssets } from "@/lib/generated-assets";
-import { notifyUser } from "@/lib/notifications";
+import { getRuntimeModel } from "@/lib/model-store";
+import { estimateMediaCredits, getInternalUsdPkr, mediaSupplierUsd } from "@/lib/pricing";
+import { createWalletHold, releaseWalletHold } from "@/lib/wallet";
+import { createIdempotencyKey, createPublicId } from "@/lib/security/ids";
+import { providerCreateTask } from "@/lib/providers";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import { assertSpendingAllowed } from "@/lib/spending";
+import { signedFileUrl } from "@/lib/file-extract";
+import { claimRequest, finalizeRequest } from "@/lib/idempotency";
+import { logServerError } from "@/lib/public-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const callbackSchema = z.object({
-  taskId: z.string().min(1).max(200),
-  state: z.string().min(1).max(60),
-  failMsg: z.string().max(2000).optional()
+const bodySchema = z.object({
+requestId: z.string().uuid(),
+modelId: z.string().min(1),
+prompt: z.string().min(1).max(20_000),
+duration: z.number().min(1).max(30).optional(),
+resolution: z.string().max(20).optional(),
+aspectRatio: z.string().max(20).optional(),
+imageFileIds: z.array(z.string().uuid()).max(10).default([]),
+mode: z.string().max(40).optional(),
+confirmedCost: z.boolean().default(false)
 });
 
-function safeSecretEqual(value: string, expected: string) {
-  const a = Buffer.from(value);
-  const b = Buffer.from(expected);
-  return a.length === b.length && timingSafeEqual(a, b);
+export async function POST(request: Request, context: { params: Promise<{ modality: string }> }) {
+const supabase = await createClient();
+const { data } = await supabase.auth.getUser();
+const user = data.user;
+if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+const { modality } = await context.params;
+if (!["image", "video", "audio"].includes(modality)) return NextResponse.json({ error: "Invalid modality." }, { status: 404 });
+
+const limit = await enforceRateLimit(`generation:${modality}:${user.id}`);
+if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
+if (!limit.success) return NextResponse.json({ error: "Too many generation requests." }, { status: 429 });
+
+const parsed = bodySchema.safeParse(await request.json().catch(() => null));
+if (!parsed.success) return NextResponse.json({ error: "Invalid generation request", details: parsed.error.flatten() }, { status: 400 });
+const input = parsed.data;
+const claim = await claimRequest(user.id, `media:${modality}`, input.requestId);
+if (!claim.claimed) {
+return NextResponse.json({ error: "This generation request was already submitted.", existing: claim.existing }, { status: 409 });
+}
+const claimId = claim.id;
+const model = await getRuntimeModel(input.modelId);
+if (!model || model.modality !== modality) { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "Model is not available for this studio." }, { status: 400 }); }
+
+if (modality === "audio" && model.id === "eleven-tts-flash") {
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: "Use the Text to Speech endpoint for Eleven Flash." }, { status: 400 });
 }
 
-function isHttpUrl(value: string) {
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" || url.protocol === "http:";
-  } catch {
-    return false;
-  }
+const fxRate = await getInternalUsdPkr();
+const supplierCostUsd = mediaSupplierUsd(model, { duration: input.duration, textLength: input.prompt.length });
+const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
+const estimated = estimateMediaCredits(model, { duration: input.duration, textLength: input.prompt.length }, fxRate);
+const requiresCostConfirmation = modality === "video" || estimated >= 50;
+if (requiresCostConfirmation && !input.confirmedCost) {
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: "Explicit cost confirmation is required for this generation.", estimatedCredits: estimated }, { status: 409 });
+}
+const reserve = Number((estimated * 1.08).toFixed(6));
+try { await assertSpendingAllowed(user.id, reserve); } catch (error) {
+const message = error instanceof Error ? error.message : "Spending limit exceeded";
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: message.includes("DAILY_SPEND_LIMIT") ? "This generation would exceed your daily spending limit." : "This generation exceeds your single-generation spending limit." }, { status: 403 });
 }
 
-function normalizeCallbackState(value: string, urls?: string[]) {
-  const state = String(value || "")
-    .toLowerCase()
-    .replace(/[ -]/g, "_");
-
-  if (
-    ["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) ||
-    (urls && urls.length > 0)
-  ) {
-    return "completed" as const;
-  }
-
-  if (
-    ["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)
-  ) {
-    return "failed" as const;
-  }
-
-  if (
-    ["processing", "running", "in_progress", "inprogress", "pending", "queued"].includes(state)
-  ) {
-    return "processing" as const;
-  }
-
-  return "submitted" as const;
+const holdKey = createIdempotencyKey(`${modality}-hold`, user.id);
+let holdId: string;
+try {
+holdId = await createWalletHold(user.id, reserve, holdKey, { model_id: model.id, modality, estimated_credits: estimated });
+} catch (error) {
+const message = error instanceof Error ? error.message : "Wallet error";
+await finalizeRequest(claimId, "failed");
+const insufficient = message.includes("INSUFFICIENT_CREDITS");
+if (!insufficient) logServerError("generation-wallet", error, { userId: user.id, modelId: model.id, modality });
+return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : "Could not reserve credits for this generation." }, { status: insufficient ? 402 : 500 });
 }
 
-function extractResultUrls(value: unknown): string[] | undefined {
-  const urls = new Set<string>();
-
-  const visit = (node: unknown, depth = 0) => {
-    if (depth > 8 || node === null || node === undefined) return;
-
-    if (typeof node === "string") {
-      const trimmed = node.trim();
-
-      if (isHttpUrl(trimmed)) {
-        urls.add(trimmed);
-        return;
-      }
-
-      if (
-        (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
-        (trimmed.startsWith("[") && trimmed.endsWith("]"))
-      ) {
-        try {
-          visit(JSON.parse(trimmed), depth + 1);
-        } catch {
-          // ignore invalid JSON string
-        }
-      }
-
-      return;
-    }
-
-    if (Array.isArray(node)) {
-      for (const item of node) visit(item, depth + 1);
-      return;
-    }
-
-    if (typeof node === "object") {
-      for (const child of Object.values(node as Record<string, unknown>)) {
-        visit(child, depth + 1);
-      }
-    }
-  };
-
-  visit(value);
-
-  const result = [...urls].filter(isHttpUrl).slice(0, 20);
-  return result.length ? result : undefined;
+const admin = createAdminClient();
+let referenceImages: string[] = [];
+if (input.imageFileIds.length) {
+const { data: files, error: filesError } = await admin.from("user_files").select("id,storage_path,mime_type").eq("user_id", user.id).in("id", input.imageFileIds);
+if (filesError || (files ?? []).length !== input.imageFileIds.length) {
+await releaseWalletHold(holdId, "invalid_reference_files").catch(() => undefined);
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: "One or more reference images are unavailable." }, { status: 400 });
+}
+const imageFiles = (files ?? []).filter((file) => String(file.mime_type).startsWith("image/"));
+if (imageFiles.length !== (files ?? []).length) {
+await releaseWalletHold(holdId, "invalid_reference_file_type").catch(() => undefined);
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: "Reference files must be images." }, { status: 400 });
+}
+referenceImages = await Promise.all(imageFiles.map((file) => signedFileUrl(admin, file.storage_path)));
 }
 
-export async function POST(
-  request: Request,
-  context: { params: Promise<{ secret: string }> }
-) {
-  const { secret } = await context.params;
+const baseUrl = (
+process.env.APP_URL ||
+process.env.NEXT_PUBLIC_APP_URL ||
+"https://allmodelhub-eta.vercel.app"
+).replace(/\/+$/, "");
 
-  const secrets = [
-    process.env.CALLBACK_SECRET,
-    process.env.CALLBACK_SECRET_PREVIOUS
-  ].filter((value): value is string => Boolean(value));
+const callbackUrl = process.env.CALLBACK_SECRET
+? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
+: undefined;
 
-  if (!secrets.some((expected) => safeSecretEqual(secret, expected))) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+console.info("[generation] callback url", callbackUrl);
 
-  const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > 1_000_000) {
-    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
-  }
+const publicId = createPublicId("AMH-GEN");
 
-  const payload = await request.json().catch(() => null);
-  if (!payload || typeof payload !== "object") {
-    return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
-  }
+const providerBody: Record<string, unknown> = {
+model: model.upstreamModel,
+prompt: input.prompt,
+...(input.duration ? { duration: input.duration } : {}),
+...(input.resolution ? { resolution: input.resolution } : {}),
+...(input.aspectRatio ? { aspect_ratio: input.aspectRatio } : {}),
+...(referenceImages.length ? { images: referenceImages } : {}),
+...(callbackUrl ? { callback_url: callbackUrl } : {})
+};
 
-  const base = payload as Record<string, any>;
-  const nestedData =
-    base.data && typeof base.data === "object" ? (base.data as Record<string, any>) : undefined;
+const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
+public_id: publicId,
+user_id: user.id,
+modality,
+model_id: model.id,
+provider_key: "apimodels",
+status: "queued",
+prompt: input.prompt,
+request_json: providerBody,
+estimated_credits: estimated,
+reserved_credits: reserve,
+supplier_cost_usd: supplierCostUsd,
+internal_cost_pkr: internalCostPkr,
+hold_id: holdId
+}).select("id,public_id,status,estimated_credits,reserved_credits").single();
 
-  const raw = nestedData ? { ...base, ...nestedData } : base;
+if (insertError) {
+await releaseWalletHold(holdId, "job_insert_failed").catch(() => undefined);
+await finalizeRequest(claimId, "failed");
+logServerError("generation-job-insert", insertError, { userId: user.id, modelId: model.id, modality });
+return NextResponse.json({ error: "Could not create generation job." }, { status: 500 });
+}
 
-  const parsed = callbackSchema.safeParse({
-    taskId:
-      raw.taskId ??
-      raw.task_id ??
-      raw.id ??
-      raw.task?.id ??
-      raw.data?.taskId ??
-      raw.data?.task_id,
-    state:
-      raw.state ??
-      raw.status ??
-      raw.task_status ??
-      raw.taskState ??
-      raw.task?.state ??
-      raw.data?.state ??
-      raw.data?.status ??
-      "processing",
-    failMsg:
-      raw.failMsg ??
-      raw.fail_msg ??
-      raw.failMessage ??
-      raw.error_message ??
-      raw.message
-  });
-
-  if (!parsed.success) {
-    console.info("[callback] invalid payload", JSON.stringify(raw));
-    return NextResponse.json({ error: "Invalid callback payload" }, { status: 400 });
-  }
-
-  const data = parsed.data;
-  const taskId = data.taskId;
-  const resultUrls = extractResultUrls(payload);
-  const callbackState = normalizeCallbackState(data.state, resultUrls);
-
-  console.info(
-    "[callback] received",
-    JSON.stringify({
-      taskId,
-      providerState: data.state,
-      normalizedState: callbackState,
-      outputUrlCount: resultUrls?.length ?? 0
-    })
-  );
-
-  const admin = createAdminClient();
-
-  const { data: job, error: jobError } = await admin
-    .from("generation_jobs")
-    .select("*")
-    .eq("provider_task_id", taskId)
-    .maybeSingle();
-
-  if (jobError) {
-    console.info("[callback] job lookup error", jobError.message);
-    return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
-  }
-
-  if (!job) {
-    console.info("[callback] no matching job", JSON.stringify({ taskId }));
-    return NextResponse.json({ ok: true });
-  }
-
-  if (["completed", "failed", "cancelled", "expired", "settling"].includes(job.status)) {
-    return NextResponse.json({ ok: true });
-  }
-
-  if (callbackState !== "completed" && callbackState !== "failed") {
-    const { error: progressError } = await admin
-      .from("generation_jobs")
-      .update({
-        status: callbackState === "processing" ? "processing" : "submitted",
-        result_json: payload,
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", job.id)
-      .in("status", ["queued", "submitted", "processing"]);
-
-    console.info(
-      "[callback] progress update",
-      JSON.stringify({
-        jobId: job.id,
-        nextStatus: callbackState === "processing" ? "processing" : "submitted",
-        ok: !progressError,
-        error: progressError?.message
-      })
-    );
-
-    return NextResponse.json({ ok: true });
-  }
-
-  const { data: claimed, error: claimError } = await admin
-    .from("generation_jobs")
-    .update({
-      status: "settling",
-      updated_at: new Date().toISOString()
-    })
-    .eq("id", job.id)
-    .in("status", ["queued", "submitted", "processing"])
-    .select("id")
-    .maybeSingle();
-
-  if (claimError) {
-    console.info("[callback] settlement claim error", claimError.message);
-    return NextResponse.json({ error: "Settlement claim failed" }, { status: 500 });
-  }
-
-  if (!claimed) {
-    return NextResponse.json({ ok: true });
-  }
-
-  if (callbackState === "completed") {
-    if (!resultUrls?.length) {
-      const { error: noUrlUpdateError } = await admin
-        .from("generation_jobs")
-        .update({
-          status: "processing",
-          result_json: payload,
-          error_message: "Provider marked job complete without output URLs.",
-          updated_at: new Date().toISOString()
-        })
-        .eq("id", job.id);
-
-      console.info(
-        "[callback] completed without urls",
-        JSON.stringify({
-          jobId: job.id,
-          ok: !noUrlUpdateError,
-          error: noUrlUpdateError?.message
-        })
-      );
-
-      return NextResponse.json({ ok: true });
-    }
-
-    const charge = Number(job.estimated_credits);
-
-    if (job.hold_id) {
-      try {
-        await captureWalletHold(job.hold_id, charge, `generation-capture:${job.id}`, {
-          callback: true,
-          provider_task_id: taskId
-        });
-      } catch (error) {
-        await admin
-          .from("generation_jobs")
-          .update({
-            status: "processing",
-            error_message: "Wallet settlement pending reconciliation.",
-            updated_at: new Date().toISOString()
-          })
-          .eq("id", job.id);
-
-        console.info(
-          "[callback] wallet capture failed",
-          JSON.stringify({
-            jobId: job.id,
-            taskId,
-            error: error instanceof Error ? error.message : "Unknown wallet capture error"
-          })
-        );
-
-        return NextResponse.json({ error: "Settlement pending" }, { status: 503 });
-      }
-    }
-
-    const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
-
-    const { error: updateError } = await admin
-      .from("generation_jobs")
-      .update({
-        status: "completed",
-        result_json: {
-          provider: payload,
-          amhStoredPaths: storedPaths
-        },
-        result_urls: resultUrls,
-        charged_credits: charge,
-        error_message: null,
-        updated_at: new Date().toISOString(),
-        completed_at: new Date().toISOString()
-      })
-      .eq("id", job.id);
-
-    console.info(
-      "[callback] completed update",
-      JSON.stringify({
-        jobId: job.id,
-        outputUrlCount: resultUrls.length,
-        chargedCredits: charge,
-        ok: !updateError,
-        error: updateError?.message
-      })
-    );
-
-    if (updateError) {
-      return NextResponse.json({ error: "Database settlement failed" }, { status: 500 });
-    }
-
-    await notifyUser(job.user_id, {
-      type: "generation",
-      title: `${job.modality} generation completed`,
-      body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`
-    });
-
-    return NextResponse.json({ ok: true });
-  }
-
-  if (job.hold_id) {
-    await releaseWalletHold(job.hold_id, "provider_callback_failed").catch(() => undefined);
-  }
-
-  const { error: failedUpdateError } = await admin
-    .from("generation_jobs")
-    .update({
-      status: "failed",
-      result_json: payload,
-      error_message: data.failMsg || "Generation failed",
-      updated_at: new Date().toISOString()
-    })
-    .eq("id", job.id);
-
-  console.info(
-    "[callback] failed update",
-    JSON.stringify({
-      jobId: job.id,
-      ok: !failedUpdateError,
-      error: failedUpdateError?.message
-    })
-  );
-
-  await notifyUser(job.user_id, {
-    type: "generation",
-    title: `${job.modality} generation failed`,
-    body: `${job.public_id} failed. Eligible reserved Credits were released.`
-  });
-
-  return NextResponse.json({ ok: true });
+try {
+if (modality === "audio") throw new Error("Audio generation uses the TTS endpoint.");
+const result = await providerCreateTask({ modelId: model.id, modality: modality as "image" | "video", body: providerBody, allowFallback: true });
+const task = result.task;
+const { error: providerUpdateError } = await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_urls: task.resultUrls ?? [], result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
+console.info("[v0] generation provider request", JSON.stringify({ jobId: job.id, provider: result.provider, modality, taskId: task.taskId, state: task.state, outputUrlCount: task.resultUrls?.length ?? 0, databaseUpdateOk: !providerUpdateError, databaseError: providerUpdateError?.message }));
+if (providerUpdateError) throw providerUpdateError;
+await finalizeRequest(claimId, "completed", { resourceId: job.id, response: { publicId: job.public_id, status: task.state } });
+return NextResponse.json({ job: { ...job, status: "submitted", provider_key: result.provider, provider_task_id: task.taskId, providerTaskId: task.taskId, result_urls: task.resultUrls ?? [], result_json: task.raw }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
+} catch (error) {
+await releaseWalletHold(holdId, "provider_create_failed").catch(() => undefined);
+logServerError("generation-provider-create", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });
+await admin.from("generation_jobs").update({ status: "failed", error_message: "Provider request failed", updated_at: new Date().toISOString() }).eq("id", job.id);
+await finalizeRequest(claimId, "failed", { resourceId: job.id });
+return NextResponse.json({ error: "Generation provider is temporarily unavailable." }, { status: 502 });
+}
 }
