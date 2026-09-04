@@ -17,6 +17,7 @@ type StreamEvent = { type?: string; conversationId?: string; text?: string; mess
 export function ChatClient() {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>([]);
@@ -33,6 +34,11 @@ export function ChatClient() {
   const [privateMode, setPrivateMode] = useState(false);
   const [error, setError] = useState("");
   const [showOptions, setShowOptions] = useState(false);
+  const [pastedContext, setPastedContext] = useState("");
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" });
+  }, [messages, busy]);
 
   useEffect(() => {
     Promise.all([
@@ -84,6 +90,7 @@ export function ChatClient() {
     const working = [...history, userMessage];
     setMessages([...working, { role: "assistant", content: "" }]);
     setInput("");
+    setPastedContext("");
 
     try {
       const response = await fetch("/api/chat", {
@@ -132,9 +139,17 @@ export function ChatClient() {
     } finally { setBusy(false); abortRef.current = null; }
   }
 
-  function submit(event?: FormEvent) { event?.preventDefault(); void sendPrompt(input); }
+  function handlePaste(event: React.ClipboardEvent<HTMLTextAreaElement>) {
+    const text = event.clipboardData.getData("text");
+    if (text.length > 1200) {
+      event.preventDefault();
+      setPastedContext(text);
+      setInput((current) => current.trim() || "Summarize and use the pasted context below.");
+    }
+  }
+  function submit(event?: FormEvent) { event?.preventDefault(); void sendPrompt(pastedContext ? `${input.trim()}\n\n[Pasted context]\n${pastedContext}` : input); }
   function stop() { abortRef.current?.abort(); }
-  function newChat() { setMessages([]); setConversationId(""); setAttachmentIds([]); setError(""); window.history.replaceState(null, "", "/chat"); }
+  function newChat() { setMessages([]); setConversationId(""); setAttachmentIds([]); setPastedContext(""); setError(""); window.history.replaceState(null, "", "/chat"); }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
   function regenerate(index: number) {
     const previous = messages.slice(0, index).filter((m) => m.content);
@@ -176,11 +191,16 @@ export function ChatClient() {
           </div>
         </div>
       </div>)}
+      <div ref={messagesEndRef} aria-hidden="true" />
     </div>
 
     <div className="composer-wrap">
       <form className="glass composer" onSubmit={submit}>
-        <textarea className="textarea chat-input" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Message All Model Hub…" aria-label="Message All Model Hub" />
+        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip" aria-label="Attached context">
+          {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div><strong>Pasted context</strong><small>{pastedContext.length.toLocaleString()} characters · ready</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
+          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-icon">{file.name.split(".").pop()?.toUpperCase().slice(0, 4) || "FILE"}</span><div><strong>{file.name}</strong><small>{Math.ceil(file.size_bytes / 1024)} KB · ready</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
+        </div>}
+        <textarea className="textarea chat-input" onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Message All Model Hub…" aria-label="Message All Model Hub" />
         <div className="composer-footer">
           <div className="composer-tools"><button type="button" className="composer-attach" onClick={() => setShowOptions((v) => !v)} aria-expanded={showOptions}>＋ <span>Attach</span></button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
           {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim()} aria-label="Send message">Send <span>↑</span></button>}
