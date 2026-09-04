@@ -18,6 +18,7 @@ export function ChatClient() {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>([]);
@@ -33,7 +34,6 @@ export function ChatClient() {
   const [deepThink, setDeepThink] = useState(false);
   const [privateMode, setPrivateMode] = useState(false);
   const [error, setError] = useState("");
-  const [showOptions, setShowOptions] = useState(false);
   const [pastedContext, setPastedContext] = useState("");
 
   useEffect(() => {
@@ -139,15 +139,32 @@ export function ChatClient() {
     } finally { setBusy(false); abortRef.current = null; }
   }
 
+  async function uploadFiles(selected: FileList | null) {
+    if (!selected?.length) return;
+    setError("");
+    for (const file of Array.from(selected)) {
+      const form = new FormData();
+      form.append("file", file);
+      if (projectId) form.append("projectId", projectId);
+      try {
+        const response = await fetch("/api/files", { method: "POST", body: form });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.file) throw new Error(data.error || `Could not upload ${file.name}.`);
+        setFiles((current) => [data.file, ...current.filter((item) => item.id !== data.file.id)]);
+        setAttachmentIds((current) => current.includes(data.file.id) ? current : [...current, data.file.id]);
+      } catch (e) { setError(e instanceof Error ? e.message : "Could not upload file."); }
+    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
   function handlePaste(event: React.ClipboardEvent<HTMLTextAreaElement>) {
     const text = event.clipboardData.getData("text");
     if (text.length > 1200) {
       event.preventDefault();
       setPastedContext(text);
-      setInput((current) => current.trim() || "Summarize and use the pasted context below.");
     }
   }
-  function submit(event?: FormEvent) { event?.preventDefault(); void sendPrompt(pastedContext ? `${input.trim()}\n\n[Pasted context]\n${pastedContext}` : input); }
+  function submit(event?: FormEvent) { event?.preventDefault(); void sendPrompt(pastedContext ? `${input.trim() || "Use the attached context to help me."}\n\n[Pasted context]\n${pastedContext}` : input); }
   function stop() { abortRef.current?.abort(); }
   function newChat() { setMessages([]); setConversationId(""); setAttachmentIds([]); setPastedContext(""); setError(""); window.history.replaceState(null, "", "/chat"); }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
@@ -202,10 +219,9 @@ export function ChatClient() {
         </div>}
         <textarea className="textarea chat-input" onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Message All Model Hub…" aria-label="Message All Model Hub" />
         <div className="composer-footer">
-          <div className="composer-tools"><button type="button" className="composer-attach" onClick={() => setShowOptions((v) => !v)} aria-expanded={showOptions}>＋ <span>Attach</span></button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
-          {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim()} aria-label="Send message">Send <span>↑</span></button>}
+          <div className="composer-tools"><input ref={fileInputRef} className="sr-only" type="file" accept=".pdf,.txt,.doc,.docx,image/*" multiple onChange={(e) => void uploadFiles(e.target.files)} /><button type="button" className="composer-attach" onClick={() => fileInputRef.current?.click()} aria-label="Attach files">＋ <span>Attach</span></button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
+          {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim() && !pastedContext} aria-label="Send message">Send <span>↑</span></button>}
         </div>
-        {showOptions && files.length > 0 && <div className="composer-options"><span className="options-label">Attach ready files</span>{files.filter((f) => !projectId || !f.project_id || f.project_id === projectId).map((file) => <label key={file.id}><input type="checkbox" checked={attachmentIds.includes(file.id)} onChange={(e) => setAttachmentIds((current) => e.target.checked ? [...current, file.id] : current.filter((id) => id !== file.id))} /> {file.name}</label>)}</div>}
       </form>
       {error && <div className="soft-card small error-box">{error}</div>}
     </div>
