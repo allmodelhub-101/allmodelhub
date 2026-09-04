@@ -181,192 +181,187 @@ export function ChatClient() {
     const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
   }
 
-return (
-  <div className="chat-page">
-    
-  <header className="chat-toolbar premium-toolbar">
+  return (
+    <div className="chat-page premium-chat-page">
+      <header className="chat-toolbar premium-toolbar">
+        <div className="model-pill">
+          <span>🧠</span>
+          <strong>{exact?.name || "Auto AI Router"}</strong>
+          <span className="dropdown-arrow">⌄</span>
+        </div>
 
-  <div className="toolbar-left">
+        <div className="toolbar-status">
+          <span className="credit-pill">⚡ 842 Credits</span>
 
-    <div className="model-pill">
-      <span className="status-dot"></span>
-      {exact?.name || "All Model Hub AI"}
-    </div>
+          <details className="chat-more">
+            <summary aria-label="Advanced settings">•••</summary>
+            <div className="chat-more-menu premium-menu">
+              <button onClick={() => setProjectId(projectId ? "" : projectId)}>
+                📁 Project
+              </button>
 
-  </div>
+              <button onClick={() => setDeepThink((v) => !v)}>
+                🧠 {deepThink ? "Deep Think" : "Reasoning"}
+              </button>
 
+              <button onClick={() => {
+                setPrivateMode((v) => !v);
+                setConversationId("");
+              }}>
+                🔒 {privateMode ? "Private On" : "Private Off"}
+              </button>
 
-  <div className="toolbar-right">
+              <button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>
+                ✨ {enhancing ? "Enhancing" : "Improve Prompt"}
+              </button>
 
-    {projects.length > 0 && (
-      <PremiumSelect
-        className="mini-select"
-        aria-label="Project"
-        value={projectId}
-        onChange={(value)=>{
-          setProjectId(value);
-          setAttachmentIds([]);
-        }}
-        options={[
-          {
-            value:"",
-            label:"No project"
-          },
-          ...projects.map((p)=>({
-            value:p.id,
-            label:p.name
-          }))
-        ]}
-      />
-    )}
+              <button onClick={exportChat}>
+                📤 Export
+              </button>
 
+              <button onClick={newChat}>
+                ＋ New Chat
+              </button>
+            </div>
+          </details>
+        </div>
+      </header>
 
-    <PremiumSelect
+      <div className="chat-layout-body">
+        <div className="chat-messages premium-messages">
+          {messages.length === 0 ? (
+            <div className="chat-empty premium-empty">
+              <div className="kicker">
+                All Model Hub AI
+              </div>
 
-      className="mini-select"
+              <h1>
+                Start creating with AI
+              </h1>
 
-      aria-label="Select model"
+              <p>
+                Chat, analyze files, write content, research ideas, and use multiple AI models from one workspace.
+              </p>
 
-      value={modelId}
+              <div className="quick-actions">
+                <button onClick={() => setInput("Analyze this document")}>📄 Analyze</button>
+                <button onClick={() => setInput("Help me write content")}>✍ Write</button>
+                <button onClick={() => setInput("Research this topic")}>🔍 Research</button>
+                <button onClick={() => setInput("Help me brainstorm ideas")}>💡 Ideas</button>
+              </div>
+            </div>
+          ) : (
+            messages.map((m, i) => (
+              <div className="chat-row" key={`${m.id || i}-${m.role}`}>
+                <div className="avatar">
+                  {m.role === "user" ? "YOU" : "AI"}
+                </div>
 
-      onChange={setModelId}
+                <div className="chat-message-box">
+                  <div className="chat-content">
+                    {m.role === "assistant" ? (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {m.content || (busy && i === messages.length - 1 ? "Thinking…" : "")}
+                      </ReactMarkdown>
+                    ) : (
+                      m.content
+                    )}
+                  </div>
 
-      options={[
-        {
-          value:"",
-          label:"Auto"
-        },
-        ...models.map((m)=>({
-          value:m.id,
-          label:m.name
-        }))
-      ]}
+                  <div className="chat-actions">
+                    <button onClick={() => navigator.clipboard.writeText(m.content)}>Copy</button>
 
-    />
+                    {m.role === "assistant" && (
+                      <button onClick={() => regenerate(i)}>Regenerate</button>
+                    )}
 
+                    {m.meta && (
+                      <span className="chat-meta">{m.meta}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
 
-    <details className="chat-more">
-
-      <summary>
-        •••
-      </summary>
-
-      <div className="chat-more-menu">
-
-        <button onClick={newChat}>
-          New Chat
-        </button>
-
-
-        <button onClick={enhancePrompt}>
-          Improve Prompt
-        </button>
-
-
-        <button onClick={exportChat}>
-          Export
-        </button>
-
-
+          <div ref={messagesEndRef} aria-hidden="true" />
+        </div>
       </div>
 
-    </details>
+      <div className="composer-wrap premium-composer-wrap">
+        <form className="glass composer premium-composer" onSubmit={submit}>
+          {(pastedContext || attachmentIds.length > 0) && (
+            <div className="attachment-strip">
+              {pastedContext && (
+                <div className="attachment-card">
+                  📄 Pasted text
+                  <button type="button" onClick={() => setPastedContext("")}>×</button>
+                </div>
+              )}
 
+              {attachmentIds.map((id) => {
+                const file = files.find((item) => item.id === id);
+                return file ? (
+                  <div className="attachment-card" key={id}>
+                    📎 {file.name}
+                    <button type="button" onClick={() => setAttachmentIds((c) => c.filter((x) => x !== id))}>
+                      ×
+                    </button>
+                  </div>
+                ) : null;
+              })}
+            </div>
+          )}
 
-  </div>
+          <textarea
+            className="textarea chat-input"
+            value={input}
+            onPaste={handlePaste}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask anything..."
+          />
 
+          <div className="composer-footer">
+            <div className="composer-tools">
+              <input
+                ref={fileInputRef}
+                className="sr-only"
+                type="file"
+                multiple
+                accept=".pdf,.txt,.doc,.docx,image/*"
+                onChange={(e) => void uploadFiles(e.target.files)}
+              />
 
-</header>
+              <button type="button" onClick={() => fileInputRef.current?.click()}>
+                📎
+              </button>
 
-<div className="chat-empty">
+              <button type="button" onClick={enhancePrompt}>
+                ✨
+              </button>
 
-<div className="chat-empty-content">
+              <span>
+                {privateMode ? "🔒 Private" : "🔒 Secure"}
+              </span>
 
-<div className="kicker">
-All Model Hub AI Workspace
-</div>
+              {projectId && <span>📁 Project</span>}
+            </div>
 
+            {busy ? (
+              <button type="button" className="btn btn-danger send-button" onClick={stop}>
+                Stop
+              </button>
+            ) : (
+              <button className="btn btn-primary send-button" disabled={!input.trim() && !pastedContext}>
+                ↑
+              </button>
+            )}
+          </div>
+        </form>
 
-<h1>
-What can I help you create today?
-</h1>
-
-
-<p>
-Chat with powerful AI models, analyze documents, create content, generate ideas, and complete tasks from one intelligent workspace.
-</p>
-
-
-<div className="quick-actions">
-
-<button
-onClick={() => setInput("Analyze this document")}
->
-📄 Analyze Document
-</button>
-
-
-<button
-onClick={() => setInput("Help me write content")}
->
-✍️ Write Content
-</button>
-
-
-<button
-onClick={() => setInput("Create an image prompt")}
->
-🎨 Create Image
-</button>
-
-
-<button
-onClick={() => setInput("Help me brainstorm ideas")}
->
-💡 Brainstorm
-</button>
-
-
-</div>
-
-
-</div>
-
-</div>
-
-<div ref={messagesEndRef} aria-hidden="true" />
-
-<div className="composer-wrap">
-      <form className="glass composer" onSubmit={submit}>
-        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip" aria-label="Attached context">
-          {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context</div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
-          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-icon">{file.name.split(".").pop()?.toUpperCase().slice(0, 4) || "FILE"}</span><div><strong>{file.name}</strong><small>{Math.ceil(file.size_bytes / 1024)} KB · Uploaded</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
-        </div>}
-        <textarea
-className="textarea chat-input premium-input"
-rows={1} onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Ask anything, analyze files, or create with AI..." aria-label="Ask anything, analyze files, or create with AI..." />
-        <div className="composer-footer">
-          <div className="composer-tools"><input ref={fileInputRef} className="sr-only" type="file" accept=".pdf,.txt,.doc,.docx,image/*" multiple onChange={(e) => void uploadFiles(e.target.files)} /><button
-type="button"
-className="composer-attach"
-onClick={() => fileInputRef.current?.click()}
-aria-label="Attach files"
->
-
-<span className="attach-icon">
-📎
-</span>
-
-<span>
-Attach
-</span>
-
-</button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
-          {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim() && !pastedContext} aria-label="Send message">Send <span>↑</span></button>}
-        </div>
-      </form>
-      {error && <div className="soft-card small error-box">{error}</div>}
+        {error && <div className="soft-card small error-box">{error}</div>}
+      </div>
     </div>
-    </div>
-);
+  );
+}
 }
