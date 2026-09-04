@@ -339,7 +339,7 @@ onClick={() => setInput("Help me brainstorm ideas")}
     <div className="composer-wrap">
       <form className="glass composer" onSubmit={submit}>
         {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip" aria-label="Attached context">
-          {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context/div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
+          {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context</div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
           {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-icon">{file.name.split(".").pop()?.toUpperCase().slice(0, 4) || "FILE"}</span><div><strong>{file.name}</strong><small>{Math.ceil(file.size_bytes / 1024)} KB · Uploaded</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
         </div>}
         <textarea
