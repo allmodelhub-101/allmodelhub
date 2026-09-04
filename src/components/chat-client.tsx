@@ -276,19 +276,61 @@ export function ChatClient() {
 
 </header>
 
-    <div className="chat-messages">
-      {messages.length === 0 ? <div className="chat-empty"><div><div className="kicker">All Model Hub {exact ? `· ${exact.name}` : "Auto"}</div><h1>What are we creating?</h1><p>Chat, reason, analyze files and switch models without leaving one PKR workspace. Auto Best can choose the right intelligence for the task.</p></div></div> : messages.map((m, i) => <div className="chat-row" key={`${m.id || i}-${m.role}`}>
-        <div className="avatar">{m.role === "user" ? "YOU" : "AI"}</div>
-        <div className="chat-message-box">
-          <div className="chat-content">{m.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content || (busy && i === messages.length - 1 ? "Thinking…" : "")}</ReactMarkdown> : m.content}</div>
-          <div className="chat-actions">
-            <button onClick={() => navigator.clipboard.writeText(m.content)}>Copy</button>
-            {m.role === "user" && <button onClick={() => { setInput(m.content); setMessages(messages.slice(0, i)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }}>Edit</button>}
-            {m.role === "user" && <button onClick={() => branchAt(i)}>Branch</button>}
-            {m.role === "assistant" && <button onClick={() => regenerate(i)}>Regenerate</button>}
-            {m.meta && <span className="chat-meta">{m.meta}</span>}
-          </div>
-        </div>
+<div className="chat-empty">
+
+<div className="chat-empty-content">
+
+<div className="kicker">
+All Model Hub AI Workspace
+</div>
+
+
+<h1>
+What can I help you create today?
+</h1>
+
+
+<p>
+Chat with powerful AI models, analyze documents, create content, generate ideas, and complete tasks from one intelligent workspace.
+</p>
+
+
+<div className="quick-actions">
+
+<button
+onClick={() => setInput("Analyze this document")}
+>
+📄 Analyze Document
+</button>
+
+
+<button
+onClick={() => setInput("Help me write content")}
+>
+✍️ Write Content
+</button>
+
+
+<button
+onClick={() => setInput("Create an image prompt")}
+>
+🎨 Create Image
+</button>
+
+
+<button
+onClick={() => setInput("Help me brainstorm ideas")}
+>
+💡 Brainstorm
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
       </div>)}
       <div ref={messagesEndRef} aria-hidden="true" />
     </div>
