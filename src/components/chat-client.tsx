@@ -341,9 +341,24 @@ onClick={() => setInput("Help me brainstorm ideas")}
           {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context/div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
           {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-icon">{file.name.split(".").pop()?.toUpperCase().slice(0, 4) || "FILE"}</span><div><strong>{file.name}</strong><small>{Math.ceil(file.size_bytes / 1024)} KB · Uploaded</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
         </div>}
-        <textarea className="textarea chat-input" onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Message All Model Hub…" aria-label="Message All Model Hub" />
+        <textarea className="textarea chat-input" onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Ask anything, analyze files, or create with AI..." aria-label="Ask anything, analyze files, or create with AI..." />
         <div className="composer-footer">
-          <div className="composer-tools"><input ref={fileInputRef} className="sr-only" type="file" accept=".pdf,.txt,.doc,.docx,image/*" multiple onChange={(e) => void uploadFiles(e.target.files)} /><button type="button" className="composer-attach" onClick={() => fileInputRef.current?.click()} aria-label="Attach files">＋ <span>Attach</span></button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
+          <div className="composer-tools"><input ref={fileInputRef} className="sr-only" type="file" accept=".pdf,.txt,.doc,.docx,image/*" multiple onChange={(e) => void uploadFiles(e.target.files)} /><button
+type="button"
+className="composer-attach"
+onClick={() => fileInputRef.current?.click()}
+aria-label="Attach files"
+>
+
+<span className="attach-icon">
+📎
+</span>
+
+<span>
+Attach
+</span>
+
+</button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
           {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim() && !pastedContext} aria-label="Send message">Send <span>↑</span></button>}
         </div>
       </form>
