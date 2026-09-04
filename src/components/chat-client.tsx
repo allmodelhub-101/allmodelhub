@@ -231,24 +231,35 @@ export function ChatClient() {
         <div className="chat-messages premium-messages">
           {messages.length === 0 ? (
             <div className="chat-empty premium-empty">
-  <div className="kicker">
-    All Model Hub AI
-  </div>
 
-  <h1>
+  <h1 className="empty-title">
     Start creating with AI
   </h1>
 
-  <p>
-    Chat, analyze files, write content, research ideas, and use multiple AI models from one workspace.
+  <p className="empty-subtitle">
+    Chat, analyze files, write content, and explore AI models.
   </p>
 
   <div className="quick-actions">
-    <button onClick={() => setInput("Analyze this document")}>📄 Analyze</button>
-    <button onClick={() => setInput("Help me write content")}>✍ Write</button>
-    <button onClick={() => setInput("Research this topic")}>🔍 Research</button>
-    <button onClick={() => setInput("Help me brainstorm ideas")}>💡 Ideas</button>
+
+    <button onClick={() => setInput("Analyze this document")}>
+      📄 Analyze
+    </button>
+
+    <button onClick={() => setInput("Help me write content")}>
+      ✍ Write
+    </button>
+
+    <button onClick={() => setInput("Create an image idea")}>
+      🎨 Create
+    </button>
+
+    <button onClick={() => setInput("Help me brainstorm ideas")}>
+      💡 Ideas
+    </button>
+
   </div>
+
 </div>
           ) : (
             messages.map((m, i) => (
