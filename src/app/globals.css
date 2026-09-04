@@ -204,12 +204,11 @@ html[data-theme="light"] .app-topbar { background: rgba(248,250,252,.72); }
 /* Premium AI Empty State */
 
 .chat-empty {
-  min-height: 38vh;
-  display: grid;
-  place-items: center;
-  text-align: center;
+ min-height:38vh;
+ display:grid;
+ place-items:center;
+ text-align:center;
 }
-
 
 .premium-empty {
   max-width: 650px;
