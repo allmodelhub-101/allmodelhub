@@ -375,18 +375,14 @@ return (
 
           <div className="composer-footer">
             <div className="composer-tools">
-              <input
-                ref={fileInputRef}
-                <input
-                ref={fileInputRef}
-                className="sr-only"
-                type="file"
-                />
-                type="file"
-                multiple
-                accept=".pdf,.txt,.doc,.docx,image/*"
-                onChange={(e) => void uploadFiles(e.target.files)}
-              />
+<input
+  ref={fileInputRef}
+  type="file"
+  multiple
+  accept=".pdf,.txt,.doc,.docx,image/*"
+  hidden
+  onChange={(e) => void uploadFiles(e.target.files)}
+/>
 
               <button type="button" onClick={() => fileInputRef.current?.click()}>
                 📎
