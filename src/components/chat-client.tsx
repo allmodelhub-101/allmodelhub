@@ -362,6 +362,5 @@ export function ChatClient() {
         {error && <div className="soft-card small error-box">{error}</div>}
       </div>
     </div>
-  );
-}
+    );
 }
