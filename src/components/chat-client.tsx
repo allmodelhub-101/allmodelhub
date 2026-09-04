@@ -210,8 +210,8 @@ export function ChatClient() {
 
     <details className="chat-more">
       <summary aria-label="Advanced settings">
-        ⋯
-      </summary>
+⋯
+</summary>
             <div className="chat-more-menu premium-menu">
               <button onClick={() => setProjectId(projectId ? "" : projectId)}>
                 📁 Project
