@@ -184,17 +184,25 @@ export function ChatClient() {
   return (
     <div className="chat-page premium-chat-page">
       <header className="chat-toolbar premium-toolbar">
-        <div className="model-pill">
-          <span>🧠</span>
-          <strong>{exact?.name || "Auto AI Router"}</strong>
-          <span className="dropdown-arrow">⌄</span>
-        </div>
 
-        <div className="toolbar-status">
-          <span className="credit-pill">⚡ 842 Credits</span>
+  <button className="model-pill">
+    <span>🧠</span>
+    <strong>{exact?.name || "Auto AI"}</strong>
+    <span className="dropdown-arrow">⌄</span>
+  </button>
 
-          <details className="chat-more">
-            <summary aria-label="Advanced settings">•••</summary>
+
+  <div className="toolbar-actions">
+
+    <span className="credit-pill">
+      ⚡ 842
+    </span>
+
+
+    <details className="chat-more">
+      <summary aria-label="Advanced settings">
+        ⋯
+      </summary>
             <div className="chat-more-menu premium-menu">
               <button onClick={() => setProjectId(projectId ? "" : projectId)}>
                 📁 Project
