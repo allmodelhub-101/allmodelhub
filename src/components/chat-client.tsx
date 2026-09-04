@@ -377,7 +377,11 @@ return (
             <div className="composer-tools">
               <input
                 ref={fileInputRef}
+                <input
+                ref={fileInputRef}
                 className="sr-only"
+                type="file"
+                />
                 type="file"
                 multiple
                 accept=".pdf,.txt,.doc,.docx,image/*"
