@@ -14,10 +14,6 @@ type UserFile = { id: string; name: string; size_bytes: number; extraction_statu
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
 type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
 
-const modes: Array<[Mode, string]> = [
-  ["auto", "Auto Best"], ["budget", "Budget"], ["balanced", "Balanced"], ["premium", "Premium"], ["flagship", "Flagship"]
-];
-
 export function ChatClient() {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
@@ -36,6 +32,7 @@ export function ChatClient() {
   const [deepThink, setDeepThink] = useState(false);
   const [privateMode, setPrivateMode] = useState(false);
   const [error, setError] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -153,15 +150,17 @@ export function ChatClient() {
   }
 
   return <div className="chat-page">
-    <div className="chat-toolbar">
-      <button className="mode-pill" onClick={newChat}>＋ New</button>
-      {modes.map(([id, label]) => <button key={id} className={`mode-pill ${mode === id && !modelId ? "active" : ""}`} onClick={() => { setMode(id); setModelId(""); }}>{label}</button>)}
-      <PremiumSelect className="mini-select" aria-label="Exact model" value={modelId} onChange={setModelId} options={[{ value: "", label: "Exact model…" }, ...models.map((m) => ({ value: m.id, label: `${m.name} · ${m.tier}` }))]} />
-      {projects.length > 0 && <PremiumSelect className="mini-select" aria-label="Project" value={projectId} onChange={(value) => { setProjectId(value); setAttachmentIds([]); }} options={[{ value: "", label: "No project" }, ...projects.map((p) => ({ value: p.id, label: p.name }))]} />}
-      <button className={`mode-pill ${deepThink ? "active" : ""}`} onClick={() => setDeepThink((v) => !v)}>Deep Think</button>
-      <button className={`mode-pill ${privateMode ? "active" : ""}`} onClick={() => { setPrivateMode((v) => !v); setConversationId(""); }}>Private</button>
-      {messages.length > 0 && <button className="mode-pill" onClick={exportChat}>Export</button>}
-    </div>
+    <header className="chat-toolbar">
+      <div className="chat-toolbar-brand"><span className="chat-brand-mark">AM</span><div><strong>Workspace</strong><span>{exact?.name || "All Model Hub"}</span></div></div>
+      <div className="chat-toolbar-controls">
+        <button className="toolbar-new" onClick={newChat}>＋ New chat</button>
+        <PremiumSelect className="mini-select model-select" aria-label="Select model" value={modelId} onChange={setModelId} options={[{ value: "", label: "Auto model" }, ...models.map((m) => ({ value: m.id, label: `${m.name} · ${m.tier}` }))]} />
+        <select className="mini-select mode-select" aria-label="Reasoning mode" value={deepThink ? "deep" : mode} onChange={(e) => e.target.value === "deep" ? setDeepThink(true) : (setDeepThink(false), setMode(e.target.value as Mode))}><option value="auto">Fast · Auto</option><option value="balanced">Balanced</option><option value="premium">Deep think</option><option value="budget">Economy</option></select>
+        {projects.length > 0 && <PremiumSelect className="mini-select project-select" aria-label="Project" value={projectId} onChange={(value) => { setProjectId(value); setAttachmentIds([]); }} options={[{ value: "", label: "No project" }, ...projects.map((p) => ({ value: p.id, label: p.name }))]} />}
+        <button className={`toolbar-icon ${privateMode ? "active" : ""}`} aria-label="Toggle private mode" title="Private mode" onClick={() => { setPrivateMode((v) => !v); setConversationId(""); }}>◈</button>
+        <details className="chat-more"><summary aria-label="More chat options">•••</summary><div className="chat-more-menu"><button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>{enhancing ? "Improving…" : "Improve prompt"}</button>{messages.length > 0 && <button onClick={exportChat}>Export chat</button>}<span>{privateMode ? "Private · not saved" : "Saved to workspace"}</span></div></details>
+      </div>
+    </header>
 
     <div className="chat-messages">
       {messages.length === 0 ? <div className="chat-empty"><div><div className="kicker">All Model Hub {exact ? `· ${exact.name}` : "Auto"}</div><h1>What are we creating?</h1><p>Chat, reason, analyze files and switch models without leaving one PKR workspace. Auto Best can choose the right intelligence for the task.</p></div></div> : messages.map((m, i) => <div className="chat-row" key={`${m.id || i}-${m.role}`}>
@@ -181,16 +180,12 @@ export function ChatClient() {
 
     <div className="composer-wrap">
       <form className="glass composer" onSubmit={submit}>
-        {files.length > 0 && <details className="attachment-picker"><summary>＋ Attach files {attachmentIds.length ? `(${attachmentIds.length})` : ""}</summary><div className="attachment-list">{files.filter((f) => !projectId || !f.project_id || f.project_id === projectId).map((file) => <label key={file.id}><input type="checkbox" checked={attachmentIds.includes(file.id)} onChange={(e) => setAttachmentIds((current) => e.target.checked ? [...current, file.id] : current.filter((id) => id !== file.id))} /> {file.name}</label>)}</div></details>}
-        <textarea className="textarea" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Ask anything, write, reason, plan, code, or analyze your files…" />
+        <textarea className="textarea chat-input" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Message All Model Hub…" aria-label="Message All Model Hub" />
         <div className="composer-footer">
-          <div className="composer-tools">
-            <button type="button" className="tool-btn" disabled={enhancing || !input.trim()} onClick={enhancePrompt}>{enhancing ? "Improving…" : "✨ Improve Prompt"}</button>
-            <span className="tool-btn">{privateMode ? "Private · not saved" : projectId ? "Project context on" : "PKR wallet protected"}</span>
-            <span className="tool-btn">{modelId ? exact?.name : mode}{deepThink ? " · Deep Think" : ""}</span>
-          </div>
-          {busy ? <button type="button" className="btn btn-danger" onClick={stop}>Stop</button> : <button className="btn btn-primary" disabled={!input.trim()}>Send ↑</button>}
+          <div className="composer-tools"><button type="button" className="composer-attach" onClick={() => setShowOptions((v) => !v)} aria-expanded={showOptions}>＋ <span>Attach</span></button><span className="composer-context">{privateMode ? "Private" : projectId ? "Project context" : "Protected workspace"}</span><span className="composer-context credit-indicator">● Credits protected</span></div>
+          {busy ? <button type="button" className="btn btn-danger send-button" onClick={stop}>Stop</button> : <button className="btn btn-primary send-button" disabled={!input.trim()} aria-label="Send message">Send <span>↑</span></button>}
         </div>
+        {showOptions && files.length > 0 && <div className="composer-options"><span className="options-label">Attach ready files</span>{files.filter((f) => !projectId || !f.project_id || f.project_id === projectId).map((file) => <label key={file.id}><input type="checkbox" checked={attachmentIds.includes(file.id)} onChange={(e) => setAttachmentIds((current) => e.target.checked ? [...current, file.id] : current.filter((id) => id !== file.id))} /> {file.name}</label>)}</div>}
       </form>
       {error && <div className="soft-card small error-box">{error}</div>}
     </div>
