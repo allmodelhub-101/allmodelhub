@@ -405,7 +405,7 @@ return (
   className="tool-btn"
   onClick={() => setPrivateMode((v) => !v)}
 >
-  {privateMode ? "🔒 Private" : "🔒 Secure"}
+  🛡 {privateMode ? "Private" : "Secure"}
 </button>
 
               {projectId && <span>📁 Project</span>}
