@@ -392,13 +392,21 @@ return (
   📎 Attach
 </button>
 
-              <button type="button" onClick={enhancePrompt}>
-                ✨
-              </button>
+              <button 
+ type="button"
+ className="tool-button"
+ onClick={enhancePrompt}
+>
+ ✨ Enhance
+</button>
 
-              <span>
-                {privateMode ? "🔒 Private" : "🔒 Secure"}
-              </span>
+              <button 
+ type="button"
+ className="tool-button"
+ onClick={enhancePrompt}
+>
+ ✨ Enhance
+</button>
 
               {projectId && <span>📁 Project</span>}
             </div>
