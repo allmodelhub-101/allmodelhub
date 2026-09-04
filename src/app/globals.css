@@ -204,10 +204,15 @@ html[data-theme="light"] .app-topbar { background: rgba(248,250,252,.72); }
 /* Premium AI Empty State */
 
 .chat-empty {
- min-height:38vh;
- display:grid;
- place-items:center;
- text-align:center;
+
+    min-height:20vh;
+
+    display:grid;
+
+    place-items:center;
+
+    text-align:center;
+
 }
 
 .premium-empty {
@@ -219,13 +224,18 @@ html[data-theme="light"] .app-topbar { background: rgba(248,250,252,.72); }
 
 
 .empty-title {
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 12px;
-  letter-spacing: -.05em;
-}
 
+font-size:32px;
+
+font-weight:700;
+
+line-height:1.15;
+
+margin-bottom:12px;
+
+letter-spacing:-.05em;
+
+}
 
 .empty-subtitle {
   font-size: 15px;
