@@ -384,28 +384,28 @@ return (
   onChange={(e) => void uploadFiles(e.target.files)}
 />
 
-              <button 
+<button 
   type="button" 
-  className="tool-button"
+  className="tool-btn"
   onClick={() => fileInputRef.current?.click()}
 >
   📎 Attach
 </button>
 
-              <button 
- type="button"
- className="tool-button"
- onClick={enhancePrompt}
+<button 
+  type="button" 
+  className="tool-btn"
+  onClick={enhancePrompt}
 >
- ✨ Enhance
+  ✨ Enhance
 </button>
 
-              <button 
- type="button"
- className="tool-button"
- onClick={enhancePrompt}
+<button 
+  type="button"
+  className="tool-btn"
+  onClick={() => setPrivateMode((v) => !v)}
 >
- ✨ Enhance
+  {privateMode ? "🔒 Private" : "🔒 Secure"}
 </button>
 
               {projectId && <span>📁 Project</span>}
