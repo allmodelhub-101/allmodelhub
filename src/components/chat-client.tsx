@@ -331,8 +331,9 @@ onClick={() => setInput("Help me brainstorm ideas")}
 </div>
 
 </div>
-      </div>)}
-      <div ref={messagesEndRef} aria-hidden="true" />
+</div>
+
+<div ref={messagesEndRef} aria-hidden="true" />
     </div>
 
     <div className="composer-wrap">
