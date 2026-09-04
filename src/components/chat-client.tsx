@@ -341,7 +341,9 @@ onClick={() => setInput("Help me brainstorm ideas")}
           {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context/div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
           {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-icon">{file.name.split(".").pop()?.toUpperCase().slice(0, 4) || "FILE"}</span><div><strong>{file.name}</strong><small>{Math.ceil(file.size_bytes / 1024)} KB · Uploaded</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
         </div>}
-        <textarea className="textarea chat-input" onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Ask anything, analyze files, or create with AI..." aria-label="Ask anything, analyze files, or create with AI..." />
+        <textarea
+className="textarea chat-input premium-input"
+rows={1} onPaste={handlePaste} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.nativeEvent.isComposing || e.keyCode === 229) return; if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); } }} placeholder="Ask anything, analyze files, or create with AI..." aria-label="Ask anything, analyze files, or create with AI..." />
         <div className="composer-footer">
           <div className="composer-tools"><input ref={fileInputRef} className="sr-only" type="file" accept=".pdf,.txt,.doc,.docx,image/*" multiple onChange={(e) => void uploadFiles(e.target.files)} /><button
 type="button"
