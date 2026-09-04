@@ -181,68 +181,92 @@ export function ChatClient() {
     const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
   }
 
-  return (
+return (
+<div className="chat-page premium-chat-page">
+
+<header className="chat-toolbar premium-toolbar">
+
   <button 
-  className="model-pill"
-  type="button"
->
-  <span className="model-icon">
-    🧠
-  </span>
+    className="model-pill"
+    type="button"
+  >
+    <span className="model-icon">
+      🧠
+    </span>
 
-  <strong>
-    {exact?.name || "Auto AI"}
-  </strong>
+    <strong>
+      {exact?.name || "Auto AI"}
+    </strong>
 
-  <span className="dropdown-arrow">
-    ⌄
-  </span>
+    <span className="dropdown-arrow">
+      ⌄
+    </span>
 
-</button>
+  </button>
 
 
   <div className="toolbar-actions">
 
     <span className="credit-pill">
- ⚡ 842
-</span>
+      ⚡842
+    </span>
 
 
     <details className="chat-more">
+
       <summary aria-label="Advanced settings">
-⋯
-</summary>
-            <div className="chat-more-menu premium-menu">
-              <button onClick={() => setProjectId(projectId ? "" : projectId)}>
-                📁 Project
-              </button>
+        ⋯
+      </summary>
 
-              <button onClick={() => setDeepThink((v) => !v)}>
-                🧠 {deepThink ? "Deep Think" : "Reasoning"}
-              </button>
 
-              <button onClick={() => {
-                setPrivateMode((v) => !v);
-                setConversationId("");
-              }}>
-                🔒 {privateMode ? "Private On" : "Private Off"}
-              </button>
+      <div className="chat-more-menu premium-menu">
 
-              <button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>
-                ✨ {enhancing ? "Enhancing" : "Improve Prompt"}
-              </button>
 
-              <button onClick={exportChat}>
-                📤 Export
-              </button>
+        <button onClick={() => setProjectId(projectId ? "" : projectId)}>
+          📁 Project
+        </button>
 
-              <button onClick={newChat}>
-                ＋ New Chat
-              </button>
-            </div>
-          </details>
-        </div>
-      </header>
+
+        <button onClick={() => setDeepThink((v) => !v)}>
+          🧠 {deepThink ? "Deep Think" : "Reasoning"}
+        </button>
+
+
+        <button onClick={() => {
+          setPrivateMode((v) => !v);
+          setConversationId("");
+        }}>
+          🔒 {privateMode ? "Private On" : "Private Off"}
+        </button>
+
+
+        <button 
+          onClick={enhancePrompt}
+          disabled={enhancing || !input.trim()}
+        >
+          ✨ {enhancing ? "Enhancing" : "Improve Prompt"}
+        </button>
+
+
+        <button onClick={exportChat}>
+          📤 Export
+        </button>
+
+
+        <button onClick={newChat}>
+          ＋ New Chat
+        </button>
+
+
+      </div>
+
+    </details>
+
+
+  </div>
+
+
+</header>
 
       <div className="chat-layout-body">
         <div className="chat-messages premium-messages">
