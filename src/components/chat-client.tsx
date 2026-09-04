@@ -181,7 +181,8 @@ export function ChatClient() {
     const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
   }
 
-  return (<button 
+  return (
+  <button 
   className="model-pill"
   type="button"
 >
@@ -203,8 +204,8 @@ export function ChatClient() {
   <div className="toolbar-actions">
 
     <span className="credit-pill">
-      ⚡ 842
-    </span>
+ ⚡ 842
+</span>
 
 
     <details className="chat-more">
