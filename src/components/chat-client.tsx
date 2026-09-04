@@ -181,8 +181,10 @@ export function ChatClient() {
     const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
   }
 
-  return <div className="chat-page">
-   <header className="chat-toolbar premium-toolbar">
+return (
+  <div className="chat-page">
+    
+  <header className="chat-toolbar premium-toolbar">
 
   <div className="toolbar-left">
 
@@ -333,9 +335,8 @@ onClick={() => setInput("Help me brainstorm ideas")}
 </div>
 
 <div ref={messagesEndRef} aria-hidden="true" />
-    </div>
 
-    <div className="composer-wrap">
+<div className="composer-wrap">
       <form className="glass composer" onSubmit={submit}>
         {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip" aria-label="Attached context">
           {pastedContext && <div className="attachment-card"><span className="attachment-icon">TXT</span><div>Pasted context</div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted context">×</button></div>}
@@ -366,5 +367,6 @@ Attach
       </form>
       {error && <div className="soft-card small error-box">{error}</div>}
     </div>
-  </div>;
+    </div>
+);
 }
