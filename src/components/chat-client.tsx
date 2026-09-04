@@ -181,15 +181,23 @@ export function ChatClient() {
     const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
   }
 
-  return (
-    <div className="chat-page premium-chat-page">
-      <header className="chat-toolbar premium-toolbar">
+  return (<button 
+  className="model-pill"
+  type="button"
+>
+  <span className="model-icon">
+    🧠
+  </span>
 
-  <button className="model-pill">
-    <span>🧠</span>
-    <strong>{exact?.name || "Auto AI"}</strong>
-    <span className="dropdown-arrow">⌄</span>
-  </button>
+  <strong>
+    {exact?.name || "Auto AI"}
+  </strong>
+
+  <span className="dropdown-arrow">
+    ⌄
+  </span>
+
+</button>
 
 
   <div className="toolbar-actions">
