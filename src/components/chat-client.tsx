@@ -331,7 +331,6 @@ onClick={() => setInput("Help me brainstorm ideas")}
 </div>
 
 </div>
-</div>
 
 <div ref={messagesEndRef} aria-hidden="true" />
     </div>
