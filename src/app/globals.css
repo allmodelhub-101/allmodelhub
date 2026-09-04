@@ -329,7 +329,15 @@ letter-spacing:-.05em;
     gap:10px;
 
 }
-.composer-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.composer-tools {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:4px;
+
+}
 .tool-btn { border: 0; background: transparent; color: var(--muted); padding: 8px 9px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 12px; }
 .tool-btn:hover { background: rgba(255,255,255,.04); color: var(--text); }
 
