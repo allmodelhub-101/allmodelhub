@@ -182,17 +182,99 @@ export function ChatClient() {
   }
 
   return <div className="chat-page">
-    <header className="chat-toolbar">
-      <div className="chat-toolbar-brand"><span className="chat-brand-mark">AM</span><div><strong>Workspace</strong><span>{exact?.name || "All Model Hub"}</span></div></div>
-      <div className="chat-toolbar-controls">
-        <button className="toolbar-new" onClick={newChat}>＋ New chat</button>
-        <PremiumSelect className="mini-select model-select" aria-label="Select model" value={modelId} onChange={setModelId} options={[{ value: "", label: "Auto model" }, ...models.map((m) => ({ value: m.id, label: `${m.name} · ${m.tier}` }))]} />
-        <select className="mini-select mode-select" aria-label="Reasoning mode" value={deepThink ? "deep" : mode} onChange={(e) => e.target.value === "deep" ? setDeepThink(true) : (setDeepThink(false), setMode(e.target.value as Mode))}><option value="auto">Fast · Auto</option><option value="balanced">Balanced</option><option value="premium">Deep think</option><option value="budget">Economy</option></select>
-        {projects.length > 0 && <PremiumSelect className="mini-select project-select" aria-label="Project" value={projectId} onChange={(value) => { setProjectId(value); setAttachmentIds([]); }} options={[{ value: "", label: "No project" }, ...projects.map((p) => ({ value: p.id, label: p.name }))]} />}
-        <button className={`toolbar-icon ${privateMode ? "active" : ""}`} aria-label="Toggle private mode" title="Private mode" onClick={() => { setPrivateMode((v) => !v); setConversationId(""); }}>◈</button>
-        <details className="chat-more"><summary aria-label="More chat options">•••</summary><div className="chat-more-menu"><button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>{enhancing ? "Improving…" : "Improve prompt"}</button>{messages.length > 0 && <button onClick={exportChat}>Export chat</button>}<span>{privateMode ? "Private · not saved" : "Saved to workspace"}</span></div></details>
+   <header className="chat-toolbar premium-toolbar">
+
+  <div className="toolbar-left">
+
+    <div className="model-pill">
+      <span className="status-dot"></span>
+      {exact?.name || "All Model Hub AI"}
+    </div>
+
+  </div>
+
+
+  <div className="toolbar-right">
+
+    {projects.length > 0 && (
+      <PremiumSelect
+        className="mini-select"
+        aria-label="Project"
+        value={projectId}
+        onChange={(value)=>{
+          setProjectId(value);
+          setAttachmentIds([]);
+        }}
+        options={[
+          {
+            value:"",
+            label:"No project"
+          },
+          ...projects.map((p)=>({
+            value:p.id,
+            label:p.name
+          }))
+        ]}
+      />
+    )}
+
+
+    <PremiumSelect
+
+      className="mini-select"
+
+      aria-label="Select model"
+
+      value={modelId}
+
+      onChange={setModelId}
+
+      options={[
+        {
+          value:"",
+          label:"Auto"
+        },
+        ...models.map((m)=>({
+          value:m.id,
+          label:m.name
+        }))
+      ]}
+
+    />
+
+
+    <details className="chat-more">
+
+      <summary>
+        •••
+      </summary>
+
+      <div className="chat-more-menu">
+
+        <button onClick={newChat}>
+          New Chat
+        </button>
+
+
+        <button onClick={enhancePrompt}>
+          Improve Prompt
+        </button>
+
+
+        <button onClick={exportChat}>
+          Export
+        </button>
+
+
       </div>
-    </header>
+
+    </details>
+
+
+  </div>
+
+
+</header>
 
     <div className="chat-messages">
       {messages.length === 0 ? <div className="chat-empty"><div><div className="kicker">All Model Hub {exact ? `· ${exact.name}` : "Auto"}</div><h1>What are we creating?</h1><p>Chat, reason, analyze files and switch models without leaving one PKR workspace. Auto Best can choose the right intelligence for the task.</p></div></div> : messages.map((m, i) => <div className="chat-row" key={`${m.id || i}-${m.role}`}>
