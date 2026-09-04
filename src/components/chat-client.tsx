@@ -384,9 +384,13 @@ return (
   onChange={(e) => void uploadFiles(e.target.files)}
 />
 
-              <button type="button" onClick={() => fileInputRef.current?.click()}>
-                📎
-              </button>
+              <button 
+  type="button" 
+  className="tool-button"
+  onClick={() => fileInputRef.current?.click()}
+>
+  📎 Attach
+</button>
 
               <button type="button" onClick={enhancePrompt}>
                 ✨
