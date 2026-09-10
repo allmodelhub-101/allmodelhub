@@ -1,0 +1,27 @@
+.menuButton { display:none; width:40px; height:40px; padding:0; border:1px solid var(--line); border-radius:12px; background:var(--panel-2); place-content:center; gap:5px; cursor:pointer; }
+.menuButton span { display:block; width:17px; height:1.5px; border-radius:2px; background:var(--text); transition:transform .2s ease; }
+.menuButton.open span:first-child { transform:translateY(3.25px) rotate(45deg); }
+.menuButton.open span:last-child { transform:translateY(-3.25px) rotate(-45deg); }
+.backdrop,.mobileMenu { display:none; }
+
+@media (max-width:760px) {
+  .menuButton { display:grid; }
+  .backdrop { display:block; position:fixed; inset:0; z-index:38; background:rgba(3,7,12,.54); backdrop-filter:blur(5px); opacity:0; visibility:hidden; transition:opacity .2s ease,visibility .2s ease; }
+  .mobileMenu { display:grid; position:fixed; z-index:39; top:76px; right:12px; left:12px; max-height:calc(100svh - 88px); overflow:auto; padding:12px; border:1px solid var(--line); border-radius:18px; background:var(--panel-solid); box-shadow:var(--shadow); opacity:0; visibility:hidden; transform:translateY(-10px); transition:opacity .2s ease,transform .2s ease,visibility .2s ease; }
+  .visible { opacity:1; visibility:visible; transform:none; }
+  .mobileMenu nav { display:grid; }
+  .mobileMenu nav a { display:grid; grid-template-columns:28px 1fr auto; align-items:center; gap:12px; min-height:58px; padding:0 12px; border-bottom:1px solid var(--line); font-weight:800; }
+  .mobileMenu nav small { color:var(--accent); font-size:9px; }
+  .mobileMenu nav b { color:var(--muted); font-size:12px; }
+  .mobileActions { display:grid; grid-template-columns:1fr 1.5fr; gap:8px; padding-top:12px; }
+}
+
+@media (max-width:380px) {
+  .mobileMenu { top:70px; }
+  .mobileActions { grid-template-columns:1fr; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .menuButton span,.backdrop,.mobileMenu { transition:none; }
+}
+
