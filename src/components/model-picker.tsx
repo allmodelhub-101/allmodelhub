@@ -10,12 +10,12 @@ export type PickerModel = {
   description?: string;
   capabilities?: string[];
   autoEligible?: boolean;
-  retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number };
+  retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 
-type Filter = "recommended" | "fast" | "reasoning" | "coding" | "vision" | "cheapest";
+type Filter = "recommended" | "fast" | "reasoning" | "coding" | "vision" | "editing" | "typography" | "multi-reference" | "cheapest";
 
-const filters: { id: Filter; label: string }[] = [
+const textFilters: { id: Filter; label: string }[] = [
   { id: "recommended", label: "Recommended" },
   { id: "fast", label: "Fast" },
   { id: "reasoning", label: "Reasoning" },
@@ -24,7 +24,17 @@ const filters: { id: Filter; label: string }[] = [
   { id: "cheapest", label: "Lowest cost" }
 ];
 
+const imageFilters: { id: Filter; label: string }[] = [
+  { id: "recommended", label: "Recommended" },
+  { id: "fast", label: "Fast" },
+  { id: "editing", label: "Editing" },
+  { id: "typography", label: "Typography" },
+  { id: "multi-reference", label: "Multi-reference" },
+  { id: "cheapest", label: "Lowest cost" }
+];
+
 function priceLabel(model: PickerModel) {
+  if (model.retail?.flatCredits != null) return `${model.retail.flatCredits.toFixed(2)} credits per image`;
   const input = model.retail?.inputPerMillionCredits;
   const output = model.retail?.outputPerMillionCredits;
   if (input == null && output == null) return "Pricing on request";
@@ -32,16 +42,18 @@ function priceLabel(model: PickerModel) {
   return `${Number(input ?? output).toFixed(1)} credits per 1M`;
 }
 
-export function ModelPicker({ models, value, onChange, open, onOpenChange }: {
+export function ModelPicker({ models, value, onChange, open, onOpenChange, modality = "text" }: {
   models: PickerModel[];
   value: string;
   onChange: (value: string) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  modality?: "text" | "image";
 }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("recommended");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const filters = modality === "image" ? imageFilters : textFilters;
 
   useEffect(() => {
     if (!open) return;
@@ -65,6 +77,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange }: {
       if (normalized && !haystack.includes(normalized)) return false;
       if (filter === "recommended") return model.autoEligible !== false;
       if (filter === "cheapest") return true;
+      if (filter === "fast") return model.capabilities?.includes("fast") || model.tier === "budget";
       return model.capabilities?.includes(filter) || false;
     });
     if (filter !== "cheapest") return matches;
@@ -78,7 +91,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange }: {
   }}>
     <section className="model-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="model-picker-title">
       <header className="model-picker-head">
-        <div><span className="eyebrow">Model library</span><h2 id="model-picker-title">Choose the right intelligence</h2></div>
+        <div><span className="eyebrow">Model library</span><h2 id="model-picker-title">{modality === "image" ? "Choose an image model" : "Choose the right intelligence"}</h2></div>
         <button className="dialog-close" type="button" onClick={() => onOpenChange(false)} aria-label="Close model picker">Close</button>
       </header>
       <label className="model-search">
@@ -90,7 +103,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange }: {
         {filters.map((item) => <button key={item.id} type="button" role="tab" aria-selected={filter === item.id} className={filter === item.id ? "active" : ""} onClick={() => setFilter(item.id)}>{item.label}</button>)}
       </div>
       <div className="model-picker-list">
-        {!query && filter === "recommended" && <button type="button" className={`model-picker-option auto-option ${value ? "" : "selected"}`} onClick={() => { onChange(""); onOpenChange(false); }}>
+        {modality === "text" && !query && filter === "recommended" && <button type="button" className={`model-picker-option auto-option ${value ? "" : "selected"}`} onClick={() => { onChange(""); onOpenChange(false); }}>
           <span className="provider-mark">AM</span><span className="model-option-copy"><strong>Auto — best available</strong><small>Routes each prompt by complexity, speed, and value.</small><span className="capability-list"><em>Recommended</em><em>Automatic routing</em></span></span><span className="model-option-side"><span className="availability"><i />Available</span><b>Select</b></span>
         </button>}
         {visibleModels.map((model) => <button type="button" key={model.id} className={`model-picker-option ${value === model.id ? "selected" : ""}`} onClick={() => { onChange(model.id); onOpenChange(false); }}>
