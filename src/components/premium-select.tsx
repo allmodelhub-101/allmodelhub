@@ -36,7 +36,8 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
   }
 
   function move(step: number) {
-    const current = available.findIndex(({ index }) => index === activeIndex);
+    const selectedIndex = Math.max(0, options.findIndex((option) => option.value === value));
+    const current = available.findIndex(({ index }) => index === (open ? activeIndex : selectedIndex));
     const next = available[(current + step + available.length) % available.length];
     if (next) setActiveIndex(next.index);
   }
@@ -51,14 +52,14 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
     }
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      if (!open) { setOpen(true); return; }
+      if (!open) { setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen(true); return; }
       const option = options[activeIndex];
       if (option) choose(option);
     }
   }
 
   return <div ref={rootRef} className={`premium-select ${className}`}>
-    <button type="button" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={() => setOpen((current) => !current)} onKeyDown={handleKeyDown} {...props}>
+    <button type="button" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={() => { if (!open) setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen((current) => !current); }} onKeyDown={handleKeyDown} {...props}>
       <span className="premium-select-value">{selected?.label || "Select an option"}</span><span className="premium-select-chevron" aria-hidden="true">⌄</span>
     </button>
     {open && <div className="premium-select-menu" role="listbox" aria-labelledby={id} tabIndex={-1}>
@@ -72,4 +73,3 @@ export function selectOptions(values: Array<[string, string]>): Option[] {
 }
 
 export type { Option };
-

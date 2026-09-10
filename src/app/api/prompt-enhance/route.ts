@@ -11,6 +11,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
+import { isFeatureEnabled } from "@/lib/feature-flags";
 
 const schema = z.object({ requestId: z.string().uuid(), prompt: z.string().min(3).max(20_000) });
 export const runtime = "nodejs";
@@ -19,6 +20,9 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isFeatureEnabled("prompt_enhancer"))) {
+    return NextResponse.json({ error: "Prompt enhancement is currently unavailable." }, { status: 503 });
+  }
 
   const rate = await enforceRateLimit(`enhance:${data.user.id}`);
   if (!rate.success) return NextResponse.json({ error: "Too many requests." }, { status: 429 });

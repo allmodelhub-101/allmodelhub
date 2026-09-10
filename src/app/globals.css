@@ -533,6 +533,8 @@ html[data-theme="light"] .app-sidebar { background: linear-gradient(180deg, rgba
   border-radius:999px;
   font-size:14px;
 }
+.chat-selectors{display:flex;align-items:center;gap:8px;min-width:0}.chat-model-select{width:min(280px,36vw)}.chat-mode-select{width:130px}.chat-project-select{width:min(210px,25vw)}
+@media(max-width:760px){.chat-selectors{flex-wrap:wrap}.chat-model-select{width:min(230px,62vw)}.chat-mode-select{width:112px}.chat-project-select{width:min(230px,62vw)}.premium-toolbar{align-items:flex-start}}
 
 /* Cinematic marketing homepage */
 .cin-site {

@@ -13,6 +13,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
+import { isFeatureEnabled } from "@/lib/feature-flags";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,12 +50,14 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const limit = await enforceRateLimit(`chat:${user.id}`);
-  if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid chat request", details: parsed.error.flatten() }, { status: 400 });
   const body = parsed.data;
+  if (body.private && !(await isFeatureEnabled("private_chat"))) {
+    return NextResponse.json({ error: "Private chat is currently unavailable." }, { status: 403 });
+  }
   const totalInputLength = body.messages.reduce((total, message) => total + message.content.length, 0);
   if (totalInputLength > 400_000) return NextResponse.json({ error: "Chat input is too large." }, { status: 413 });
   const claim = await claimRequest(user.id, "chat", body.requestId);

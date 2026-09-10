@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logServerError } from "@/lib/public-error";
+import { getFeatureFlags } from "@/lib/feature-flags";
 
 export const dynamic = "force-dynamic";
 const schema = z.object({
@@ -19,9 +20,12 @@ const schema = z.object({
 export async function GET() {
   const supabase = await createClient(); const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const admin = createAdminClient(); const { data: profile, error } = await admin.from("profiles").select("*").eq("id", data.user.id).single();
+  const admin = createAdminClient(); const [{ data: profile, error }, features] = await Promise.all([
+    admin.from("profiles").select("*").eq("id", data.user.id).single(),
+    getFeatureFlags()
+  ]);
   if (error) { logServerError("settings-read", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load settings." }, { status: 500 }); }
-  return NextResponse.json({ profile });
+  return NextResponse.json({ profile, features });
 }
 
 export async function PATCH(request: Request) {

@@ -33,13 +33,13 @@ async function routesForModel(modelId: string, defaultUpstream: string): Promise
   return routes;
 }
 
-export async function providerCreateTask(input: { modelId: string; modality: "image" | "video"; body: Record<string, unknown>; allowFallback?: boolean }) {
+export async function providerCreateTask(input: { modelId: string; modality: "image" | "video" | "audio"; body: Record<string, unknown>; allowFallback?: boolean }) {
   const fallback = haimakerModelFor(input.modelId);
   try {
     const task = await apimodelsCreateTask(input.modality, input.body);
     return { task, provider: "apimodels" as const };
   } catch (primaryError) {
-    if (!input.allowFallback || !fallback || !process.env.HAIMAKER_API_KEY) throw primaryError;
+    if (input.modality === "audio" || !input.allowFallback || !fallback || !process.env.HAIMAKER_API_KEY) throw primaryError;
     const task = await haimakerCreateTask(input.modality, { ...input.body, model: fallback });
     return { task, provider: "haimaker" as const };
   }

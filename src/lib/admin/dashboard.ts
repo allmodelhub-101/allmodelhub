@@ -24,7 +24,7 @@ supabase
 
 
 supabase
-.from("transactions")
+.from("wallet_transactions")
 .select("*")
 
 

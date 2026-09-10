@@ -1,3 +1,2 @@
-export default function Page(){
-return <main className="p-8"><h1>Profit Intelligence</h1></main>
-}
+import { redirect } from "next/navigation";
+export default function ProfitsPage() { redirect("/admin?tab=jobs"); }

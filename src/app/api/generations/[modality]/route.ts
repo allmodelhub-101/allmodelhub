@@ -12,6 +12,7 @@ import { assertSpendingAllowed } from "@/lib/spending";
 import { signedFileUrl } from "@/lib/file-extract";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
+import { isFeatureEnabled, type FeatureKey } from "@/lib/feature-flags";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -36,9 +37,12 @@ if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
 const { modality } = await context.params;
 if (!["image", "video", "audio"].includes(modality)) return NextResponse.json({ error: "Invalid modality." }, { status: 404 });
+const featureKey = `${modality}_studio` as FeatureKey;
+if (!(await isFeatureEnabled(featureKey))) {
+return NextResponse.json({ error: `${modality[0].toUpperCase() + modality.slice(1)} generation is currently unavailable.` }, { status: 503 });
+}
 
 const limit = await enforceRateLimit(`generation:${modality}:${user.id}`);
-if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
 if (!limit.success) return NextResponse.json({ error: "Too many generation requests." }, { status: 429 });
 
 const parsed = bodySchema.safeParse(await request.json().catch(() => null));
@@ -151,8 +155,7 @@ return NextResponse.json({ error: "Could not create generation job." }, { status
 }
 
 try {
-if (modality === "audio") throw new Error("Audio generation uses the TTS endpoint.");
-const result = await providerCreateTask({ modelId: model.id, modality: modality as "image" | "video", body: providerBody, allowFallback: true });
+const result = await providerCreateTask({ modelId: model.id, modality: modality as "image" | "video" | "audio", body: providerBody, allowFallback: true });
 const task = result.task;
 const { error: providerUpdateError } = await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_urls: task.resultUrls ?? [], result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
 console.info("[v0] generation provider request", JSON.stringify({ jobId: job.id, provider: result.provider, modality, taskId: task.taskId, state: task.state, outputUrlCount: task.resultUrls?.length ?? 0, databaseUpdateOk: !providerUpdateError, databaseError: providerUpdateError?.message }));

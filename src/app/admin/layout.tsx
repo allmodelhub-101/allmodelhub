@@ -43,7 +43,7 @@ return (
 <div className="app-main">
 
 
-<AdminHeader />
+<AdminHeader email={data.user.email} />
 
 
 <main className="app-content">

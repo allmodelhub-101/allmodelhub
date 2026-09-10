@@ -1,4 +1,4 @@
-export default function AdminHeader(){
+export default function AdminHeader({ email }: { email?: string }){
 
 return (
 
@@ -16,7 +16,7 @@ Admin Control Center
 
 <span className="status-dot"></span>
 
-allmodelhub@gmail.com
+{email || "Administrator"}
 
 
 </div>
