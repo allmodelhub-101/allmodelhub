@@ -10,6 +10,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
+import { isFeatureEnabled } from "@/lib/feature-flags";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,9 +28,11 @@ export async function POST(request: Request) {
   const { data } = await supabase.auth.getUser();
   const user = data.user;
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isFeatureEnabled("audio_studio"))) {
+    return NextResponse.json({ error: "Audio generation is currently unavailable." }, { status: 503 });
+  }
 
   const limit = await enforceRateLimit(`tts:${user.id}`);
-  if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many TTS requests." }, { status: 429 });
 
   const parsed = schema.safeParse(await request.json().catch(() => null));

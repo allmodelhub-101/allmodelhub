@@ -34,20 +34,12 @@ Admin
 href="/admin"
 className="sidebar-link"
 >
-Dashboard
-</a>
-
-
-<a
-href="/admin/payments"
-className="sidebar-link"
->
 Payments
 </a>
 
 
 <a
-href="/admin/models"
+href="/admin?tab=models"
 className="sidebar-link"
 >
 Models
@@ -55,7 +47,15 @@ Models
 
 
 <a
-href="/admin/users"
+href="/admin?tab=providers"
+className="sidebar-link"
+>
+Providers
+</a>
+
+
+<a
+href="/admin?tab=users"
 className="sidebar-link"
 >
 Users
@@ -63,9 +63,17 @@ Users
 
 
 <a
-href="/admin/settings"
+href="/admin?tab=jobs"
 className="sidebar-link"
 >
+Jobs
+</a>
+
+<a href="/admin?tab=support" className="sidebar-link">
+Support
+</a>
+
+<a href="/admin?tab=settings" className="sidebar-link">
 Settings
 </a>
 

@@ -9,10 +9,11 @@ import { PremiumSelect } from "@/components/premium-select";
 type Mode = "auto" | "budget" | "balanced" | "premium" | "flagship";
 type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; meta?: string; credits?: number };
 type Project = { id: string; name: string };
-type Model = { id: string; name: string; modality: string; tier: string; description?: string };
+type Model = { id: string; name: string; modality: string; tier: string; description?: string; capabilities?: string[] };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
 type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
+type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 
 export function ChatClient() {
   const qs = useSearchParams();
@@ -35,6 +36,8 @@ export function ChatClient() {
   const [privateMode, setPrivateMode] = useState(false);
   const [error, setError] = useState("");
   const [pastedContext, setPastedContext] = useState("");
+  const [availableCredits, setAvailableCredits] = useState<number | null>(null);
+  const [features, setFeatures] = useState<FeatureFlags>({ private_chat: true, prompt_enhancer: true });
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" });
@@ -45,11 +48,14 @@ export function ChatClient() {
       fetch("/api/models").then((r) => r.json()),
       fetch("/api/projects").then((r) => r.json()),
       fetch("/api/files").then((r) => r.json()),
-      fetch("/api/settings").then((r) => r.json())
-    ]).then(([modelData, projectData, fileData, settingsData]) => {
+      fetch("/api/settings").then((r) => r.json()),
+      fetch("/api/wallet").then((r) => r.json())
+    ]).then(([modelData, projectData, fileData, settingsData, walletData]) => {
       setModels((modelData.models || []).filter((m: Model) => m.modality === "text"));
       setProjects(projectData.projects || []);
       setFiles((fileData.files || []).filter((f: UserFile) => f.extraction_status === "ready"));
+      setFeatures(settingsData.features || { private_chat: true, prompt_enhancer: true });
+      if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       if (!qs.get("model") && !qs.get("conversation") && settingsData.profile?.default_tier) setMode(settingsData.profile.default_tier as Mode);
     }).catch(() => setError("Could not load workspace data."));
   }, [qs]);
@@ -129,6 +135,9 @@ export function ChatClient() {
             copy[copy.length - 1] = { ...last, id: evt.messageId || last.id, credits: Number(evt.credits), meta: `${evt.model} · ${Number(evt.credits).toFixed(4)} Credits` };
             return copy;
           });
+          if (evt.type === "usage") void fetch("/api/wallet").then((r) => r.json()).then((data) => {
+            if (data.wallet) setAvailableCredits(Number(data.wallet.available));
+          });
           if (evt.type === "error") throw new Error(evt.error || "Generation failed.");
         }
       }
@@ -185,87 +194,43 @@ return (
 <div className="chat-page premium-chat-page">
 
 <header className="chat-toolbar premium-toolbar">
-
-  <button 
-    className="model-pill"
-    type="button"
-  >
-    <span className="model-icon">
-      🧠
-    </span>
-
-    <strong>
-      {exact?.name || "Auto AI"}
-    </strong>
-
-    <span className="dropdown-arrow">
-      ⌄
-    </span>
-
-  </button>
-
-
-  <div className="toolbar-actions">
-
-    <span className="credit-pill">
-      ⚡842
-    </span>
-
-
-    <details className="chat-more">
-
-      <summary aria-label="Advanced settings">
-        ⋯
-      </summary>
-
-
-      <div className="chat-more-menu premium-menu">
-
-
-        <button onClick={() => setProjectId(projectId ? "" : projectId)}>
-          📁 Project
-        </button>
-
-
-        <button onClick={() => setDeepThink((v) => !v)}>
-          🧠 {deepThink ? "Deep Think" : "Reasoning"}
-        </button>
-
-
-        <button onClick={() => {
-          setPrivateMode((v) => !v);
-          setConversationId("");
-        }}>
-          🔒 {privateMode ? "Private On" : "Private Off"}
-        </button>
-
-
-        <button 
-          onClick={enhancePrompt}
-          disabled={enhancing || !input.trim()}
-        >
-          ✨ {enhancing ? "Enhancing" : "Improve Prompt"}
-        </button>
-
-
-        <button onClick={exportChat}>
-          📤 Export
-        </button>
-
-
-        <button onClick={newChat}>
-          ＋ New Chat
-        </button>
-
-
-      </div>
-
-    </details>
-
-
+  <div className="chat-selectors">
+    <PremiumSelect
+      className="mini-select chat-model-select"
+      aria-label="AI model"
+      value={modelId}
+      onChange={setModelId}
+      options={[{ value: "", label: "🧠 Auto AI" }, ...models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}` }))]}
+    />
+    <PremiumSelect
+      className="mini-select chat-mode-select"
+      aria-label="Model tier"
+      value={mode}
+      onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }}
+      options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))}
+    />
+    <PremiumSelect
+      className="mini-select chat-project-select"
+      aria-label="Project"
+      value={projectId}
+      onChange={setProjectId}
+      options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: `📁 ${project.name}` }))]}
+    />
   </div>
 
-
+  <div className="toolbar-actions">
+    <span className="credit-pill" title="Available wallet credits">⚡{availableCredits == null ? "—" : availableCredits.toFixed(2)}</span>
+    <details className="chat-more">
+      <summary aria-label="Advanced settings">⋯</summary>
+      <div className="chat-more-menu premium-menu">
+        <button onClick={() => setDeepThink((value) => !value)} disabled={Boolean(exact && !exact.capabilities?.includes("reasoning"))}>🧠 {deepThink ? "Deep Think On" : "Deep Think Off"}</button>
+        {features.private_chat !== false && <button onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>🔒 {privateMode ? "Private On" : "Private Off"}</button>}
+        {features.prompt_enhancer !== false && <button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>✨ {enhancing ? "Enhancing" : "Improve Prompt"}</button>}
+        <button onClick={exportChat}>📤 Export</button>
+        <button onClick={newChat}>＋ New Chat</button>
+      </div>
+    </details>
+  </div>
 </header>
 
       <div className="chat-layout-body">
@@ -324,7 +289,7 @@ return (
                     <button onClick={() => navigator.clipboard.writeText(m.content)}>Copy</button>
 
                     {m.role === "assistant" && (
-                      <button onClick={() => regenerate(i)}>Regenerate</button>
+                      <><button onClick={() => regenerate(i)}>Regenerate</button><button onClick={() => branchAt(i)}>Branch</button></>
                     )}
 
                     {m.meta && (
@@ -392,23 +357,19 @@ return (
   📎 Attach
 </button>
 
-<button 
-  type="button" 
-  className="tool-btn"
-  onClick={enhancePrompt}
->
+{features.prompt_enhancer !== false && <button type="button" className="tool-btn" onClick={enhancePrompt} disabled={enhancing || !input.trim()}>
   ✨ Enhance
-</button>
+</button>}
 
-<button 
+{features.private_chat !== false && <button 
   type="button"
   className="tool-btn"
   onClick={() => setPrivateMode((v) => !v)}
 >
   🛡 {privateMode ? "Private" : "Secure"}
-</button>
+</button>}
 
-              {projectId && <span>📁 Project</span>}
+              {projectId && <span>📁 {projects.find((project) => project.id === projectId)?.name || "Project"}</span>}
             </div>
 
             {busy ? (

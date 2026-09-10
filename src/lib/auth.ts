@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { checkAdmin } from "@/lib/admin/check-admin";
 
 export async function requireUser() {
   const supabase = await createClient();
@@ -17,8 +17,6 @@ export async function getUserOrNull() {
 
 export async function requireAdmin() {
   const user = await requireUser();
-  const admin = createAdminClient();
-  const { data } = await admin.from("profiles").select("role").eq("id", user.id).single();
-  if (!data || !["admin", "owner"].includes(data.role)) redirect("/chat");
+  if (!(await checkAdmin(user.id))) redirect("/chat");
   return user;
 }
