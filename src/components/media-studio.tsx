@@ -15,7 +15,7 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const qs=useSearchParams();
   const [models,setModels]=useState<Model[]>([]);
   const [modelId,setModelId]=useState("");
-  const [prompt,setPrompt]=useState("");
+  const [prompt,setPrompt]=useState(qs.get("prompt") || "");
   const [duration,setDuration]=useState(5);
   const [resolution]=useState(modality==="video"?"720p":"");
   const [aspect,setAspect]=useState("16:9");
@@ -23,15 +23,15 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState("");
   const [confirmed,setConfirmed]=useState(false);
-  const [referenceFileIds,setReferenceFileIds]=useState<string[]>([]);
+  const [referenceFileIds,setReferenceFileIds]=useState<string[]>(()=>{const incoming=qs.get("reference");return incoming?[incoming]:[]});
   const [uploading,setUploading]=useState(false);
   const [copied,setCopied]=useState(false);
 
   useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.id==="eleven-tts-flash"));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
   const model=models.find(m=>m.id===modelId);
   const veoFixed = modelId === "veo-3-1-fast-fhd";
+  const estimate=useMemo(()=>{if(!model)return 0;if(model.retail.flatCredits)return Number(model.retail.flatCredits);if(model.retail.perSecondCredits)return Number(model.retail.perSecondCredits)*duration;return 0},[model,duration]);
   const effectiveDuration = veoFixed ? 8 : duration;
-  const estimate=useMemo(()=>{if(!model)return 0;if(model.retail.flatCredits)return Number(model.retail.flatCredits);if(model.retail.perSecondCredits)return Number(model.retail.perSecondCredits)*effectiveDuration;return 0},[model,effectiveDuration]);
   const expensive=modality==="video"||estimate>=50;
 
   async function uploadReference(file:File){setUploading(true);setError("");try{if(!file.type.startsWith("image/"))throw new Error("Reference files must be images.");const form=new FormData();form.set("file",file);const r=await fetch("/api/files",{method:"POST",body:form});const d=await r.json().catch(()=>({}));if(!r.ok||!d.file?.id)throw new Error(d.error||"Reference upload failed.");setReferenceFileIds(ids=>[...ids,d.file.id].slice(0,10));}catch(err){setError(err instanceof Error?err.message:"Reference upload failed.");}finally{setUploading(false);}}
@@ -52,7 +52,7 @@ export function MediaStudio({modality,title,subtitle}:Props){
         {modality==="video"&&<><label className="label">Duration{veoFixed?<div className="soft-card small" style={{padding:10}}>8 seconds · fixed by this VEO tier</div>:<PremiumSelect value={String(duration)} onChange={value=>{setDuration(Number(value));setConfirmed(false)}} options={[5,8,10,15].map(value=>({value:String(value),label:`${value} seconds`}))} />}</label><label className="label">Resolution<div className="soft-card small" style={{padding:10}}>{veoFixed?"1080p":"720p launch-safe tier"}</div></label></>}
         {modality!=="audio"&&<label className="label">Aspect ratio<PremiumSelect value={aspect} onChange={setAspect} options={["16:9","9:16","1:1","4:3","3:4"].map(value=>({value,label:value}))} /></label>}
         {modality==="audio"&&<label className="label">Duration (for sound effects)<input className="input" type="number" min={3} max={10} step={1} value={duration} onChange={e=>setDuration(Number(e.target.value))}/></label>}
-        <div className="confirm-box"><b>Estimated usage: {estimate.toFixed(2)} Credits{model?.retail.perSecondCredits?` for ${effectiveDuration}s`:""}</b><br/>1 Credit = PKR 1. Provider-specific options can change actual cost; the server reserves a small safety buffer and never allows a negative wallet.</div>
+        <div className="confirm-box"><b>Estimated usage: {estimate.toFixed(2)} Credits{model?.retail.perSecondCredits?` for ${duration}s`:""}</b><br/>1 Credit = PKR 1. Provider-specific options can change actual cost; the server reserves a small safety buffer and never allows a negative wallet.</div>
         {expensive&&<label style={{display:"flex",gap:9,alignItems:"flex-start",fontSize:13,color:"var(--muted)"}}><input type="checkbox" checked={confirmed} onChange={e=>setConfirmed(e.target.checked)}/><span>I understand this is a higher-cost generation and authorize the displayed estimated usage.</span></label>}
         <button className="btn btn-primary" disabled={busy||!modelId||!prompt.trim()||(expensive&&!confirmed)}>{busy?"Submitting…":`Generate ${modality}`}</button>
         {error&&<div className="soft-card small" style={{padding:12,color:"var(--danger)"}}>{error}</div>}
@@ -66,3 +66,4 @@ export function MediaStudio({modality,title,subtitle}:Props){
     </div>
   </div>;
 }
+

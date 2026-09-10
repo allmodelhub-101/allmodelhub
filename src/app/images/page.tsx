@@ -1,1 +1,9 @@
-import { AppShell } from "@/components/app-shell";import { MediaStudio } from "@/components/media-studio";import { FeatureUnavailable } from "@/components/feature-unavailable";import { isFeatureEnabled } from "@/lib/feature-flags";export const dynamic="force-dynamic";export default async function Page(){const enabled=await isFeatureEnabled("image_studio");return <AppShell>{enabled?<MediaStudio modality="image" title="Image Studio" subtitle="Generate premium visuals with curated budget, balanced and premium image models. Exact model costs stay visible in Credits."/>:<FeatureUnavailable title="Image Studio"/>}</AppShell>}
+import { AppShell } from "@/components/app-shell";
+import { ImageStudio } from "@/components/image-studio";
+
+export const dynamic = "force-dynamic";
+
+export default function Page() {
+  return <AppShell><ImageStudio /></AppShell>;
+}
+
