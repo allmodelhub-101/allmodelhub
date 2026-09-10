@@ -38,6 +38,30 @@ export async function captureWalletHold(holdId: string, amount: number, idempote
   return data as string;
 }
 
+export async function completeGenerationJob(input: {
+  jobId: string;
+  chargedCredits: number;
+  resultJson: Record<string, unknown>;
+  resultUrls: string[];
+  metadata?: Record<string, unknown>;
+}) {
+  const admin = createAdminClient();
+  const { data, error } = await admin.rpc("complete_generation_job", {
+    p_job_id: input.jobId,
+    p_charged_credits: input.chargedCredits,
+    p_result_json: input.resultJson,
+    p_result_urls: input.resultUrls,
+    p_metadata: input.metadata ?? {}
+  });
+  if (error) throw error;
+
+  const result = data as { transaction_id?: string | null; completed_now?: boolean } | null;
+  return {
+    transactionId: result?.transaction_id ?? null,
+    completedNow: Boolean(result?.completed_now)
+  };
+}
+
 export async function releaseWalletHold(holdId: string, reason = "released") {
   const admin = createAdminClient();
   const { error } = await admin.rpc("release_wallet_hold", { p_hold_id: holdId, p_reason: reason });
