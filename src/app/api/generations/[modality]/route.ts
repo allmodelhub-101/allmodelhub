@@ -113,7 +113,7 @@ const callbackUrl = process.env.CALLBACK_SECRET
 ? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
 : undefined;
 
-console.info("[generation] callback url", callbackUrl);
+console.info("[generation] callback configured", Boolean(callbackUrl));
 
 const publicId = createPublicId("AMH-GEN");
 

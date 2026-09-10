@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { providerPollTask } from "@/lib/providers";
-import { captureWalletHold, releaseWalletHold } from "@/lib/wallet";
+import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
 import { persistGeneratedAssets, signGeneratedPaths } from "@/lib/generated-assets";
 import { notifyUser } from "@/lib/notifications";
 
@@ -37,21 +37,25 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
   try {
     const task = await providerPollTask({ provider: String(job.provider_key || "apimodels"), modality: job.modality as "image" | "video" | "audio", taskId: job.provider_task_id });
     if (task.state === "completed") {
-      const claim = await admin.from("generation_jobs").update({ status: "settling", updated_at: new Date().toISOString() }).eq("id", job.id).in("status", ["submitted", "processing"]).select("id").maybeSingle();
-      if (!claim.data) return NextResponse.json({ job: await clientJob(job), warning: "Generation completion is being finalized." });
       const charge = Number(job.estimated_credits);
-      if (job.hold_id) {
-        try {
-          await captureWalletHold(job.hold_id, charge, `generation-capture:${job.id}`, { job_id: job.id, model_id: job.model_id, provider_task_id: job.provider_task_id });
-        } catch {
-          await admin.from("generation_jobs").update({ status: "processing", error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id);
-          return NextResponse.json({ job: await clientJob(job), warning: "Wallet settlement is pending." }, { status: 503 });
-        }
-      }
       const storedPaths = await persistGeneratedAssets(user.id, job.id, task.resultUrls ?? []);
       const resultJson = { provider: task.raw, amhStoredPaths: storedPaths };
-      const { data: updated } = await admin.from("generation_jobs").update({ status: "completed", result_json: resultJson, result_urls: task.resultUrls ?? [], charged_credits: charge, updated_at: new Date().toISOString(), completed_at: new Date().toISOString() }).eq("id", job.id).select("*").single();
-      await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
+      try {
+        const settlement = await completeGenerationJob({
+          jobId: job.id,
+          chargedCredits: charge,
+          resultJson,
+          resultUrls: task.resultUrls ?? [],
+          metadata: { job_id: job.id, model_id: job.model_id, provider_task_id: job.provider_task_id, source: "job_poll" }
+        });
+        if (settlement.completedNow) {
+          await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
+        }
+      } catch {
+        await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
+        return NextResponse.json({ job: await clientJob(job), warning: "Wallet settlement is pending." }, { status: 503 });
+      }
+      const { data: updated } = await admin.from("generation_jobs").select("*").eq("id", job.id).single();
       return NextResponse.json({ job: await clientJob(updated) });
     }
 
