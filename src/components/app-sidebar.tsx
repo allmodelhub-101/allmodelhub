@@ -5,25 +5,25 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type NavItem = { label: string; href: string; icon: string };
-type NavGroup = { label: string; items: NavItem[] };
+const primaryItems: NavItem[] = [
+  { label: "Chat", href: "/chat", icon: "✦" },
+  { label: "Image", href: "/images", icon: "▧" },
+  { label: "Video", href: "/video", icon: "▶" },
+  { label: "Audio", href: "/audio", icon: "◖" },
+  { label: "Projects", href: "/projects", icon: "⌘" },
+  { label: "Library", href: "/history", icon: "◷" },
+  { label: "Models", href: "/models", icon: "◈" }
+];
 
-const groups: NavGroup[] = [
-  { label: "Create", items: [
-    { label: "New Chat", href: "/chat", icon: "✦" }, { label: "Images", href: "/images", icon: "▧" },
-    { label: "Video", href: "/video", icon: "▶" }, { label: "Audio", href: "/audio", icon: "◖" },
-  ] },
-  { label: "Workspace", items: [
-    { label: "History", href: "/history", icon: "◷" }, { label: "Projects", href: "/projects", icon: "⌘" },
-    { label: "Files", href: "/files", icon: "□" }, { label: "Templates", href: "/templates", icon: "▤" },
-  ] },
-  { label: "AI", items: [
-    { label: "Models", href: "/models", icon: "◈" }, { label: "Model Battle", href: "/battle", icon: "⚔" },
-  ] },
-  { label: "Account", items: [
-    { label: "Wallet", href: "/wallet", icon: "₨" }, { label: "Usage & Receipts", href: "/usage", icon: "▥" },
-    { label: "Notifications", href: "/notifications", icon: "◌" }, { label: "Settings", href: "/settings", icon: "⚙" },
-    { label: "Help", href: "/support", icon: "?" },
-  ] },
+const moreItems: NavItem[] = [
+  { label: "Compare Models", href: "/battle", icon: "↔" },
+  { label: "Files", href: "/files", icon: "□" },
+  { label: "Templates", href: "/templates", icon: "▤" },
+  { label: "Wallet", href: "/wallet", icon: "₨" },
+  { label: "Usage & Receipts", href: "/usage", icon: "▥" },
+  { label: "Notifications", href: "/notifications", icon: "◌" },
+  { label: "Settings", href: "/settings", icon: "⚙" },
+  { label: "Help", href: "/support", icon: "?" }
 ];
 
 function isActive(pathname: string, href: string) { return href === "/chat" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`); }
@@ -57,8 +57,10 @@ export function AppSidebar({ balance, displayName, email, isAdmin }: { balance: 
     <aside className={`app-sidebar ${collapsed ? "is-collapsed" : ""} ${open ? "is-open" : ""}`} aria-label="Authenticated navigation">
       <div className="sidebar-head"><Link href="/" className="sidebar-brand"><span className="brand-mark" /><span className="sidebar-brand-copy">All Model Hub</span></Link><button className="sidebar-collapse" type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} onClick={toggleCollapsed}>{collapsed ? "›" : "‹"}</button><button className="sidebar-close" type="button" aria-label="Close navigation" onClick={() => setOpen(false)}>×</button></div>
       <Link href="/wallet" className="sidebar-balance" title="Open Wallet"><span className="balance-icon">₨</span><span><strong>{balance.toFixed(2)}</strong><small>available credits</small></span><span className="balance-arrow">↗</span></Link>
+      <Link href="/chat" className="sidebar-new"><span aria-hidden="true">+</span><span className="sidebar-label">New creation</span></Link>
       <nav className="sidebar-scroll">
-        {groups.map((group) => <div className="sidebar-group" key={group.label}><div className="sidebar-section">{group.label}</div><div className="sidebar-nav">{group.items.map((item) => <Link className={`sidebar-link ${isActive(pathname, item.href) ? "active" : ""}`} href={item.href} key={item.href} title={collapsed ? item.label : undefined} aria-current={isActive(pathname, item.href) ? "page" : undefined}><span className="sidebar-icon" aria-hidden="true">{item.icon}</span><span className="sidebar-label">{item.label}</span></Link>)}</div></div>)}
+        <div className="sidebar-group"><div className="sidebar-section">Workspace</div><div className="sidebar-nav">{primaryItems.map((item) => <Link className={`sidebar-link ${isActive(pathname, item.href) ? "active" : ""}`} href={item.href} key={item.href} title={collapsed ? item.label : undefined} aria-current={isActive(pathname, item.href) ? "page" : undefined}><span className="sidebar-icon" aria-hidden="true">{item.icon}</span><span className="sidebar-label">{item.label}</span></Link>)}</div></div>
+        <details className="sidebar-more"><summary><span className="sidebar-icon" aria-hidden="true">•••</span><span className="sidebar-label">More</span></summary><div className="sidebar-nav">{moreItems.map((item) => <Link className={`sidebar-link ${isActive(pathname, item.href) ? "active" : ""}`} href={item.href} key={item.href} title={collapsed ? item.label : undefined} aria-current={isActive(pathname, item.href) ? "page" : undefined}><span className="sidebar-icon" aria-hidden="true">{item.icon}</span><span className="sidebar-label">{item.label}</span></Link>)}</div></details>
         {isAdmin && <div className="sidebar-group"><div className="sidebar-nav"><Link className={`sidebar-link ${isActive(pathname, "/admin") ? "active" : ""}`} href="/admin" title={collapsed ? "Admin Control Center" : undefined}><span className="sidebar-icon" aria-hidden="true">◆</span><span className="sidebar-label">Admin Control Center</span></Link></div></div>}
       </nav>
       <div className="sidebar-bottom"><div className="sidebar-profile"><span className="profile-avatar">{initials}</span><span className="profile-copy"><strong>{displayName || "Member"}</strong><small>{email || "Account"}</small></span></div><form action="/auth/logout" method="post"><button className="sidebar-signout" type="submit" title={collapsed ? "Sign out" : undefined}><span aria-hidden="true">↗</span><span className="sidebar-label">Sign out</span></button></form></div>
@@ -68,5 +70,5 @@ export function AppSidebar({ balance, displayName, email, isAdmin }: { balance: 
 
 export function MobileNavButton() { return null; }
 
-export { groups };
+export { primaryItems, moreItems };
 
