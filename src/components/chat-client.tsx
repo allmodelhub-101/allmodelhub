@@ -1,24 +1,29 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ModelPicker, PickerModel } from "@/components/model-picker";
 import { PremiumSelect } from "@/components/premium-select";
 
 type Mode = "auto" | "budget" | "balanced" | "premium" | "flagship";
 type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; meta?: string; credits?: number };
 type Project = { id: string; name: string };
-type Model = { id: string; name: string; modality: string; tier: string; description?: string; capabilities?: string[] };
+type Model = PickerModel & { modality: string };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
 type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 
+const starterPrompts = ["Help me plan a launch", "Analyze a document", "Build a product brief"];
+
 export function ChatClient() {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
@@ -38,22 +43,59 @@ export function ChatClient() {
   const [pastedContext, setPastedContext] = useState("");
   const [availableCredits, setAvailableCredits] = useState<number | null>(null);
   const [features, setFeatures] = useState<FeatureFlags>({ private_chat: true, prompt_enhancer: true });
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+  const [copiedKey, setCopiedKey] = useState("");
+  const draftKey = `amh-chat-draft:${conversationId || "new"}`;
+
+  useEffect(() => {
+    if (qs.get("template") || privateMode) return;
+    const saved = window.sessionStorage.getItem(draftKey);
+    if (!saved) return;
+    const timer = window.setTimeout(() => setInput(saved), 0);
+    return () => window.clearTimeout(timer);
+  }, [draftKey, privateMode, qs]);
+
+  useEffect(() => {
+    if (privateMode) return;
+    if (input) window.sessionStorage.setItem(draftKey, input);
+    else window.sessionStorage.removeItem(draftKey);
+  }, [draftKey, input, privateMode]);
+
+  useEffect(() => {
+    const field = textareaRef.current;
+    if (!field) return;
+    field.style.height = "auto";
+    field.style.height = `${Math.min(Math.max(field.scrollHeight, 44), 184)}px`;
+    field.style.overflowY = field.scrollHeight > 184 ? "auto" : "hidden";
+  }, [input]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" });
   }, [messages, busy]);
 
   useEffect(() => {
+    function globalShortcut(event: globalThis.KeyboardEvent) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setPickerOpen(true);
+      }
+      if (event.key === "Escape" && busy) abortRef.current?.abort();
+    }
+    document.addEventListener("keydown", globalShortcut);
+    return () => document.removeEventListener("keydown", globalShortcut);
+  }, [busy]);
+
+  useEffect(() => {
     Promise.all([
-      fetch("/api/models").then((r) => r.json()),
-      fetch("/api/projects").then((r) => r.json()),
-      fetch("/api/files").then((r) => r.json()),
-      fetch("/api/settings").then((r) => r.json()),
-      fetch("/api/wallet").then((r) => r.json())
+      fetch("/api/models").then((response) => response.json()), fetch("/api/projects").then((response) => response.json()),
+      fetch("/api/files").then((response) => response.json()), fetch("/api/settings").then((response) => response.json()),
+      fetch("/api/wallet").then((response) => response.json())
     ]).then(([modelData, projectData, fileData, settingsData, walletData]) => {
-      setModels((modelData.models || []).filter((m: Model) => m.modality === "text"));
+      setModels((modelData.models || []).filter((model: Model) => model.modality === "text"));
       setProjects(projectData.projects || []);
-      setFiles((fileData.files || []).filter((f: UserFile) => f.extraction_status === "ready"));
+      setFiles((fileData.files || []).filter((file: UserFile) => file.extraction_status === "ready"));
       setFeatures(settingsData.features || { private_chat: true, prompt_enhancer: true });
       if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       if (!qs.get("model") && !qs.get("conversation") && settingsData.profile?.default_tier) setMode(settingsData.profile.default_tier as Mode);
@@ -62,11 +104,11 @@ export function ChatClient() {
 
   useEffect(() => {
     if (!conversationId) return;
-    fetch(`/api/conversations?id=${conversationId}`).then((r) => r.json()).then((data) => {
-      if (data.messages) setMessages(data.messages.filter((m: ConversationMessage) => m.role !== "system").map((m: ConversationMessage) => ({
-        id: m.id, role: m.role, content: m.content,
-        credits: m.credits_charged == null ? undefined : Number(m.credits_charged),
-        meta: m.credits_charged == null ? undefined : `${m.model_id || "AI"} · ${Number(m.credits_charged).toFixed(4)} Credits`
+    fetch(`/api/conversations?id=${conversationId}`).then((response) => response.json()).then((data) => {
+      if (data.messages) setMessages(data.messages.filter((message: ConversationMessage) => message.role !== "system").map((message: ConversationMessage) => ({
+        id: message.id, role: message.role, content: message.content,
+        credits: message.credits_charged == null ? undefined : Number(message.credits_charged),
+        meta: message.credits_charged == null ? undefined : `${message.model_id || "AI"} · ${Number(message.credits_charged).toFixed(4)} credits`
       })));
       if (data.conversation?.mode) setMode(data.conversation.mode as Mode);
       if (data.conversation?.project_id) setProjectId(data.conversation.project_id);
@@ -74,7 +116,8 @@ export function ChatClient() {
     }).catch(() => setError("Could not load this conversation."));
   }, [conversationId]);
 
-  const exact = useMemo(() => models.find((m) => m.id === modelId), [models, modelId]);
+  const exact = useMemo(() => models.find((model) => model.id === modelId), [models, modelId]);
+  const selectedProject = useMemo(() => projects.find((project) => project.id === projectId), [projectId, projects]);
 
   async function enhancePrompt() {
     if (!input.trim() || enhancing || busy) return;
@@ -84,308 +127,164 @@ export function ChatClient() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Prompt enhancement failed.");
       setInput(data.prompt || input);
-    } catch (e) { setError(e instanceof Error ? e.message : "Prompt enhancement failed."); }
+    } catch (caught) { setError(caught instanceof Error ? caught.message : "Prompt enhancement failed."); }
     finally { setEnhancing(false); }
   }
 
-  async function sendPrompt(prompt: string, history: ChatMessage[] = messages) {
+  async function sendPrompt(prompt: string, history: ChatMessage[] = messages, recovery?: { input: string; pasted: string }) {
     if (!prompt.trim() || busy) return;
+    const recoveryDraft = recovery || { input, pasted: pastedContext };
     setError(""); setBusy(true);
     const controller = new AbortController(); abortRef.current = controller;
-    const userMessage: ChatMessage = { role: "user", content: prompt.trim() };
-    const working = [...history, userMessage];
+    const working = [...history, { role: "user" as const, content: prompt.trim() }];
     setMessages([...working, { role: "assistant", content: "" }]);
-    setInput("");
-    setPastedContext("");
-
+    setInput(""); setPastedContext("");
     try {
       const response = await fetch("/api/chat", {
         method: "POST", signal: controller.signal, headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           requestId: crypto.randomUUID(), messages: working.map(({ role, content }) => ({ role, content })), tier: mode,
           modelId: modelId || undefined, conversationId: privateMode ? undefined : conversationId || undefined,
-          projectId: projectId || undefined, attachmentIds, maxTokens: deepThink ? 4096 : 2048,
-          deepThink, private: privateMode
+          projectId: projectId || undefined, attachmentIds, maxTokens: deepThink ? 4096 : 2048, deepThink, private: privateMode
         })
       });
       if (!response.ok || !response.body) {
         const data = await response.json().catch(() => ({}));
         throw new Error(data.error || "Chat request failed.");
       }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
+      const reader = response.body.getReader(); const decoder = new TextDecoder(); let buffer = "";
       while (true) {
         const { value, done } = await reader.read(); if (done) break;
         buffer += decoder.decode(value, { stream: true });
         const frames = buffer.split("\n\n"); buffer = frames.pop() || "";
         for (const frame of frames) {
-          const line = frame.split("\n").find((x) => x.startsWith("data:")); if (!line) continue;
-          let evt: StreamEvent; try { evt = JSON.parse(line.slice(5).trim()) as StreamEvent; } catch { continue; }
-          if (evt.type === "meta" && evt.conversationId && !privateMode) {
-            setConversationId(evt.conversationId);
-            window.history.replaceState(null, "", `/chat?conversation=${evt.conversationId}`);
+          const line = frame.split("\n").find((item) => item.startsWith("data:")); if (!line) continue;
+          let streamEvent: StreamEvent; try { streamEvent = JSON.parse(line.slice(5).trim()) as StreamEvent; } catch { continue; }
+          if (streamEvent.type === "meta" && streamEvent.conversationId && !privateMode) {
+            setConversationId(streamEvent.conversationId); window.history.replaceState(null, "", `/chat?conversation=${streamEvent.conversationId}`);
           }
-          if (evt.type === "delta") setMessages((current) => {
-            const copy = [...current]; const last = copy[copy.length - 1]; copy[copy.length - 1] = { ...last, content: last.content + evt.text }; return copy;
-          });
-          if (evt.type === "usage") setMessages((current) => {
+          if (streamEvent.type === "delta") setMessages((current) => {
             const copy = [...current]; const last = copy[copy.length - 1];
-            copy[copy.length - 1] = { ...last, id: evt.messageId || last.id, credits: Number(evt.credits), meta: `${evt.model} · ${Number(evt.credits).toFixed(4)} Credits` };
-            return copy;
+            copy[copy.length - 1] = { ...last, content: last.content + streamEvent.text }; return copy;
           });
-          if (evt.type === "usage") void fetch("/api/wallet").then((r) => r.json()).then((data) => {
-            if (data.wallet) setAvailableCredits(Number(data.wallet.available));
-          });
-          if (evt.type === "error") throw new Error(evt.error || "Generation failed.");
+          if (streamEvent.type === "usage") {
+            setMessages((current) => {
+              const copy = [...current]; const last = copy[copy.length - 1];
+              copy[copy.length - 1] = { ...last, id: streamEvent.messageId || last.id, credits: Number(streamEvent.credits), meta: `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` }; return copy;
+            });
+            void fetch("/api/wallet").then((walletResponse) => walletResponse.json()).then((data) => { if (data.wallet) setAvailableCredits(Number(data.wallet.available)); });
+          }
+          if (streamEvent.type === "error") throw new Error(streamEvent.error || "Generation failed.");
         }
       }
-      setAttachmentIds([]);
-    } catch (e) {
-      if ((e as Error)?.name !== "AbortError") setError(e instanceof Error ? e.message : "Chat request failed.");
-      setMessages((current) => current.filter((m, i) => !(i === current.length - 1 && m.role === "assistant" && !m.content)));
+      setAttachmentIds([]); window.sessionStorage.removeItem(draftKey);
+    } catch (caught) {
+      const stopped = (caught as Error)?.name === "AbortError";
+      if (!stopped) {
+        setError(caught instanceof Error ? caught.message : "Chat request failed.");
+        setInput((current) => current || recoveryDraft.input); setPastedContext((current) => current || recoveryDraft.pasted);
+      }
+      setMessages((current) => current.filter((message, index) => !(index === current.length - 1 && message.role === "assistant" && !message.content)));
     } finally { setBusy(false); abortRef.current = null; }
   }
 
-  async function uploadFiles(selected: FileList | null) {
-    if (!selected?.length) return;
+  const uploadFiles = useCallback(async (selected: FileList | File[] | null) => {
+    if (!selected || selected.length === 0) return;
     setError("");
     for (const file of Array.from(selected)) {
-      const form = new FormData();
-      form.append("file", file);
-      if (projectId) form.append("projectId", projectId);
+      const form = new FormData(); form.append("file", file); if (projectId) form.append("projectId", projectId);
       try {
-        const response = await fetch("/api/files", { method: "POST", body: form });
-        const data = await response.json().catch(() => ({}));
+        const response = await fetch("/api/files", { method: "POST", body: form }); const data = await response.json().catch(() => ({}));
         if (!response.ok || !data.file) throw new Error(data.error || `Could not upload ${file.name}.`);
         setFiles((current) => [data.file, ...current.filter((item) => item.id !== data.file.id)]);
         setAttachmentIds((current) => current.includes(data.file.id) ? current : [...current, data.file.id]);
-      } catch (e) { setError(e instanceof Error ? e.message : "Could not upload file."); }
+      } catch (caught) { setError(caught instanceof Error ? caught.message : "Could not upload file."); }
     }
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }
+  }, [projectId]);
 
   function handlePaste(event: React.ClipboardEvent<HTMLTextAreaElement>) {
     const text = event.clipboardData.getData("text");
-    if (text.length > 1200) {
-      event.preventDefault();
-      setPastedContext(text);
-    }
+    if (text.length > 1200) { event.preventDefault(); setPastedContext(text); }
   }
-  function submit(event?: FormEvent) { event?.preventDefault(); void sendPrompt(pastedContext ? `${input.trim() || "Use the attached context to help me."}\n\n[Pasted context]\n${pastedContext}` : input); }
-  function stop() { abortRef.current?.abort(); }
-  function newChat() { setMessages([]); setConversationId(""); setAttachmentIds([]); setPastedContext(""); setError(""); window.history.replaceState(null, "", "/chat"); }
+  function submit(event?: FormEvent) {
+    event?.preventDefault();
+    const prompt = pastedContext ? `${input.trim() || "Use the attached context to help me."}\n\n[Pasted context]\n${pastedContext}` : input;
+    void sendPrompt(prompt, messages, { input, pasted: pastedContext });
+  }
+  function handleComposerKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); }
+    if (event.key === "Escape" && busy) abortRef.current?.abort();
+  }
+  function newChat() {
+    setMessages([]); setConversationId(""); setAttachmentIds([]); setPastedContext(""); setError("");
+    window.history.replaceState(null, "", "/chat"); window.setTimeout(() => textareaRef.current?.focus(), 0);
+  }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
+  function editPrompt(index: number) {
+    setInput(messages[index].content); setMessages(messages.slice(0, index)); setConversationId("");
+    window.history.replaceState(null, "", "/chat"); window.setTimeout(() => textareaRef.current?.focus(), 0);
+  }
   function regenerate(index: number) {
-    const previous = messages.slice(0, index).filter((m) => m.content);
-    const lastUserIndex = [...previous].map((m) => m.role).lastIndexOf("user");
-    if (lastUserIndex < 0) return;
-    const prompt = previous[lastUserIndex].content;
-    void sendPrompt(prompt, previous.slice(0, lastUserIndex));
+    const previous = messages.slice(0, index).filter((message) => message.content);
+    const lastUserIndex = [...previous].map((message) => message.role).lastIndexOf("user"); if (lastUserIndex < 0) return;
+    void sendPrompt(previous[lastUserIndex].content, previous.slice(0, lastUserIndex), { input: previous[lastUserIndex].content, pasted: "" });
+  }
+  async function copyMessage(content: string, key: string) {
+    await navigator.clipboard.writeText(content); setCopiedKey(key); window.setTimeout(() => setCopiedKey(""), 1400);
   }
   function exportChat() {
-    const content = messages.map((m) => `## ${m.role === "user" ? "You" : "All Model Hub"}\n\n${m.content}\n`).join("\n");
-    const blob = new Blob([content], { type: "text/markdown" }); const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "all-model-hub-chat.md"; a.click(); URL.revokeObjectURL(url);
+    const content = messages.map((message) => `## ${message.role === "user" ? "You" : "All Model Hub"}\n\n${message.content}\n`).join("\n");
+    const blob = new Blob([content], { type: "text/markdown" }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a");
+    anchor.href = url; anchor.download = "all-model-hub-chat.md"; anchor.click(); URL.revokeObjectURL(url);
   }
 
-return (
-<div className="chat-page premium-chat-page">
-
-<header className="chat-toolbar premium-toolbar">
-  <div className="chat-selectors">
-    <PremiumSelect
-      className="mini-select chat-model-select"
-      aria-label="AI model"
-      value={modelId}
-      onChange={setModelId}
-      options={[{ value: "", label: "🧠 Auto AI" }, ...models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}` }))]}
-    />
-    <PremiumSelect
-      className="mini-select chat-mode-select"
-      aria-label="Model tier"
-      value={mode}
-      onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }}
-      options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))}
-    />
-    <PremiumSelect
-      className="mini-select chat-project-select"
-      aria-label="Project"
-      value={projectId}
-      onChange={setProjectId}
-      options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: `📁 ${project.name}` }))]}
-    />
-  </div>
-
-  <div className="toolbar-actions">
-    <span className="credit-pill" title="Available wallet credits">⚡{availableCredits == null ? "—" : availableCredits.toFixed(2)}</span>
-    <details className="chat-more">
-      <summary aria-label="Advanced settings">⋯</summary>
-      <div className="chat-more-menu premium-menu">
-        <button onClick={() => setDeepThink((value) => !value)} disabled={Boolean(exact && !exact.capabilities?.includes("reasoning"))}>🧠 {deepThink ? "Deep Think On" : "Deep Think Off"}</button>
-        {features.private_chat !== false && <button onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>🔒 {privateMode ? "Private On" : "Private Off"}</button>}
-        {features.prompt_enhancer !== false && <button onClick={enhancePrompt} disabled={enhancing || !input.trim()}>✨ {enhancing ? "Enhancing" : "Improve Prompt"}</button>}
-        <button onClick={exportChat}>📤 Export</button>
-        <button onClick={newChat}>＋ New Chat</button>
+  return <div className={`chat-page premium-chat-page ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
+    {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
+    <header className="chat-toolbar premium-toolbar">
+      <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
+      <div className="chat-toolbar-actions">
+        <button className="model-trigger" type="button" onClick={() => setPickerOpen(true)} aria-haspopup="dialog"><span><small>{exact?.providerFamily || "Smart routing"}</small><strong>{exact?.name || "Auto — best model"}</strong></span><kbd>⌘K</kbd></button>
+        <Link href="/battle" className="toolbar-text-button">Compare</Link>
+        <details className="chat-more"><summary aria-label="Conversation menu">More</summary><div className="chat-more-menu premium-menu"><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
       </div>
-    </details>
-  </div>
-</header>
+    </header>
 
-      <div className="chat-layout-body">
-        <div className="chat-messages premium-messages">
-          {messages.length === 0 ? (
-            <div className="chat-empty premium-empty">
-
-  <h1 className="empty-title">
-    Start creating with AI
-  </h1>
-
-  <p className="empty-subtitle">
-    Chat, analyze files, write content, and explore AI models.
-  </p>
-
-  <div className="quick-actions">
-
-    <button onClick={() => setInput("Analyze this document")}>
-      📄 Analyze
-    </button>
-
-    <button onClick={() => setInput("Help me write content")}>
-      ✍ Write
-    </button>
-
-    <button onClick={() => setInput("Create an image idea")}>
-      🎨 Create
-    </button>
-
-    <button onClick={() => setInput("Help me brainstorm ideas")}>
-      💡 Ideas
-    </button>
-
-  </div>
-
-</div>
-          ) : (
-            messages.map((m, i) => (
-              <div className="chat-row" key={`${m.id || i}-${m.role}`}>
-                <div className="avatar">
-                  {m.role === "user" ? "YOU" : "AI"}
-                </div>
-
-                <div className="chat-message-box">
-                  <div className="chat-content">
-                    {m.role === "assistant" ? (
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {m.content || (busy && i === messages.length - 1 ? "Thinking…" : "")}
-                      </ReactMarkdown>
-                    ) : (
-                      m.content
-                    )}
-                  </div>
-
-                  <div className="chat-actions">
-                    <button onClick={() => navigator.clipboard.writeText(m.content)}>Copy</button>
-
-                    {m.role === "assistant" && (
-                      <><button onClick={() => regenerate(i)}>Regenerate</button><button onClick={() => branchAt(i)}>Branch</button></>
-                    )}
-
-                    {m.meta && (
-                      <span className="chat-meta">{m.meta}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-
-          <div ref={messagesEndRef} aria-hidden="true" />
-        </div>
+    <div className="chat-layout-body" onScroll={(event) => { const element = event.currentTarget; setShowScrollButton(element.scrollHeight - element.scrollTop - element.clientHeight > 220); }}>
+      <div className="chat-messages premium-messages">
+        {messages.length === 0 ? <div className="chat-empty premium-empty"><span className="empty-kicker">One prompt. Every leading model.</span><h1 className="empty-title">What will you create today?</h1><p className="empty-subtitle">Choose a model when you need control, or let Auto route the work for you.</p><div className="quick-actions">{starterPrompts.map((prompt) => <button type="button" key={prompt} onClick={() => { setInput(prompt); window.setTimeout(() => textareaRef.current?.focus(), 0); }}>{prompt}</button>)}</div></div> : messages.map((message, index) => {
+          const key = message.id || `${message.role}-${index}`;
+          return <article className={`chat-row ${message.role}`} key={key}><div className="avatar" aria-hidden="true">{message.role === "user" ? "You" : "AI"}</div><div className="chat-message-box"><div className="message-author">{message.role === "user" ? "You" : exact?.name || "All Model Hub"}</div><div className="chat-content">{message.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content || (busy && index === messages.length - 1 ? "" : "No response returned.")}</ReactMarkdown> : message.content}</div>{busy && message.role === "assistant" && index === messages.length - 1 && !message.content && <div className="thinking-state" role="status"><i /><span>Starting model</span></div>}<div className="chat-actions"><button type="button" onClick={() => void copyMessage(message.content, key)}>{copiedKey === key ? "Copied" : "Copy"}</button>{message.role === "user" && <button type="button" onClick={() => editPrompt(index)}>Edit prompt</button>}{message.role === "assistant" && <><button type="button" onClick={() => regenerate(index)}>Retry</button><button type="button" onClick={() => branchAt(index)}>Branch</button></>}{message.meta && <span className="chat-meta">{message.meta}</span>}</div></div></article>;
+        })}
+        <div ref={messagesEndRef} aria-hidden="true" />
       </div>
-
-      <div className="composer-wrap premium-composer-wrap">
-        <form className="glass composer premium-composer" onSubmit={submit}>
-          {(pastedContext || attachmentIds.length > 0) && (
-            <div className="attachment-strip">
-              {pastedContext && (
-                <div className="attachment-card">
-                  📄 Pasted text
-                  <button type="button" onClick={() => setPastedContext("")}>×</button>
-                </div>
-              )}
-
-              {attachmentIds.map((id) => {
-                const file = files.find((item) => item.id === id);
-                return file ? (
-                  <div className="attachment-card" key={id}>
-                    📎 {file.name}
-                    <button type="button" onClick={() => setAttachmentIds((c) => c.filter((x) => x !== id))}>
-                      ×
-                    </button>
-                  </div>
-                ) : null;
-              })}
-            </div>
-          )}
-
-          <textarea
-            className="textarea chat-input"
-            value={input}
-            onPaste={handlePaste}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything..."
-          />
-
-          <div className="composer-footer">
-            <div className="composer-tools">
-<input
-  ref={fileInputRef}
-  type="file"
-  multiple
-  accept=".pdf,.txt,.doc,.docx,image/*"
-  hidden
-  onChange={(e) => void uploadFiles(e.target.files)}
-/>
-
-<button 
-  type="button" 
-  className="tool-btn"
-  onClick={() => fileInputRef.current?.click()}
->
-  📎 Attach
-</button>
-
-{features.prompt_enhancer !== false && <button type="button" className="tool-btn" onClick={enhancePrompt} disabled={enhancing || !input.trim()}>
-  ✨ Enhance
-</button>}
-
-{features.private_chat !== false && <button 
-  type="button"
-  className="tool-btn"
-  onClick={() => setPrivateMode((v) => !v)}
->
-  🛡 {privateMode ? "Private" : "Secure"}
-</button>}
-
-              {projectId && <span>📁 {projects.find((project) => project.id === projectId)?.name || "Project"}</span>}
-            </div>
-
-            {busy ? (
-              <button type="button" className="btn btn-danger send-button" onClick={stop}>
-                Stop
-              </button>
-            ) : (
-              <button className="btn btn-primary send-button" disabled={!input.trim() && !pastedContext}>
-                ↑
-              </button>
-            )}
-          </div>
-        </form>
-
-        {error && <div className="soft-card small error-box">{error}</div>}
-      </div>
+      {showScrollButton && <button type="button" className="scroll-latest" onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })}>Latest</button>}
     </div>
-    );
+
+    <div className="composer-wrap premium-composer-wrap">
+      <form className="glass composer premium-composer" onSubmit={submit}>
+        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip">
+          {pastedContext && <div className="attachment-card"><span className="attachment-type">TXT</span><div><strong>Pasted text</strong><small>{pastedContext.length.toLocaleString()} characters</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted text">×</button></div>}
+          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-type">FILE</span><div><strong>{file.name}</strong><small>{Math.max(1, Math.round(file.size_bytes / 1024)).toLocaleString()} KB</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
+        </div>}
+        <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={handleComposerKeyDown} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" />
+        <div className="composer-footer"><div className="composer-tools">
+          <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
+          <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files">+</button>
+          <button type="button" className="composer-model-button" onClick={() => setPickerOpen(true)}><span>{exact?.name || "Auto"}</span><small>{mode}</small></button>
+          <details className="composer-settings"><summary>Controls</summary><div className="composer-settings-panel">
+            <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
+            <label><span>Routing tier</span><PremiumSelect aria-label="Routing tier" value={mode} onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }} options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))} /></label>
+            <div className="setting-toggle-row"><span><strong>Reasoning</strong><small>Use a larger response budget</small></span><button type="button" role="switch" aria-checked={deepThink} className={deepThink ? "active" : ""} disabled={Boolean(exact && !exact.capabilities?.includes("reasoning"))} onClick={() => setDeepThink((value) => !value)}>{deepThink ? "On" : "Off"}</button></div>
+            {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
+          </div></details>
+          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}>{enhancing ? "Improving…" : "Improve prompt"}</button>}
+        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{availableCredits != null && <span className="composer-balance" title="Available credits">{availableCredits.toFixed(2)} cr</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><span /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message">↑</button>}</div></div>
+      </form>
+      <p className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
+      {error && <div className="soft-card small error-box" role="alert"><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}
+    </div>
+    <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
+  </div>;
 }
+
