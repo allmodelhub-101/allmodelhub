@@ -685,6 +685,8 @@ html[data-theme="light"] .app-sidebar { background: linear-gradient(180deg, rgba
   .cin-story { height:auto; padding:120px 0; }.cin-story-sticky { position:relative; min-height:auto; overflow:visible; }.cin-story-layout { grid-template-columns:1fr; }.cin-scene-copy { display:grid; gap:20px; min-height:0; }.cin-story-card { position:relative; inset:auto; opacity:1; transform:none; pointer-events:auto; padding:24px 0; border-bottom:1px solid var(--line); }.cin-section-number,.cin-progress { display:none; }.cin-product-stage { order:-1; min-height:0; }.cin-app-window { transform:none; }.cin-preview { opacity:0!important; }.cin-preview-models { opacity:1!important; transform:none; }
 }
 
+.model-control-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;color:var(--muted);font-size:10px}.model-control-summary strong{color:var(--text);font-size:10px;text-transform:capitalize}
+
 html[data-theme="light"] .cin-site { --cin-ink:#eef8fc; }
 html[data-theme="light"] .cin-site .cin-grid { opacity:.38; }
 html[data-theme="light"] .cin-site .cin-model-node { color:#173044; background:rgba(255,255,255,.8); }
