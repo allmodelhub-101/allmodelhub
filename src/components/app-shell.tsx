@@ -3,6 +3,7 @@ import { WorkspaceTopbar } from "@/components/workspace-topbar";
 import { requireUser } from "@/lib/auth";
 import { getWallet } from "@/lib/wallet";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { WorkspaceOnboarding } from "@/components/workspace-onboarding";
 
 
 export async function AppShell({ children }: { children: React.ReactNode }) {
@@ -18,6 +19,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
       <WorkspaceTopbar balance={Number(wallet.available)} identity={profile?.display_name || user.email || "Member"} />
       <div className="app-content">{children}</div>
     </main>
+    <WorkspaceOnboarding />
   </div>;
 }
 
