@@ -8,6 +8,7 @@ type Project = { id: string; name: string };
 type Job = { id: string; public_id: string; project_id?: string | null; modality: string; model_id: string; status: string; prompt?: string; result_urls?: string[]; error_message?: string; charged_credits?: number; estimated_credits?: number };
 type Model = { id: string; name: string; providerFamily?: string; modality: "text" | "image" | "video" | "audio"; capabilities?: string[] };
 type Notification = { id:string; title:string; body:string; read_at?:string|null; created_at:string };
+type SearchResult={id:string;kind:"chat"|"generation"|"file";label:string;detail:string;href:string};
 
 const destinations = [
   { label: "New chat", detail: "Start a conversation", href: "/chat" },
@@ -31,6 +32,8 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   const [notifications,setNotifications]=useState<Notification[]>([]);
   const [notificationsOpen,setNotificationsOpen]=useState(false);
   const [keyboardHelp,setKeyboardHelp]=useState(false);
+  const [productResults,setProductResults]=useState<SearchResult[]>([]);
+  const [searching,setSearching]=useState(false);
 
   async function loadJobs() {
     const response = await fetch("/api/jobs?limit=20", { cache: "no-store" });
@@ -62,6 +65,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   const matchingDestinations = useMemo(() => destinations.filter((item) => !normalizedQuery || `${item.label} ${item.detail}`.toLowerCase().includes(normalizedQuery)), [normalizedQuery]);
   const matchingProjects = useMemo(() => projects.filter((project) => normalizedQuery && project.name.toLowerCase().includes(normalizedQuery)).slice(0, 4), [normalizedQuery, projects]);
   const matchingModels = useMemo(() => models.filter((model) => normalizedQuery && [model.name, model.providerFamily, model.modality, ...(model.capabilities || [])].join(" ").toLowerCase().includes(normalizedQuery)).slice(0, 6), [models, normalizedQuery]);
+  useEffect(()=>{if(!palette||normalizedQuery.length<2){setProductResults([]);setSearching(false);return}const controller=new AbortController();setSearching(true);const timer=window.setTimeout(()=>fetch(`/api/search?q=${encodeURIComponent(query.trim())}`,{signal:controller.signal}).then(response=>response.ok?response.json():{results:[]}).then(data=>setProductResults(data.results||[])).catch(()=>undefined).finally(()=>setSearching(false)),220);return()=>{window.clearTimeout(timer);controller.abort()}},[normalizedQuery,palette,query]);
   const modelHref = (model: Model) => `${model.modality === "image" ? "/images" : `/${model.modality === "text" ? "chat" : model.modality}`}?model=${encodeURIComponent(model.id)}`;
   function selectProject(next: string) {
     setProjectId(next);
@@ -100,11 +104,13 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     }) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts →</Link></aside></>}
     {notificationsOpen&&<><button className="workspace-scrim" aria-label="Close notifications" onClick={()=>setNotificationsOpen(false)}/><aside className="generation-drawer notification-drawer" aria-label="Notifications"><div className="drawer-head"><div><div className="kicker">Updates</div><h2>Notifications</h2></div><button className="icon-button" onClick={()=>setNotificationsOpen(false)} aria-label="Close">×</button></div><div className="drawer-scroll" aria-live="polite">{notifications.length?notifications.map(item=><button type="button" className={`drawer-notification ${item.read_at?"":"unread"}`} key={item.id} onClick={()=>void markNotificationsRead(item.id)}><span><b>{item.title}</b><small>{item.body}</small></span><time>{new Date(item.created_at).toLocaleString()}</time></button>):<div className="drawer-empty">You’re all caught up.</div>}</div><div className="drawer-footer drawer-footer-actions"><button type="button" disabled={!unreadCount} onClick={()=>void markNotificationsRead()}>Mark all read</button><Link href="/notifications" onClick={()=>setNotificationsOpen(false)}>Open all →</Link></div></aside></>}
     {keyboardHelp&&<div className="command-overlay keyboard-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><button className="workspace-scrim" aria-label="Close keyboard shortcuts" onClick={()=>setKeyboardHelp(false)}/><div className="keyboard-panel"><div className="drawer-head"><div><div className="kicker">Work faster</div><h2>Keyboard shortcuts</h2></div><button className="icon-button" onClick={()=>setKeyboardHelp(false)} aria-label="Close">×</button></div><div className="shortcut-list"><span><b>Search and jump</b><kbd>Ctrl/⌘ K</kbd></span><span><b>Close an open panel</b><kbd>Esc</kbd></span><span><b>Open this help</b><kbd>?</kbd></span><span><b>Send a chat message</b><kbd>Enter</kbd></span><span><b>New line in chat</b><kbd>Shift Enter</kbd></span></div></div></div>}
-    {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><span>⌕</span><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search destinations, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
+    {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><span>⌕</span><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats, generations, files, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
       {matchingDestinations.length > 0 && <section><span className="command-section-label">Destinations</span>{matchingDestinations.map((item) => <Link key={item.href} href={item.href} onClick={() => setPalette(false)}><span><b>{item.label}</b><small>{item.detail}</small></span><span>→</span></Link>)}</section>}
       {matchingProjects.length > 0 && <section><span className="command-section-label">Projects</span>{matchingProjects.map((project) => <button key={project.id} type="button" onClick={() => { selectProject(project.id); setPalette(false); }}><span><b>{project.name}</b><small>Switch active project</small></span><span>Activate</span></button>)}</section>}
       {matchingModels.length > 0 && <section><span className="command-section-label">Models</span>{matchingModels.map((model) => <Link key={model.id} href={modelHref(model)} onClick={() => setPalette(false)}><span><b>{model.name}</b><small>{model.providerFamily || "AI"} · {model.modality}</small></span><span>Open</span></Link>)}</section>}
-      {!matchingDestinations.length && !matchingProjects.length && !matchingModels.length && <div className="command-empty"><b>No results found</b><span>Try a model, provider, project, or workspace name.</span></div>}
+      {productResults.length>0&&<section><span className="command-section-label">Your content</span>{productResults.map(item=><Link key={`${item.kind}-${item.id}`} href={item.href} onClick={()=>setPalette(false)}><span><b>{item.label}</b><small>{item.kind} · {item.detail}</small></span><span>Open</span></Link>)}</section>}
+      {searching&&<div className="command-empty"><span>Searching your workspace…</span></div>}
+      {!searching&&!matchingDestinations.length&&!matchingProjects.length&&!matchingModels.length&&!productResults.length&&<div className="command-empty"><b>No results found</b><span>Try a chat title, prompt, filename, model, provider, project, or workspace.</span></div>}
     </div></div></div>}
   </>;
 }
