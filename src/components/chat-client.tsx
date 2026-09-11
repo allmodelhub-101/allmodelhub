@@ -118,6 +118,11 @@ export function ChatClient() {
 
   const exact = useMemo(() => models.find((model) => model.id === modelId), [models, modelId]);
   const selectedProject = useMemo(() => projects.find((project) => project.id === projectId), [projectId, projects]);
+  const supportsReasoning = !exact || Boolean(exact.capabilities?.includes("reasoning"));
+
+  useEffect(() => {
+    if (!supportsReasoning) setDeepThink(false);
+  }, [supportsReasoning]);
 
   async function enhancePrompt() {
     if (!input.trim() || enhancing || busy) return;
@@ -275,7 +280,8 @@ export function ChatClient() {
           <details className="composer-settings"><summary>Controls</summary><div className="composer-settings-panel">
             <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
             <label><span>Routing tier</span><PremiumSelect aria-label="Routing tier" value={mode} onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }} options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))} /></label>
-            <div className="setting-toggle-row"><span><strong>Reasoning</strong><small>Use a larger response budget</small></span><button type="button" role="switch" aria-checked={deepThink} className={deepThink ? "active" : ""} disabled={Boolean(exact && !exact.capabilities?.includes("reasoning"))} onClick={() => setDeepThink((value) => !value)}>{deepThink ? "On" : "Off"}</button></div>
+            {supportsReasoning && <div className="setting-toggle-row"><span><strong>Reasoning</strong><small>Use a larger response budget</small></span><button type="button" role="switch" aria-checked={deepThink} className={deepThink ? "active" : ""} onClick={() => setDeepThink((value) => !value)}>{deepThink ? "On" : "Off"}</button></div>}
+            {exact && <div className="model-control-summary"><span>Model inputs</span><strong>{exact.uiSchema?.inputModes?.join(" · ") || "text"}</strong></div>}
             {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
           </div></details>
           {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}>{enhancing ? "Improving…" : "Improve prompt"}</button>}

@@ -18,7 +18,7 @@ type ImageJob = {
   estimated_credits?: number;
 };
 
-const aspectRatios = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+const fallbackAspectRatios = ["1:1", "16:9", "9:16", "4:3", "3:4"];
 const promptStarters = [
   "Editorial product photograph with sculpted studio light",
   "Cinematic landscape at blue hour with atmospheric depth",
@@ -74,18 +74,29 @@ export function ImageStudio() {
   }, []);
 
   const model = useMemo(() => models.find((item) => item.id === modelId), [modelId, models]);
+  const aspectRatios = model?.uiSchema?.aspectRatios?.length ? model.uiSchema.aspectRatios : fallbackAspectRatios;
+  const maxReferences = Math.max(0, model?.uiSchema?.maxReferences ?? (model?.capabilities?.includes("multi-reference") ? 10 : model?.capabilities?.includes("editing") ? 1 : 0));
   const estimate = Number(model?.retail?.flatCredits || 0);
   const expensive = estimate >= 50;
-  const supportsEditing = model?.capabilities?.includes("editing") || false;
-  const supportsMultipleReferences = model?.capabilities?.includes("multi-reference") || false;
+  const supportsEditing = maxReferences > 0 && (model?.uiSchema?.inputModes?.includes("image") ?? model?.capabilities?.includes("editing") ?? false);
+  const supportsMultipleReferences = maxReferences > 1;
   const generating = Boolean(job && !["completed", "failed", "cancelled", "expired"].includes(job.status || ""));
   const resultUrl = Array.isArray(job?.result_urls) ? job.result_urls[0] : undefined;
   const status = statusCopy(job?.status);
+
+  useEffect(() => {
+    if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
+    setReferences((current) => {
+      current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));
+      return current.slice(0, maxReferences);
+    });
+  }, [modelId]);
 
   async function uploadReference(file: File) {
     setUploading(true); setError("");
     try {
       if (!file.type.startsWith("image/")) throw new Error("Reference files must be PNG, JPEG, or WebP images.");
+      if (!supportsEditing || maxReferences < 1) throw new Error(`${model?.name || "This model"} does not support reference-image editing.`);
       if (file.size > 50 * 1024 * 1024) throw new Error("Reference images must be smaller than 50 MB.");
       const form = new FormData(); form.set("file", file);
       const response = await fetch("/api/files", { method: "POST", body: form });
@@ -95,7 +106,7 @@ export function ImageStudio() {
       referenceUrlsRef.current.push(previewUrl);
       const asset = { id: data.file.id as string, name: file.name, previewUrl, size: file.size };
       setReferences((current) => {
-        const limit = supportsMultipleReferences ? 10 : 1;
+        const limit = maxReferences;
         current.slice(limit - 1).forEach((item) => URL.revokeObjectURL(item.previewUrl));
         return [...current.slice(0, limit - 1), asset];
       });
@@ -190,14 +201,14 @@ export function ImageStudio() {
         <div className="image-inspector-head"><div><span className="eyebrow">Inspector</span><strong>Generation controls</strong></div><button type="button" onClick={() => setInspectorOpen(false)} aria-label="Close controls">Close</button></div>
         <div className="inspector-section"><span className="inspector-label">Model</span><button className="inspector-model" type="button" onClick={() => setPickerOpen(true)}><span className="provider-mark">{(model?.providerFamily || "AI").slice(0, 2).toUpperCase()}</span><span><strong>{model?.name || "Loading models"}</strong><small>{model?.providerFamily || "Image model"} · {model?.tier || ""}</small></span><b>Change</b></button>{model?.description && <p className="inspector-help">{model.description}</p>}<div className="capability-list">{model?.capabilities?.map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</div></div>
         <div className="inspector-section"><span className="inspector-label">Mode</span><div className="mode-readout"><strong>{references.length ? "Edit image" : "Create image"}</strong><small>{references.length ? "Your reference supplies the visual starting point." : "Text prompt to a new image."}</small></div></div>
-        <div className="inspector-section"><span className="inspector-label">Reference images</span><input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadReference(file); event.currentTarget.value = ""; }} /><button type="button" className="reference-upload" disabled={uploading || (!supportsMultipleReferences && references.length >= 1)} onClick={() => fileInputRef.current?.click()}><strong>{uploading ? "Uploading…" : references.length ? "Add another reference" : "Add a reference image"}</strong><small>{supportsMultipleReferences ? "PNG, JPEG or WebP · up to 10" : "PNG, JPEG or WebP · one image"}</small></button>{references.length > 0 && <div className="reference-list">{references.map((reference) => <div className="reference-item" key={reference.id}><Image src={reference.previewUrl} alt="" width={80} height={80} unoptimized /><span><strong>{reference.name}</strong><small>{Math.max(1, Math.round(reference.size / 1024)).toLocaleString()} KB</small></span><button type="button" onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}>×</button></div>)}</div>}{references.length > 0 && !supportsEditing && <p className="inspector-warning">This model does not support editing. Choose an editing model to use the reference.</p>}</div>
+        <div className="inspector-section"><span className="inspector-label">Reference images</span><input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadReference(file); event.currentTarget.value = ""; }} />{supportsEditing ? <button type="button" className="reference-upload" disabled={uploading || references.length >= maxReferences} onClick={() => fileInputRef.current?.click()}><strong>{uploading ? "Uploading…" : references.length ? "Add another reference" : "Add a reference image"}</strong><small>PNG, JPEG or WebP · {supportsMultipleReferences ? `up to ${maxReferences}` : "one image"}</small></button> : <div className="mode-readout"><strong>Text creation only</strong><small>{model?.name || "This model"} does not accept a reference image.</small></div>}{references.length > 0 && <div className="reference-list">{references.map((reference) => <div className="reference-item" key={reference.id}><Image src={reference.previewUrl} alt="" width={80} height={80} unoptimized /><span><strong>{reference.name}</strong><small>{Math.max(1, Math.round(reference.size / 1024)).toLocaleString()} KB</small></span><button type="button" onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}>×</button></div>)}</div>}</div>
         <div className="inspector-section"><span className="inspector-label">Aspect ratio</span><div className="aspect-grid">{aspectRatios.map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div><div className="output-count"><span>Outputs</span><strong>1 image</strong><small>Current provider capability</small></div></div>
         <div className="inspector-cost"><span>Estimated cost</span><strong>{estimate ? `~${estimate.toFixed(2)} credits` : "Calculating…"}</strong><small>Actual charge is shown after completion.</small>{availableCredits != null && <small>{availableCredits.toFixed(2)} credits available</small>}</div>
         {expensive && <label className="image-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /><span>I authorize the displayed estimated usage.</span></label>}
       </aside>
     </main>
 
-    <div className="image-prompt-dock"><form onSubmit={submit}><div className="prompt-reference-summary"><button type="button" onClick={() => fileInputRef.current?.click()}>+ Reference</button>{references.length > 0 && <span>{references.length} ready</span>}<button type="button" onClick={() => setPickerOpen(true)}>{model?.name || "Choose model"}</button></div><textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} placeholder={references.length ? "Describe what to change in the reference…" : "Describe the image you want to create…"} aria-label="Image prompt" /><div className="image-prompt-footer"><div className="quick-aspects">{aspectRatios.slice(0, 4).map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div><span className="dock-estimate">{estimate ? `~${estimate.toFixed(2)} cr` : "—"}</span><button className="image-generate-button" disabled={submitting || generating || !modelId || !prompt.trim() || Boolean(references.length && !supportsEditing) || (expensive && !confirmed)}>{submitting ? "Submitting…" : generating ? status.step : references.length ? "Edit image" : "Generate"}</button></div></form>{error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}</div>
+    <div className="image-prompt-dock"><form onSubmit={submit}><div className="prompt-reference-summary">{supportsEditing && <button type="button" onClick={() => fileInputRef.current?.click()}>+ Reference</button>}{references.length > 0 && <span>{references.length} ready</span>}<button type="button" onClick={() => setPickerOpen(true)}>{model?.name || "Choose model"}</button></div><textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} placeholder={references.length ? "Describe what to change in the reference…" : "Describe the image you want to create…"} aria-label="Image prompt" /><div className="image-prompt-footer"><div className="quick-aspects">{aspectRatios.slice(0, 4).map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div><span className="dock-estimate">{estimate ? `~${estimate.toFixed(2)} cr` : "—"}</span><button className="image-generate-button" disabled={submitting || generating || !modelId || !prompt.trim() || Boolean(references.length && !supportsEditing) || (expensive && !confirmed)}>{submitting ? "Submitting…" : generating ? status.step : references.length ? "Edit image" : "Generate"}</button></div></form>{error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}</div>
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); setConfirmed(false); }} open={pickerOpen} onOpenChange={setPickerOpen} modality="image" />
   </div>;
 }

@@ -10,10 +10,11 @@ export type PickerModel = {
   description?: string;
   capabilities?: string[];
   autoEligible?: boolean;
+  uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; maxReferences?: number };
   retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 
-type Filter = "recommended" | "fast" | "reasoning" | "coding" | "vision" | "editing" | "typography" | "multi-reference" | "cheapest";
+type Filter = "recommended" | "fast" | "reasoning" | "coding" | "vision" | "editing" | "typography" | "multi-reference" | "image-to-video" | "audio" | "1080p" | "cheapest";
 
 const textFilters: { id: Filter; label: string }[] = [
   { id: "recommended", label: "Recommended" },
@@ -33,8 +34,18 @@ const imageFilters: { id: Filter; label: string }[] = [
   { id: "cheapest", label: "Lowest cost" }
 ];
 
+const videoFilters: { id: Filter; label: string }[] = [
+  { id: "recommended", label: "Recommended" },
+  { id: "fast", label: "Fast" },
+  { id: "image-to-video", label: "Image to video" },
+  { id: "audio", label: "Native audio" },
+  { id: "1080p", label: "1080p" },
+  { id: "cheapest", label: "Lowest cost" }
+];
+
 function priceLabel(model: PickerModel) {
-  if (model.retail?.flatCredits != null) return `${model.retail.flatCredits.toFixed(2)} credits per image`;
+  if (model.retail?.flatCredits != null) return `${model.retail.flatCredits.toFixed(2)} credits per generation`;
+  if (model.retail?.perSecondCredits != null) return `${model.retail.perSecondCredits.toFixed(2)} credits per second`;
   const input = model.retail?.inputPerMillionCredits;
   const output = model.retail?.outputPerMillionCredits;
   if (input == null && output == null) return "Pricing on request";
@@ -48,12 +59,12 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
   onChange: (value: string) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  modality?: "text" | "image";
+  modality?: "text" | "image" | "video";
 }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("recommended");
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const filters = modality === "image" ? imageFilters : textFilters;
+  const filters = modality === "image" ? imageFilters : modality === "video" ? videoFilters : textFilters;
 
   useEffect(() => {
     if (!open) return;
@@ -91,7 +102,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
   }}>
     <section className="model-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="model-picker-title">
       <header className="model-picker-head">
-        <div><span className="eyebrow">Model library</span><h2 id="model-picker-title">{modality === "image" ? "Choose an image model" : "Choose the right intelligence"}</h2></div>
+        <div><span className="eyebrow">Model library</span><h2 id="model-picker-title">{modality === "image" ? "Choose an image model" : modality === "video" ? "Choose a video model" : "Choose the right intelligence"}</h2></div>
         <button className="dialog-close" type="button" onClick={() => onOpenChange(false)} aria-label="Close model picker">Close</button>
       </header>
       <label className="model-search">
