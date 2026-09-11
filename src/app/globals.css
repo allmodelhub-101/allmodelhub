@@ -720,6 +720,7 @@ html[data-theme="light"] .cin-site .cin-final-cta { background:#eaf6fb; }
 .command-input kbd{padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel-2);color:var(--muted);font-size:10px}
 .command-empty{display:grid;gap:6px;padding:34px 18px;text-align:center}
 .command-empty b{font-size:13px}.command-empty span{color:var(--muted);font-size:11px}
+.generation-row-content{display:grid;min-width:0}.generation-row-content>a{min-width:0;color:var(--text)}.generation-row-content>a:hover b{color:var(--accent)}.generation-error{color:var(--danger)!important}.generation-row-actions{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:9px}.generation-row-actions button,.generation-row-actions>a{padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--text);font-size:9px;font-weight:800;cursor:pointer}.generation-row-actions button:hover,.generation-row-actions>a:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));background:var(--panel-2)}.generation-row-actions>small{flex-basis:100%;margin:0;color:var(--muted);line-height:1.4}
 
 /* AI Creation Workspace — focused interaction layer */
 .modal-open{overflow:hidden}.app-content:has(.chat-page){width:100%;max-width:none;padding:0}.app-content:has(.chat-page) .chat-page{height:calc(100dvh - 66px);min-height:620px;overflow:hidden}.premium-chat-page{position:relative;grid-template-rows:64px minmax(0,1fr) auto;background:radial-gradient(circle at 50% -20%,rgba(126,231,255,.07),transparent 36%)}
