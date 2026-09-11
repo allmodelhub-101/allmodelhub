@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { AppSidebar } from "@/components/app-sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { WorkspaceTopbar } from "@/components/workspace-topbar";
 import { requireUser } from "@/lib/auth";
 import { getWallet } from "@/lib/wallet";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -16,8 +15,9 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
   return <div className={`app-shell ${profile?.low_bandwidth ? "low-bandwidth" : ""}`}>
     <AppSidebar balance={Number(wallet.available)} displayName={profile?.display_name} email={user.email} isAdmin={Boolean(isAdmin)} />
     <main className="app-main">
-      <header className="app-topbar"><Link href="/wallet" className="wallet-chip"><span className="status-dot" />{Number(wallet.available).toFixed(2)} Credits</Link><div className="topbar-user"><span className="muted small">{profile?.display_name || user.email}</span><ThemeToggle /></div></header>
+      <WorkspaceTopbar balance={Number(wallet.available)} identity={profile?.display_name || user.email || "Member"} />
       <div className="app-content">{children}</div>
     </main>
   </div>;
 }
+

@@ -19,6 +19,7 @@ export const dynamic = "force-dynamic";
 
 const bodySchema = z.object({
 requestId: z.string().uuid(),
+projectId: z.string().uuid().optional(),
 modelId: z.string().min(1),
 prompt: z.string().min(1).max(20_000),
 duration: z.number().min(1).max(30).optional(),
@@ -38,16 +39,20 @@ if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 const { modality } = await context.params;
 if (!["image", "video", "audio"].includes(modality)) return NextResponse.json({ error: "Invalid modality." }, { status: 404 });
 const featureKey = `${modality}_studio` as FeatureKey;
-if (!(await isFeatureEnabled(featureKey))) {
-return NextResponse.json({ error: `${modality[0].toUpperCase() + modality.slice(1)} generation is currently unavailable.` }, { status: 503 });
-}
+if (!(await isFeatureEnabled(featureKey))) return NextResponse.json({ error: `${modality[0].toUpperCase() + modality.slice(1)} generation is currently unavailable.` }, { status: 503 });
 
 const limit = await enforceRateLimit(`generation:${modality}:${user.id}`);
+if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
 if (!limit.success) return NextResponse.json({ error: "Too many generation requests." }, { status: 429 });
 
 const parsed = bodySchema.safeParse(await request.json().catch(() => null));
 if (!parsed.success) return NextResponse.json({ error: "Invalid generation request", details: parsed.error.flatten() }, { status: 400 });
 const input = parsed.data;
+if (input.projectId) {
+  const admin = createAdminClient();
+  const { data: project } = await admin.from("projects").select("id").eq("id", input.projectId).eq("user_id", user.id).maybeSingle();
+  if (!project) return NextResponse.json({ error: "Project is unavailable." }, { status: 400 });
+}
 const claim = await claimRequest(user.id, `media:${modality}`, input.requestId);
 if (!claim.claimed) {
 return NextResponse.json({ error: "This generation request was already submitted.", existing: claim.existing }, { status: 409 });
@@ -133,7 +138,8 @@ prompt: input.prompt,
 
 const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
 public_id: publicId,
-user_id: user.id,
+  user_id: user.id,
+project_id: input.projectId || null,
 modality,
 model_id: model.id,
 provider_key: "apimodels",
@@ -170,3 +176,4 @@ await finalizeRequest(claimId, "failed", { resourceId: job.id });
 return NextResponse.json({ error: "Generation provider is temporarily unavailable." }, { status: 502 });
 }
 }
+
