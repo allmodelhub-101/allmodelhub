@@ -32,7 +32,7 @@ function statusCopy(status?: string) {
   return { step: "Generating", title: "Creating your image" };
 }
 
-export function ImageStudio() {
+export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs?:boolean}) {
   const qs = useSearchParams();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -62,7 +62,9 @@ export function ImageStudio() {
         const list = (modelData.models || []).filter((model: ImageModel) => model.modality === "image");
         setModels(list);
         const requested = qs.get("model");
-        const chosen = requested && list.some((model: ImageModel) => model.id === requested) ? requested : list[0]?.id;
+        const incomingReference=qs.get("reference");
+        const acceptsReference=(item:ImageModel)=>Boolean((item.uiSchema?.maxReferences||0)>0||item.capabilities?.includes("editing")||item.capabilities?.includes("multi-reference"));
+        const chosen = requested && list.some((model: ImageModel) => model.id === requested && (!incomingReference||acceptsReference(model))) ? requested : incomingReference?list.find(acceptsReference)?.id:list[0]?.id;
         if (chosen) setModelId(chosen);
         if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       }).catch(() => setError("Could not load the Image workspace."));
@@ -83,6 +85,17 @@ export function ImageStudio() {
   const generating = Boolean(job && !["completed", "failed", "cancelled", "expired"].includes(job.status || ""));
   const resultUrl = Array.isArray(job?.result_urls) ? job.result_urls[0] : undefined;
   const status = statusCopy(job?.status);
+
+  useEffect(()=>{
+    const incoming=qs.get("reference");
+    if(!incoming||!modelId||maxReferences<1||references.some(item=>item.id===incoming))return;
+    fetch(`/api/files/${encodeURIComponent(incoming)}`).then(async response=>{
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok||!data.file?.url)throw new Error(data.error||"Could not load the selected Library asset.");
+      if(!String(data.file.mime_type||"").startsWith("image/"))throw new Error("Only image assets can be used as image references.");
+      setReferences([{id:data.file.id,name:data.file.name,previewUrl:data.file.url,size:Number(data.file.size_bytes||0)}]);
+    }).catch(caught=>setError(caught instanceof Error?caught.message:"Could not load the selected Library asset."));
+  },[maxReferences,modelId,qs,references]);
 
   useEffect(() => {
     if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
@@ -193,7 +206,7 @@ export function ImageStudio() {
         {!job && <div className="image-empty-state"><span className="canvas-orbit" aria-hidden="true" /><span className="empty-kicker">Create or transform</span><h1>What do you want to create?</h1><p>Start with an idea, or add a reference image to edit something visually.</p><div className="image-starters">{promptStarters.map((starter) => <button type="button" key={starter} onClick={() => setPrompt(starter)}>{starter}</button>)}</div></div>}
         {generating && <div className="image-generating-state" role="status"><div className="image-generation-frame"><span /><span /><span /></div><span className="empty-kicker">{status.step}</span><h2>{status.title}</h2><p>{job?.public_id || "Your image will appear here when it is ready."}</p><small>No fake percentage—this updates from the provider.</small></div>}
         {job?.status === "failed" && <div className="image-failed-state"><span className="empty-kicker">Generation stopped</span><h2>That image was not created</h2><p>{job.error_message || "The provider returned a failure. Eligible reserved credits were released."}</p><button type="button" onClick={resetResult}>Try again</button></div>}
-        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><div className="image-result-toolbar"><a href={resultUrl} target="_blank" rel="noreferrer">Open</a><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}>Use as reference</button><button type="button" onClick={resetResult}>Variation</button><button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button><a href={resultUrl} download>Download</a><button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Copied" : "Copy settings"}</button></div></div>}
+        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><div className="image-result-toolbar"><a href={resultUrl} target="_blank" rel="noreferrer">Open</a><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}>Use as reference</button><button type="button" onClick={resetResult}>Variation</button>{crossModalityHandoffs&&<button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button>}<a href={resultUrl} download>Download</a><button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Copied" : "Copy settings"}</button></div></div>}
         {job?.status === "completed" && !resultUrl && <div className="image-failed-state"><h2>Generation completed</h2><p>The provider did not return a displayable image. You can find this job in Library.</p><Link href="/history">Open Library</Link></div>}
       </section>
 
