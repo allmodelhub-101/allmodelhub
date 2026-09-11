@@ -23,6 +23,7 @@ type DbModel = {
   per_1k_chars_usd: number | string | null;
   markup: number | string;
   capabilities: unknown;
+  ui_schema?: unknown;
   active: boolean;
   auto_eligible: boolean;
 };
@@ -50,6 +51,7 @@ function toCatalogModel(row: DbModel): CatalogModel {
     per1kCharsUsd: optionalNumber(row.per_1k_chars_usd),
     markup: Number(row.markup),
     capabilities: Array.isArray(row.capabilities) ? row.capabilities.filter((item): item is string => typeof item === "string") : [],
+    uiSchema: row.ui_schema && typeof row.ui_schema === "object" && !Array.isArray(row.ui_schema) ? row.ui_schema as CatalogModel["uiSchema"] : staticModel?.uiSchema,
     inputOverheadTokens: staticModel?.inputOverheadTokens,
     autoEligible: row.auto_eligible
   };
@@ -91,3 +93,4 @@ export async function chooseRuntimeTextModel(input: { tier?: ModelTier | "auto";
   if (sameTier) return sameTier;
   return runtimeModels[0] ?? desired;
 }
+

@@ -15,6 +15,7 @@ export async function GET() {
       modality: model.modality,
       description: model.description,
       capabilities: model.capabilities,
+      uiSchema: model.uiSchema,
       autoEligible: model.autoEligible !== false,
       retail: {
         inputPerMillionCredits: model.inputUsdPerMillion ? creditsFromUsd(model.inputUsdPerMillion, model.markup, fxRate) : undefined,
@@ -26,3 +27,4 @@ export async function GET() {
     }))
   });
 }
+

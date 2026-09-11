@@ -1,5 +1,14 @@
 export type ModelTier = "budget" | "balanced" | "premium" | "flagship";
 export type Modality = "text" | "image" | "video" | "audio";
+export type ModelUiSchema = {
+  inputModes?: Array<"text" | "image" | "audio">;
+  aspectRatios?: string[];
+  durationOptions?: number[];
+  resolutionOptions?: string[];
+  audioModes?: Array<"music" | "sfx">;
+  maxReferences?: number;
+  nativeAudio?: boolean;
+};
 
 export type CatalogModel = {
   id: string;
@@ -16,6 +25,7 @@ export type CatalogModel = {
   per1kCharsUsd?: number;
   markup: number;
   capabilities: string[];
+  uiSchema?: ModelUiSchema;
   inputOverheadTokens?: number;
   autoEligible?: boolean;
 };
@@ -171,3 +181,4 @@ export function chooseTextModel(input: { tier?: ModelTier | "auto"; prompt: stri
   if (input.prompt.length < 550) return getModel("gpt-5-6-luna")!;
   return getModel("gpt-5-6-terra")!;
 }
+
