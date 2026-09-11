@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 type Project = { id: string; name: string };
-type Job = { id: string; public_id: string; modality: string; model_id: string; status: string; prompt?: string; charged_credits?: number; estimated_credits?: number };
+type Job = { id: string; public_id: string; project_id?: string | null; modality: string; model_id: string; status: string; prompt?: string; result_urls?: string[]; error_message?: string; charged_credits?: number; estimated_credits?: number };
 type Model = { id: string; name: string; providerFamily?: string; modality: "text" | "image" | "video" | "audio"; capabilities?: string[] };
 
 const destinations = [
@@ -60,6 +60,18 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     window.dispatchEvent(new CustomEvent("amh-project-change", { detail: next }));
   }
 
+  function workspaceHref(job: Job, retry = false) {
+    const path = job.modality === "image" ? "/images" : `/${job.modality}`;
+    if (!retry) return path;
+    const params = new URLSearchParams({ model: job.model_id, prompt: job.prompt || "" });
+    return `${path}?${params.toString()}`;
+  }
+
+  function retryJob(job: Job) {
+    if (job.project_id) selectProject(job.project_id);
+    window.location.assign(workspaceHref(job, true));
+  }
+
   return <>
     <header className="app-topbar">
       <label className="global-project"><span>Project</span><select value={projectId} onChange={(event) => selectProject(event.target.value)}><option value="">Personal workspace</option>{projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}</select></label>
@@ -70,7 +82,11 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
         <span className="topbar-identity">{identity}</span><ThemeToggle />
       </div>
     </header>
-    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close">×</button></div><div className="drawer-scroll">{jobs.length ? jobs.map((job) => <Link href={job.modality === "image" ? "/images" : `/${job.modality}`} className="generation-row" key={job.id} onClick={() => setOpen(false)}><span className={`job-state ${job.status}`} /><span><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {Number(job.charged_credits || job.estimated_credits || 0).toFixed(2)} credits</small></span></Link>) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts →</Link></aside></>}
+    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close">×</button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
+      const terminalFailure = ["failed", "cancelled", "expired"].includes(job.status);
+      const active = ["queued", "submitted", "processing", "settling"].includes(job.status);
+      return <article className="generation-row" key={job.id}><span className={`job-state ${job.status}`} /><span className="generation-row-content"><Link href={workspaceHref(job)} onClick={() => setOpen(false)}><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {Number(job.charged_credits || job.estimated_credits || 0).toFixed(2)} credits</small></Link>{job.error_message && terminalFailure && <small className="generation-error">{job.error_message}</small>}<span className="generation-row-actions">{terminalFailure && <button type="button" onClick={() => retryJob(job)}>Retry with settings</button>}<Link href="/usage" onClick={() => setOpen(false)}>Cost details</Link>{active && <small>Cancellation becomes available only when the provider supports it safely.</small>}</span></span></article>;
+    }) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts →</Link></aside></>}
     {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><span>⌕</span><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search destinations, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
       {matchingDestinations.length > 0 && <section><span className="command-section-label">Destinations</span>{matchingDestinations.map((item) => <Link key={item.href} href={item.href} onClick={() => setPalette(false)}><span><b>{item.label}</b><small>{item.detail}</small></span><span>→</span></Link>)}</section>}
       {matchingProjects.length > 0 && <section><span className="command-section-label">Projects</span>{matchingProjects.map((project) => <button key={project.id} type="button" onClick={() => { selectProject(project.id); setPalette(false); }}><span><b>{project.name}</b><small>Switch active project</small></span><span>Activate</span></button>)}</section>}
