@@ -10,9 +10,9 @@ type Retail = { flatCredits?: number; perSecondCredits?: number };
 type UiSchema = {inputModes?:string[];aspectRatios?:string[];durationOptions?:number[];resolutionOptions?:string[];audioModes?:Array<"music"|"sfx">;maxReferences?:number;nativeAudio?:boolean};
 type Model = {id:string;name:string;tier:string;modality:string;description:string;retail:Retail;capabilities:string[];uiSchema?:UiSchema};
 
-type Props = { modality: Modality; title:string; subtitle:string };
+type Props = { modality: Modality; title:string; subtitle:string; embedded?:boolean; initialAudioMode?:"music"|"sfx"; hideAudioModeTabs?:boolean };
 
-export function MediaStudio({modality,title,subtitle}:Props){
+export function MediaStudio({modality,title,subtitle,embedded=false,initialAudioMode="music",hideAudioModeTabs=false}:Props){
   const qs=useSearchParams();
   const [models,setModels]=useState<Model[]>([]);
   const [modelId,setModelId]=useState("");
@@ -29,7 +29,7 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const [copied,setCopied]=useState(false);
   const [projectId,setProjectId]=useState("");
   const [advanced,setAdvanced]=useState(false);
-  const [audioMode,setAudioMode]=useState<"music"|"sfx">("music");
+  const [audioMode,setAudioMode]=useState<"music"|"sfx">(initialAudioMode);
 
   useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.id==="eleven-tts-flash"));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
   useEffect(()=>{const sync=()=>setProjectId(window.localStorage.getItem("amh-active-project")||"");sync();const listener=(event:Event)=>setProjectId((event as CustomEvent<string>).detail||"");window.addEventListener("amh-project-change",listener);return()=>window.removeEventListener("amh-project-change",listener)},[]);
@@ -74,8 +74,8 @@ export function MediaStudio({modality,title,subtitle}:Props){
   const terminalFailure=job?.status&&["failed","cancelled","expired"].includes(job.status);
   const activeJob=job&&!job.status?.includes("completed")&&!terminalFailure;
   const statusCopy=getGenerationStatus(job?.status);
-  return <div className={`creation-workspace ${modality}-workspace`}><div className="workspace-heading"><div><div className="kicker">{modality} studio</div><h1>{title}</h1></div><div className="workspace-context">{projectId?"Project connected":"Personal workspace"}</div></div>
-    {modality==="audio"&&<div className="workspace-modes" role="tablist" aria-label="Audio creation mode">{audioModes.map(mode=><button key={mode} type="button" role="tab" aria-selected={audioMode===mode} className={audioMode===mode?"active":""} onClick={()=>selectAudioMode(mode)}>{mode==="music"?"Music":"Sound effects"}</button>)}</div>}
+  return <div className={`creation-workspace ${modality}-workspace ${embedded?"embedded-workspace":""}`}>{!embedded&&<div className="workspace-heading"><div><div className="kicker">{modality} studio</div><h1>{title}</h1></div><div className="workspace-context">{projectId?"Project connected":"Personal workspace"}</div></div>}
+    {modality==="audio"&&!hideAudioModeTabs&&<div className="workspace-modes" role="tablist" aria-label="Audio creation mode">{audioModes.map(mode=><button key={mode} type="button" role="tab" aria-selected={audioMode===mode} className={audioMode===mode?"active":""} onClick={()=>selectAudioMode(mode)}>{mode==="music"?"Music":"Sound effects"}</button>)}</div>}
     <div className="studio-layout creation-studio-layout">
       <form className="studio-panel inspector-panel" onSubmit={submit}>
         <label className="label">Model<PremiumSelect value={modelId} onChange={value=>{setModelId(value);setConfirmed(false)}} options={compatibleModels.map(m=>({value:m.id,label:`${m.name} · ${m.tier}`}))} /></label>
@@ -93,13 +93,11 @@ export function MediaStudio({modality,title,subtitle}:Props){
         {!job&&<div className="studio-empty"><div className="studio-empty-glyph">{modality==="image"?"▧":modality==="video"?"▶":"♫"}</div><h2>{modality==="video"?"Bring an idea—or a frame—to life.":audioMode==="music"?"Give your story a soundtrack.":"Create a sound from words."}</h2><p>{subtitle}</p><span>Model → Prompt → Generate</span></div>}
         {activeJob&&<div className="generation-status"><div className="generation-skeleton" aria-hidden="true"><span /><span /><span /></div><div className="kicker">{statusCopy.label}</div><h3>{statusCopy.title}</h3><p className="muted small">{statusCopy.detail}</p><p className="muted small">Job {job.public_id||job.id}</p><p className="muted small">You can move to another workspace while this finishes. Progress remains available in the Generation Center.</p></div>}
         {terminalFailure&&<div><h3 style={{color:"var(--danger)"}}>{job?.status==="cancelled"?"Generation cancelled":job?.status==="expired"?"Generation expired":"Generation failed"}</h3><p className="muted">{job?.error_message||"The provider could not complete this generation."}</p><p className="small">Eligible reserved credits are released automatically. Your prompt and settings are preserved.</p><button className="btn btn-primary" type="button" onClick={retryWithSameSettings}>Retry with same settings</button></div>}
-        {job?.status==="completed"&&<div className="studio-output">{modality==="image"&&resultUrl?<Image src={resultUrl} alt="Generated result" width={1024} height={1024} unoptimized/>:modality==="video"&&resultUrl?<video controls src={resultUrl}/>:resultUrl?<audio controls src={resultUrl}/>:<p>Generation completed. Open the result from your Library.</p>}<div className="result-meta">Ready · Charged {Number(job.charged_credits||job.estimated_credits||0).toFixed(2)} Credits</div>{resultUrl&&<div className="generation-actions"><a className="btn btn-primary" href={resultUrl} download>Download</a>{modality==="video"&&<LinkButton href={`/images?reference=${job?.id||""}`} label="Send frame → Image"/>}{modality==="audio"&&<LinkButton href={`/video?audio=${job?.id||""}`} label="Use in Video"/>}<button className="btn" type="button" onClick={async () => { await navigator.clipboard?.writeText(resultUrl); setCopied(true); window.setTimeout(() => setCopied(false), 1800); }}>{copied ? "Copied" : "Copy link"}</button><button className="btn" type="button" onClick={() => { setJob(null); setError(""); }}>Variation</button></div>}</div>}
+        {job?.status==="completed"&&<div className="studio-output">{modality==="image"&&resultUrl?<Image src={resultUrl} alt="Generated result" width={1024} height={1024} unoptimized/>:modality==="video"&&resultUrl?<video controls src={resultUrl}/>:resultUrl?<audio controls src={resultUrl}/>:<p>Generation completed. Open the result from your Library.</p>}<div className="result-meta">Ready · Charged {Number(job.charged_credits||job.estimated_credits||0).toFixed(2)} Credits</div>{resultUrl&&<div className="generation-actions"><a className="btn btn-primary" href={resultUrl} download>Download</a><button className="btn" type="button" onClick={async () => { await navigator.clipboard?.writeText(resultUrl); setCopied(true); window.setTimeout(() => setCopied(false), 1800); }}>{copied ? "Copied" : "Copy link"}</button><button className="btn" type="button" onClick={() => { setJob(null); setError(""); }}>Variation</button></div>}</div>}
       </section>
     </div>
   </div>;
 }
-
-function LinkButton({href,label}:{href:string;label:string}){return <a className="btn" href={href}>{label}</a>}
 
 function getGenerationStatus(status?:string){
   if(status==="queued")return {label:"Queued",title:"Your generation is queued",detail:"Waiting for provider capacity."};
