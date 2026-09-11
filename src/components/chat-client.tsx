@@ -121,7 +121,8 @@ export function ChatClient() {
   const supportsReasoning = !exact || Boolean(exact.capabilities?.includes("reasoning"));
 
   useEffect(() => {
-    if (!supportsReasoning) setDeepThink(false);
+    const timer=window.setTimeout(()=>{if (!supportsReasoning) setDeepThink(false)},0);
+    return()=>window.clearTimeout(timer);
   }, [supportsReasoning]);
 
   async function enhancePrompt() {
