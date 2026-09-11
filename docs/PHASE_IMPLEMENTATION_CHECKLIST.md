@@ -27,7 +27,8 @@ Each phase uses a small branch and pull request, automated checks, review, merge
 - [x] Compact navigation, creation launcher, project selector, command palette
 - [x] Mobile bottom navigation
 - [x] Global generation feed with real states and costs
-- [ ] Add supported retry/cancel actions without faking provider progress
+- [x] Add safe retry with original prompt, model, and project context
+- [ ] Add cancellation when an upstream provider exposes a safe cancellation contract
 
 ## Phases 4–7 — Creation workspaces
 
