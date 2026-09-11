@@ -12,7 +12,7 @@ const steps=[
 
 export function WorkspaceOnboarding(){
  const [open,setOpen]=useState(false),[step,setStep]=useState(0);
- useEffect(()=>{if(window.localStorage.getItem("amh-onboarding-v1")!=="complete")setOpen(true)},[]);
+ useEffect(()=>{const timer=window.setTimeout(()=>{if(window.localStorage.getItem("amh-onboarding-v1")!=="complete")setOpen(true)},0);return()=>window.clearTimeout(timer)},[]);
  function finish(){window.localStorage.setItem("amh-onboarding-v1","complete");setOpen(false)}
  if(!open)return null;
  const current=steps[step];
