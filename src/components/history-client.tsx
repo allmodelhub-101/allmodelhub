@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { type ReactNode,useEffect,useMemo,useState } from "react";
 type Conversation={id:string;title:string;mode:string;preferred_model?:string;pinned:boolean;updated_at:string};
 type Job={id:string;modality:string;model_id:string;status:string;prompt?:string;result_urls?:string[];charged_credits?:number;created_at:string};
@@ -9,7 +10,7 @@ export function HistoryClient({crossModalityHandoffs=false}:{crossModalityHandof
  const [conversations,setConversations]=useState<Conversation[]>([]),[jobs,setJobs]=useState<Job[]>([]),[files,setFiles]=useState<FileRow[]>([]),[favoriteJobs,setFavoriteJobs]=useState<string[]>([]),[favoriteFiles,setFavoriteFiles]=useState<string[]>([]),[q,setQ]=useState(""),[view,setView]=useState<View>("all"),[loading,setLoading]=useState(true);
  const [detail,setDetail]=useState<{kind:"job";item:Job}|{kind:"file";item:FileRow;url?:string}|null>(null),[detailLoading,setDetailLoading]=useState(false);
  async function load(){setLoading(true);const [a,b,c,d]=await Promise.all([fetch("/api/conversations"),fetch("/api/jobs?limit=100"),fetch("/api/files"),fetch("/api/favorites")]);if(a.ok)setConversations((await a.json()).conversations||[]);if(b.ok)setJobs((await b.json()).jobs||[]);if(c.ok)setFiles((await c.json()).files||[]);if(d.ok){const data=await d.json();setFavoriteJobs(data.jobIds||[]);setFavoriteFiles(data.fileIds||[])}setLoading(false)}
- useEffect(()=>{void load()},[]);
+ useEffect(()=>{const timer=window.setTimeout(()=>void load(),0);return()=>window.clearTimeout(timer)},[]);
  async function patchConversation(id:string,body:Record<string,unknown>){await fetch(`/api/conversations/${id}`,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});await load()}
  async function removeConversation(id:string){if(!confirm("Delete this conversation permanently?"))return;await fetch(`/api/conversations/${id}`,{method:"DELETE"});await load()}
  async function toggleFavorite(kind:"job"|"file",id:string,current:boolean){await fetch("/api/favorites",{method:current?"DELETE":"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,id})});if(kind==="job")setFavoriteJobs(items=>current?items.filter(x=>x!==id):[...items,id]);else setFavoriteFiles(items=>current?items.filter(x=>x!==id):[...items,id])}
@@ -36,6 +37,6 @@ function AssetDetail({detail,loading,crossModalityHandoffs,onClose}:{detail:{kin
 }
 
 function DetailFrame({title,kicker,url,mime,loading,onClose,metadata,children}:{title:string;kicker:string;url?:string;mime:string;loading:boolean;onClose:()=>void;metadata:string[][];children:ReactNode}){
- return <div className="asset-detail-overlay" role="dialog" aria-modal="true" aria-label="Asset details"><button className="workspace-scrim" aria-label="Close asset details" onClick={onClose}/><section className="asset-detail-panel"><header><div><span className="kicker">{kicker}</span><h2>{title}</h2></div><button className="icon-button" onClick={onClose} aria-label="Close">×</button></header><div className="asset-detail-scroll"><div className="asset-preview">{loading?<span>Loading secure preview…</span>:url&&(mime==="image"||mime.startsWith("image/"))?<img src={url} alt="Asset preview"/>:url&&(mime==="video"||mime.startsWith("video/"))?<video src={url} controls/>:url&&(mime==="audio"||mime.startsWith("audio/"))?<audio src={url} controls/>:<span>Preview is not available for this asset type.</span>}</div><dl className="asset-metadata">{metadata.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><footer>{children}</footer></section></div>
+ return <div className="asset-detail-overlay" role="dialog" aria-modal="true" aria-label="Asset details"><button className="workspace-scrim" aria-label="Close asset details" onClick={onClose}/><section className="asset-detail-panel"><header><div><span className="kicker">{kicker}</span><h2>{title}</h2></div><button className="icon-button" onClick={onClose} aria-label="Close">×</button></header><div className="asset-detail-scroll"><div className="asset-preview">{loading?<span>Loading secure preview…</span>:url&&(mime==="image"||mime.startsWith("image/"))?<Image src={url} alt="Asset preview" width={1200} height={900} unoptimized/>:url&&(mime==="video"||mime.startsWith("video/"))?<video src={url} controls/>:url&&(mime==="audio"||mime.startsWith("audio/"))?<audio src={url} controls/>:<span>Preview is not available for this asset type.</span>}</div><dl className="asset-metadata">{metadata.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></div><footer>{children}</footer></section></div>
 }
 
