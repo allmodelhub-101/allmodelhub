@@ -98,12 +98,10 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   },[maxReferences,modelId,qs,references]);
 
   useEffect(() => {
-    if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
-    setReferences((current) => {
-      current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));
-      return current.slice(0, maxReferences);
-    });
-  }, [modelId]);
+    const timer=window.setTimeout(()=>{if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
+      setReferences((current) => {current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));return current.slice(0, maxReferences);});},0);
+    return()=>window.clearTimeout(timer);
+  }, [aspect,aspectRatios,maxReferences,modelId]);
 
   async function uploadReference(file: File) {
     setUploading(true); setError("");
