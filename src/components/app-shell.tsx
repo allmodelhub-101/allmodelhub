@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/auth";
 import { getWallet } from "@/lib/wallet";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { WorkspaceOnboarding } from "@/components/workspace-onboarding";
+import { WorkspaceNetworkStatus } from "@/components/workspace-network-status";
 
 
 export async function AppShell({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
       <div className="app-content">{children}</div>
     </main>
     <WorkspaceOnboarding />
+    <WorkspaceNetworkStatus />
   </div>;
 }
 
