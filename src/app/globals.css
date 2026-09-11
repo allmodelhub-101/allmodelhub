@@ -706,6 +706,21 @@ html[data-theme="light"] .cin-site .cin-final-cta { background:#eaf6fb; }
 @media(max-width:560px){.app-topbar{grid-template-columns:1fr auto;gap:6px;padding-right:8px}.topbar-actions .theme-toggle{display:none}.wallet-chip{padding-inline:8px}.workspace-heading h1{font-size:21px}.creation-workspace{gap:9px}.creation-studio-layout{gap:9px}.creation-canvas{min-height:260px;padding:14px}.studio-empty h2{font-size:24px}.studio-empty p{font-size:12px}.inspector-panel{padding:13px}.creation-menu{position:fixed;left:12px!important;right:12px;top:auto!important;bottom:78px;width:auto}}
 @media(prefers-reduced-motion:reduce){.generation-drawer,.command-panel,.job-state{animation:none!important}}
 
+/* Searchable workspace command palette */
+.command-list{max-height:min(58vh,520px);overflow:auto}
+.command-list section{display:grid}
+.command-section-label{padding:9px 12px 5px;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:.11em;text-transform:uppercase}
+.command-list a,.command-list button{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:11px 12px;border:0;border-radius:10px;color:var(--text);background:transparent;text-align:left;font:inherit;cursor:pointer}
+.command-list a:hover,.command-list button:hover,.command-list a:focus-visible,.command-list button:focus-visible{background:var(--panel-2);outline:0}
+.command-list a>span:first-child,.command-list button>span:first-child{min-width:0}
+.command-list b,.command-list small{display:block}
+.command-list b{font-size:12px}
+.command-list small{margin-top:3px;color:var(--muted);font-size:10px}
+.command-list a>span:last-child,.command-list button>span:last-child{flex:none;color:var(--muted);font-size:10px;font-weight:800}
+.command-input kbd{padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel-2);color:var(--muted);font-size:10px}
+.command-empty{display:grid;gap:6px;padding:34px 18px;text-align:center}
+.command-empty b{font-size:13px}.command-empty span{color:var(--muted);font-size:11px}
+
 /* AI Creation Workspace — focused interaction layer */
 .modal-open{overflow:hidden}.app-content:has(.chat-page){width:100%;max-width:none;padding:0}.app-content:has(.chat-page) .chat-page{height:calc(100dvh - 66px);min-height:620px;overflow:hidden}.premium-chat-page{position:relative;grid-template-rows:64px minmax(0,1fr) auto;background:radial-gradient(circle at 50% -20%,rgba(126,231,255,.07),transparent 36%)}
 .chat-toolbar{min-height:64px;padding:8px clamp(16px,2.4vw,34px);flex-wrap:nowrap;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(18px);z-index:20}.workspace-identity{display:grid;gap:3px;min-width:0}.workspace-identity .eyebrow,.model-picker-head .eyebrow{color:var(--muted);font-size:9px;font-weight:850;letter-spacing:.14em;text-transform:uppercase}.workspace-identity strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.chat-toolbar-actions{display:flex;align-items:center;gap:8px}.model-trigger{display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:230px;padding:8px 10px 8px 13px;border:1px solid var(--line);border-radius:13px;background:var(--panel);color:var(--text);text-align:left;cursor:pointer;transition:border-color .16s ease,background .16s ease,transform .16s ease}.model-trigger:hover{border-color:rgba(126,231,255,.38);background:var(--panel-2);transform:translateY(-1px)}.model-trigger span{display:grid;gap:1px;min-width:0}.model-trigger small{color:var(--muted);font-size:9px}.model-trigger strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.model-trigger kbd,.model-search kbd{padding:3px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;background:var(--panel-2);color:var(--muted);font:10px ui-monospace,monospace}.toolbar-text-button,.chat-more summary{min-height:38px;display:grid;place-items:center;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:transparent;color:var(--muted);font-size:12px;font-weight:750;letter-spacing:0;cursor:pointer}.toolbar-text-button:hover,.chat-more summary:hover{color:var(--text);background:var(--panel-2)}

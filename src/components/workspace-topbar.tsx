@@ -1,18 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 type Project = { id: string; name: string };
 type Job = { id: string; public_id: string; modality: string; model_id: string; status: string; prompt?: string; charged_credits?: number; estimated_credits?: number };
+type Model = { id: string; name: string; providerFamily?: string; modality: "text" | "image" | "video" | "audio"; capabilities?: string[] };
+
+const destinations = [
+  { label: "New chat", detail: "Start a conversation", href: "/chat" },
+  { label: "Create image", detail: "Open Image Studio", href: "/images" },
+  { label: "Create video", detail: "Open Video Studio", href: "/video" },
+  { label: "Create audio", detail: "Open Audio Studio", href: "/audio" },
+  { label: "Projects", detail: "Organize persistent context", href: "/projects" },
+  { label: "Library", detail: "Find chats, files, and generations", href: "/history" },
+  { label: "Models", detail: "Compare models and pricing", href: "/models" },
+  { label: "Wallet & receipts", detail: "Credits, costs, and usage", href: "/wallet" }
+];
 
 export function WorkspaceTopbar({ balance, identity }: { balance: number; identity: string }) {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [models, setModels] = useState<Model[]>([]);
   const [projectId, setProjectId] = useState("");
   const [jobs, setJobs] = useState<Job[]>([]);
   const [open, setOpen] = useState(false);
   const [palette, setPalette] = useState(false);
+  const [query, setQuery] = useState("");
 
   async function loadJobs() {
     const response = await fetch("/api/jobs?limit=20", { cache: "no-store" });
@@ -23,6 +37,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     const saved = window.localStorage.getItem("amh-active-project") || "";
     setProjectId(saved);
     fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
+    fetch("/api/models").then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
     void loadJobs();
     const timer = window.setInterval(() => void loadJobs(), 12000);
     const shortcut = (event: KeyboardEvent) => {
@@ -34,6 +49,11 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   }, []);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
+  const normalizedQuery = query.trim().toLowerCase();
+  const matchingDestinations = useMemo(() => destinations.filter((item) => !normalizedQuery || `${item.label} ${item.detail}`.toLowerCase().includes(normalizedQuery)), [normalizedQuery]);
+  const matchingProjects = useMemo(() => projects.filter((project) => normalizedQuery && project.name.toLowerCase().includes(normalizedQuery)).slice(0, 4), [normalizedQuery, projects]);
+  const matchingModels = useMemo(() => models.filter((model) => normalizedQuery && [model.name, model.providerFamily, model.modality, ...(model.capabilities || [])].join(" ").toLowerCase().includes(normalizedQuery)).slice(0, 6), [models, normalizedQuery]);
+  const modelHref = (model: Model) => `${model.modality === "image" ? "/images" : `/${model.modality === "text" ? "chat" : model.modality}`}?model=${encodeURIComponent(model.id)}`;
   function selectProject(next: string) {
     setProjectId(next);
     window.localStorage.setItem("amh-active-project", next);
@@ -43,7 +63,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   return <>
     <header className="app-topbar">
       <label className="global-project"><span>Project</span><select value={projectId} onChange={(event) => selectProject(event.target.value)}><option value="">Personal workspace</option>{projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}</select></label>
-      <button className="command-trigger" type="button" onClick={() => setPalette(true)}><span>⌕</span><span>Search or jump to…</span><kbd>⌘K</kbd></button>
+      <button className="command-trigger" type="button" onClick={() => { setQuery(""); setPalette(true); }}><span>⌕</span><span>Search or jump to…</span><kbd>⌘K</kbd></button>
       <div className="topbar-actions">
         <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} working` : "Generations"}</button>
         <Link href="/wallet" className="wallet-chip">{balance.toFixed(2)} Credits</Link>
@@ -51,7 +71,12 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
       </div>
     </header>
     {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close">×</button></div><div className="drawer-scroll">{jobs.length ? jobs.map((job) => <Link href={job.modality === "image" ? "/images" : `/${job.modality}`} className="generation-row" key={job.id} onClick={() => setOpen(false)}><span className={`job-state ${job.status}`} /><span><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {Number(job.charged_credits || job.estimated_credits || 0).toFixed(2)} credits</small></span></Link>) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts →</Link></aside></>}
-    {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><div className="command-input">⌕ <input autoFocus placeholder="Search or choose a destination…" /></div><div className="command-list">{[["New chat","/chat"],["Create image","/images"],["Create video","/video"],["Create audio","/audio"],["Projects","/projects"],["Library","/history"],["Models","/models"],["Wallet & receipts","/wallet"]].map(([label,href]) => <Link key={href} href={href} onClick={() => setPalette(false)}>{label}<span>→</span></Link>)}</div></div></div>}
+    {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><span>⌕</span><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search destinations, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
+      {matchingDestinations.length > 0 && <section><span className="command-section-label">Destinations</span>{matchingDestinations.map((item) => <Link key={item.href} href={item.href} onClick={() => setPalette(false)}><span><b>{item.label}</b><small>{item.detail}</small></span><span>→</span></Link>)}</section>}
+      {matchingProjects.length > 0 && <section><span className="command-section-label">Projects</span>{matchingProjects.map((project) => <button key={project.id} type="button" onClick={() => { selectProject(project.id); setPalette(false); }}><span><b>{project.name}</b><small>Switch active project</small></span><span>Activate</span></button>)}</section>}
+      {matchingModels.length > 0 && <section><span className="command-section-label">Models</span>{matchingModels.map((model) => <Link key={model.id} href={modelHref(model)} onClick={() => setPalette(false)}><span><b>{model.name}</b><small>{model.providerFamily || "AI"} · {model.modality}</small></span><span>Open</span></Link>)}</section>}
+      {!matchingDestinations.length && !matchingProjects.length && !matchingModels.length && <div className="command-empty"><b>No results found</b><span>Try a model, provider, project, or workspace name.</span></div>}
+    </div></div></div>}
   </>;
 }
 
