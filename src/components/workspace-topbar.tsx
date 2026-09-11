@@ -44,11 +44,10 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
 
   useEffect(() => {
     const saved = window.localStorage.getItem("amh-active-project") || "";
-    setProjectId(saved);
+    window.setTimeout(()=>setProjectId(saved),0);
     fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
     fetch("/api/models").then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
-    void loadJobs();
-    void loadNotifications();
+    const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications()},0);
     const timer = window.setInterval(() => void loadJobs(), 12000);
     const shortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
@@ -56,7 +55,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
       if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); }
     };
     window.addEventListener("keydown", shortcut);
-    return () => { window.clearInterval(timer); window.removeEventListener("keydown", shortcut); };
+    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer); window.removeEventListener("keydown", shortcut); };
   }, []);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
@@ -65,7 +64,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   const matchingDestinations = useMemo(() => destinations.filter((item) => !normalizedQuery || `${item.label} ${item.detail}`.toLowerCase().includes(normalizedQuery)), [normalizedQuery]);
   const matchingProjects = useMemo(() => projects.filter((project) => normalizedQuery && project.name.toLowerCase().includes(normalizedQuery)).slice(0, 4), [normalizedQuery, projects]);
   const matchingModels = useMemo(() => models.filter((model) => normalizedQuery && [model.name, model.providerFamily, model.modality, ...(model.capabilities || [])].join(" ").toLowerCase().includes(normalizedQuery)).slice(0, 6), [models, normalizedQuery]);
-  useEffect(()=>{if(!palette||normalizedQuery.length<2){setProductResults([]);setSearching(false);return}const controller=new AbortController();setSearching(true);const timer=window.setTimeout(()=>fetch(`/api/search?q=${encodeURIComponent(query.trim())}`,{signal:controller.signal}).then(response=>response.ok?response.json():{results:[]}).then(data=>setProductResults(data.results||[])).catch(()=>undefined).finally(()=>setSearching(false)),220);return()=>{window.clearTimeout(timer);controller.abort()}},[normalizedQuery,palette,query]);
+  useEffect(()=>{const controller=new AbortController();const timer=window.setTimeout(()=>{if(!palette||normalizedQuery.length<2){setProductResults([]);setSearching(false);return}setSearching(true);fetch(`/api/search?q=${encodeURIComponent(query.trim())}`,{signal:controller.signal}).then(response=>response.ok?response.json():{results:[]}).then(data=>setProductResults(data.results||[])).catch(()=>undefined).finally(()=>setSearching(false))},palette&&normalizedQuery.length>=2?220:0);return()=>{window.clearTimeout(timer);controller.abort()}},[normalizedQuery,palette,query]);
   const modelHref = (model: Model) => `${model.modality === "image" ? "/images" : `/${model.modality === "text" ? "chat" : model.modality}`}?model=${encodeURIComponent(model.id)}`;
   function selectProject(next: string) {
     setProjectId(next);

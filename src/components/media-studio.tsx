@@ -49,7 +49,9 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
   const maxReferences=Math.max(0,schema.maxReferences??(model?.capabilities.includes("image-to-video")?1:0));
   const effectiveDuration = durationOptions.length===1 ? durationOptions[0] : duration;
   const estimate=useMemo(()=>{if(!model)return 0;if(model.retail.flatCredits)return Number(model.retail.flatCredits);if(model.retail.perSecondCredits)return Number(model.retail.perSecondCredits)*effectiveDuration;return 0},[model,effectiveDuration]);
-  useEffect(()=>{if(!model)return;const nextDuration=durationOptions[0];if(nextDuration&&!durationOptions.includes(duration))setDuration(nextDuration);const nextAspect=aspectOptions[0];if(nextAspect&&!aspectOptions.includes(aspect))setAspect(nextAspect);const nextResolution=resolutionOptions[0]||"";if(!resolutionOptions.includes(resolution))setResolution(nextResolution);if(schema.audioModes?.length&&!schema.audioModes.includes(audioMode))setAudioMode(schema.audioModes[0]);setReferenceFileIds(ids=>ids.slice(0,maxReferences));setConfirmed(false)},[modelId]);
+  // Model selection is the synchronization boundary for its capability defaults.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(()=>{if(!model)return;const timer=window.setTimeout(()=>{const nextDuration=durationOptions[0];if(nextDuration&&!durationOptions.includes(duration))setDuration(nextDuration);const nextAspect=aspectOptions[0];if(nextAspect&&!aspectOptions.includes(aspect))setAspect(nextAspect);const nextResolution=resolutionOptions[0]||"";if(!resolutionOptions.includes(resolution))setResolution(nextResolution);if(schema.audioModes?.length&&!schema.audioModes.includes(audioMode))setAudioMode(schema.audioModes[0]);setReferenceFileIds(ids=>ids.slice(0,maxReferences));setConfirmed(false)},0);return()=>window.clearTimeout(timer)},[modelId]);
   const expensive=modality==="video"||estimate>=50;
 
   function selectAudioMode(nextMode:"music"|"sfx"){
