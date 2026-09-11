@@ -8,6 +8,11 @@ import { creditsFromUsd } from "@/lib/pricing";
 type Props = { models: CatalogModel[]; fxRate: number };
 const modalities = ["all", "text", "image", "video", "audio"] as const;
 const tiers = ["all", "budget", "balanced", "premium", "flagship"] as const;
+type Sort = "recommended"|"price"|"name";
+
+function creditEstimate(model: CatalogModel, fxRate: number) {
+  return creditsFromUsd(model.inputUsdPerMillion ?? model.flatUsd ?? model.perSecondUsd ?? model.per1kCharsUsd ?? 0, model.markup, fxRate);
+}
 
 function costLabel(model: CatalogModel, fxRate: number) {
   const usd = model.inputUsdPerMillion ?? model.flatUsd ?? model.perSecondUsd ?? model.per1kCharsUsd ?? 0;
@@ -37,10 +42,13 @@ function titleCase(value: string) { return value[0].toUpperCase() + value.slice(
 export function ModelsMarketplace({ models, fxRate }: Props) {
   const [modality, setModality] = useState<(typeof modalities)[number]>("all");
   const [tier, setTier] = useState<(typeof tiers)[number]>("all");
-  const filtered = useMemo(() => models.filter((model) => (modality === "all" || model.modality === modality) && (tier === "all" || model.tier === tier)), [models, modality, tier]);
+  const [query,setQuery]=useState("");
+  const [sort,setSort]=useState<Sort>("recommended");
+  const filtered = useMemo(() => {const needle=query.trim().toLowerCase();return models.filter((model) => (modality === "all" || model.modality === modality) && (tier === "all" || model.tier === tier) && (!needle||`${model.name} ${model.providerFamily} ${model.description} ${model.capabilities.join(" ")}`.toLowerCase().includes(needle))).sort((a,b)=>sort==="price"?creditEstimate(a,fxRate)-creditEstimate(b,fxRate):sort==="name"?a.name.localeCompare(b.name):Number(Boolean(b.autoEligible))-Number(Boolean(a.autoEligible)));}, [models, modality, tier, query, sort, fxRate]);
   const hrefFor = (model: CatalogModel) => model.modality === "text" ? `/chat?model=${encodeURIComponent(model.id)}` : `/${model.modality === "image" ? "images" : model.modality === "video" ? "video" : "audio"}?model=${encodeURIComponent(model.id)}`;
   return <div className="marketplace">
     <div className="marketplace-controls glass">
+      <div className="model-search-row"><label className="model-search">⌕<input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Search models, providers or capabilities…"/></label><label className="model-sort"><span>Sort</span><select value={sort} onChange={event=>setSort(event.target.value as Sort)}><option value="recommended">Recommended</option><option value="price">Lowest estimated cost</option><option value="name">Name</option></select></label></div>
       <div className="filter-group" role="group" aria-label="Filter by capability"><span className="filter-label">Capability</span>{modalities.map((item) => <button type="button" key={item} className={`mode-pill ${modality === item ? "active" : ""}`} aria-pressed={modality === item} onClick={() => setModality(item)}>{titleCase(item)}</button>)}</div>
       <div className="filter-group" role="group" aria-label="Filter by tier"><span className="filter-label">Tier</span>{tiers.map((item) => <button type="button" key={item} className={`mode-pill ${tier === item ? "active" : ""}`} aria-pressed={tier === item} onClick={() => setTier(item)}>{titleCase(item)}</button>)}</div>
     </div>
@@ -54,11 +62,13 @@ function ModelCard({ model, fxRate, href }: { model: CatalogModel; fxRate: numbe
   return <article className="card glass model-card">
     <div className="model-card-top"><span className={`tier tier-${model.tier}`}>{titleCase(model.tier)}</span><span className="category-badge">{titleCase(model.modality)}</span></div>
     <div className="model-card-title"><div><h3>{model.name}</h3><p className="muted small">{model.providerFamily}</p></div><span className="model-signal" aria-label="Available" /></div>
+    <div className="capability-chips">{model.capabilities.slice(0,4).map(item=><span key={item}>{item}</span>)}</div>
     <div className="model-details">
       <div><span className="detail-label">Best for</span><ul>{bullets.map((item) => <li key={item}>{item}</li>)}</ul></div>
       <div className="detail-row"><span className="detail-label">Speed</span><strong>{speedLabel(model)}</strong></div>
-      <div className="detail-row"><span className="detail-label">Cost</span><strong>{costLabel(model, fxRate)}</strong></div>
+      <div className="detail-row"><span className="detail-label">Cost</span><strong>{costLabel(model, fxRate)} · from {creditEstimate(model,fxRate).toFixed(2)} cr</strong></div>
     </div>
     <Link className="btn btn-primary model-action" href={href}>{model.modality === "text" ? "Use Model" : "Open Studio"}<span aria-hidden="true">↗</span></Link>
   </article>;
 }
+
