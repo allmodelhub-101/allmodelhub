@@ -1093,3 +1093,6 @@ html[data-theme="light"] .cin-site .cin-final-cta { background:#eaf6fb; }
 .image-mobile-controls{display:none}
 @media(max-width:900px){.image-mobile-controls{position:absolute;right:14px;top:12px;z-index:48;display:flex;align-items:center;gap:6px;min-height:34px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel-solid);color:var(--text);font-size:10px;font-weight:800;box-shadow:0 12px 35px rgba(0,0,0,.18)}}
 @media(max-width:620px){.image-mobile-controls{top:8px;right:8px}}
+
+/* Headerless Image Studio occupies the full available viewport row. */
+.image-workspace{grid-template-rows:minmax(0,1fr)}
