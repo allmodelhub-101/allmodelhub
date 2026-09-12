@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, Command, DotsThree, MagicWand, Paperclip, Stop, X } from "@phosphor-icons/react";
+import { ArrowUp, DotsThree, MagicWand, Paperclip, Plus, Stop, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -251,9 +251,8 @@ export function ChatClient() {
     <header className="chat-toolbar premium-toolbar">
       <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
       <div className="chat-toolbar-actions">
-        <button className="model-trigger" type="button" onClick={() => setPickerOpen(true)} aria-haspopup="dialog"><span><small>{exact?.providerFamily || "Smart routing"}</small><strong>{exact?.name || "Auto — best model"}</strong></span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
-        <Link href="/battle" className="toolbar-text-button">Compare</Link>
-        <details className="chat-more"><summary aria-label="Conversation menu"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>More</span></summary><div className="chat-more-menu premium-menu"><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
+        {conversationId && <button className="toolbar-new-chat" type="button" onClick={newChat}><Plus size={15} weight="bold" aria-hidden="true" />New chat</button>}
+        <details className="chat-more"><summary aria-label="Conversation actions"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>Actions</span></summary><div className="chat-more-menu premium-menu"><Link href="/battle">Compare models</Link><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
       </div>
     </header>
 
@@ -295,5 +294,4 @@ export function ChatClient() {
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
   </div>;
 }
-
 
