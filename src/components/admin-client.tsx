@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { PremiumSelect } from "@/components/premium-select";
+import { Activity, ArrowRight, ChartLineUp, CheckCircle, Clock, Coins, CreditCard, Gauge, UsersThree, WarningCircle } from "@phosphor-icons/react";
 
 type Payment = {
   id: string; public_id: string; method: string; amount_pkr: number; credits: number; status: string;
@@ -26,14 +27,14 @@ type Job = {
 type Ticket = {
   id: string; public_id: string; email?: string | null; category: string; subject: string; status: string; priority: string; updated_at: string;
 };
-export type AdminTab = "payments" | "models" | "providers" | "users" | "jobs" | "support" | "settings";
+export type AdminTab = "overview" | "payments" | "models" | "providers" | "users" | "jobs" | "support" | "settings";
 type FeatureFlags = Record<"audio_studio" | "image_studio" | "model_battle" | "private_chat" | "prompt_enhancer" | "teams" | "video_studio", boolean>;
 
 export function AdminClient(props: {
   payments: Payment[]; models: Model[]; users: UserRow[]; routes: ProviderRoute[]; jobs: Job[]; tickets: Ticket[];
   settings: Record<string, number>; features: FeatureFlags; initialTab?: AdminTab;
 }) {
-  const [tab, setTab] = useState<AdminTab>(props.initialTab ?? "payments");
+  const [tab, setTab] = useState<AdminTab>(props.initialTab ?? "overview");
   const [payments, setPayments] = useState(props.payments);
   const [models, setModels] = useState(props.models);
   const [routes, setRoutes] = useState(props.routes);
@@ -168,13 +169,14 @@ export function AdminClient(props: {
   }
 
   const tabs: { id: AdminTab; label: string }[] = [
-    { id: "payments", label: "Payments" }, { id: "models", label: "Models" }, { id: "providers", label: "Providers" },
+    { id: "overview", label: "Overview" }, { id: "payments", label: "Payments" }, { id: "models", label: "Models" }, { id: "providers", label: "Providers" },
     { id: "users", label: "Users" }, { id: "jobs", label: "Jobs" }, { id: "support", label: "Support" }, { id: "settings", label: "Platform" }
   ];
 
-  return <div style={{ display: "grid", gap: 20 }}>
-    <div className="mode-row" style={{ overflowX: "auto" }}>{tabs.map((item) => <button key={item.id} className={`mode-pill ${tab === item.id ? "active" : ""}`} onClick={() => setTab(item.id)}>{item.label}</button>)}</div>
+  return <div className="admin-console">
+    <div className="admin-tabs">{tabs.map((item) => <button key={item.id} className={tab === item.id ? "active" : ""} onClick={() => setTab(item.id)}>{item.label}</button>)}</div>
     {status && <div className="soft-card small" style={{ padding: 12 }}>{status}</div>}
+    {tab === "overview" && <AdminOverview payments={payments} users={users} models={models} routes={routes} jobs={jobs} tickets={tickets} openTab={setTab} />}
 
     {tab === "payments" && <section><h2 className="page-title" style={{ marginBottom: 14 }}>Manual payments</h2><div className="table-wrap"><table><thead><tr><th>Order</th><th>User</th><th>Method</th><th>Amount</th><th>Reference</th><th>Status</th><th>Proof</th><th>Action</th></tr></thead><tbody>{payments.length ? payments.map((payment) => <tr key={payment.id}><td>{payment.public_id}</td><td>{payment.email || "—"}</td><td>{payment.method}</td><td>PKR {Number(payment.amount_pkr).toLocaleString()}</td><td>{payment.transaction_reference}</td><td><span className={`badge ${payment.status === "approved" ? "success" : payment.status === "rejected" ? "danger" : "warning"}`}>{payment.status}</span></td><td>{payment.proofUrl ? <a className="btn btn-ghost" href={payment.proofUrl} target="_blank" rel="noreferrer">View ↗</a> : "—"}</td><td>{!["approved", "rejected", "duplicate", "cancelled"].includes(payment.status) ? <div style={{ display: "flex", gap: 6 }}><button className="btn btn-primary" onClick={() => paymentAction(payment.id, "approve")}>Approve</button><button className="btn btn-danger" onClick={() => paymentAction(payment.id, "reject")}>Reject</button></div> : "—"}</td></tr>) : <tr><td colSpan={8} className="muted">No payment submissions.</td></tr>}</tbody></table></div></section>}
 
@@ -191,3 +193,19 @@ export function AdminClient(props: {
     {tab === "settings" && <section><h2 className="page-title" style={{ marginBottom: 6 }}>Platform controls</h2><p className="muted" style={{ marginBottom: 14 }}>Economics and feature availability are enforced server-side. Supplier acquisition costs remain hidden from customers.</p><form className="card studio-panel" onSubmit={savePlatformSettings}><div className="form-grid"><label className="label">Internal USD → PKR basis<input className="input" name="internalUsdPkr" type="number" min={1} step={0.01} defaultValue={platformSettings.internal_usd_pkr ?? 310} /></label><label className="label">Minimum top-up (PKR)<input className="input" name="minTopupPkr" type="number" min={1} step={1} defaultValue={platformSettings.min_topup_pkr ?? 500} /></label><label className="label">Welcome promotional credits<input className="input" name="welcomeCredits" type="number" min={0} step={1} defaultValue={platformSettings.welcome_credits ?? 10} /></label></div><h3 style={{ margin: "8px 0 0" }}>Feature flags</h3><div className="form-grid">{Object.entries(featureFlags).map(([key, enabled]) => <label className="label" key={key} style={{ display: "flex", alignItems: "center", gap: 10 }}><input type="checkbox" checked={enabled} onChange={(event) => setFeatureFlags((current) => ({ ...current, [key]: event.target.checked }))} />{key.replaceAll("_", " ")}</label>)}</div><button className="btn btn-primary" type="submit">Save platform controls</button></form></section>}
   </div>;
 }
+
+function AdminOverview({payments,users,models,routes,jobs,tickets,openTab}:{payments:Payment[];users:UserRow[];models:Model[];routes:ProviderRoute[];jobs:Job[];tickets:Ticket[];openTab:(tab:AdminTab)=>void}) {
+  const now=Date.now(),day=86400000,approved=payments.filter(p=>p.status==="approved");
+  const revenue30=approved.filter(p=>now-new Date(p.created_at).getTime()<=30*day).reduce((s,p)=>s+p.amount_pkr,0);
+  const spend30=jobs.filter(j=>now-new Date(j.created_at).getTime()<=30*day).reduce((s,j)=>s+Number(j.charged_credits||0),0);
+  const pending=payments.filter(p=>!["approved","rejected","duplicate","cancelled"].includes(p.status)),active=jobs.filter(j=>!["completed","failed","cancelled","expired"].includes(j.status)),failed=jobs.filter(j=>j.status==="failed"&&now-new Date(j.created_at).getTime()<=7*day),open=tickets.filter(t=>!["closed","resolved"].includes(t.status));
+  const liability=users.reduce((s,u)=>s+Number(u.wallet?.purchased_balance||0)+Number(u.wallet?.promo_balance||0),0);
+  const days=Array.from({length:14},(_,i)=>{const start=new Date();start.setHours(0,0,0,0);start.setDate(start.getDate()-(13-i));const end=start.getTime()+day;return{label:start.toLocaleDateString(undefined,{month:"short",day:"numeric"}),value:approved.filter(p=>{const t=new Date(p.created_at).getTime();return t>=start.getTime()&&t<end}).reduce((s,p)=>s+p.amount_pkr,0)}}),max=Math.max(1,...days.map(d=>d.value));
+  const metrics=[{label:"Revenue · 30 days",value:`PKR ${revenue30.toLocaleString()}`,note:"Approved manual payments",icon:ChartLineUp,tone:"cyan"},{label:"Usage · 30 days",value:`${spend30.toFixed(2)} cr`,note:"Credits captured by jobs",icon:Coins,tone:"violet"},{label:"Total users",value:users.length.toLocaleString(),note:`${users.filter(u=>now-new Date(u.created_at).getTime()<=7*day).length} joined this week`,icon:UsersThree,tone:"green"},{label:"Wallet liability",value:`${liability.toFixed(2)} cr`,note:"Purchased + promotional",icon:CreditCard,tone:"amber"}];
+  return <section className="admin-overview"><header className="admin-page-head"><div><span className="kicker">Live operations</span><h1>Platform overview</h1><p>Revenue, usage, customer activity, and operational health in one place.</p></div><span className="admin-live"><i/>Live data</span></header>
+  <div className="admin-metric-grid">{metrics.map(m=>{const Icon=m.icon;return <article className={`admin-metric ${m.tone}`} key={m.label}><span><Icon weight="duotone"/></span><small>{m.label}</small><strong>{m.value}</strong><p>{m.note}</p></article>})}</div>
+  <div className="admin-dashboard-grid"><article className="admin-chart-card"><div className="admin-card-head"><div><small>Cash received</small><h2>14-day payment trend</h2></div><b>PKR {days.reduce((s,d)=>s+d.value,0).toLocaleString()}</b></div><div className="admin-bars">{days.map(d=><div key={d.label} title={`${d.label}: PKR ${d.value.toLocaleString()}`}><i style={{height:`${Math.max(4,d.value/max*100)}%`}}/><span>{d.label}</span></div>)}</div></article><article className="admin-health-card"><div className="admin-card-head"><div><small>Operations</small><h2>Needs attention</h2></div><Gauge weight="duotone"/></div><HealthRow icon={Clock} label="Payments awaiting review" value={pending.length} onClick={()=>openTab("payments")}/><HealthRow icon={Activity} label="Jobs currently processing" value={active.length} onClick={()=>openTab("jobs")}/><HealthRow icon={WarningCircle} label="Failed jobs · 7 days" value={failed.length} danger onClick={()=>openTab("jobs")}/><HealthRow icon={CheckCircle} label="Open support tickets" value={open.length} onClick={()=>openTab("support")}/></article></div>
+  <div className="admin-dashboard-grid lower"><article className="admin-list-card"><div className="admin-card-head"><div><small>Recent activity</small><h2>Latest payments</h2></div><button onClick={()=>openTab("payments")}>View all <ArrowRight/></button></div>{payments.slice(0,5).map(p=><div className="admin-activity-row" key={p.id}><span><b>{p.email||"Unknown user"}</b><small>{p.public_id} · {p.method}</small></span><span><b>PKR {p.amount_pkr.toLocaleString()}</b><small>{p.status}</small></span></div>)}</article><article className="admin-list-card"><div className="admin-card-head"><div><small>Infrastructure</small><h2>Platform inventory</h2></div><button onClick={()=>openTab("models")}>Manage <ArrowRight/></button></div><div className="admin-inventory"><span><b>{models.filter(m=>m.active).length}/{models.length}</b><small>Active models</small></span><span><b>{routes.filter(r=>r.active).length}</b><small>Provider routes</small></span><span><b>{jobs.filter(j=>j.status==="completed").length}</b><small>Completed jobs</small></span><span><b>{tickets.length}</b><small>Total tickets</small></span></div></article></div></section>
+}
+function HealthRow({icon:Icon,label,value,danger,onClick}:{icon:typeof Clock;label:string;value:number;danger?:boolean;onClick:()=>void}){return <button className={danger&&value?"danger":""} onClick={onClick}><Icon weight="duotone"/><span>{label}</span><b>{value}</b><ArrowRight/></button>}
+
