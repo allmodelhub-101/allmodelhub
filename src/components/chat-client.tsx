@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, DotsThree, MagicWand, Paperclip, Plus, Stop, X } from "@phosphor-icons/react";
+import { ArrowUp, CaretDown, DotsThree, MagicWand, Paperclip, Plus, Stop, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -273,7 +273,7 @@ export function ChatClient() {
         <div className="composer-footer"><div className="composer-tools">
           <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
           <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
-          <button type="button" className="composer-model-button" onClick={() => setPickerOpen(true)}><span>{exact?.name || "Auto"}</span><small>{mode}</small></button>
+          <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">\n              <span className="model-selector-copy"><small>AI model</small><strong>{exact?.name || "Auto-select"}</strong></span><CaretDown size={13} aria-hidden="true" />\n            </button>
           <details className="composer-settings"><summary>Controls</summary><div className="composer-settings-panel">
             <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
             <label><span>Routing tier</span><PremiumSelect aria-label="Routing tier" value={mode} onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }} options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))} /></label>
