@@ -3,7 +3,7 @@
 import type { Icon } from "@phosphor-icons/react";
 import {
   ArrowsLeftRight, Bell, CaretLeft, CaretRight, ChatCircle, ClockCounterClockwise,
-  DotsThree, File, Folder, GearSix, ImageSquare, Lifebuoy, Plus, Receipt,
+  DotsThree, File, Folder, GearSix, ImageSquare, Lifebuoy, Receipt,
   ShieldCheck, SignOut, Sparkle, SquaresFour, VideoCamera, Wallet, Waveform, X
 } from "@phosphor-icons/react";
 import Link from "next/link";
@@ -23,14 +23,17 @@ const primaryItems: NavItem[] = [
 ];
 
 const moreItems: NavItem[] = [
-  { label: "Compare Models", href: "/battle", icon: ArrowsLeftRight },
-  { label: "Files", href: "/files", icon: File },
   { label: "Templates", href: "/templates", icon: Sparkle },
-  { label: "Wallet", href: "/wallet", icon: Wallet },
   { label: "Usage & Receipts", href: "/usage", icon: Receipt },
   { label: "Notifications", href: "/notifications", icon: Bell },
   { label: "Settings", href: "/settings", icon: GearSix },
   { label: "Help", href: "/support", icon: Lifebuoy }
+];
+
+const quickAccessItems: NavItem[] = [
+  { label: "Compare", href: "/battle", icon: ArrowsLeftRight },
+  { label: "Files", href: "/files", icon: File },
+  { label: "Wallet", href: "/wallet", icon: Wallet }
 ];
 
 const creationItems = primaryItems.slice(0, 4);
@@ -84,13 +87,9 @@ export function AppSidebar({ balance, displayName, email, isAdmin }: { balance: 
         <Link href="/chat" className="sidebar-brand" aria-label="All Model Hub workspace"><span className="brand-mark" /><span className="sidebar-brand-copy">All Model Hub</span></Link>
         <button className="sidebar-collapse" type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} onClick={toggleCollapsed}>{collapsed ? <CaretRight size={16} /> : <CaretLeft size={16} />}</button>
       </div>
-      <Link href="/wallet" className="sidebar-balance" title="Open wallet"><Wallet className="balance-icon" size={18} aria-hidden="true" /><span><strong>{balance.toFixed(2)}</strong><small>available credits</small></span><CaretRight className="balance-arrow" size={14} aria-hidden="true" /></Link>
-      <details className="creation-launcher">
-        <summary className="sidebar-new"><Plus size={18} weight="bold" aria-hidden="true" /><span className="sidebar-label">New creation</span></summary>
-        <div className="creation-menu">{creationItems.map((item) => { const ItemIcon = item.icon; return <Link href={item.href} key={item.href}><ItemIcon size={20} aria-hidden="true" /><span><b>{item.label}</b><small>Start a new {item.label.toLowerCase()} creation</small></span><CaretRight size={14} aria-hidden="true" /></Link>; })}</div>
-      </details>
       <nav className="sidebar-scroll">
         <div className="sidebar-group"><div className="sidebar-section">Workspace</div><div className="sidebar-nav">{primaryItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} key={item.href} />)}</div></div>
+        <div className="sidebar-group sidebar-quick-access"><div className="sidebar-section">Quick access</div><div className="sidebar-nav">{quickAccessItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} key={item.href} />)}</div></div>
         <details className="sidebar-more"><summary><DotsThree className="sidebar-icon" size={20} weight="bold" aria-hidden="true" /><span className="sidebar-label">More tools</span></summary><div className="sidebar-more-menu"><div className="sidebar-more-title"><span>Workspace tools</span><small>Manage, compare and configure</small></div><div className="sidebar-more-grid">{moreItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} key={item.href} />)}</div></div></details>
         {isAdmin && <div className="sidebar-group"><div className="sidebar-nav"><Link className={`sidebar-link ${isActive(pathname, "/admin") ? "active" : ""}`} href="/admin" title={collapsed ? "Admin Control Center" : undefined}><ShieldCheck className="sidebar-icon" size={19} aria-hidden="true" /><span className="sidebar-label">Admin Control Center</span></Link></div></div>}
       </nav>
