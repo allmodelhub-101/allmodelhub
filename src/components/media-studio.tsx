@@ -88,6 +88,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
     {modality==="audio"&&!hideAudioModeTabs&&<div className="workspace-modes" role="tablist" aria-label="Audio creation mode">{audioModes.map(mode=><button key={mode} type="button" role="tab" aria-selected={audioMode===mode} className={audioMode===mode?"active":""} onClick={()=>selectAudioMode(mode)}>{mode==="music"?"Music":"Sound effects"}</button>)}</div>}
     <div className="studio-layout creation-studio-layout">
       <form className="studio-panel inspector-panel" onSubmit={submit}>
+        <div className="studio-control-head"><span><small>Creation setup</small><strong>Direct your generation</strong></span><i>01</i></div>
         <label className="label">Model<PremiumSelect value={modelId} onChange={value=>{setModelId(value);setConfirmed(false)}} options={compatibleModels.map(m=>({value:m.id,label:`${m.name} · ${m.tier}`}))} /></label>
         {model&&<div className="soft-card small" style={{padding:12}}><b>{model.name}</b><div className="muted" style={{marginTop:4}}>{model.description}</div>{schema.inputModes?.length?<div className="muted" style={{marginTop:6}}>Inputs: {schema.inputModes.join(" · ")}</div>:null}</div>}
         {(modality==="image"||modality==="video")&&maxReferences>0&&<div className="label">Reference image <span className="muted small">optional · up to {maxReferences} for this model</span><input className="input" type="file" accept="image/png,image/jpeg,image/webp" disabled={uploading||referenceFileIds.length>=maxReferences} onChange={e=>{const f=e.target.files?.[0];if(f)uploadReference(f);e.currentTarget.value="";}}/>{referenceFileIds.length>0&&<div className="small muted" style={{marginTop:6}}>{referenceFileIds.length} reference image{referenceFileIds.length===1?"":"s"} ready. <button type="button" className="link-button" onClick={()=>setReferenceFileIds([])}>Clear</button></div>}</div>}
@@ -100,6 +101,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
         {error&&<div className="soft-card small" style={{padding:12,color:"var(--danger)"}}>{error}</div>}
       </form>
       <section className="studio-panel studio-result creation-canvas">
+        <div className="studio-stage-label"><span className={activeJob?"live":""}/><b>{job?.status==="completed"?"Result ready":activeJob?"Generating now":"Preview stage"}</b><small>{model?.name||"Choose a model"}</small></div>
         {!job&&<div className="studio-empty"><div className="studio-empty-glyph">{studioIcon}</div><h2>{modality==="video"?"Bring an idea—or a frame—to life.":audioMode==="music"?"Give your story a soundtrack.":"Create a sound from words."}</h2><p>{subtitle}</p><span>Model → Prompt → Generate</span></div>}
         {activeJob&&<div className="generation-status"><div className="generation-skeleton" aria-hidden="true"><span /><span /><span /></div><div className="kicker">{statusCopy.label}</div><h3>{statusCopy.title}</h3><p className="muted small">{statusCopy.detail}</p><p className="muted small">Job {job.public_id||job.id}</p><p className="muted small">You can move to another workspace while this finishes. Progress remains available in the Generation Center.</p></div>}
         {terminalFailure&&<div><h3 style={{color:"var(--danger)"}}>{job?.status==="cancelled"?"Generation cancelled":job?.status==="expired"?"Generation expired":"Generation failed"}</h3><p className="muted">{job?.error_message||"The provider could not complete this generation."}</p><p className="small">Eligible reserved credits are released automatically. Your prompt and settings are preserved.</p><button className="btn btn-primary media-submit" type="button" onClick={retryWithSameSettings}><ArrowClockwise aria-hidden="true" />Retry with same settings</button></div>}
@@ -115,5 +117,4 @@ function getGenerationStatus(status?:string){
   if(status==="settling")return {label:"Processing result",title:"Securing your finished output",detail:"Saving the result and finalizing the exact credit charge."};
   return {label:"Generating",title:"Creating your result",detail:"The selected model is working on your request."};
 }
-
 
