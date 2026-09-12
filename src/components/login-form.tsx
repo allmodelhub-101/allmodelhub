@@ -1,61 +1,14 @@
 "use client";
-
-import { FormEvent, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-
-export function LoginForm({ nextPath = "/chat" }: { nextPath?: string }) {
-  const [mode, setMode] = useState<"login"|"signup">("login");
-  const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
-  const [message,setMessage] = useState("");
-  const [loading,setLoading] = useState(false);
-
-  async function google() {
-    setLoading(true); setMessage("");
-    const supabase = createClient();
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo } });
-    if (error) { setMessage(error.message); setLoading(false); }
-  }
-
-  async function magicLink() {
-    if (!email) { setMessage("Enter your email first."); return; }
-    setLoading(true); setMessage("");
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` } });
-    setMessage(error ? error.message : "Check your email for your secure sign-in link.");
-    setLoading(false);
-  }
-
-  async function submit(e: FormEvent) {
-    e.preventDefault(); setLoading(true); setMessage("");
-    if (mode === "signup") {
-      const supabase = createClient();
-      const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}` } });
-      setMessage(error ? error.message : "Check your email to verify your account.");
-    } else {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) setMessage(result.error || "Unable to sign in right now.");
-      else window.location.href = nextPath;
-    }
-    setLoading(false);
-  }
-
-  return <>
-    <button className="btn" type="button" style={{width:"100%"}} onClick={google} disabled={loading}>Continue with Google</button>
-    <div className="divider">or use email</div>
-    <form onSubmit={submit}>
-      <label className="label">Email<input className="input" type="email" autoComplete="email" value={email} onChange={e=>setEmail(e.target.value)} required /></label>
-      <label className="label">Password<input className="input" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={8} value={password} onChange={e=>setPassword(e.target.value)} required /></label>
-      <button className="btn btn-primary" disabled={loading}>{loading ? "Please wait…" : mode === "login" ? "Login" : "Create account"}</button>
-    </form>
-    <button type="button" className="btn btn-ghost" style={{width:"100%",marginTop:8}} onClick={magicLink} disabled={loading}>Email me a sign-in link</button>
-    {message && <div className="soft-card small" style={{padding:12,marginTop:14}}>{message}</div>}
-    <button className="btn btn-ghost" style={{width:"100%",marginTop:8}} onClick={()=>setMode(mode === "login" ? "signup" : "login")}>{mode === "login" ? "New here? Create an account" : "Already have an account? Login"}</button>
-  </>;
+import {FormEvent,useState} from "react";
+import {ArrowRight,Check,Eye,EyeSlash,GoogleLogo,LockKey,ShieldCheck} from "@phosphor-icons/react";
+import {createClient} from "@/lib/supabase/client";
+type Mode="login"|"signup"|"recovery";
+export function LoginForm({nextPath="/chat"}:{nextPath?:string}){
+ const[mode,setMode]=useState<Mode>("login"),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[showPassword,setShowPassword]=useState(false),[message,setMessage]=useState(""),[success,setSuccess]=useState(false),[loading,setLoading]=useState(false);
+ const callback=(next=nextPath)=>`${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+ async function google(){setLoading(true);setMessage("");setSuccess(false);const{error}=await createClient().auth.signInWithOAuth({provider:"google",options:{redirectTo:callback(),skipBrowserRedirect:false}});if(error){setMessage(error.message.includes("provider")?"Google sign-in is not enabled yet. Please continue with email.":error.message);setLoading(false)}}
+ async function submit(event:FormEvent){event.preventDefault();setLoading(true);setMessage("");setSuccess(false);const supabase=createClient();if(mode==="recovery"){const{error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:callback("/auth/update-password")});setMessage(error?error.message:"Password reset link sent. Check your inbox and spam folder.");setSuccess(!error);setLoading(false);return}if(mode==="signup"){const{error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:callback()}});setMessage(error?error.message:"Verification email sent. Open the secure link to activate your account.");setSuccess(!error);setLoading(false);return}const response=await fetch("/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});const result=await response.json().catch(()=>({}));if(!response.ok)setMessage(result.error||"Unable to sign in right now.");else window.location.href=nextPath;setLoading(false)}
+ function changeMode(next:Mode){setMode(next);setMessage("");setSuccess(false)}
+ return <section className="auth-form-panel"><header className="auth-form-head"><span><LockKey weight="duotone"/></span><div><small>{mode==="signup"?"Create your workspace":mode==="recovery"?"Account recovery":"Secure member access"}</small><h1>{mode==="signup"?"Start creating.":mode==="recovery"?"Reset your password.":"Welcome back."}</h1><p>{mode==="signup"?"One account for every leading AI model.":mode==="recovery"?"We’ll email you a secure recovery link.":"Continue to your AI creation workspace."}</p></div></header>{mode!=="recovery"&&<button className="auth-google" type="button" onClick={google} disabled={loading}><GoogleLogo weight="bold"/><span>Continue with Google</span><ArrowRight/></button>}{mode!=="recovery"&&<div className="auth-divider"><span/>or continue with email<span/></div>}<form className="auth-form" onSubmit={submit}><label><span>Email address</span><input type="email" autoComplete="email" value={email} onChange={event=>setEmail(event.target.value)} placeholder="you@example.com" required/></label>{mode!=="recovery"&&<label><span>Password</span><div className="auth-password"><input type={showPassword?"text":"password"} autoComplete={mode==="login"?"current-password":"new-password"} minLength={8} value={password} onChange={event=>setPassword(event.target.value)} placeholder={mode==="signup"?"At least 8 characters":"Enter your password"} required/><button type="button" onClick={()=>setShowPassword(value=>!value)} aria-label={showPassword?"Hide password":"Show password"}>{showPassword?<EyeSlash/>:<Eye/>}</button></div></label>}{mode==="login"&&<button className="auth-forgot" type="button" onClick={()=>changeMode("recovery")}>Forgot password?</button>}<button className="auth-submit" disabled={loading}>{loading?<i className="auth-spinner"/>:<>{mode==="signup"?"Create account":mode==="recovery"?"Send recovery link":"Sign in securely"}<ArrowRight weight="bold"/></>}</button></form>{message&&<div className={`auth-message ${success?"success":"error"}`} role="status">{success?<Check weight="bold"/>:<ShieldCheck weight="duotone"/>}<span>{message}</span></div>}<footer className="auth-switch">{mode==="login"?<>New to All Model Hub? <button onClick={()=>changeMode("signup")}>Create account</button></>:<>Remember your password? <button onClick={()=>changeMode("login")}>Sign in</button></>}</footer><p className="auth-legal"><ShieldCheck weight="fill"/>Encrypted session · Protected by Supabase Auth</p></section>
 }
+
