@@ -34,7 +34,7 @@ redirect("/");
 
 return (
 
-<div className="app-shell">
+<div className="app-shell admin-shell">
 
 
 <AdminSidebar />
@@ -61,3 +61,4 @@ return (
 )
 
 }
+
