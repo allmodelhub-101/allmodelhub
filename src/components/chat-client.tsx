@@ -42,7 +42,6 @@ export function ChatClient() {
   const [privateMode, setPrivateMode] = useState(false);
   const [error, setError] = useState("");
   const [pastedContext, setPastedContext] = useState("");
-  const [availableCredits, setAvailableCredits] = useState<number | null>(null);
   const [features, setFeatures] = useState<FeatureFlags>({ private_chat: true, prompt_enhancer: true });
   const [pickerOpen, setPickerOpen] = useState(false);
   const [dragActive, setDragActive] = useState(false);
@@ -91,14 +90,12 @@ export function ChatClient() {
   useEffect(() => {
     Promise.all([
       fetch("/api/models").then((response) => response.json()), fetch("/api/projects").then((response) => response.json()),
-      fetch("/api/files").then((response) => response.json()), fetch("/api/settings").then((response) => response.json()),
-      fetch("/api/wallet").then((response) => response.json())
-    ]).then(([modelData, projectData, fileData, settingsData, walletData]) => {
+      fetch("/api/files").then((response) => response.json()), fetch("/api/settings").then((response) => response.json())
+    ]).then(([modelData, projectData, fileData, settingsData]) => {
       setModels((modelData.models || []).filter((model: Model) => model.modality === "text"));
       setProjects(projectData.projects || []);
       setFiles((fileData.files || []).filter((file: UserFile) => file.extraction_status === "ready"));
       setFeatures(settingsData.features || { private_chat: true, prompt_enhancer: true });
-      if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       if (!qs.get("model") && !qs.get("conversation") && settingsData.profile?.default_tier) setMode(settingsData.profile.default_tier as Mode);
     }).catch(() => setError("Could not load workspace data."));
   }, [qs]);
@@ -179,7 +176,6 @@ export function ChatClient() {
               const copy = [...current]; const last = copy[copy.length - 1];
               copy[copy.length - 1] = { ...last, id: streamEvent.messageId || last.id, credits: Number(streamEvent.credits), meta: `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` }; return copy;
             });
-            void fetch("/api/wallet").then((walletResponse) => walletResponse.json()).then((data) => { if (data.wallet) setAvailableCredits(Number(data.wallet.available)); });
           }
           if (streamEvent.type === "error") throw new Error(streamEvent.error || "Generation failed.");
         }
@@ -286,7 +282,7 @@ export function ChatClient() {
             {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
           </div></details>
           {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}><MagicWand size={15} aria-hidden="true" />{enhancing ? "Improving…" : "Improve prompt"}</button>}
-        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{availableCredits != null && <span className="composer-balance" title="Available credits">{availableCredits.toFixed(2)} cr</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><Stop size={14} weight="fill" /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message"><ArrowUp size={17} weight="bold" /></button>}</div></div>
+        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><Stop size={14} weight="fill" /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message"><ArrowUp size={17} weight="bold" /></button>}</div></div>
       </form>
       <p className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
       {error && <div className="soft-card small error-box" role="alert"><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}

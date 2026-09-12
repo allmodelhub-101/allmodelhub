@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, Question, Wallet, X } from "@phosphor-icons/react";
+import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, Wallet, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -101,7 +101,6 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
       <div className="topbar-actions">
         <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} working` : "Generations"}</button>
         <button className="topbar-icon-trigger" type="button" onClick={()=>{setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
-        <button className="topbar-icon-trigger keyboard-trigger" type="button" onClick={()=>setKeyboardHelp(true)} aria-label="Keyboard shortcuts"><Question size={17} aria-hidden="true" /></button>
         <Link href="/wallet" className="wallet-chip"><Wallet size={14} aria-hidden="true" />{balance.toFixed(2)} Credits</Link>
         <ThemeToggle />
       </div>
