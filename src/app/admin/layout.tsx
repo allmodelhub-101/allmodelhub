@@ -1,3 +1,4 @@
+import "./admin-premium.css";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { checkAdmin } from "@/lib/admin/check-admin";
@@ -34,7 +35,7 @@ redirect("/");
 
 return (
 
-<div className="app-shell">
+<div className="app-shell admin-shell">
 
 
 <AdminSidebar />
@@ -61,3 +62,4 @@ return (
 )
 
 }
+

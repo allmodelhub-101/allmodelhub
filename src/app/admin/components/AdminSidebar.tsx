@@ -1,3 +1,4 @@
+const links=[["Overview","/admin","OV"],["Payments","/admin?tab=payments","$"],["Models","/admin?tab=models","AI"],["Providers","/admin?tab=providers","PR"],["Users","/admin?tab=users","US"],["Jobs","/admin?tab=jobs","JB"],["Support","/admin?tab=support","SP"],["Platform","/admin?tab=settings","ST"]] as const;
 export default function AdminSidebar(){
 
 return (
@@ -21,64 +22,7 @@ All Model Hub
 
 
 
-<div className="sidebar-section">
-Admin
-</div>
-
-
-
-<nav className="sidebar-nav">
-
-
-<a 
-href="/admin"
-className="sidebar-link"
->
-Payments
-</a>
-
-
-<a
-href="/admin?tab=models"
-className="sidebar-link"
->
-Models
-</a>
-
-
-<a
-href="/admin?tab=providers"
-className="sidebar-link"
->
-Providers
-</a>
-
-
-<a
-href="/admin?tab=users"
-className="sidebar-link"
->
-Users
-</a>
-
-
-<a
-href="/admin?tab=jobs"
-className="sidebar-link"
->
-Jobs
-</a>
-
-<a href="/admin?tab=support" className="sidebar-link">
-Support
-</a>
-
-<a href="/admin?tab=settings" className="sidebar-link">
-Settings
-</a>
-
-
-</nav>
+<div className="sidebar-section">Operations</div><nav className="sidebar-nav">{links.map(([label,href,mark])=><a href={href} className="sidebar-link" key={label}><b className="admin-nav-mark">{mark}</b><span>{label}</span></a>)}</nav><a className="admin-back-link" href="/chat"><b className="admin-nav-mark">↗</b>Return to workspace</a>
 
 
 </aside>
@@ -86,3 +30,4 @@ Settings
 )
 
 }
+
