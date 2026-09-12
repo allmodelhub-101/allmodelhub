@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { chooseRuntimeTextModel } from "@/lib/model-store";
-import { estimateTextHold, actualTextCredits, getInternalUsdPkr } from "@/lib/pricing";
+import { estimateTextHold, actualTextCredits, getInternalUsdPkr, textSupplierUsd } from "@/lib/pricing";
 import { providerChatStream } from "@/lib/providers";
 import { normalizeProviderChunk } from "@/lib/providers/stream-normalizer";
 import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
@@ -130,11 +130,13 @@ export async function POST(request: Request) {
     if (!inputTokens) inputTokens = Math.ceil(joined.length / 3.4);
     if (!outputTokens) outputTokens = Math.max(1, Math.ceil(text.length / 3.4));
     const credits = Math.min(hold, actualTextCredits(model, inputTokens, outputTokens, fxRate));
+    const supplierCostUsd = textSupplierUsd(model, inputTokens, outputTokens);
+    const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
     await captureWalletHold(
       holdId,
       credits,
       createIdempotencyKey("enhance-capture", data.user.id),
-      { kind: "prompt_enhancer", model_id: model.id }
+      { kind: "prompt_enhancer", model_id: model.id, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr }
     );
     await finalizeRequest(claimId, "completed", { response: { credits, model: model.id } });
     return NextResponse.json({ prompt: text.trim(), credits });
@@ -148,3 +150,4 @@ export async function POST(request: Request) {
     );
   }
 }
+
