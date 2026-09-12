@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { extractText } from "@/lib/file-extract";
 import { logServerError } from "@/lib/public-error";
+import { getStorageQuota } from "@/lib/storage-quota";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,9 +25,16 @@ export async function GET(request: Request) {
   const { data: files, error } = await query;
   if (error) { logServerError("files-list", error, { userId: data.user.id }); return NextResponse.json({ error: "Could not load files." }, { status: 500 }); }
 
-  return NextResponse.json({
-    files: (files ?? []).map((file) => { const safeFile = { ...file }; delete safeFile.storage_path; return safeFile; })
-  });
+  try {
+    const quota = await getStorageQuota(admin, data.user.id);
+    return NextResponse.json({
+      files: (files ?? []).map((file) => { const safeFile = { ...file }; delete safeFile.storage_path; return safeFile; }),
+      quota
+    });
+  } catch (quotaError) {
+    logServerError("files-quota", quotaError, { userId: data.user.id });
+    return NextResponse.json({ error: "Could not load storage allowance." }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
@@ -41,13 +49,31 @@ export async function POST(request: Request) {
   const form = await request.formData();
   const file = form.get("file");
   const projectId = String(form.get("projectId") || "").trim() || null;
-  if (!(file instanceof File) || file.size < 1 || file.size > 50 * 1024 * 1024) {
-    return NextResponse.json({ error: "File must be between 1 byte and 50 MB." }, { status: 400 });
+  if (!(file instanceof File) || file.size < 1) return NextResponse.json({ error: "Choose a non-empty file." }, { status: 400 });
+
+  const admin = createAdminClient();
+  let quota;
+  try { quota = await getStorageQuota(admin, user.id); }
+  catch (quotaError) { logServerError("file-quota-read", quotaError, { userId: user.id }); return NextResponse.json({ error: "Could not verify storage allowance." }, { status: 500 }); }
+  if (file.size > quota.maxFileBytes) return NextResponse.json({ error: `Your ${quota.label} plan allows up to ${Math.round(quota.maxFileBytes / 1024 / 1024)} MB per file.` }, { status: 413 });
+  if (file.size > quota.remainingBytes) return NextResponse.json({ error: "Not enough storage available. Delete files or increase your storage plan." }, { status: 413 });
+
+  const { data: reservationId, error: reservationError } = await admin.rpc("reserve_file_upload", {
+    p_user_id: user.id,
+    p_size_bytes: file.size,
+    p_limit_bytes: quota.limitBytes
+  });
+  if (reservationError || !reservationId) {
+    const overQuota = reservationError?.message?.includes("STORAGE_QUOTA_EXCEEDED");
+    if (!overQuota) logServerError("file-storage-reserve", reservationError, { userId: user.id });
+    return NextResponse.json({ error: overQuota ? "Not enough storage available. Delete files or increase your storage plan." : "Could not reserve storage. Try again." }, { status: overQuota ? 413 : 500 });
   }
+
+  const releaseReservation = async () => { await admin.rpc("release_file_upload_reservation", { p_reservation_id: reservationId, p_user_id: user.id }); };
 
   const extension = file.name.match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase();
   const allowedExtensions = new Set(["pdf", "docx", "txt", "md", "csv", "xlsx", "xls", "json", "xml", "png", "jpg", "jpeg", "webp", "gif", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
-  if (!extension || !allowedExtensions.has(extension)) return NextResponse.json({ error: "Unsupported file type." }, { status: 400 });
+  if (!extension || !allowedExtensions.has(extension)) { await releaseReservation(); return NextResponse.json({ error: "Unsupported file type." }, { status: 400 }); }
 
   const bytes = new Uint8Array(await file.arrayBuffer());
   const textExtensions = new Set(["txt", "md", "csv", "json", "xml", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
@@ -64,12 +90,11 @@ export async function POST(request: Request) {
     : extension === "xls" ? oleContainer
     : textExtensions.has(extension) ? !bytes.slice(0, 4096).some((byte) => byte === 0)
     : false;
-  if (!validBinary || (textExtensions.has(extension) && !String(file.type).startsWith("text/") && file.type !== "application/json" && file.type !== "application/xml")) return NextResponse.json({ error: "File contents do not match the selected type." }, { status: 400 });
+  if (!validBinary || (textExtensions.has(extension) && !String(file.type).startsWith("text/") && file.type !== "application/json" && file.type !== "application/xml")) { await releaseReservation(); return NextResponse.json({ error: "File contents do not match the selected type." }, { status: 400 }); }
 
-  const admin = createAdminClient();
   if (projectId) {
     const { data: project } = await admin.from("projects").select("id").eq("id", projectId).eq("user_id", user.id).maybeSingle();
-    if (!project) return NextResponse.json({ error: "Project not found." }, { status: 404 });
+    if (!project) { await releaseReservation(); return NextResponse.json({ error: "Project not found." }, { status: 404 }); }
   }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-140);
@@ -78,7 +103,7 @@ export async function POST(request: Request) {
     contentType: file.type || "application/octet-stream",
     upsert: false
   });
-  if (uploadError) { logServerError("file-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not upload file." }, { status: 500 }); }
+  if (uploadError) { await releaseReservation(); logServerError("file-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not upload file." }, { status: 500 }); }
 
   const extraction = await extractText(file);
   const { data: record, error: dbError } = await admin.from("user_files").insert({
@@ -94,9 +119,13 @@ export async function POST(request: Request) {
 
   if (dbError) {
     await admin.storage.from("user-files").remove([path]).catch(() => undefined);
+    await releaseReservation();
     logServerError("file-record-create", dbError, { userId: user.id });
     return NextResponse.json({ error: "Could not save file." }, { status: 500 });
   }
 
-  return NextResponse.json({ file: record }, { status: 201 });
+  await releaseReservation();
+  const updatedQuota = await getStorageQuota(admin, user.id).catch(() => null);
+  return NextResponse.json({ file: record, quota: updatedQuota }, { status: 201 });
 }
+
