@@ -1,3 +1,4 @@
+import "./wallet-premium.css";
 import { AppShell } from "@/components/app-shell";
 import { requireUser } from "@/lib/auth";
 import { getWallet } from "@/lib/wallet";
