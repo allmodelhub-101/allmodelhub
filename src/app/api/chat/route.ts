@@ -204,7 +204,7 @@ export async function POST(request: Request) {
         const actualCredits = Math.min(holdAmount, actualTextCredits(selected, inputTokens, outputTokens, fxRate));
         const supplierCostUsd = textSupplierUsd(selected, inputTokens, outputTokens);
         const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
-        const walletTransactionId = await captureWalletHold(holdId!, actualCredits, captureKey, { model_id: selected.id, provider: upstream.provider, input_tokens: inputTokens, output_tokens: outputTokens, conversation_id: conversationId, private: body.private });
+        const walletTransactionId = await captureWalletHold(holdId!, actualCredits, captureKey, { model_id: selected.id, provider: upstream.provider, input_tokens: inputTokens, output_tokens: outputTokens, conversation_id: conversationId, private: body.private, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
         finalized = true;
 
         let assistantMessageId: string | null = null;
@@ -234,3 +234,4 @@ export async function POST(request: Request) {
 
   return new Response(stream, { headers: { "Content-Type": "text/event-stream; charset=utf-8", "Cache-Control": "no-cache, no-transform", Connection: "keep-alive", ...(conversationId ? { "X-Conversation-Id": conversationId } : {}) } });
 }
+
