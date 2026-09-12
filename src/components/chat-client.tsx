@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, CaretDown, DotsThree, MagicWand, Paperclip, Plus, Stop, X } from "@phosphor-icons/react";
+import { ArrowUp, CaretDown, DotsThree, MagicWand, Microphone, Paperclip, Plus, Stop, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -17,6 +17,8 @@ type UserFile = { id: string; name: string; size_bytes: number; extraction_statu
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
 type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
+type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
+type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
 
 const starterPrompts = ["Help me plan a launch", "Analyze a document", "Build a product brief"];
 
@@ -26,6 +28,9 @@ export function ChatClient() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const voiceRef = useRef<VoiceRecognition | null>(null);
+  const voiceCommittedRef = useRef("");
+  const voiceStartDraftRef = useRef("");
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>([]);
@@ -47,6 +52,8 @@ export function ChatClient() {
   const [dragActive, setDragActive] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [copiedKey, setCopiedKey] = useState("");
+  const [voiceActive, setVoiceActive] = useState(false);
+  const [voiceSeconds, setVoiceSeconds] = useState(0);
   const draftKey = `amh-chat-draft:${conversationId || "new"}`;
 
   useEffect(() => {
@@ -70,6 +77,14 @@ export function ChatClient() {
     field.style.height = `${Math.min(Math.max(field.scrollHeight, 44), 184)}px`;
     field.style.overflowY = field.scrollHeight > 184 ? "auto" : "hidden";
   }, [input]);
+
+  useEffect(() => {
+    if (!voiceActive) return;
+    const timer = window.setInterval(() => setVoiceSeconds((value) => value + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [voiceActive]);
+
+  useEffect(() => () => voiceRef.current?.abort(), []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" });
@@ -133,6 +148,35 @@ export function ChatClient() {
       setInput(data.prompt || input);
     } catch (caught) { setError(caught instanceof Error ? caught.message : "Prompt enhancement failed."); }
     finally { setEnhancing(false); }
+  }
+
+  function startVoiceInput() {
+    if (voiceActive) { voiceRef.current?.stop(); return; }
+    const speechWindow = window as typeof window & { SpeechRecognition?: new () => VoiceRecognition; webkitSpeechRecognition?: new () => VoiceRecognition };
+    const Recognition = speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
+    if (!Recognition) { setError("Voice typing is not supported in this browser. Try the latest Chrome or Edge."); return; }
+    const recognition = new Recognition();
+    voiceStartDraftRef.current = input;
+    voiceCommittedRef.current = input.trim();
+    recognition.continuous = true; recognition.interimResults = true; recognition.lang = navigator.language || "en-US";
+    recognition.onresult = (event) => {
+      let interim = "";
+      for (let index = event.resultIndex; index < event.results.length; index += 1) {
+        const result = event.results[index]; const transcript = result[0]?.transcript?.trim() || "";
+        if (!transcript) continue;
+        if (result.isFinal) voiceCommittedRef.current = `${voiceCommittedRef.current}${voiceCommittedRef.current ? " " : ""}${transcript}`;
+        else interim += `${interim ? " " : ""}${transcript}`;
+      }
+      setInput(`${voiceCommittedRef.current}${interim ? `${voiceCommittedRef.current ? " " : ""}${interim}` : ""}`);
+    };
+    recognition.onerror = (event) => { setVoiceActive(false); setError(event.error === "not-allowed" ? "Microphone access was blocked. Allow microphone access in your browser and try again." : "Voice typing stopped. Please try again."); };
+    recognition.onend = () => { setVoiceActive(false); setVoiceSeconds(0); setInput(voiceCommittedRef.current); voiceRef.current = null; window.setTimeout(() => textareaRef.current?.focus(), 0); };
+    voiceRef.current = recognition; setError(""); setVoiceSeconds(0); setVoiceActive(true);
+    try { recognition.start(); } catch { setVoiceActive(false); setError("Voice typing could not start. Please try again."); }
+  }
+
+  function cancelVoiceInput() {
+    voiceCommittedRef.current = voiceStartDraftRef.current; voiceRef.current?.abort(); voiceRef.current = null; setVoiceActive(false); setVoiceSeconds(0); setInput(voiceStartDraftRef.current); window.setTimeout(() => textareaRef.current?.focus(), 0);
   }
 
   async function sendPrompt(prompt: string, history: ChatMessage[] = messages, recovery?: { input: string; pasted: string }) {
@@ -273,6 +317,8 @@ export function ChatClient() {
         <div className="composer-footer"><div className="composer-tools">
           <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
           <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
+            <button type="button" className={`composer-icon-button voice-input-button ${voiceActive ? "is-recording" : ""}`} onClick={startVoiceInput} aria-label={voiceActive ? "Stop voice typing" : "Start voice typing"} title={voiceActive ? "Stop voice typing" : "Voice typing"}><Microphone size={18} weight={voiceActive ? "fill" : "regular"} aria-hidden="true" /></button>
+            {voiceActive && <div className="voice-recording-status" role="status"><i/><span>Listening</span><time>{Math.floor(voiceSeconds / 60)}:{String(voiceSeconds % 60).padStart(2,"0")}</time><button type="button" onClick={cancelVoiceInput}>Cancel</button></div>}
           <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
               <span className="model-selector-copy"><small>AI model</small><strong>{exact?.name || "Auto-select"}</strong></span><CaretDown size={13} aria-hidden="true" />
             </button>
