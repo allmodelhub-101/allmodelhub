@@ -1112,3 +1112,6 @@ html[data-theme="light"] .cin-site .cin-final-cta { background:#eaf6fb; }
 @keyframes voiceRing{0%{transform:scale(.88);opacity:.9}100%{transform:scale(1.18);opacity:0}}@keyframes voicePulse{50%{opacity:.35}}
 @media(max-width:680px){.voice-recording-status{position:absolute;left:10px;bottom:54px;height:32px;box-shadow:0 10px 28px rgba(0,0,0,.22)}}
 @media(prefers-reduced-motion:reduce){.voice-input-button.is-recording:after,.voice-recording-status i{animation:none}}
+/* Stronger affordance for choosing a model. */
+.composer-model-button.model-selector-button{min-width:174px;border-width:1.5px;border-color:color-mix(in srgb,var(--accent) 52%,var(--line));background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 13%,var(--panel)),color-mix(in srgb,var(--accent-2) 7%,var(--panel)));box-shadow:0 7px 20px color-mix(in srgb,var(--accent) 9%,transparent),inset 0 1px rgba(255,255,255,.08)}.composer-model-button .model-selector-copy small{font-size:7.5px}.model-selector-copy strong{max-width:135px;font-size:10.5px}.model-selector-button>svg{margin-left:auto}
+@media(max-width:680px){.composer-model-button.model-selector-button{min-width:148px}.model-selector-copy strong{max-width:108px}}
