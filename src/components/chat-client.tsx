@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUp, Command, DotsThree, MagicWand, Paperclip, Stop, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -250,9 +251,9 @@ export function ChatClient() {
     <header className="chat-toolbar premium-toolbar">
       <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
       <div className="chat-toolbar-actions">
-        <button className="model-trigger" type="button" onClick={() => setPickerOpen(true)} aria-haspopup="dialog"><span><small>{exact?.providerFamily || "Smart routing"}</small><strong>{exact?.name || "Auto — best model"}</strong></span><kbd>⌘K</kbd></button>
+        <button className="model-trigger" type="button" onClick={() => setPickerOpen(true)} aria-haspopup="dialog"><span><small>{exact?.providerFamily || "Smart routing"}</small><strong>{exact?.name || "Auto — best model"}</strong></span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
         <Link href="/battle" className="toolbar-text-button">Compare</Link>
-        <details className="chat-more"><summary aria-label="Conversation menu">More</summary><div className="chat-more-menu premium-menu"><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
+        <details className="chat-more"><summary aria-label="Conversation menu"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>More</span></summary><div className="chat-more-menu premium-menu"><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
       </div>
     </header>
 
@@ -270,13 +271,13 @@ export function ChatClient() {
     <div className="composer-wrap premium-composer-wrap">
       <form className="glass composer premium-composer" onSubmit={submit}>
         {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip">
-          {pastedContext && <div className="attachment-card"><span className="attachment-type">TXT</span><div><strong>Pasted text</strong><small>{pastedContext.length.toLocaleString()} characters</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted text">×</button></div>}
-          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-type">FILE</span><div><strong>{file.name}</strong><small>{Math.max(1, Math.round(file.size_bytes / 1024)).toLocaleString()} KB</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}>×</button></div> : null; })}
+          {pastedContext && <div className="attachment-card"><span className="attachment-type">TXT</span><div><strong>Pasted text</strong><small>{pastedContext.length.toLocaleString()} characters</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted text"><X size={14} /></button></div>}
+          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-type">FILE</span><div><strong>{file.name}</strong><small>{Math.max(1, Math.round(file.size_bytes / 1024)).toLocaleString()} KB</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}><X size={14} /></button></div> : null; })}
         </div>}
         <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={handleComposerKeyDown} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" />
         <div className="composer-footer"><div className="composer-tools">
           <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
-          <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files">+</button>
+          <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
           <button type="button" className="composer-model-button" onClick={() => setPickerOpen(true)}><span>{exact?.name || "Auto"}</span><small>{mode}</small></button>
           <details className="composer-settings"><summary>Controls</summary><div className="composer-settings-panel">
             <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
@@ -285,8 +286,8 @@ export function ChatClient() {
             {exact && <div className="model-control-summary"><span>Model inputs</span><strong>{exact.uiSchema?.inputModes?.join(" · ") || "text"}</strong></div>}
             {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
           </div></details>
-          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}>{enhancing ? "Improving…" : "Improve prompt"}</button>}
-        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{availableCredits != null && <span className="composer-balance" title="Available credits">{availableCredits.toFixed(2)} cr</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><span /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message">↑</button>}</div></div>
+          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}><MagicWand size={15} aria-hidden="true" />{enhancing ? "Improving…" : "Improve prompt"}</button>}
+        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{availableCredits != null && <span className="composer-balance" title="Available credits">{availableCredits.toFixed(2)} cr</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><Stop size={14} weight="fill" /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message"><ArrowUp size={17} weight="bold" /></button>}</div></div>
       </form>
       <p className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
       {error && <div className="soft-card small error-box" role="alert"><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}
@@ -294,4 +295,5 @@ export function ChatClient() {
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
   </div>;
 }
+
 
