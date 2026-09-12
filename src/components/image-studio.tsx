@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FolderSimple, MagicWand, PaperPlaneTilt, Plus, SlidersHorizontal, X } from "@phosphor-icons/react";
+import { MagicWand, PaperPlaneTilt, Plus, SlidersHorizontal, X } from "@phosphor-icons/react";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
 
 type ImageModel = PickerModel & { modality: string; description?: string; capabilities?: string[] };
@@ -201,11 +201,6 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
 
   return <div className={`image-workspace ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); const file = event.dataTransfer.files[0]; if (file) void uploadReference(file); }}>
     {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>The selected model will switch into editing mode.</span></div>}
-    <header className="image-workspace-bar">
-      <div className="image-workspace-title"><span className="image-studio-mark"><MagicWand weight="fill" aria-hidden="true" /></span><span><span className="eyebrow">AI Creation Workspace</span><strong>Image Studio</strong></span></div>
-      <nav aria-label="Image workspace actions"><Link href="/history"><FolderSimple aria-hidden="true" />Library</Link><button type="button" onClick={() => setInspectorOpen((value) => !value)} aria-expanded={inspectorOpen}><SlidersHorizontal aria-hidden="true" />Controls</button></nav>
-    </header>
-
     <main className="image-canvas-shell">
       <section className={`image-canvas-stage aspect-${aspect.replace(":", "-")}`} aria-live="polite">
         {!job && <div className="image-empty-state"><span className="canvas-orbit" aria-hidden="true"><MagicWand weight="fill" /></span><span className="empty-kicker">Create or transform</span><h1>What do you want to create?</h1><p>Start with an idea, choose a visual direction, or add a reference image to edit something visually.</p><div className="direction-starters" aria-label="Visual directions">{directionStarters.map((starter) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}><span>{starter.label}</span><small>Use direction</small></button>)}</div><div className="image-starters">{promptStarters.map((starter) => <button type="button" key={starter} onClick={() => setPrompt(starter)}>{starter}</button>)}</div></div>}
@@ -226,9 +221,10 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
       </aside>
     </main>
 
+    <button className="image-mobile-controls" type="button" onClick={() => setInspectorOpen((value) => !value)} aria-expanded={inspectorOpen}><SlidersHorizontal aria-hidden="true" /><span>{inspectorOpen ? "Hide controls" : "Controls"}</span></button>
+
     <div className="image-prompt-dock"><form onSubmit={submit}><div className="prompt-reference-summary">{supportsEditing && <button type="button" onClick={() => fileInputRef.current?.click()}><Plus aria-hidden="true" />Reference</button>}{references.length > 0 && <span>{references.length} ready</span>}<button type="button" onClick={() => setPickerOpen(true)}>{model?.name || "Choose model"}</button></div><textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} placeholder={references.length ? "Describe what to change in the reference…" : "Describe the image you want to create…"} aria-label="Image prompt" /><div className="image-prompt-footer"><div className="quick-aspects">{aspectRatios.slice(0, 4).map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div><span className="dock-estimate">{estimate ? `~${estimate.toFixed(2)} cr` : "—"}</span><button className="image-generate-button" disabled={submitting || generating || !modelId || !prompt.trim() || Boolean(references.length && !supportsEditing) || (expensive && !confirmed)}><PaperPlaneTilt aria-hidden="true" weight="fill" />{submitting ? "Submitting…" : generating ? status.step : references.length ? "Edit image" : "Generate"}</button></div></form>{error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}</div>
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); setConfirmed(false); }} open={pickerOpen} onOpenChange={setPickerOpen} modality="image" />
   </div>;
 }
-
 
