@@ -698,3 +698,5 @@ html[data-theme="light"] {
   --bg: #05070a;
   color-scheme: dark;
 :root {
+
+.admin-nav-mark{display:grid;place-items:center;width:21px;height:21px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));border-radius:6px;color:var(--accent);font-size:7px;font-weight:950;letter-spacing:-.04em}.admin-shell .sidebar-link:hover .admin-nav-mark{background:color-mix(in srgb,var(--accent) 10%,transparent)}.admin-back-link .admin-nav-mark{flex:none}
