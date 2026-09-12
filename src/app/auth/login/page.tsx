@@ -1,10 +1,6 @@
-import { Brand } from "@/components/brand";
-import { LoginForm } from "@/components/login-form";
+import Link from "next/link";
+import {LoginForm} from "@/components/login-form";
+import "./auth-premium.css";
+export const dynamic="force-dynamic";
+export default async function LoginPage({searchParams}:{searchParams:Promise<{next?:string}>}){const params=await searchParams;const nextPath=params.next?.startsWith("/")?params.next:"/chat";return <main className="auth-portal"><div className="auth-aurora one"/><div className="auth-aurora two"/><div className="auth-grid"/><nav className="auth-nav"><Link href="/" className="auth-brand"><i/><b>All Model Hub</b></Link><Link href="/support">Need help?</Link></nav><section className="auth-stage"><aside className="auth-story"><span className="auth-kicker">One prompt. Every leading model.</span><h2>Your ideas,<br/><em>amplified.</em></h2><p>Move from thought to finished work with the world’s leading text, image, video, and audio intelligence in one protected workspace.</p><div className="auth-model-orbit"><span>GPT</span><span>Claude</span><span>Gemini</span><span>Flux</span><b>AMH<small>Creative OS</small></b></div><ul><li><i>✓</i>One secure account</li><li><i>✓</i>Transparent PKR credits</li><li><i>✓</i>Your work stays yours</li></ul></aside><LoginForm nextPath={nextPath}/></section><footer className="auth-page-foot"><span>© 2026 All Model Hub</span><span><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></span></footer></main>}
 
-export const dynamic = "force-dynamic";
-
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
-  const params = await searchParams;
-  const nextPath = params.next?.startsWith("/") ? params.next : "/chat";
-  return <main className="auth-page"><section className="glass auth-card"><Brand/><h1>Welcome to <span className="gradient-text">All Model Hub.</span></h1><p className="muted" style={{lineHeight:1.65}}>One account for leading text, image, video and audio AI. Verified accounts can qualify for 10 non-transferable welcome credits.</p><LoginForm nextPath={nextPath}/></section></main>;
-}
