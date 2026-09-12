@@ -1,3 +1,5 @@
+import {Activity,Brain,Briefcase,ChartLineUp,CreditCard,Gear,Headset,Network,UsersThree} from "@phosphor-icons/react/dist/ssr";
+const links=[["Overview","/admin",ChartLineUp],["Payments","/admin?tab=payments",CreditCard],["Models","/admin?tab=models",Brain],["Providers","/admin?tab=providers",Network],["Users","/admin?tab=users",UsersThree],["Jobs","/admin?tab=jobs",Activity],["Support","/admin?tab=support",Headset],["Platform","/admin?tab=settings",Gear]] as const;
 export default function AdminSidebar(){
 
 return (
@@ -21,64 +23,7 @@ All Model Hub
 
 
 
-<div className="sidebar-section">
-Admin
-</div>
-
-
-
-<nav className="sidebar-nav">
-
-
-<a 
-href="/admin"
-className="sidebar-link"
->
-Payments
-</a>
-
-
-<a
-href="/admin?tab=models"
-className="sidebar-link"
->
-Models
-</a>
-
-
-<a
-href="/admin?tab=providers"
-className="sidebar-link"
->
-Providers
-</a>
-
-
-<a
-href="/admin?tab=users"
-className="sidebar-link"
->
-Users
-</a>
-
-
-<a
-href="/admin?tab=jobs"
-className="sidebar-link"
->
-Jobs
-</a>
-
-<a href="/admin?tab=support" className="sidebar-link">
-Support
-</a>
-
-<a href="/admin?tab=settings" className="sidebar-link">
-Settings
-</a>
-
-
-</nav>
+<div className="sidebar-section">Operations</div><nav className="sidebar-nav">{links.map(([label,href,Icon])=><a href={href} className="sidebar-link" key={label}><Icon weight="duotone"/><span>{label}</span></a>)}</nav><a className="admin-back-link" href="/chat"><Briefcase weight="duotone"/>Return to workspace</a>
 
 
 </aside>
@@ -86,3 +31,4 @@ Settings
 )
 
 }
+
