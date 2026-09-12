@@ -14,7 +14,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
   const { data: profile } = await admin.from("profiles").select("low_bandwidth,role,display_name").eq("id", user.id).single();
   const isAdmin = profile && ["admin", "owner"].includes(profile.role);
 
-  return <div className={`app-shell ${profile?.low_bandwidth ? "low-bandwidth" : ""}`}>
+  return <div className={`app-shell premium-workstation-shell ${profile?.low_bandwidth ? "low-bandwidth" : ""}`}>
     <AppSidebar balance={Number(wallet.available)} displayName={profile?.display_name} email={user.email} isAdmin={Boolean(isAdmin)} />
     <main className="app-main">
       <WorkspaceTopbar balance={Number(wallet.available)} identity={profile?.display_name || user.email || "Member"} />
@@ -24,4 +24,5 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
     <WorkspaceNetworkStatus />
   </div>;
 }
+
 
