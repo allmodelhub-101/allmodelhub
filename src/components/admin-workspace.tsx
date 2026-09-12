@@ -4,7 +4,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
   const admin = createAdminClient();
-  const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, features] = await Promise.all([
+  const economicsCutoff = new Date(Date.now() - 30 * 86_400_000).toISOString();
+  const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, features] = await Promise.all([
     admin.from("manual_payments").select("id,public_id,user_id,method,amount_pkr,credits,status,transaction_reference,proof_path,created_at").order("created_at", { ascending: false }).limit(100),
     admin.from("models").select("id,display_name,tier,modality,markup,active,featured,auto_eligible,provider_family,upstream_model").order("modality").order("tier").order("display_name"),
     admin.from("profiles").select("id,email,display_name,role,created_at,welcome_granted_at").order("created_at", { ascending: false }).limit(500),
@@ -13,10 +14,12 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
     admin.from("generation_jobs").select("id,public_id,user_id,modality,model_id,provider_key,status,charged_credits,error_message,created_at").order("created_at", { ascending: false }).limit(200),
     admin.from("support_tickets").select("id,public_id,user_id,category,subject,status,priority,updated_at").order("updated_at", { ascending: false }).limit(100),
     admin.from("system_settings").select("key,value").in("key", ["internal_usd_pkr", "min_topup_pkr", "welcome_credits"]),
+    admin.from("messages").select("credits_charged,internal_cost_pkr").eq("role", "assistant").gte("created_at", economicsCutoff),
+    admin.from("generation_jobs").select("charged_credits,internal_cost_pkr").eq("status", "completed").gte("completed_at", economicsCutoff),
     getFeatureFlags()
   ]);
 
-  const failed = [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult].find((result) => result.error);
+  const failed = [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult].find((result) => result.error);
   if (failed?.error) throw new Error(`Could not load admin workspace: ${failed.error.message}`);
 
   const profiles = profilesResult.data ?? [];
@@ -39,5 +42,14 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
     tickets={(ticketsResult.data ?? []).map((ticket) => ({ ...ticket, email: profileById.get(ticket.user_id)?.email }))}
     settings={Object.fromEntries((settingsResult.data ?? []).map((row) => [row.key, Number(row.value)]))}
     features={features}
+    profitSummary={{
+      chatRevenue: (messageEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.credits_charged || 0), 0),
+      chatCost: (messageEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.internal_cost_pkr || 0), 0),
+      mediaRevenue: (mediaEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.charged_credits || 0), 0),
+      mediaCost: (mediaEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.internal_cost_pkr || 0), 0)
+    }}
   />;
 }
+
+
+

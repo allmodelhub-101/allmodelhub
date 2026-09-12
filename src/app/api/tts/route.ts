@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getRuntimeModel } from "@/lib/model-store";
-import { estimateMediaCredits, getInternalUsdPkr } from "@/lib/pricing";
+import { estimateMediaCredits, getInternalUsdPkr, mediaSupplierUsd } from "@/lib/pricing";
 import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
 import { apimodelsTtsStream } from "@/lib/providers/apimodels";
 import { haimakerTtsStream } from "@/lib/providers/haimaker";
@@ -72,7 +72,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "TTS provider request failed." }, { status: response.status >= 500 ? 502 : 400 });
     }
 
-    const transactionId = await captureWalletHold(holdId, estimated, `tts-capture:${user.id}:${input.requestId}`, { model_id: model.id, characters: input.text.length });
+    const supplierCostUsd = mediaSupplierUsd(model, { textLength: input.text.length });
+    const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
+    const transactionId = await captureWalletHold(holdId, estimated, `tts-capture:${user.id}:${input.requestId}`, { kind: "tts", model_id: model.id, characters: input.text.length, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
     await finalizeRequest(claimId, "completed", { resourceId: transactionId, response: { credits: estimated } });
     return new Response(response.body, {
       headers: {
@@ -92,3 +94,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: insufficient ? "Insufficient credits." : safety ? "This request exceeds your spending safety limit." : "Voice generation is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 500 });
   }
 }
+
