@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, CaretRight, Command, MagnifyingGlass, Question, Wallet, X } from "@phosphor-icons/react";
+import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, Question, Wallet, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -19,7 +19,14 @@ const destinations = [
   { label: "Projects", detail: "Organize persistent context", href: "/projects" },
   { label: "Library", detail: "Find chats, files, and generations", href: "/history" },
   { label: "Models", detail: "Compare models and pricing", href: "/models" },
-  { label: "Wallet & receipts", detail: "Credits, costs, and usage", href: "/wallet" }
+  { label: "Compare models", detail: "Run one prompt across multiple models", href: "/battle" },
+  { label: "Files", detail: "Manage private knowledge", href: "/files" },
+  { label: "Templates", detail: "Reuse proven prompt workflows", href: "/templates" },
+  { label: "Wallet", detail: "Credits and billing", href: "/wallet" },
+  { label: "Usage & receipts", detail: "Review costs and receipts", href: "/usage" },
+  { label: "Notifications", detail: "See workspace updates", href: "/notifications" },
+  { label: "Settings", detail: "Preferences and account controls", href: "/settings" },
+  { label: "Help", detail: "Guidance and support", href: "/support" }
 ];
 
 export function WorkspaceTopbar({ balance, identity }: { balance: number; identity: string }) {
@@ -33,6 +40,7 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   const [notifications,setNotifications]=useState<Notification[]>([]);
   const [notificationsOpen,setNotificationsOpen]=useState(false);
   const [keyboardHelp,setKeyboardHelp]=useState(false);
+  const [projectOpen,setProjectOpen]=useState(false);
   const [productResults,setProductResults]=useState<SearchResult[]>([]);
   const [searching,setSearching]=useState(false);
 
@@ -53,13 +61,14 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     const shortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
       if(event.key==="?"&&!event.metaKey&&!event.ctrlKey&&!event.altKey&&!(["INPUT","TEXTAREA","SELECT"].includes((event.target as HTMLElement)?.tagName))){event.preventDefault();setKeyboardHelp(true)}
-      if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); }
+      if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); setProjectOpen(false); }
     };
     window.addEventListener("keydown", shortcut);
     return () => { window.clearTimeout(initialLoad);window.clearInterval(timer); window.removeEventListener("keydown", shortcut); };
   }, []);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
+  const activeProjectName=projects.find(project=>project.id===projectId)?.name||"Personal";
   const unreadCount=notifications.filter(item=>!item.read_at).length;
   const normalizedQuery = query.trim().toLowerCase();
   const matchingDestinations = useMemo(() => destinations.filter((item) => !normalizedQuery || `${item.label} ${item.detail}`.toLowerCase().includes(normalizedQuery)), [normalizedQuery]);
@@ -87,14 +96,14 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
 
   return <>
     <header className="app-topbar">
-      <label className="global-project"><span>Project</span><select value={projectId} onChange={(event) => selectProject(event.target.value)}><option value="">Personal workspace</option>{projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}</select></label>
+      <div className="global-project-wrap"><button className="global-project" type="button" onClick={()=>setProjectOpen(value=>!value)} aria-haspopup="listbox" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div className="project-popover" role="listbox" aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" role="option" aria-selected={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
       <button className="command-trigger" type="button" onClick={() => { setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>Search or jump to…</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
       <div className="topbar-actions">
         <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} working` : "Generations"}</button>
         <button className="topbar-icon-trigger" type="button" onClick={()=>{setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
         <button className="topbar-icon-trigger keyboard-trigger" type="button" onClick={()=>setKeyboardHelp(true)} aria-label="Keyboard shortcuts"><Question size={17} aria-hidden="true" /></button>
         <Link href="/wallet" className="wallet-chip"><Wallet size={14} aria-hidden="true" />{balance.toFixed(2)} Credits</Link>
-        <span className="topbar-identity">{identity}</span><ThemeToggle />
+        <ThemeToggle />
       </div>
     </header>
     {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
@@ -114,5 +123,4 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     </div></div></div>}
   </>;
 }
-
 
