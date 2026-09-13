@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MagicWand, PaperPlaneTilt, Plus, SlidersHorizontal, X } from "@phosphor-icons/react";
+import { ArrowsClockwise, DownloadSimple, ImageSquare, MagicWand, PaperPlaneTilt, Plus, ShareNetwork, SlidersHorizontal, X } from "@phosphor-icons/react";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
 
 type ImageModel = PickerModel & { modality: string; description?: string; capabilities?: string[] };
@@ -198,15 +198,24 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     await navigator.clipboard.writeText(JSON.stringify({ prompt, model: model?.name, modelId, aspectRatio: aspect, mode: references.length ? "edit" : "create" }, null, 2));
     setCopied("settings"); window.setTimeout(() => setCopied(""), 1500);
   }
+  async function shareResult() {
+    if (!resultUrl) return;
+    if (navigator.share) {
+      try { await navigator.share({ title: "Created with All Model Hub", text: prompt, url: resultUrl }); return; }
+      catch (caught) { if (caught instanceof DOMException && caught.name === "AbortError") return; }
+    }
+    await navigator.clipboard.writeText(resultUrl); setCopied("link"); window.setTimeout(() => setCopied(""), 1500);
+  }
 
   return <div className={`image-workspace ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); const file = event.dataTransfer.files[0]; if (file) void uploadReference(file); }}>
     {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>The selected model will switch into editing mode.</span></div>}
+    <header className="image-workspace-bar"><div className="image-workspace-title"><span className="image-studio-mark"><ImageSquare weight="duotone" /></span><span><span className="eyebrow">Visual creation workspace</span><strong>Image Studio</strong></span></div><nav><span className="image-mode-chip">{references.length ? "Editing reference" : "Text to image"}</span><Link href="/history">My images</Link><button type="button" onClick={() => setInspectorOpen((value) => !value)}><SlidersHorizontal />Settings</button></nav></header>
     <main className="image-canvas-shell">
       <section className={`image-canvas-stage aspect-${aspect.replace(":", "-")}`} aria-live="polite">
-        {!job && <div className="image-empty-state"><span className="canvas-orbit" aria-hidden="true"><MagicWand weight="fill" /></span><span className="empty-kicker">Create or transform</span><h1>What do you want to create?</h1><p>Start with an idea, choose a visual direction, or add a reference image to edit something visually.</p><div className="direction-starters" aria-label="Visual directions">{directionStarters.map((starter) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}><span>{starter.label}</span><small>Use direction</small></button>)}</div><div className="image-starters">{promptStarters.map((starter) => <button type="button" key={starter} onClick={() => setPrompt(starter)}>{starter}</button>)}</div></div>}
+        {!job && <div className="image-empty-state"><div className="image-stage-emblem"><span className="canvas-orbit" aria-hidden="true"><MagicWand weight="fill" /></span><i/><i/><i/></div><span className="empty-kicker">Image generation canvas</span><h1>Turn an idea into an image.</h1><p>Describe the scene below. Choose a direction to begin, or add an image when you want to transform something you already have.</p><div className="direction-starters" aria-label="Visual directions">{directionStarters.map((starter, index) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}><b>0{index + 1}</b><span>{starter.label}</span><small>{promptStarters[index]}</small></button>)}</div></div>}
         {generating && <div className="image-generating-state" role="status"><div className="image-generation-frame"><span /><span /><span /></div><span className="empty-kicker">{status.step}</span><h2>{status.title}</h2><p>{job?.public_id || "Your image will appear here when it is ready."}</p><small>No fake percentage—this updates from the provider.</small></div>}
         {job?.status === "failed" && <div className="image-failed-state"><span className="empty-kicker">Generation stopped</span><h2>That image was not created</h2><p>{job.error_message || "The provider returned a failure. Eligible reserved credits were released."}</p><button type="button" onClick={resetResult}>Try again</button></div>}
-        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><div className="image-result-toolbar"><a href={resultUrl} target="_blank" rel="noreferrer">Open</a><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}><Plus aria-hidden="true" />Use as reference</button><button type="button" onClick={resetResult}>Variation</button>{crossModalityHandoffs&&<button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button>}<a href={resultUrl} download>Download</a><button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Copied" : "Copy settings"}</button></div></div>}
+        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><div className="image-result-toolbar"><a href={resultUrl} download><DownloadSimple/>Download</a><button type="button" onClick={() => void shareResult()}><ShareNetwork/>{copied === "link" ? "Link copied" : "Share"}</button><button type="button" onClick={resetResult}><ArrowsClockwise/>Create variation</button><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}><Plus aria-hidden="true" />Edit this image</button>{crossModalityHandoffs&&<button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button>}<button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Settings copied" : "Copy settings"}</button></div></div>}
         {job?.status === "completed" && !resultUrl && <div className="image-failed-state"><h2>Generation completed</h2><p>The provider did not return a displayable image. You can find this job in Library.</p><Link href="/history">Open Library</Link></div>}
       </section>
 
