@@ -43,11 +43,24 @@ function safeSseJson(line: string) {
   try { return JSON.parse(data); } catch { return null; }
 }
 
+function languageInstruction(language: "auto" | "en" | "ur" | "roman-ur", userText: string) {
+  if (language === "ur") return "LANGUAGE REQUIREMENT (highest priority): Write the entire answer in natural Urdu using Urdu script. Do not answer in English or Roman Urdu, except for code, URLs, product names, and technical identifiers that must remain unchanged. Use clear Pakistani Urdu. If the user explicitly asks for a different language in their latest message, follow that latest explicit request.";
+  if (language === "roman-ur") return "LANGUAGE REQUIREMENT (highest priority): Write the entire answer in natural Roman Urdu using the Latin alphabet. Do not use Urdu/Arabic script and do not answer in English, except for code, URLs, product names, and technical identifiers that must remain unchanged. Use familiar Pakistani Roman Urdu wording. If the user explicitly asks for a different language in their latest message, follow that latest explicit request.";
+  if (language === "en") return "LANGUAGE REQUIREMENT (highest priority): Write the answer in clear English, unless the user explicitly asks for a different language in their latest message.";
+  const containsUrduScript = /[\u0600-\u06FF]/.test(userText);
+  return containsUrduScript
+    ? "The user wrote in Urdu script. Reply naturally in Urdu script unless their latest message requests another language."
+    : "Match the language used in the user's latest message. When it is ambiguous, reply in clear English.";
+}
+
 export async function POST(request: Request) {
   const supabase = await createClient();
-  const { data: authData } = await supabase.auth.getUser();
+  const { data: authData, error: authError } = await supabase.auth.getUser();
   const user = authData.user;
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user) {
+    if (authError) logServerError("chat-auth", authError, { requestPath: "/api/chat" });
+    return NextResponse.json({ error: "Your session expired. Please sign in again to continue.", code: "AUTH_SESSION_EXPIRED" }, { status: 401 });
+  }
 
   const limit = await enforceRateLimit(`chat:${user.id}`);
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
@@ -71,17 +84,14 @@ export async function POST(request: Request) {
   const effectiveTier = body.tier === "auto" && body.deepThink ? "premium" : body.tier;
   const selected = body.modelId
     ? await getRuntimeModel(body.modelId)
-    : await chooseRuntimeTextModel({ tier: effectiveTier as ModelTier | "auto", prompt: lastUser.content });
+    : await chooseRuntimeTextModel({ tier: effectiveTier as ModelTier | "auto", prompt: lastUser.content, hasAttachments: body.attachmentIds.length > 0, deepThink: body.deepThink });
   if (!selected || selected.modality !== "text") { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "Selected text model is not available." }, { status: 400 }); }
 
   const systemParts: string[] = [
     "You are responding inside All Model Hub. Follow the user's request precisely, be useful, accurate and concise unless more detail is requested."
   ];
   if (profile?.custom_instructions) systemParts.push(`User custom instructions:\n${profile.custom_instructions}`);
-  const language = body.language || profile?.default_language || "auto";
-  if (language !== "auto") {
-    systemParts.push(language === "roman-ur" ? "Respond in natural Roman Urdu unless the user explicitly requests another language." : language === "ur" ? "Respond in Urdu unless the user explicitly requests another language." : "Respond in English unless the user explicitly requests another language.");
-  }
+  const language = body.language && body.language !== "auto" ? body.language : profile?.default_language || "auto";
   if (body.responseStyle) systemParts.push(`Preferred response style: ${body.responseStyle}.`);
   if (body.deepThink) systemParts.push("Use deeper reasoning internally and give a carefully checked final answer. Do not expose hidden chain-of-thought.");
 
@@ -100,6 +110,9 @@ export async function POST(request: Request) {
     const fileContext = (files ?? []).filter((f) => f.extraction_status === "ready" && f.extracted_text).map((f) => `### File: ${f.name}\n${String(f.extracted_text).slice(0, 45_000)}`).join("\n\n").slice(0, 120_000);
     if (fileContext) systemParts.push(`Use these user-provided files as context. If the answer is not supported by them, say so rather than inventing file content.\n\n${fileContext}`);
   }
+
+  // Keep the user's language contract last so project and file context cannot dilute it.
+  systemParts.push(languageInstruction(language, lastUser.content));
 
   const effectiveMessages = [{ role: "system" as const, content: systemParts.join("\n\n") }, ...body.messages.filter((m) => m.role !== "system")];
   const combinedInput = effectiveMessages.map((m) => `${m.role}:${m.content}`).join("\n");
@@ -182,23 +195,27 @@ export async function POST(request: Request) {
 
       try {
         emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: upstream.provider, tier: selected.tier, private: body.private });
+        const consumeLine = (rawLine: string) => {
+          const line = rawLine.trim();
+          if (!line.startsWith("data:")) return;
+          const chunk = safeSseJson(line);
+          if (!chunk) return;
+          for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
+            if (event.type === "delta") { assistantText += event.text; emit({ type: "delta", text: event.text }); }
+            if (event.type === "usage") { if (event.inputTokens) inputTokens = event.inputTokens; if (event.outputTokens) outputTokens = event.outputTokens; }
+          }
+        };
         while (true) {
           const { value, done } = await providerReader.read();
           if (done) break;
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split("\n");
           buffer = lines.pop() || "";
-          for (const rawLine of lines) {
-            const line = rawLine.trim();
-            if (!line.startsWith("data:")) continue;
-            const chunk = safeSseJson(line);
-            if (!chunk) continue;
-            for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
-              if (event.type === "delta") { assistantText += event.text; emit({ type: "delta", text: event.text }); }
-              if (event.type === "usage") { if (event.inputTokens) inputTokens = event.inputTokens; if (event.outputTokens) outputTokens = event.outputTokens; }
-            }
-          }
+          lines.forEach(consumeLine);
         }
+        buffer += decoder.decode();
+        if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
+        if (!assistantText.trim()) throw new Error("Provider stream completed without response text.");
         if (!inputTokens) inputTokens = Math.ceil(combinedInput.length / 3.4) + (selected.inputOverheadTokens ?? 0);
         if (!outputTokens) outputTokens = Math.max(1, Math.ceil(assistantText.length / 3.4));
         const actualCredits = Math.min(holdAmount, actualTextCredits(selected, inputTokens, outputTokens, fxRate));
