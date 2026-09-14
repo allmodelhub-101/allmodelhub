@@ -30,6 +30,14 @@ mode: z.string().max(40).optional(),
 confirmedCost: z.boolean().default(false)
 });
 
+const catalogOnlyModels = new Set([
+"real-esrgan",
+"flashvsr",
+"eleven-dialogue",
+"eleven-dubbing",
+"eleven-isolator"
+]);
+
 export async function POST(request: Request, context: { params: Promise<{ modality: string }> }) {
 const supabase = await createClient();
 const { data } = await supabase.auth.getUser();
@@ -61,9 +69,14 @@ const claimId = claim.id;
 const model = await getRuntimeModel(input.modelId);
 if (!model || model.modality !== modality) { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "Model is not available for this studio." }, { status: 400 }); }
 
-if (modality === "audio" && model.id === "eleven-tts-flash") {
+if (catalogOnlyModels.has(model.id)) {
 await finalizeRequest(claimId, "failed");
-return NextResponse.json({ error: "Use the Text to Speech endpoint for Eleven Flash." }, { status: 400 });
+return NextResponse.json({ error: `${model.name} requires a dedicated source or structured-input workflow and is currently catalog-only.` }, { status: 400 });
+}
+
+if (modality === "audio" && model.capabilities.includes("tts")) {
+await finalizeRequest(claimId, "failed");
+return NextResponse.json({ error: "Use the Speech workspace for text-to-speech models." }, { status: 400 });
 }
 
 const fxRate = await getInternalUsdPkr();

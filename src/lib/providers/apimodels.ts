@@ -122,13 +122,19 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
 }
 
 export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
-  const endpoint = apiUrl("audio/speech");
+  // Preserve the proven legacy Eleven Flash contract while using APIMODELS' current
+  // unified streaming contract for the expanded speech catalog.
+  const legacy = body.model === "eleven-tts-flash";
+  const endpoint = apiUrl(legacy ? "audio/speech" : "tts/stream");
   const response = await fetch(endpoint, {
     method: "POST",
     headers: headers(),
-    body: JSON.stringify({ model: body.model, input: body.text, voice: body.voice_id, ...(body.language_code ? { language: body.language_code } : {}) }),
+    body: JSON.stringify(legacy
+      ? { model: body.model, input: body.text, voice: body.voice_id, ...(body.language_code ? { language: body.language_code } : {}) }
+      : { model: body.model, text: body.text, voice_id: body.voice_id, ...(body.language_code ? { language_code: body.language_code } : {}) }),
     cache: "no-store"
   });
   logProviderResponse("apimodels", endpoint, body.model, response);
   return response;
 }
+

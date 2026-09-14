@@ -13,6 +13,16 @@ type Model = {id:string;name:string;tier:string;modality:string;description:stri
 
 type Props = { modality: Modality; title:string; subtitle:string; embedded?:boolean; initialAudioMode?:"music"|"sfx"; hideAudioModeTabs?:boolean };
 
+// These models require dedicated source/structured-input workflows. Keep them
+// visible in the catalog without presenting an incompatible prompt-only form.
+const CATALOG_ONLY_MODEL_IDS = new Set([
+  "real-esrgan",
+  "flashvsr",
+  "eleven-dialogue",
+  "eleven-dubbing",
+  "eleven-isolator"
+]);
+
 const videoStarters = [
   { label: "Product reveal", prompt: "Cinematic product reveal, slow camera push-in, sculpted studio light, refined material detail" },
   { label: "Moving portrait", prompt: "Expressive portrait with subtle natural movement, shallow depth of field, gentle handheld camera motion" },
@@ -38,7 +48,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
   const [advanced,setAdvanced]=useState(false);
   const [audioMode,setAudioMode]=useState<"music"|"sfx">(initialAudioMode);
 
-  useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.id==="eleven-tts-flash"));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
+  useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.capabilities.includes("tts")) && !CATALOG_ONLY_MODEL_IDS.has(m.id));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
   useEffect(()=>{const sync=()=>setProjectId(window.localStorage.getItem("amh-active-project")||"");sync();const listener=(event:Event)=>setProjectId((event as CustomEvent<string>).detail||"");window.addEventListener("amh-project-change",listener);return()=>window.removeEventListener("amh-project-change",listener)},[]);
   const model=models.find(m=>m.id===modelId);
   const schema=model?.uiSchema||{};
