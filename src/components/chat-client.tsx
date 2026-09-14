@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, CaretDown, DotsThree, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, X } from "@phosphor-icons/react";
+import { ArrowUp, CaretDown, ChartBar, ChatCircle, DotsThree, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -20,8 +20,6 @@ type StreamEvent = { type?: string; conversationId?: string; text?: string; mess
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
 type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
-
-const starterPrompts = ["Help me plan a launch", "Analyze a document", "Build a product brief"];
 
 export function ChatClient() {
   const qs = useSearchParams();
@@ -141,6 +139,14 @@ export function ChatClient() {
   }, [busy, conversationId]);
 
   const exact = useMemo(() => models.find((model) => model.id === modelId), [models, modelId]);
+  const popularModels = useMemo(() => {
+    const preferred = ["gpt", "claude", "gemini", "llama", "mistral", "deepseek"];
+    return [...models].sort((left, right) => {
+      const leftIndex = preferred.findIndex((name) => left.name.toLowerCase().includes(name));
+      const rightIndex = preferred.findIndex((name) => right.name.toLowerCase().includes(name));
+      return (leftIndex < 0 ? preferred.length : leftIndex) - (rightIndex < 0 ? preferred.length : rightIndex);
+    }).slice(0, 6);
+  }, [models]);
   const selectedProject = useMemo(() => projects.find((project) => project.id === projectId), [projectId, projects]);
   const supportsReasoning = !exact || Boolean(exact.capabilities?.includes("reasoning"));
 
@@ -313,19 +319,45 @@ export function ChatClient() {
     anchor.href = url; anchor.download = "all-model-hub-chat.md"; anchor.click(); URL.revokeObjectURL(url);
   }
 
+  function focusComposer(nextPrompt?: string) {
+    if (nextPrompt) setInput(nextPrompt);
+    window.setTimeout(() => textareaRef.current?.focus(), 0);
+  }
+
   return <div className={`chat-page premium-chat-page ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
     {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
-    <header className="chat-toolbar premium-toolbar">
+    {messages.length > 0 && <header className="chat-toolbar premium-toolbar">
       <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
       <div className="chat-toolbar-actions">
         {conversationId && <button className="toolbar-new-chat" type="button" onClick={newChat} title="Start a fresh conversation"><Plus size={15} weight="bold" aria-hidden="true" /><span>New chat</span></button>}
         <details className="chat-more"><summary aria-label="Open conversation actions" title="Conversation actions"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>Actions</span><small>Export &amp; manage</small></summary><div className="chat-more-menu premium-menu"><Link href="/battle">Compare models</Link><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
       </div>
-    </header>
+    </header>}
 
     <div className="chat-layout-body" onScroll={(event) => { const element = event.currentTarget; setShowScrollButton(element.scrollHeight - element.scrollTop - element.clientHeight > 220); }}>
       <div className="chat-messages premium-messages">
-        {messages.length === 0 ? <div className="chat-empty premium-empty"><span className="empty-kicker">One prompt. Every leading model.</span><h1 className="empty-title">What will you create today?</h1><p className="empty-subtitle">Choose a model when you need control, or let Auto route the work for you.</p><div className="quick-actions">{starterPrompts.map((prompt) => <button type="button" key={prompt} onClick={() => { setInput(prompt); window.setTimeout(() => textareaRef.current?.focus(), 0); }}>{prompt}</button>)}</div></div> : messages.map((message, index) => {
+        {messages.length === 0 ? <div className="chat-home">
+          <nav className="popular-models" aria-label="Popular AI models">
+            <span className="popular-models-label">Popular models</span>
+            <div className="popular-model-list">
+              {popularModels.map((model, index) => <button type="button" className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
+                <span className={`model-monogram tone-${index % 6}`} aria-hidden="true">{model.name.slice(0, 1).toUpperCase()}</span><b>{model.name}</b>
+              </button>)}
+              <button type="button" className="popular-more" onClick={() => setPickerOpen(true)}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
+            </div>
+          </nav>
+          <section className="chat-home-hero" aria-labelledby="chat-home-title">
+            <span className="empty-kicker">One prompt. Endless possibilities.</span>
+            <h1 className="empty-title" id="chat-home-title">What will you <span>create</span> today?<i aria-hidden="true" /></h1>
+            <p className="empty-subtitle">Chat, create, analyze, and be more productive with the world&apos;s most advanced AI models.<br />All in one place.</p>
+            <div className="creation-paths">
+              <button type="button" className="creation-path answers" onClick={() => focusComposer()}><span><ChatCircle size={25} weight="fill" aria-hidden="true" /></span><strong>Get Answers</strong><small>Ask anything and get smart, reliable responses.</small></button>
+              <Link className="creation-path images" href="/images"><span><ImageSquare size={25} weight="fill" aria-hidden="true" /></span><strong>Create Images</strong><small>Turn your ideas into stunning visuals.</small></Link>
+              <Link className="creation-path videos" href="/video"><span><VideoCamera size={25} weight="fill" aria-hidden="true" /></span><strong>Make Videos</strong><small>Create videos from text in seconds.</small></Link>
+              <button type="button" className="creation-path analyze" onClick={() => focusComposer("Help me analyze and plan ")}><span><ChartBar size={25} weight="fill" aria-hidden="true" /></span><strong>Analyze &amp; Plan</strong><small>Summarize, analyze, and get insights.</small></button>
+            </div>
+          </section>
+        </div> : messages.map((message, index) => {
           const key = message.id || `${message.role}-${index}`;
           return <article className={`chat-row ${message.role}${message.interrupted ? " is-interrupted" : ""}`} key={key}><div className="avatar" aria-hidden="true">{message.role === "user" ? "You" : "AI"}</div><div className="chat-message-box"><div className="message-author">{message.role === "user" ? "You" : activeModelName || exact?.name || "All Model Hub"}</div><div className="chat-content">{message.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown> : message.content}</div>{busy && message.id?.startsWith("pending-") && !message.content && <div className="thinking-state" role="status" aria-live="polite"><div className="thinking-orbit" aria-hidden="true"><Sparkle weight="fill" /><i /><i /></div><div className="thinking-copy"><strong>{processingSeconds < 2 ? "Understanding your request" : activeModelName ? `${activeModelName} is responding` : "Choosing the best model"}</strong><span>Working live · {processingSeconds}s</span><div className="thinking-progress" aria-hidden="true"><i /></div></div></div>}<div className="chat-actions"><button type="button" onClick={() => void copyMessage(message.content, key)} disabled={!message.content}>{copiedKey === key ? "Copied" : "Copy"}</button>{message.role === "user" && <button type="button" onClick={() => editPrompt(index)}>Edit prompt</button>}{message.role === "assistant" && <><button type="button" onClick={() => regenerate(index)}>Retry</button><button type="button" onClick={() => branchAt(index)}>Branch</button></>}{message.meta && <span className="chat-meta">{message.meta}</span>}</div></div></article>;
         })}

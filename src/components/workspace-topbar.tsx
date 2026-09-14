@@ -29,7 +29,9 @@ const destinations = [
   { label: "Help", detail: "Guidance and support", href: "/support" }
 ];
 
-export function WorkspaceTopbar({ balance, identity }: { balance: number; identity: string }) {
+export function WorkspaceTopbar({ balance, identity, language = "en" }: { balance: number; identity: string; language?: string }) {
+  const [liveBalance, setLiveBalance] = useState(balance);
+  const [walletRefreshing, setWalletRefreshing] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [models, setModels] = useState<Model[]>([]);
   const [projectId, setProjectId] = useState("");
@@ -49,6 +51,11 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     if (response.ok) setJobs((await response.json()).jobs || []);
   }
   async function loadNotifications(){const response=await fetch("/api/notifications",{cache:"no-store"});if(response.ok)setNotifications((await response.json()).notifications||[])}
+  async function refreshWallet(){
+    setWalletRefreshing(true);
+    try { const response=await fetch("/api/wallet",{cache:"no-store"});if(response.ok){const data=await response.json();if(Number.isFinite(Number(data.wallet?.available)))setLiveBalance(Number(data.wallet.available));} }
+    finally { setWalletRefreshing(false); }
+  }
   async function markNotificationsRead(id?:string){await fetch("/api/notifications",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(id?{id}:{all:true})});await loadNotifications()}
 
   useEffect(() => {
@@ -56,15 +63,16 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
     window.setTimeout(()=>setProjectId(saved),0);
     fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
     fetch("/api/models").then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
-    const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications()},0);
+    const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications();void refreshWallet()},0);
     const timer = window.setInterval(() => void loadJobs(), 12000);
+    const walletTimer = window.setInterval(() => void refreshWallet(), 30000);
     const shortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
       if(event.key==="?"&&!event.metaKey&&!event.ctrlKey&&!event.altKey&&!(["INPUT","TEXTAREA","SELECT"].includes((event.target as HTMLElement)?.tagName))){event.preventDefault();setKeyboardHelp(true)}
       if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); setProjectOpen(false); }
     };
     window.addEventListener("keydown", shortcut);
-    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer); window.removeEventListener("keydown", shortcut); };
+    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); };
   }, []);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
@@ -97,12 +105,13 @@ export function WorkspaceTopbar({ balance, identity }: { balance: number; identi
   return <>
     <header className="app-topbar">
       <div className="global-project-wrap"><button className="global-project" type="button" onClick={()=>setProjectOpen(value=>!value)} aria-haspopup="listbox" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div className="project-popover" role="listbox" aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" role="option" aria-selected={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
-      <button className="command-trigger" type="button" onClick={() => { setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>Search or jump to…</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
+      <button className="command-trigger" type="button" onClick={() => { setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>{language==="ur"?"تلاش کریں یا جائیں…":language==="roman-ur"?"Talash karein ya jayein…":"Search or jump to…"}</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
       <div className="topbar-actions">
-        <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} working` : "Generations"}</button>
+        <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} ${language==="ur"?"جاری":language==="roman-ur"?"jaari":"working"}` : language==="ur"?"تخلیقات":language==="roman-ur"?"Generations":"Generations"}</button>
         <button className="topbar-icon-trigger" type="button" onClick={()=>{setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
-        <Link href="/wallet" className="wallet-chip"><Wallet size={14} aria-hidden="true" />{balance.toFixed(2)} Credits</Link>
+        <Link href="/wallet" className={`wallet-chip wallet-chip-live ${walletRefreshing ? "is-refreshing" : ""}`} aria-label={`${liveBalance.toFixed(2)} credits available. Balance refreshes automatically.`}><span className="wallet-live-signal" aria-hidden="true" /><Wallet size={14} aria-hidden="true" /><span>{liveBalance.toFixed(2)} Credits</span><small>Live</small></Link>
         <ThemeToggle />
+        <Link href="/settings" className="topbar-profile" aria-label="Open account settings"><span>{identity.slice(0, 1).toUpperCase()}</span><CaretDown size={12} weight="bold" aria-hidden="true" /></Link>
       </div>
     </header>
     {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
