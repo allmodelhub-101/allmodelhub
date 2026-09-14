@@ -8,14 +8,15 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
 import { PremiumSelect } from "@/components/premium-select";
+import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
 
 type Mode = "auto" | "budget" | "balanced" | "premium" | "flagship";
-type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; meta?: string; credits?: number };
+type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; meta?: string; credits?: number; interrupted?: boolean };
 type Project = { id: string; name: string };
 type Model = PickerModel & { modality: string };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
-type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; error?: string };
+type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; modelName?: string; error?: string };
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
 type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
@@ -31,6 +32,7 @@ export function ChatClient() {
   const voiceRef = useRef<VoiceRecognition | null>(null);
   const voiceCommittedRef = useRef("");
   const voiceStartDraftRef = useRef("");
+  const loadedConversationRef = useRef("");
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>([]);
@@ -54,6 +56,8 @@ export function ChatClient() {
   const [copiedKey, setCopiedKey] = useState("");
   const [voiceActive, setVoiceActive] = useState(false);
   const [voiceSeconds, setVoiceSeconds] = useState(0);
+  const [processingSeconds, setProcessingSeconds] = useState(0);
+  const [activeModelName, setActiveModelName] = useState("");
   const draftKey = `amh-chat-draft:${conversationId || "new"}`;
 
   useEffect(() => {
@@ -83,6 +87,12 @@ export function ChatClient() {
     const timer = window.setInterval(() => setVoiceSeconds((value) => value + 1), 1000);
     return () => window.clearInterval(timer);
   }, [voiceActive]);
+
+  useEffect(() => {
+    if (!busy) return;
+    const timer = window.setInterval(() => setProcessingSeconds((value) => value + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [busy]);
 
   useEffect(() => () => voiceRef.current?.abort(), []);
 
@@ -116,7 +126,8 @@ export function ChatClient() {
   }, [qs]);
 
   useEffect(() => {
-    if (!conversationId) return;
+    if (!conversationId || busy || loadedConversationRef.current === conversationId) return;
+    loadedConversationRef.current = conversationId;
     fetch(`/api/conversations?id=${conversationId}`).then((response) => response.json()).then((data) => {
       if (data.messages) setMessages(data.messages.filter((message: ConversationMessage) => message.role !== "system").map((message: ConversationMessage) => ({
         id: message.id, role: message.role, content: message.content,
@@ -127,7 +138,7 @@ export function ChatClient() {
       if (data.conversation?.project_id) setProjectId(data.conversation.project_id);
       if (data.conversation?.preferred_model) setModelId(data.conversation.preferred_model);
     }).catch(() => setError("Could not load this conversation."));
-  }, [conversationId]);
+  }, [busy, conversationId]);
 
   const exact = useMemo(() => models.find((model) => model.id === modelId), [models, modelId]);
   const selectedProject = useMemo(() => projects.find((project) => project.id === projectId), [projectId, projects]);
@@ -191,20 +202,25 @@ export function ChatClient() {
   async function sendPrompt(prompt: string, history: ChatMessage[] = messages, recovery?: { input: string; pasted: string }) {
     if (!prompt.trim() || busy) return;
     const recoveryDraft = recovery || { input, pasted: pastedContext };
-    setError(""); setBusy(true);
+    setError(""); setProcessingSeconds(0); setBusy(true);
     const controller = new AbortController(); abortRef.current = controller;
     const working = [...history, { role: "user" as const, content: prompt.trim() }];
-    setMessages([...working, { role: "assistant", content: "" }]);
+    const pendingId = `pending-${crypto.randomUUID()}`;
+    setActiveModelName(exact?.name || "");
+    setMessages([...working, { id: pendingId, role: "assistant", content: "" }]);
     setInput(""); setPastedContext("");
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST", signal: controller.signal, headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      const payload = {
           requestId: crypto.randomUUID(), messages: working.map(({ role, content }) => ({ role, content })), tier: mode,
           modelId: modelId || undefined, conversationId: privateMode ? undefined : conversationId || undefined,
           projectId: projectId || undefined, attachmentIds, maxTokens: deepThink ? 4096 : 2048, deepThink, private: privateMode
-        })
-      });
+      };
+      const requestChat = () => fetch("/api/chat", { method: "POST", signal: controller.signal, credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      let response = await requestChat();
+      if (response.status === 401) {
+        const { error: refreshError } = await createBrowserSupabaseClient().auth.refreshSession();
+        if (!refreshError) response = await requestChat();
+      }
       if (!response.ok || !response.body) {
         const data = await response.json().catch(() => ({}));
         throw new Error(data.error || "Chat request failed.");
@@ -217,17 +233,19 @@ export function ChatClient() {
         for (const frame of frames) {
           const line = frame.split("\n").find((item) => item.startsWith("data:")); if (!line) continue;
           let streamEvent: StreamEvent; try { streamEvent = JSON.parse(line.slice(5).trim()) as StreamEvent; } catch { continue; }
-          if (streamEvent.type === "meta" && streamEvent.conversationId && !privateMode) {
-            setConversationId(streamEvent.conversationId); window.history.replaceState(null, "", `/chat?conversation=${streamEvent.conversationId}`);
+          if (streamEvent.type === "meta") {
+            if (streamEvent.modelName) setActiveModelName(streamEvent.modelName);
+            if (streamEvent.conversationId && !privateMode) {
+              loadedConversationRef.current = streamEvent.conversationId;
+              setConversationId(streamEvent.conversationId); window.history.replaceState(null, "", `/chat?conversation=${streamEvent.conversationId}`);
+            }
           }
           if (streamEvent.type === "delta") setMessages((current) => {
-            const copy = [...current]; const last = copy[copy.length - 1];
-            copy[copy.length - 1] = { ...last, content: last.content + streamEvent.text }; return copy;
+            return current.map((message) => message.id === pendingId ? { ...message, content: message.content + (streamEvent.text || "") } : message);
           });
           if (streamEvent.type === "usage") {
             setMessages((current) => {
-              const copy = [...current]; const last = copy[copy.length - 1];
-              copy[copy.length - 1] = { ...last, id: streamEvent.messageId || last.id, credits: Number(streamEvent.credits), meta: `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` }; return copy;
+              return current.map((message) => message.id === pendingId ? { ...message, id: streamEvent.messageId || message.id, credits: Number(streamEvent.credits), meta: `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` } : message);
             });
           }
           if (streamEvent.type === "error") throw new Error(streamEvent.error || "Generation failed.");
@@ -240,8 +258,8 @@ export function ChatClient() {
         setError(caught instanceof Error ? caught.message : "Chat request failed.");
         setInput((current) => current || recoveryDraft.input); setPastedContext((current) => current || recoveryDraft.pasted);
       }
-      setMessages((current) => current.filter((message, index) => !(index === current.length - 1 && message.role === "assistant" && !message.content)));
-    } finally { setBusy(false); abortRef.current = null; }
+      setMessages((current) => current.map((message) => message.id === pendingId ? { ...message, interrupted: true, meta: message.content ? "Response interrupted · Retry available" : "Request not completed · Retry available" } : message));
+    } finally { setBusy(false); setProcessingSeconds(0); setActiveModelName(""); abortRef.current = null; }
   }
 
   const uploadFiles = useCallback(async (selected: FileList | File[] | null) => {
@@ -273,7 +291,7 @@ export function ChatClient() {
     if (event.key === "Escape" && busy) abortRef.current?.abort();
   }
   function newChat() {
-    setMessages([]); setConversationId(""); setAttachmentIds([]); setPastedContext(""); setError("");
+    setMessages([]); setConversationId(""); loadedConversationRef.current = ""; setAttachmentIds([]); setPastedContext(""); setError("");
     window.history.replaceState(null, "", "/chat"); window.setTimeout(() => textareaRef.current?.focus(), 0);
   }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
@@ -309,7 +327,7 @@ export function ChatClient() {
       <div className="chat-messages premium-messages">
         {messages.length === 0 ? <div className="chat-empty premium-empty"><span className="empty-kicker">One prompt. Every leading model.</span><h1 className="empty-title">What will you create today?</h1><p className="empty-subtitle">Choose a model when you need control, or let Auto route the work for you.</p><div className="quick-actions">{starterPrompts.map((prompt) => <button type="button" key={prompt} onClick={() => { setInput(prompt); window.setTimeout(() => textareaRef.current?.focus(), 0); }}>{prompt}</button>)}</div></div> : messages.map((message, index) => {
           const key = message.id || `${message.role}-${index}`;
-          return <article className={`chat-row ${message.role}`} key={key}><div className="avatar" aria-hidden="true">{message.role === "user" ? "You" : "AI"}</div><div className="chat-message-box"><div className="message-author">{message.role === "user" ? "You" : exact?.name || "All Model Hub"}</div><div className="chat-content">{message.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content || (busy && index === messages.length - 1 ? "" : "No response returned.")}</ReactMarkdown> : message.content}</div>{busy && message.role === "assistant" && index === messages.length - 1 && !message.content && <div className="thinking-state" role="status" aria-live="polite"><div className="thinking-orbit" aria-hidden="true"><Sparkle weight="fill" /><i /><i /><i /></div><div className="thinking-copy"><strong>Creating your response</strong><span>{exact?.name ? `${exact.name} is preparing the first words` : "Selecting the best model for your request"}</span><div className="thinking-steps" aria-hidden="true"><b className="active">Understand</b><i /><b>Reason</b><i /><b>Compose</b></div></div></div>}<div className="chat-actions"><button type="button" onClick={() => void copyMessage(message.content, key)}>{copiedKey === key ? "Copied" : "Copy"}</button>{message.role === "user" && <button type="button" onClick={() => editPrompt(index)}>Edit prompt</button>}{message.role === "assistant" && <><button type="button" onClick={() => regenerate(index)}>Retry</button><button type="button" onClick={() => branchAt(index)}>Branch</button></>}{message.meta && <span className="chat-meta">{message.meta}</span>}</div></div></article>;
+          return <article className={`chat-row ${message.role}${message.interrupted ? " is-interrupted" : ""}`} key={key}><div className="avatar" aria-hidden="true">{message.role === "user" ? "You" : "AI"}</div><div className="chat-message-box"><div className="message-author">{message.role === "user" ? "You" : activeModelName || exact?.name || "All Model Hub"}</div><div className="chat-content">{message.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown> : message.content}</div>{busy && message.id?.startsWith("pending-") && !message.content && <div className="thinking-state" role="status" aria-live="polite"><div className="thinking-orbit" aria-hidden="true"><Sparkle weight="fill" /><i /><i /></div><div className="thinking-copy"><strong>{processingSeconds < 2 ? "Understanding your request" : activeModelName ? `${activeModelName} is responding` : "Choosing the best model"}</strong><span>Working live · {processingSeconds}s</span><div className="thinking-progress" aria-hidden="true"><i /></div></div></div>}<div className="chat-actions"><button type="button" onClick={() => void copyMessage(message.content, key)} disabled={!message.content}>{copiedKey === key ? "Copied" : "Copy"}</button>{message.role === "user" && <button type="button" onClick={() => editPrompt(index)}>Edit prompt</button>}{message.role === "assistant" && <><button type="button" onClick={() => regenerate(index)}>Retry</button><button type="button" onClick={() => branchAt(index)}>Branch</button></>}{message.meta && <span className="chat-meta">{message.meta}</span>}</div></div></article>;
         })}
         <div ref={messagesEndRef} aria-hidden="true" />
       </div>
@@ -325,10 +343,10 @@ export function ChatClient() {
         <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={handleComposerKeyDown} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" />
         <div className="composer-footer"><div className="composer-tools">
           <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
-          <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
+            <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
             <button type="button" className={`composer-icon-button voice-input-button ${voiceActive ? "is-recording" : ""}`} onClick={startVoiceInput} aria-label={voiceActive ? "Stop voice typing" : "Start voice typing"} title={voiceActive ? "Stop voice typing" : "Voice typing"}><Microphone size={18} weight={voiceActive ? "fill" : "regular"} aria-hidden="true" /></button>
             {voiceActive && <div className="voice-recording-status" role="status"><i/><span>Listening</span><time>{Math.floor(voiceSeconds / 60)}:{String(voiceSeconds % 60).padStart(2,"0")}</time><button type="button" onClick={cancelVoiceInput}>Cancel</button></div>}
-          <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
+            <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
               <span className="model-selector-copy"><small>Choose AI model</small><strong>{exact?.name || "Auto (best match)"}</strong></span><CaretDown size={13} weight="bold" aria-hidden="true" />
             </button>
           <details className="composer-settings"><summary title="Open generation controls"><SlidersHorizontal size={15} aria-hidden="true" /><span>Controls</span><small>Project, mode &amp; privacy</small></summary><div className="composer-settings-panel">
