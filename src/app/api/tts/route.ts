@@ -19,7 +19,7 @@ const schema = z.object({
   requestId: z.string().uuid(),
   text: z.string().min(1).max(10_000),
   voiceId: z.string().min(2).max(120).default("EXAVITQu4vr4xnSDxMaL"),
-  modelId: z.literal("eleven-tts-flash").default("eleven-tts-flash"),
+  modelId: z.string().min(1).max(120).default("eleven-tts-flash"),
   confirmedCost: z.boolean().default(false)
 });
 
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
   const claimId = claim.id;
 
   const model = await getRuntimeModel(input.modelId);
-  if (!model || model.modality !== "audio") {
+  if (!model || model.modality !== "audio" || !model.capabilities.includes("tts")) {
     await finalizeRequest(claimId, "failed");
     return NextResponse.json({ error: "TTS model is unavailable." }, { status: 400 });
   }
