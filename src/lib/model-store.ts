@@ -83,14 +83,40 @@ export async function getRuntimeModel(id: string) {
   }
 }
 
-export async function chooseRuntimeTextModel(input: { tier?: ModelTier | "auto"; prompt: string }) {
+export async function chooseRuntimeTextModel(input: { tier?: ModelTier | "auto"; prompt: string; hasAttachments?: boolean; deepThink?: boolean }) {
   const desired = chooseTextModel(input);
-  const runtimeDesired = await getRuntimeModel(desired.id);
-  if (runtimeDesired?.modality === "text") return runtimeDesired;
-
   const runtimeModels = (await listRuntimeModels({ modality: "text" })).filter((model) => model.autoEligible !== false);
-  const sameTier = runtimeModels.find((model) => model.tier === desired.tier);
-  if (sameTier) return sameTier;
-  return runtimeModels[0] ?? desired;
+  if (!runtimeModels.length) return desired;
+
+  if (input.tier && input.tier !== "auto") {
+    const runtimeDesired = runtimeModels.find((model) => model.id === desired.id);
+    return runtimeDesired ?? runtimeModels.find((model) => model.tier === desired.tier) ?? runtimeModels[0];
+  }
+
+  const prompt = input.prompt.toLowerCase();
+  const words = prompt.trim().split(/\s+/).filter(Boolean).length;
+  const wantsCode = /\b(code|coding|debug|bug|typescript|javascript|python|sql|api|refactor|repository|codebase)\b/.test(prompt);
+  const wantsResearch = /\b(research|sources?|citations?|current|latest|verify|evidence|compare)\b/.test(prompt);
+  const wantsReasoning = input.deepThink || /\b(analy[sz]e|reason|strategy|architecture|contract|financial|legal|complex|step.by.step)\b/.test(prompt);
+  const wantsVision = input.hasAttachments || /\b(image|photo|screenshot|diagram|document|pdf|file)\b/.test(prompt);
+  const wantsLongContext = input.hasAttachments || words > 900 || input.prompt.length > 6_000;
+  const simple = words < 90 && !wantsCode && !wantsResearch && !wantsReasoning && !wantsVision;
+  const tierWeight: Record<ModelTier, number> = { budget: 0, balanced: 1, premium: 2, flagship: 3 };
+
+  return [...runtimeModels].sort((a, b) => {
+    const score = (model: CatalogModel) => {
+      const capabilities = new Set(model.capabilities.map((item) => item.toLowerCase()));
+      let value = simple ? (capabilities.has("fast") ? 8 : 0) - tierWeight[model.tier] * 2 : tierWeight[model.tier];
+      if (wantsCode && (capabilities.has("coding") || capabilities.has("code"))) value += 10;
+      if (wantsResearch && (capabilities.has("research") || capabilities.has("reasoning"))) value += 8;
+      if (wantsReasoning && capabilities.has("reasoning")) value += 9;
+      if (wantsVision && (capabilities.has("vision") || capabilities.has("multimodal"))) value += 11;
+      if (wantsLongContext && (capabilities.has("long-context") || capabilities.has("long context"))) value += 9;
+      if (!simple && capabilities.has("tools")) value += 2;
+      return value;
+    };
+    return score(b) - score(a) || a.id.localeCompare(b.id);
+  })[0];
 }
+
 
