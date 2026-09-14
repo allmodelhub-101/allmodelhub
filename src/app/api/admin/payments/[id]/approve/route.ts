@@ -32,7 +32,7 @@ export async function POST(
   const { id } = await context.params;
   const { data: payment, error: paymentError } = await admin
     .from("manual_payments")
-    .select("id,user_id,public_id,credits,status")
+    .select("id,user_id,public_id,credits,bonus_credits,status")
     .eq("id", id)
     .maybeSingle();
 
@@ -59,13 +59,18 @@ export async function POST(
   }
 
   if (!wasApproved) {
+    const purchased = Number(payment.credits);
+    const bonus = Number(payment.bonus_credits || 0);
     await notifyUser(payment.user_id, {
       type: "payment",
       title: "Payment approved",
-      body: `${payment.public_id} was approved. ${Number(payment.credits).toFixed(2)} Credits were added to your wallet.`,
+      body: bonus > 0
+        ? `${purchased.toLocaleString()} purchased credits + ${bonus.toLocaleString()} bonus credits were added to your wallet.`
+        : `${purchased.toLocaleString()} purchased credits were added to your wallet.`,
       href: "/wallet"
     });
   }
 
   return NextResponse.json({ ok: true, transactionId });
 }
+

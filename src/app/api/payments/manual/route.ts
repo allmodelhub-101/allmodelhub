@@ -7,6 +7,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { notifyUser } from "@/lib/notifications";
 import { getMinimumTopupPkr } from "@/lib/system-settings";
 import { logServerError } from "@/lib/public-error";
+import { calculateTopupBonus, TOPUP_MAX_PKR, TOPUP_MIN_PKR } from "@/lib/topup-bonus";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,7 +18,7 @@ export async function GET() {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const minimum = await getMinimumTopupPkr();
+  const minimum = Math.max(TOPUP_MIN_PKR, await getMinimumTopupPkr());
   return NextResponse.json({ methods: getManualPaymentMethods(), minimum });
 }
 
@@ -38,8 +39,9 @@ export async function POST(request: Request) {
   const proof = form.get("proof");
 
   if (!['easypaisa','meezan'].includes(method)) return NextResponse.json({ error: "Invalid payment method." }, { status: 400 });
-  const minimum = await getMinimumTopupPkr();
-  if (!Number.isFinite(amount) || amount < minimum || amount > 1_000_000) return NextResponse.json({ error: `Top-up amount must be at least PKR ${minimum.toLocaleString()}.` }, { status: 400 });
+  const minimum = Math.max(TOPUP_MIN_PKR, await getMinimumTopupPkr());
+  if (!Number.isInteger(amount) || amount < minimum) return NextResponse.json({ error: `Minimum top-up is PKR ${minimum.toLocaleString()}.` }, { status: 400 });
+  if (amount > TOPUP_MAX_PKR) return NextResponse.json({ error: `Maximum top-up is PKR ${TOPUP_MAX_PKR.toLocaleString()}.` }, { status: 400 });
   if (transactionReference.length < 4 || transactionReference.length > 120) return NextResponse.json({ error: "Enter a valid transaction/reference ID." }, { status: 400 });
   if (!(proof instanceof File) || proof.size < 1 || proof.size > 5 * 1024 * 1024 || !allowedTypes.has(proof.type)) {
     return NextResponse.json({ error: "Upload a JPG, PNG, WEBP, or PDF proof up to 5 MB." }, { status: 400 });
@@ -50,6 +52,7 @@ export async function POST(request: Request) {
   if (duplicate) return NextResponse.json({ error: "This transaction/reference ID has already been submitted." }, { status: 409 });
 
   const publicId = createPublicId("AMH-PAY");
+  const bonus = calculateTopupBonus(amount);
   const ext = proof.name.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "bin";
   const path = `${user.id}/${publicId}/proof.${ext}`;
   const bytes = new Uint8Array(await proof.arrayBuffer());
@@ -62,11 +65,13 @@ export async function POST(request: Request) {
     method,
     amount_pkr: amount,
     credits: amount,
+    bonus_percent: bonus.percent,
+    bonus_credits: bonus.bonusCredits,
     transaction_reference: transactionReference,
     proof_path: path,
     note,
     status: "pending"
-  }).select("id,public_id,status,amount_pkr,credits,created_at").single();
+  }).select("id,public_id,status,amount_pkr,credits,bonus_percent,bonus_credits,created_at").single();
 
   if (error) {
     await admin.storage.from("payment-proofs").remove([path]).catch(() => undefined);
@@ -76,5 +81,6 @@ export async function POST(request: Request) {
   }
 
   await notifyUser(user.id, { type: "payment", title: "Payment submitted", body: `${publicId} for PKR ${amount.toLocaleString()} is pending verification.`, href: "/wallet" });
-  return NextResponse.json({ payment }, { status: 201 });
+  return NextResponse.json({ payment: { ...payment, total_credits: Number(payment.credits) + Number(payment.bonus_credits) } }, { status: 201 });
 }
+
