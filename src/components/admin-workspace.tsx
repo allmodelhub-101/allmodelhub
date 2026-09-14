@@ -6,7 +6,7 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
   const admin = createAdminClient();
   const economicsCutoff = new Date(Date.now() - 30 * 86_400_000).toISOString();
   const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, features] = await Promise.all([
-    admin.from("manual_payments").select("id,public_id,user_id,method,amount_pkr,credits,status,transaction_reference,proof_path,created_at").order("created_at", { ascending: false }).limit(100),
+    admin.from("manual_payments").select("id,public_id,user_id,method,amount_pkr,credits,bonus_percent,bonus_credits,status,transaction_reference,proof_path,created_at").order("created_at", { ascending: false }).limit(100),
     admin.from("models").select("id,display_name,tier,modality,markup,active,featured,auto_eligible,provider_family,upstream_model").order("modality").order("tier").order("display_name"),
     admin.from("profiles").select("id,email,display_name,role,created_at,welcome_granted_at").order("created_at", { ascending: false }).limit(500),
     admin.from("wallets").select("user_id,purchased_balance,promo_balance,reserved_balance"),
@@ -34,7 +34,7 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
 
   return <AdminClient
     initialTab={initialTab}
-    payments={(paymentsResult.data ?? []).map((payment) => ({ ...payment, amount_pkr: Number(payment.amount_pkr), credits: Number(payment.credits), email: profileById.get(payment.user_id)?.email, proofUrl: payment.proof_path ? proofByPath.get(payment.proof_path) : undefined }))}
+    payments={(paymentsResult.data ?? []).map((payment) => ({ ...payment, amount_pkr: Number(payment.amount_pkr), credits: Number(payment.credits), bonus_percent: Number(payment.bonus_percent || 0), bonus_credits: Number(payment.bonus_credits || 0), email: profileById.get(payment.user_id)?.email, proofUrl: payment.proof_path ? proofByPath.get(payment.proof_path) : undefined }))}
     models={(modelsResult.data ?? []).map((model) => ({ ...model, markup: Number(model.markup) }))}
     users={profiles.map((profile) => { const wallet = walletById.get(profile.id); return { ...profile, wallet: wallet ? { purchased_balance: Number(wallet.purchased_balance), promo_balance: Number(wallet.promo_balance), reserved_balance: Number(wallet.reserved_balance) } : null }; })}
     routes={(routesResult.data ?? []).map((route) => ({ ...route, provider_key: route.provider_key as "apimodels" | "haimaker" }))}
@@ -50,6 +50,5 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
     }}
   />;
 }
-
 
 
