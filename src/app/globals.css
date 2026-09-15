@@ -1795,7 +1795,8 @@ html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.globa
 
 /* Final composition: fixed model rail plus one centered welcome/composer cluster. */
 .premium-chat-page.is-welcome{display:grid;grid-template-rows:auto auto!important;align-content:center;padding-top:52px;box-sizing:border-box}
-.premium-chat-page.is-welcome .popular-models{position:absolute;z-index:3;top:0;left:0;right:0}
+.premium-chat-page.is-welcome .popular-models{position:fixed;z-index:3;top:64px;left:232px;right:0}
+.premium-workstation-shell:has(.app-sidebar.is-collapsed) .premium-chat-page.is-welcome .popular-models{left:72px}
 .premium-chat-page.is-welcome .chat-layout-body{height:auto;min-height:0;overflow:visible}
 .premium-chat-page.is-welcome .chat-messages{display:block;height:auto;min-height:0}
 .premium-chat-page.is-welcome .chat-home{display:block;height:auto;min-height:0}
@@ -1804,6 +1805,7 @@ html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.globa
 
 @media(max-width:620px){
   .premium-chat-page.is-welcome{padding-top:48px}
+  .premium-chat-page.is-welcome .popular-models{top:58px;left:0}
   .premium-chat-page.is-welcome .chat-home-hero{width:calc(100% - 18px);padding-block:7px}
 }
 
