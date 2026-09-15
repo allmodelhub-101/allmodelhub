@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ModelBrand } from "@/components/model-brand";
 
 export type PickerModel = {
   id: string;
@@ -115,10 +116,10 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
       </div>
       <div className="model-picker-list">
         {modality === "text" && !query && filter === "recommended" && <button type="button" className={`model-picker-option auto-option ${value ? "" : "selected"}`} onClick={() => { onChange(""); onOpenChange(false); }}>
-          <span className="provider-mark">AM</span><span className="model-option-copy"><strong>Auto — best available</strong><small>Routes each prompt by complexity, speed, and value.</small><span className="capability-list"><em>Recommended</em><em>Automatic routing</em></span></span><span className="model-option-side"><span className="availability"><i />Available</span><b>Select</b></span>
+          <ModelBrand modelName="Auto" /><span className="model-option-copy"><strong>Auto — best available</strong><small>Routes each prompt by complexity, speed, and value.</small><span className="capability-list"><em>Recommended</em><em>Automatic routing</em></span></span><span className="model-option-side"><span className="availability"><i />Available</span><b>Select</b></span>
         </button>}
         {visibleModels.map((model) => <button type="button" key={model.id} className={`model-picker-option ${value === model.id ? "selected" : ""}`} onClick={() => { onChange(model.id); onOpenChange(false); }}>
-          <span className="provider-mark">{(model.providerFamily || model.name).slice(0, 2).toUpperCase()}</span>
+          <ModelBrand modelName={model.name} provider={model.providerFamily} />
           <span className="model-option-copy"><strong>{model.name}</strong><small>{model.description || `${model.providerFamily || "AI"} ${model.tier} model`}</small><span className="capability-list">{(model.capabilities || []).slice(0, 4).map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</span></span>
           <span className="model-option-side"><span className="availability"><i />Available</span><small>{priceLabel(model)}</small><b>{value === model.id ? "Selected" : "Select"}</b></span>
         </button>)}
@@ -127,4 +128,5 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
     </section>
   </div>;
 }
+
 
