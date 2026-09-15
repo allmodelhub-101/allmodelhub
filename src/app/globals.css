@@ -1523,3 +1523,34 @@ html:not([data-theme="light"]) :is(.model-brand-openai,.model-brand-grok){color:
 @media(max-width:680px){.premium-chat-page.has-messages .chat-row.user{padding-right:8%}.premium-chat-page.has-messages .chat-row.assistant{padding-left:0}.model-picker-dialog{max-height:calc(100dvh - 18px);padding:12px}.model-picker-option{grid-template-columns:36px minmax(0,1fr) auto}.model-picker-option .model-brand{width:36px;height:36px}.model-option-side small,.capability-list{display:none}}
 @media(prefers-reduced-motion:reduce){.premium-chat-page .popular-model-track{animation:none}}
 
+/* Contained desktop workspace: no gutter, footer collision, or page drift */
+.app-shell:has(.premium-chat-page){grid-template-columns:232px minmax(0,1fr);width:100%;max-width:100vw;overflow:hidden}
+.app-shell:has(.premium-chat-page) .app-sidebar{width:232px;max-width:232px;box-sizing:border-box;overflow:visible;padding-inline:14px}
+.app-shell:has(.premium-chat-page):has(.app-sidebar.is-collapsed){grid-template-columns:72px minmax(0,1fr)}
+.app-shell:has(.premium-chat-page) .app-sidebar.is-collapsed{width:72px;max-width:72px;padding-inline:9px}
+.app-shell:has(.premium-chat-page) .sidebar-scroll{min-height:0;overflow-x:hidden;overflow-y:auto;padding-top:10px}
+.app-shell:has(.premium-chat-page) .sidebar-more{flex:none}
+.app-shell:has(.premium-chat-page) .sidebar-bottom{position:relative;z-index:3;flex:none;margin-top:5px;background:inherit}
+.app-shell:has(.premium-chat-page) .sidebar-more-menu{left:232px;bottom:76px}
+.app-shell:has(.premium-chat-page) .app-sidebar.is-collapsed .sidebar-more-menu{left:72px}
+.app-shell:has(.premium-chat-page) .app-main,.app-content:has(.premium-chat-page),.premium-chat-page,.premium-chat-page .chat-layout-body,.premium-chat-page .chat-home{min-width:0;max-width:100%;overflow-x:hidden}
+.premium-chat-page.is-welcome .chat-layout-body{overflow-y:hidden;overscroll-behavior:none}
+
+/* Seamless, clipped provider marquee — only the rail moves */
+.premium-chat-page .popular-model-list{flex:1;width:0;max-width:100%;contain:paint}
+.premium-chat-page .popular-model-track{gap:10px;will-change:transform;animation:popularModelMarquee 28s linear infinite}
+.premium-chat-page .popular-model-set{display:flex;align-items:center;gap:8px;flex:none}
+@keyframes popularModelMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(-50% - 5px),0,0)}}
+
+/* Familiar conversation flow: customer right, assistant left */
+.premium-chat-page.has-messages .chat-row.user{grid-template-columns:minmax(0,1fr) 36px;padding:0 0 0 26%}
+.premium-chat-page.has-messages .chat-row.user .avatar{grid-column:2}
+.premium-chat-page.has-messages .chat-row.user .chat-message-box{grid-column:1;grid-row:1;justify-self:end;width:fit-content;max-width:100%}
+.premium-chat-page.has-messages .chat-row.user .message-author{text-align:right}
+.premium-chat-page.has-messages .chat-row.user .chat-actions{justify-content:flex-end}
+.premium-chat-page.has-messages .chat-row.assistant{padding:0 9% 0 0}
+
+@media(max-width:900px){.app-shell:has(.premium-chat-page){display:block}.app-shell:has(.premium-chat-page) .app-sidebar,.app-shell:has(.premium-chat-page) .app-sidebar.is-collapsed{width:272px;max-width:272px;padding-inline:17px}.premium-chat-page.is-welcome .chat-layout-body{overflow-y:auto}}
+@media(max-width:680px){.premium-chat-page.has-messages .chat-row.user{padding-left:9%}.premium-chat-page.has-messages .chat-row.assistant{padding-right:0}}
+@media(prefers-reduced-motion:reduce){.premium-chat-page .popular-model-track{transform:none;animation:none}}
+
