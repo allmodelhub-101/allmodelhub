@@ -1534,7 +1534,7 @@ html:not([data-theme="light"]) :is(.model-brand-openai,.model-brand-grok){color:
 .app-shell:has(.premium-chat-page) .sidebar-more-menu{left:232px;bottom:76px}
 .app-shell:has(.premium-chat-page) .app-sidebar.is-collapsed .sidebar-more-menu{left:72px}
 .app-shell:has(.premium-chat-page) .app-main,.app-content:has(.premium-chat-page),.premium-chat-page,.premium-chat-page .chat-layout-body,.premium-chat-page .chat-home{min-width:0;max-width:100%;overflow-x:hidden}
-.app-content:has(.premium-chat-page){width:100%;max-width:none;margin:0;padding:0;box-sizing:border-box}
+.app-shell:has(.premium-chat-page) .app-content:has(.premium-chat-page){width:100%;max-width:none;margin:0;padding:0;box-sizing:border-box}
 .premium-chat-page.is-welcome .chat-layout-body{overflow-y:hidden;overscroll-behavior:none}
 
 /* Seamless, clipped provider marquee — only the rail moves */
