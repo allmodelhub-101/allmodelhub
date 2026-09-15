@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ModelBrand } from "@/components/model-brand";
 
 export type PickerModel = {
@@ -98,7 +99,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
 
   if (!open) return null;
 
-  return <div className="model-picker-backdrop" role="presentation" onMouseDown={(event) => {
+  return createPortal(<div className="model-picker-backdrop" role="presentation" onMouseDown={(event) => {
     if (event.target === event.currentTarget) onOpenChange(false);
   }}>
     <section className="model-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="model-picker-title">
@@ -126,7 +127,6 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
         {visibleModels.length === 0 && <div className="model-picker-empty"><strong>No matching models</strong><span>Try another capability or search term.</span></div>}
       </div>
     </section>
-  </div>;
+  </div>, document.body);
 }
-
 
