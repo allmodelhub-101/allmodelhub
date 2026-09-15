@@ -1555,3 +1555,47 @@ html:not([data-theme="light"]) :is(.model-brand-openai,.model-brand-grok){color:
 @media(max-width:680px){.premium-chat-page.has-messages .chat-row.user{padding-left:9%}.premium-chat-page.has-messages .chat-row.assistant{padding-right:0}}
 @media(prefers-reduced-motion:reduce){.premium-chat-page .popular-model-track{transform:none;animation:none}}
 
+/* Shared workspace chrome: compact, consistent, and viewport-contained. */
+@media(min-width:901px){
+  .app-shell{grid-template-columns:232px minmax(0,1fr);max-width:100vw;overflow:hidden}
+  .app-shell:has(.app-sidebar.is-collapsed){grid-template-columns:72px minmax(0,1fr)}
+  .app-sidebar{width:232px;max-width:232px;padding:11px 13px 9px;overflow:visible;background:linear-gradient(180deg,color-mix(in srgb,var(--panel-solid) 98%,var(--accent) 2%),var(--panel-solid));border-color:var(--line)}
+  .app-sidebar.is-collapsed{width:72px;max-width:72px;padding-inline:9px}
+  .sidebar-head{min-height:40px;gap:7px}
+  .sidebar-brand{gap:8px;font-size:17px}.sidebar-brand-mark{width:36px;height:36px}.sidebar-collapse{width:34px;height:34px}
+  .sidebar-scroll{flex:1;min-height:0;overflow:hidden;padding:6px 0 2px}
+  .sidebar-nav{gap:1px}.sidebar-section{margin:1px 8px 2px;font-size:7px;line-height:1;letter-spacing:.08em}
+  .sidebar-link,.sidebar-signout{min-height:32px;padding:5px 8px;border-radius:10px;font-size:11px}.sidebar-link svg,.sidebar-signout svg{width:17px;height:17px}
+  .sidebar-group+.sidebar-group{margin-top:5px;padding-top:5px}.sidebar-more{margin-top:4px;padding-top:4px}
+  .sidebar-more>summary{min-height:32px;padding:5px 8px;border-radius:10px;font-size:11px}
+  .sidebar-bottom{flex:none;margin-top:3px;padding-top:5px}.sidebar-profile{min-height:38px;padding:4px 7px}.profile-avatar{width:30px;height:30px}.profile-copy strong{font-size:10px}.profile-copy small{font-size:8px}.sidebar-signout{margin-top:2px}
+  .sidebar-upgrade-card{padding:10px;margin-top:5px}.sidebar-upgrade-card p{margin-block:4px 7px}.sidebar-upgrade-card button{min-height:30px}
+  .sidebar-more-menu{left:232px;bottom:62px;max-height:min(430px,calc(100dvh - 92px));overflow:auto}
+  .app-sidebar.is-collapsed .sidebar-more-menu{left:72px}
+}
+html:not([data-theme="light"]) .app-sidebar{background:linear-gradient(180deg,#0d1725,#09111d);border-color:#1f2b3d}
+html:not([data-theme="light"]) .app-sidebar :is(.sidebar-brand,.profile-copy strong){color:#f2f6ff}
+html:not([data-theme="light"]) .app-sidebar :is(.sidebar-link,.sidebar-more>summary,.sidebar-signout){color:#9ba9bc}
+.app-topbar{background:color-mix(in srgb,var(--panel-solid) 94%,transparent);border-color:var(--line);box-shadow:0 1px 0 color-mix(in srgb,var(--line) 72%,transparent);backdrop-filter:blur(20px)}
+html:not([data-theme="light"]) .app-topbar{background:rgba(10,18,30,.94);border-color:#202d40}
+html:not([data-theme="light"]) .app-topbar :is(.global-project,.command-trigger,.generation-trigger,.topbar-icon-trigger,.wallet-chip,.theme-toggle){background:#111c2b;border-color:#27364a;color:#eaf1ff}
+
+/* Conversation toolbar remains legible and restrained in both themes. */
+.premium-chat-page .chat-toolbar{min-width:0;gap:12px;padding-inline:18px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px)}
+.premium-chat-page .workspace-identity{min-width:0}.premium-chat-page .workspace-identity strong{color:#263248;white-space:nowrap}.premium-chat-page .chat-toolbar-actions{min-width:0;gap:7px}
+html:not([data-theme="light"]) .premium-chat-page .chat-toolbar{background:rgba(10,18,30,.94);border-color:#25354a;color:#edf4ff;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+html:not([data-theme="light"]) .premium-chat-page .workspace-identity .eyebrow{color:#67dff1}
+html:not([data-theme="light"]) .premium-chat-page .workspace-identity strong{color:#edf4ff}
+html:not([data-theme="light"]) .premium-chat-page .chat-toolbar :is(.toolbar-new-chat,.chat-more>summary){background:#111d2d;border-color:#2b3b51;color:#edf4ff}
+html:not([data-theme="light"]) .premium-chat-page .chat-toolbar small{color:#9aa9bd}
+
+/* Small-screen welcome view: one contained canvas, no idle page drift. */
+@media(max-width:620px){
+  .premium-chat-page .popular-models{min-height:48px;height:48px;padding-block:6px;overflow:hidden}.premium-chat-page .popular-model-list button{height:34px;font-size:10px}
+  .premium-chat-page.is-welcome .chat-layout-body{overflow:hidden;overscroll-behavior:none}
+  .premium-chat-page .chat-home-hero{padding:12px 0 7px}.premium-chat-page .empty-kicker{margin-bottom:8px}.premium-chat-page .empty-title{font-size:clamp(28px,10vw,40px)}.premium-chat-page .empty-subtitle{margin-top:7px;font-size:10px;line-height:1.35}
+  .premium-chat-page .creation-paths{gap:7px;margin-top:10px}.premium-chat-page .creation-path{min-height:82px;padding:9px}.premium-chat-page .creation-path>span{width:31px;height:31px}.premium-chat-page .creation-path small{font-size:8px}
+  .premium-chat-page .composer-wrap{padding-top:5px}.premium-chat-page .premium-composer{box-shadow:0 12px 30px rgba(42,76,126,.14)}
+  .premium-chat-page .chat-toolbar{padding-inline:9px}.premium-chat-page .workspace-identity .eyebrow{display:none}.premium-chat-page .chat-toolbar-actions{gap:4px}.premium-chat-page .chat-toolbar-actions small{display:none}
+}
+
