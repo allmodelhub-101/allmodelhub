@@ -1648,3 +1648,51 @@ html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.globa
 }
 @media(max-width:620px){.premium-workstation-shell .app-topbar{grid-template-columns:minmax(96px,1fr) auto;gap:4px;padding-right:7px}.premium-workstation-shell .wallet-chip{width:40px;min-width:40px;padding:0}}
 
+/* 100% browser zoom / laptop viewport fit: keep every primary control visible. */
+@media(min-width:901px){
+  .premium-chat-page.is-welcome .chat-home{grid-template-rows:52px minmax(0,1fr)}
+  .premium-chat-page.is-welcome .popular-models{display:flex!important;height:52px;min-height:52px;overflow:hidden;padding:6px 14px;gap:10px}
+  .premium-chat-page.is-welcome .popular-models-label{font-size:10px;white-space:nowrap}
+  .premium-chat-page.is-welcome .popular-model-list button{height:34px;padding-inline:9px;gap:6px;border-radius:9px;font-size:10px}
+  .premium-chat-page.is-welcome .popular-model-list .model-brand.is-compact{width:21px;height:21px;border-radius:6px}.premium-chat-page.is-welcome .popular-model-list .model-brand.is-compact svg{width:14px;height:14px}
+  .premium-chat-page.is-welcome .popular-model-track{gap:7px}.premium-chat-page.is-welcome .popular-model-set{gap:6px}
+
+  .premium-workstation-shell .sidebar-scroll{min-height:0;overflow:hidden;padding:8px 0 2px}
+  .premium-workstation-shell .sidebar-nav{gap:1px}
+  .premium-workstation-shell .sidebar-link,.premium-workstation-shell .sidebar-signout{min-height:35px;padding-block:6px;font-size:12px}
+  .premium-workstation-shell .sidebar-group+.sidebar-group{margin-top:5px;padding-top:5px}
+  .premium-workstation-shell .sidebar-more{flex:none;margin-top:4px;padding-top:4px}
+  .premium-workstation-shell .sidebar-more>summary{min-height:35px;padding-block:6px;font-size:12px}
+  .premium-workstation-shell .sidebar-bottom{flex:none;margin-top:3px;padding-top:5px}
+}
+@media(min-width:901px) and (max-height:900px){
+  .premium-workstation-shell .sidebar-upgrade-card{display:none}
+  .premium-workstation-shell .sidebar-head{min-height:42px}
+  .premium-workstation-shell .sidebar-scroll{padding-top:5px}
+  .premium-workstation-shell .sidebar-link,.premium-workstation-shell .sidebar-signout{min-height:33px;padding-block:5px}
+  .premium-workstation-shell .sidebar-group+.sidebar-group{margin-top:3px;padding-top:3px}
+  .premium-workstation-shell .sidebar-more{margin-top:2px;padding-top:2px}
+  .premium-workstation-shell .sidebar-more>summary{min-height:33px;padding-block:5px}
+  .premium-workstation-shell .sidebar-profile{min-height:36px;padding-block:3px}
+
+  .premium-chat-page.is-welcome .chat-home-hero{width:min(900px,calc(100% - 34px));padding:14px 0 10px}
+  .premium-chat-page.is-welcome .empty-kicker{margin-bottom:10px;font-size:9px}
+  .premium-chat-page.is-welcome .empty-title{font-size:clamp(42px,4.6vw,60px)}
+  .premium-chat-page.is-welcome .empty-subtitle{margin-top:9px;font-size:12px;line-height:1.4}
+  .premium-chat-page.is-welcome .creation-paths{gap:10px;margin-top:15px}
+  .premium-chat-page.is-welcome .creation-path{min-height:98px;padding:11px;gap:5px}
+  .premium-chat-page.is-welcome .creation-path>span{width:34px;height:34px;border-radius:10px}
+  .premium-chat-page.is-welcome .creation-path strong{font-size:12px}.premium-chat-page.is-welcome .creation-path small{font-size:9px}
+  .premium-chat-page.is-welcome .composer-wrap{padding-block:6px 7px}
+  .premium-chat-page.is-welcome .premium-composer{padding-block:8px 7px}.premium-chat-page.is-welcome .composer textarea{min-height:40px;padding-block:5px}
+}
+@media(min-width:901px) and (max-height:720px){
+  .premium-chat-page.is-welcome .chat-home{grid-template-rows:46px minmax(0,1fr)}
+  .premium-chat-page.is-welcome .popular-models{height:46px;min-height:46px;padding-block:5px}
+  .premium-chat-page.is-welcome .popular-model-list button{height:31px}
+  .premium-chat-page.is-welcome .chat-home-hero{padding-block:8px 5px}
+  .premium-chat-page.is-welcome .empty-kicker{margin-bottom:6px}.premium-chat-page.is-welcome .empty-title{font-size:clamp(36px,4.2vw,52px)}
+  .premium-chat-page.is-welcome .empty-subtitle{margin-top:6px}.premium-chat-page.is-welcome .creation-paths{margin-top:9px}
+  .premium-chat-page.is-welcome .creation-path{min-height:82px;padding:8px}.premium-chat-page.is-welcome .creation-path small{display:none}
+}
+
