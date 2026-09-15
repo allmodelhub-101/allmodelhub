@@ -1713,3 +1713,37 @@ html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.globa
   .premium-workstation-shell .profile-copy strong{font-size:9px}.premium-workstation-shell .profile-copy small{font-size:7px}
 }
 
+/* Final welcome-page balance: no empty toolbar row and no oversized sidebar promo. */
+.premium-chat-page.is-welcome{grid-template-rows:minmax(0,1fr) auto!important}
+.premium-chat-page.is-welcome .chat-layout-body{min-height:0}
+.premium-chat-page.is-welcome .chat-home-hero{align-self:center}
+.premium-workstation-shell .sidebar-upgrade-card{display:none}
+
+/* On exceptionally tall desktops, surface a compact CTA without displacing navigation. */
+@media(min-width:901px) and (min-height:1050px){
+  .premium-workstation-shell .sidebar-upgrade-card{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:7px;margin:5px 0;padding:8px 9px;border-radius:12px}
+  .premium-workstation-shell .sidebar-upgrade-card>svg{width:17px;height:17px}
+  .premium-workstation-shell .sidebar-upgrade-card strong{font-size:9px;line-height:1.2}
+  .premium-workstation-shell .sidebar-upgrade-card>span{display:none}
+  .premium-workstation-shell .sidebar-upgrade-card>b{margin:0;padding:5px 7px;font-size:0}
+  .premium-workstation-shell .sidebar-upgrade-card>b svg{width:12px;height:12px}
+}
+
+@media(max-width:620px){
+  .premium-chat-page.is-welcome .chat-home-hero{width:calc(100% - 18px);padding-inline:0}
+  .premium-chat-page.is-welcome .creation-paths{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .premium-chat-page.is-welcome .composer-model-button{width:min(132px,34vw);max-width:min(132px,34vw);padding-inline:7px}
+  .premium-chat-page.is-welcome .model-selector-copy{min-width:0;overflow:hidden}
+  .premium-chat-page.is-welcome .model-selector-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+
+@media(max-width:380px){
+  .premium-chat-page.is-welcome .chat-home-hero{padding-block:8px 5px}
+  .premium-chat-page.is-welcome .empty-kicker{margin-bottom:6px;font-size:7px}
+  .premium-chat-page.is-welcome .empty-title{font-size:clamp(29px,10.5vw,37px)}
+  .premium-chat-page.is-welcome .empty-subtitle{margin-top:6px;font-size:8px}
+  .premium-chat-page.is-welcome .creation-paths{margin-top:8px;gap:6px}
+  .premium-chat-page.is-welcome .creation-path{min-height:76px;padding:8px}
+  .premium-chat-page.is-welcome .creation-path small{font-size:7px;line-height:1.3}
+}
+
