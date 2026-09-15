@@ -65,13 +65,14 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setCollapsed(window.localStorage.getItem("amh-sidebar-collapsed") === "true"), 0);
     return () => window.clearTimeout(timer);
   }, []);
   useEffect(() => {
-    const timer = window.setTimeout(() => setMobileMoreOpen(false), 0);
+    const timer = window.setTimeout(() => { setMobileMoreOpen(false); setMoreOpen(false); }, 0);
     return () => window.clearTimeout(timer);
   }, [pathname]);
   useEffect(() => {
@@ -80,6 +81,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
   }, [mobileMoreOpen]);
 
   function toggleCollapsed() {
+    setMoreOpen(false);
     setCollapsed((value) => {
       const next = !value;
       window.localStorage.setItem("amh-sidebar-collapsed", String(next));
@@ -98,7 +100,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
       <nav className="sidebar-scroll">
         <div className="sidebar-group"><div className="sidebar-section">{language==="ur"?"ورک اسپیس":language==="roman-ur"?"Workspace":"Workspace"}</div><div className="sidebar-nav">{primaryItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div>
         <div className="sidebar-group sidebar-quick-access"><div className="sidebar-section">{language==="ur"?"فوری رسائی":language==="roman-ur"?"Fori rasai":"Quick access"}</div><div className="sidebar-nav">{quickAccessItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div>
-        <details className="sidebar-more"><summary><DotsThree className="sidebar-icon" size={20} weight="bold" aria-hidden="true" /><span className="sidebar-label">{language==="ur"?"مزید ٹولز":language==="roman-ur"?"Mazeed tools":"More tools"}</span></summary><div className="sidebar-more-menu"><div className="sidebar-more-title"><span>{language==="ur"?"ورک اسپیس ٹولز":language==="roman-ur"?"Workspace tools":"Workspace tools"}</span><small>{language==="ur"?"انتظام، موازنہ اور ترتیب":language==="roman-ur"?"Manage, muqabla aur settings":"Manage, compare and configure"}</small></div><div className="sidebar-more-grid">{moreItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div></details>
+        <details className="sidebar-more" open={moreOpen} onToggle={(event) => setMoreOpen(event.currentTarget.open)}><summary><DotsThree className="sidebar-icon" size={20} weight="bold" aria-hidden="true" /><span className="sidebar-label">{language==="ur"?"مزید ٹولز":language==="roman-ur"?"Mazeed tools":"More tools"}</span></summary><div className="sidebar-more-menu"><div className="sidebar-more-title"><span>{language==="ur"?"ورک اسپیس ٹولز":language==="roman-ur"?"Workspace tools":"Workspace tools"}</span><small>{language==="ur"?"انتظام، موازنہ اور ترتیب":language==="roman-ur"?"Manage, muqabla aur settings":"Manage, compare and configure"}</small></div><div className="sidebar-more-grid">{moreItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div></details>
         {isAdmin && <div className="sidebar-group"><div className="sidebar-nav"><Link className={`sidebar-link ${isActive(pathname, "/admin") ? "active" : ""}`} href="/admin" title={collapsed ? "Admin Control Center" : undefined}><ShieldCheck className="sidebar-icon" size={19} aria-hidden="true" /><span className="sidebar-label">Admin Control Center</span></Link></div></div>}
       </nav>
       {pathname === "/chat" && !collapsed && <Link href="/models" className="sidebar-upgrade-card"><Sparkle size={21} weight="fill" aria-hidden="true" /><strong>Unlock more possibilities</strong><span>Explore every available AI model in one workspace.</span><b>Explore models <CaretRight size={13} weight="bold" /></b></Link>}

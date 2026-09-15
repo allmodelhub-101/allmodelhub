@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
+import { ModelBrand } from "@/components/model-brand";
 import { PremiumSelect } from "@/components/premium-select";
 import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
 
@@ -324,7 +325,7 @@ export function ChatClient() {
     window.setTimeout(() => textareaRef.current?.focus(), 0);
   }
 
-  return <div className={`chat-page premium-chat-page ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
+  return <div className={`chat-page premium-chat-page ${messages.length > 0 ? "has-messages" : "is-welcome"} ${pickerOpen ? "picker-open" : ""} ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
     {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
     {messages.length > 0 && <header className="chat-toolbar premium-toolbar">
       <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
@@ -339,12 +340,12 @@ export function ChatClient() {
         {messages.length === 0 ? <div className="chat-home">
           <nav className="popular-models" aria-label="Popular AI models">
             <span className="popular-models-label">Popular models</span>
-            <div className="popular-model-list">
+            <div className="popular-model-list"><div className="popular-model-track">
               {popularModels.map((model, index) => <button type="button" className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
-                <span className={`model-monogram tone-${index % 6}`} aria-hidden="true">{model.name.slice(0, 1).toUpperCase()}</span><b>{model.name}</b>
+                <ModelBrand modelName={model.name} provider={model.providerFamily} compact /><b>{model.name}</b>
               </button>)}
               <button type="button" className="popular-more" onClick={() => setPickerOpen(true)}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
-            </div>
+            </div></div>
           </nav>
           <section className="chat-home-hero" aria-labelledby="chat-home-title">
             <span className="empty-kicker">One prompt. Endless possibilities.</span>
@@ -379,7 +380,7 @@ export function ChatClient() {
             <button type="button" className={`composer-icon-button voice-input-button ${voiceActive ? "is-recording" : ""}`} onClick={startVoiceInput} aria-label={voiceActive ? "Stop voice typing" : "Start voice typing"} title={voiceActive ? "Stop voice typing" : "Voice typing"}><Microphone size={18} weight={voiceActive ? "fill" : "regular"} aria-hidden="true" /></button>
             {voiceActive && <div className="voice-recording-status" role="status"><i/><span>Listening</span><time>{Math.floor(voiceSeconds / 60)}:{String(voiceSeconds % 60).padStart(2,"0")}</time><button type="button" onClick={cancelVoiceInput}>Cancel</button></div>}
             <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
-              <span className="model-selector-copy"><small>Choose AI model</small><strong>{exact?.name || "Auto (best match)"}</strong></span><CaretDown size={13} weight="bold" aria-hidden="true" />
+              <ModelBrand modelName={exact?.name || "Auto"} provider={exact?.providerFamily} compact /><span className="model-selector-copy"><small>Choose AI model</small><strong>{exact?.name || "Auto (best match)"}</strong></span><CaretDown size={13} weight="bold" aria-hidden="true" />
             </button>
           <details className="composer-settings"><summary title="Open generation controls"><SlidersHorizontal size={15} aria-hidden="true" /><span>Controls</span><small>Project, mode &amp; privacy</small></summary><div className="composer-settings-panel">
             <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
