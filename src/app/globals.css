@@ -1599,3 +1599,52 @@ html:not([data-theme="light"]) .premium-chat-page .chat-toolbar small{color:#9aa
   .premium-chat-page .chat-toolbar{padding-inline:9px}.premium-chat-page .workspace-identity .eyebrow{display:none}.premium-chat-page .chat-toolbar-actions{gap:4px}.premium-chat-page .chat-toolbar-actions small{display:none}
 }
 
+/* One workspace shell everywhere — the chat chrome is the visual source of truth. */
+@media(min-width:901px){
+  .premium-workstation-shell{grid-template-columns:232px minmax(0,1fr);background:#f7fbff}
+  .premium-workstation-shell:has(.app-sidebar.is-collapsed){grid-template-columns:72px minmax(0,1fr)}
+  .premium-workstation-shell .app-sidebar{width:232px;max-width:232px;padding:14px;background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(248,251,255,.97));border-right:1px solid #e6edf6;box-shadow:10px 0 42px rgba(53,92,147,.045);backdrop-filter:blur(24px)}
+  .premium-workstation-shell .app-sidebar.is-collapsed{width:72px;max-width:72px;padding-inline:9px}
+  .premium-workstation-shell .sidebar-head{min-height:47px}
+  .premium-workstation-shell .sidebar-brand{gap:12px;padding:2px 6px;color:#10182b;font-size:18px;letter-spacing:-.035em}
+  .premium-workstation-shell .brand-mark{width:39px;height:39px;border-radius:13px;background:radial-gradient(circle at 32% 25%,#effeff,#59d8ff 30%,#5c7dff 66%,#754dff);box-shadow:0 10px 24px rgba(63,126,255,.25)}
+  .premium-workstation-shell .brand-mark:after{inset:9px;border-color:rgba(255,255,255,.8);box-shadow:inset 0 0 0 1px rgba(20,75,170,.18)}
+  .premium-workstation-shell .sidebar-collapse{border:0;background:#f2f6fd;color:#65738b}
+  .premium-workstation-shell .sidebar-scroll{padding:12px 0 4px;overflow:hidden}
+  .premium-workstation-shell .sidebar-section{display:none}
+  .premium-workstation-shell .sidebar-group+.sidebar-group{margin-top:8px;padding-top:8px;border-top:1px solid #edf1f7}
+  .premium-workstation-shell .sidebar-nav{gap:2px}
+  .premium-workstation-shell .sidebar-link,.premium-workstation-shell .sidebar-signout{min-height:39px;padding:8px 11px;border-radius:11px;color:#536078;font-size:13px;font-weight:650}
+  .premium-workstation-shell .sidebar-link.active{color:#075ee8;border-color:transparent;background:linear-gradient(100deg,#e8e8ff,#dff4ff);box-shadow:inset 4px 0 0 #8b76ff,0 9px 22px rgba(68,129,233,.08)}
+  .premium-workstation-shell .sidebar-link.active .sidebar-icon{color:#066ee9}
+  .premium-workstation-shell .sidebar-more{margin-top:6px;padding-top:6px;border-top:1px solid #edf1f7}
+  .premium-workstation-shell .sidebar-more>summary{min-height:39px;padding:8px 11px;color:#536078;font-size:13px;font-weight:650}
+  .premium-workstation-shell .sidebar-bottom{margin-top:4px;padding-top:7px;border-color:#edf1f7}
+  .premium-workstation-shell .sidebar-profile{min-height:42px;padding:5px 8px}.premium-workstation-shell .profile-avatar{width:32px;height:32px}.premium-workstation-shell .profile-copy strong{color:#11182a;font-size:11px}.premium-workstation-shell .profile-copy small{color:#78859b;font-size:9px}
+  .premium-workstation-shell .sidebar-more-menu{left:232px;bottom:68px}.premium-workstation-shell .app-sidebar.is-collapsed .sidebar-more-menu{left:72px}
+
+  .premium-workstation-shell .app-main{grid-template-rows:64px minmax(0,1fr);background:#f8fbff}
+  .premium-workstation-shell .app-topbar{height:64px;min-height:64px;grid-template-columns:176px minmax(260px,1fr) auto;gap:18px;padding:0 20px;background:rgba(255,255,255,.91);border-color:#e6edf6;box-shadow:0 5px 24px rgba(42,84,140,.05);backdrop-filter:blur(22px)}
+  .premium-workstation-shell .global-project{width:176px;height:40px;border-color:#e2e9f3;background:#fff;color:#1c263a}
+  .premium-workstation-shell .command-trigger{height:40px;max-width:670px;justify-self:center;border-color:#e3eaf4;background:#f8faff;color:#6c7890}
+  .premium-workstation-shell .command-trigger span{font-weight:500}
+  .premium-workstation-shell .topbar-actions{display:flex;gap:8px;min-width:0}
+  .premium-workstation-shell :is(.generation-trigger,.topbar-icon-trigger,.wallet-chip,.theme-toggle){height:40px;min-height:40px;border-color:#e3eaf4;background:#fff;color:#111a2d}
+  .premium-workstation-shell .generation-trigger{width:auto;min-width:108px;padding:0 14px;font-size:12px}
+  .premium-workstation-shell .wallet-chip{max-width:none;min-width:145px;padding-inline:13px;font-size:11px;background:linear-gradient(100deg,#f4fbff,#eef6ff)}
+  .premium-workstation-shell .wallet-chip-live small{display:none}.premium-workstation-shell :is(.topbar-icon-trigger,.theme-toggle){width:40px}.premium-workstation-shell .topbar-profile{height:40px}
+}
+html:not([data-theme="light"]) .premium-workstation-shell{background:#08101c}
+html:not([data-theme="light"]) .premium-workstation-shell .app-sidebar{background:linear-gradient(180deg,#0d1725,#09111d);border-color:#1f2b3d}
+html:not([data-theme="light"]) .premium-workstation-shell .app-sidebar :is(.sidebar-brand,.profile-copy strong){color:#f2f6ff}
+html:not([data-theme="light"]) .premium-workstation-shell .app-sidebar :is(.sidebar-link,.sidebar-more>summary,.sidebar-signout){color:#9ba9bc}
+html:not([data-theme="light"]) .premium-workstation-shell .app-main{background:#08101c}
+html:not([data-theme="light"]) .premium-workstation-shell .app-topbar{background:rgba(10,18,30,.92);border-color:#202d40}
+html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.global-project,.command-trigger,.generation-trigger,.topbar-icon-trigger,.wallet-chip,.theme-toggle){background:#111c2b;border-color:#27364a;color:#eaf1ff}
+@media(max-width:900px){
+  .premium-workstation-shell .app-main{grid-template-rows:58px minmax(0,1fr);padding-bottom:64px}
+  .premium-workstation-shell .app-topbar{height:58px;min-height:58px;grid-template-columns:minmax(120px,1fr) auto;gap:6px;padding:0 8px 0 64px}
+  .premium-workstation-shell .global-project{width:min(180px,100%);height:40px}.premium-workstation-shell .topbar-actions{gap:4px}.premium-workstation-shell .topbar-profile{display:none}
+}
+@media(max-width:620px){.premium-workstation-shell .app-topbar{grid-template-columns:minmax(96px,1fr) auto;gap:4px;padding-right:7px}.premium-workstation-shell .wallet-chip{width:40px;min-width:40px;padding:0}}
+
