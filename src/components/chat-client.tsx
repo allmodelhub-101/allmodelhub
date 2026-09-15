@@ -341,10 +341,12 @@ export function ChatClient() {
           <nav className="popular-models" aria-label="Popular AI models">
             <span className="popular-models-label">Popular models</span>
             <div className="popular-model-list"><div className="popular-model-track">
-              {popularModels.map((model, index) => <button type="button" className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
-                <ModelBrand modelName={model.name} provider={model.providerFamily} compact /><b>{model.name}</b>
-              </button>)}
-              <button type="button" className="popular-more" onClick={() => setPickerOpen(true)}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
+              {[0, 1].map((copy) => <div className="popular-model-set" aria-hidden={copy === 1 ? "true" : undefined} key={copy}>
+                {popularModels.map((model) => <button type="button" tabIndex={copy === 1 ? -1 : undefined} className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
+                  <ModelBrand modelName={model.name} provider={model.providerFamily} compact /><b>{model.name}</b>
+                </button>)}
+                <button type="button" tabIndex={copy === 1 ? -1 : undefined} className="popular-more" onClick={() => setPickerOpen(true)}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
+              </div>)}
             </div></div>
           </nav>
           <section className="chat-home-hero" aria-labelledby="chat-home-title">
