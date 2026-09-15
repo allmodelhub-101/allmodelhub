@@ -1751,6 +1751,7 @@ html:not([data-theme="light"]) .premium-workstation-shell .app-topbar :is(.globa
 .premium-workstation-shell .sidebar-upgrade-card{display:none!important}
 .premium-chat-page.is-welcome{grid-template-rows:minmax(0,1fr) auto!important}
 .premium-chat-page.is-welcome .chat-layout-body{min-height:0;overflow:hidden}
+.premium-chat-page.is-welcome .chat-messages{grid-template-rows:minmax(0,1fr) 0;gap:0}
 .premium-chat-page.is-welcome .chat-home{height:100%;min-height:0;grid-template-rows:auto minmax(0,1fr)}
 .premium-chat-page.is-welcome .chat-home-hero{align-self:end;margin-inline:auto;padding-bottom:clamp(12px,2.2vh,24px)}
 .premium-chat-page.is-welcome .composer-wrap{position:relative;bottom:auto}
