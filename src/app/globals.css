@@ -1873,6 +1873,16 @@ html:not([data-theme="light"]) .image-workspace .image-prompt-dock form{backgrou
 @media(max-width:1100px){.hero-art{display:none}.image-studio-hero .hero-copy{width:100%}.inspiration-grid{grid-template-columns:repeat(4,1fr)}.inspiration-grid .inspiration-crop:nth-child(n+5){display:none}}
 @media(max-width:700px){.image-workspace{padding:10px 10px 88px}.image-workspace .image-canvas-stage{min-height:0;padding:54px 0 14px}.image-workspace .image-empty-state.image-studio-hero{min-height:0}.image-studio-hero .hero-copy{width:100%}.image-studio-hero h1{font-size:42px}.image-studio-hero .hero-copy>p{font-size:12px}.desktop-only{display:none}.image-studio-hero .image-creation-path{margin-top:18px;gap:6px}.image-studio-hero .image-creation-path i{width:18px}.image-studio-hero .direction-starters{display:grid;grid-template-columns:repeat(3,1fr);width:100%;overflow:visible;padding:0;gap:6px}.image-studio-hero .direction-starters button{width:auto;min-width:0;min-height:62px;padding:8px}.image-studio-hero .direction-starters button>svg{width:28px;height:28px}.image-studio-hero .direction-starters strong{font-size:10px}.image-workspace .image-prompt-dock{margin-top:8px}.image-workspace .image-prompt-label{display:flex}.image-workspace .image-prompt-label span{display:none}.image-workspace .image-prompt-dock textarea{min-height:90px}.image-workspace .image-prompt-footer{display:grid}.image-workspace .image-compose-tools{display:grid;grid-template-columns:1fr 1fr}.image-workspace .compose-tool,.image-workspace .compose-tool.model-tool,.image-workspace .compose-tool.settings-tool{display:flex;width:auto;max-width:none;min-height:52px}.image-workspace .image-generate-button{width:100%;min-width:0}.image-inspiration{display:none}}
 @media(prefers-reduced-motion:reduce){.hero-art,.image-studio-hero .direction-starters button{animation:none!important;transition:none!important}}
+
+/* Image Studio viewport fit: composer is primary; inspiration follows below. */
+.app-content:has(.image-workspace){width:100%;max-width:none!important;min-width:0;overflow-x:hidden!important}
+.image-workspace{width:100%;max-width:none;min-width:0;overflow-x:hidden!important}
+.image-workspace .image-canvas-stage{width:100%;min-width:0;min-height:375px;padding-block:62px 16px}
+.image-workspace .image-empty-state.image-studio-hero{min-height:292px}
+.image-workspace .image-prompt-dock{width:100%;max-width:none;margin:0 0 20px}
+.image-inspiration{width:100%;min-width:0}
+.inspiration-grid{min-width:0;grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(max-height:820px) and (min-width:901px){.image-workspace{padding-top:12px}.image-workspace .image-canvas-stage{min-height:335px;padding-block:54px 10px}.image-workspace .image-empty-state.image-studio-hero{min-height:268px}.image-studio-hero h1{font-size:clamp(44px,4.5vw,66px)}.image-studio-hero .direction-starters{margin-top:16px}.image-workspace .image-prompt-dock form{padding-block:12px}.image-workspace .image-prompt-dock textarea{min-height:58px}}
 @media(min-width:901px){.premium-workstation-shell .app-content:has(.chat-page) .chat-page{height:calc(100dvh - 64px)}}
 .premium-chat-page.is-welcome{grid-template-rows:minmax(0,1fr) auto!important}
 .premium-chat-page.is-welcome .chat-layout-body{min-height:0;overflow:hidden}
