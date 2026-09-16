@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ArrowClockwise, CaretDown, CheckCircle, DownloadSimple, LinkSimple, MagicWand, MusicNote, PaperPlaneTilt, VideoCamera } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
+import videoStyles from "@/components/video-studio.module.css";
 
 type Modality = "image"|"video"|"audio";
 type Retail = { flatCredits?: number; perSecondCredits?: number };
@@ -111,7 +112,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
         <button className="btn btn-primary media-submit" disabled={busy||!modelId||!prompt.trim()||(expensive&&!confirmed)}><PaperPlaneTilt weight="fill" aria-hidden="true" />{busy?"Submitting…":`Generate ${modality}`}</button>
         {error&&<div className="soft-card small" style={{padding:12,color:"var(--danger)"}}>{error}</div>}
       </form>
-      <section className="studio-panel studio-result creation-canvas">
+      <section className={`studio-panel studio-result creation-canvas ${modality==="video"?videoStyles.root:""}`}>
         {modality==="video"&&<div className="video-mode-tabs" role="tablist" aria-label="Video workflow"><button type="button" className={!referenceFileIds.length?"active":""} role="tab" aria-selected={!referenceFileIds.length}>Text to Video</button><button type="button" className={referenceFileIds.length?"active":""} role="tab" aria-selected={Boolean(referenceFileIds.length)} disabled={maxReferences<1}>Image to Video</button><button type="button" disabled title="Storyboard is not available for the selected model">Storyboard</button><button type="button" disabled title="Advanced Canvas is not available for the selected model">Advanced Canvas</button></div>}
         <div className="studio-stage-label"><span className={activeJob?"live":""}/><b>{job?.status==="completed"?"Result ready":activeJob?"Generating now":"Preview stage"}</b><small>{model?.name||"Choose a model"}</small></div>
         {!job&&<div className="studio-empty"><div className="studio-empty-glyph">{studioIcon}</div><h2>{modality==="video"?"Create your first video":audioMode==="music"?"Give your story a soundtrack.":"Create a sound from words."}</h2><p>{modality==="video"?"Start from words or animate an image. Choose the model, describe the motion, and review the cost before creating.":subtitle}</p>{modality==="video"?<div className="video-stage-features"><span>Text to video</span><span>Image to video</span><span>Flexible canvas</span></div>:<span>Model → Prompt → Generate</span>}</div>}
