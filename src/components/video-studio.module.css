@@ -74,3 +74,23 @@
 @media(max-width:620px){:global(.video-workspace):has(.root) :global(.workspace-heading){border-radius:16px;padding:12px!important}:global(.video-workspace):has(.root) :global(.workspace-heading):after{display:none}:global(.video-workspace):has(.root) :global(.media-studio-heading h1){width:auto}.root{min-height:330px}.root:after{width:230px;height:230px}.video-inspiration{display:none}.root :global(.studio-empty){transform:translateY(12px)}}
 @media(prefers-reduced-motion:reduce){:global(.video-workspace):has(.root) :global(.media-studio-mark):after,.root:after,.root :global(.studio-empty-glyph){animation:none!important}}
 
+/* Video Studio: compact production workspace, using the shell's normal scroll surface. */
+:global(.video-workspace):has(.root){padding:14px clamp(14px,2vw,26px) 28px!important}
+:global(.video-workspace):has(.root) :global(.workspace-heading){min-height:96px;padding:14px 18px!important;border-radius:18px}
+:global(.video-workspace):has(.root) :global(.media-studio-mark){width:44px;height:44px;border-radius:13px}
+:global(.video-workspace):has(.root) :global(.media-studio-heading h1){font-size:clamp(28px,3vw,42px)}
+:global(.video-workspace):has(.root) :global(.media-studio-heading p){font-size:12px}
+:global(.video-workspace):has(.root) :global(.video-workflow-guide){padding:8px 11px;border-radius:14px}
+:global(.video-workspace):has(.root) :global(.creation-studio-layout){grid-template-columns:minmax(330px,.9fr) minmax(430px,1.1fr)!important;gap:12px;margin-top:12px}
+:global(.video-workspace):has(.root) :global(.inspector-panel){gap:10px;padding:14px!important;border-radius:16px;overflow:visible!important}
+:global(.video-workspace):has(.root) :global(.video-selected-model),:global(.video-workspace):has(.root) :global(.video-panel-scroll-hint){display:none}
+:global(.video-workspace):has(.root) :global(.prompt-editor){min-height:82px;max-height:120px}
+:global(.video-workspace):has(.root) :global(.advanced-grid){grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+:global(.video-workspace):has(.root) :global(.confirm-box){margin-top:2px;padding:10px 11px;font-size:10px;line-height:1.4}
+:global(.video-workspace):has(.root) :global(.media-submit){min-height:44px}
+.root{min-height:0!important;height:auto!important;align-content:start;padding:66px 14px 14px!important;border-radius:16px!important;overflow:visible!important}
+.root:after{display:none}.root :global(.video-mode-tabs){position:relative;inset:auto;grid-template-columns:repeat(4,minmax(0,1fr));padding:4px;margin-bottom:10px}.root :global(.studio-stage-label){position:relative;top:auto;left:auto;right:auto;margin:0 4px 8px}.root :global(.studio-empty){min-height:250px;padding:18px 16px}.root :global(.studio-empty-glyph){width:54px;height:54px;margin-bottom:12px}.root :global(.studio-empty h2){font-size:clamp(26px,3.1vw,38px)}.root :global(.studio-empty p){max-width:460px}.video-inspiration{position:relative;inset:auto;margin-top:10px;padding:10px;border-radius:13px}.video-inspiration>div{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1100px){:global(.video-workspace):has(.root) :global(.creation-studio-layout){grid-template-columns:minmax(300px,.92fr) minmax(360px,1.08fr)!important}:global(.video-workspace):has(.root) :global(.advanced-grid){grid-template-columns:repeat(2,minmax(0,1fr))}.root :global(.video-mode-tabs button){font-size:8px}}
+@media(max-width:900px){:global(.video-workspace):has(.root){padding:12px 12px 86px!important}:global(.video-workspace):has(.root) :global(.workspace-heading){min-height:0}.root{grid-row:2!important;min-height:0!important}.root :global(.studio-empty){min-height:230px}.video-inspiration{margin-top:8px}}
+@media(max-width:620px){:global(.video-workspace):has(.root) :global(.workspace-heading){padding:12px!important}:global(.video-workspace):has(.root) :global(.media-studio-heading h1){font-size:28px}:global(.video-workspace):has(.root) :global(.video-workflow-guide){display:none!important}:global(.video-workspace):has(.root) :global(.advanced-grid){grid-template-columns:1fr}.root{padding:10px!important}.root :global(.video-mode-tabs){grid-template-columns:1fr 1fr}.root :global(.video-mode-tabs button:nth-child(n+3)){display:none}.root :global(.studio-empty){min-height:220px;padding:14px 8px}.video-inspiration{display:grid!important}.video-inspiration>div{display:flex;overflow-x:auto}.video-inspiration button{flex:0 0 145px}}
+
