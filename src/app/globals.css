@@ -1950,4 +1950,7 @@ html:not([data-theme="light"]) .image-workspace .image-prompt-dock form{backgrou
 
 /* Keep the authenticated shell's scroll surface sized to its grid track. */
 .app-content{width:100%;max-width:none;min-width:0}
+.premium-chat-page.is-welcome{grid-template-rows:minmax(0,1fr) auto!important;align-content:stretch;padding-top:0}.premium-chat-page.is-welcome .chat-layout-body{height:auto;min-height:0;overflow:auto}.premium-chat-page.is-welcome .chat-messages{display:grid;height:100%;min-height:100%;grid-template-rows:minmax(0,1fr) 0;gap:0}.premium-chat-page.is-welcome .chat-home{display:grid;height:100%;min-height:100%;grid-template-rows:auto minmax(0,1fr)}.premium-chat-page.is-welcome .popular-models{position:static}.premium-chat-page.is-welcome .chat-home-hero{align-self:end;margin-inline:auto;padding-bottom:clamp(14px,2vh,28px)}.premium-chat-page.is-welcome .composer-wrap{padding-bottom:clamp(36px,7vh,76px)}
+@media(max-width:620px){.premium-chat-page.is-welcome .chat-layout-body{overflow:auto}.premium-chat-page.is-welcome .chat-home-hero{padding-bottom:7px}.premium-chat-page.is-welcome .composer-wrap{padding:7px 8px max(74px,calc(env(safe-area-inset-bottom) + 69px))}}
+@media(max-width:900px){.premium-chat-page.is-welcome .chat-home-hero{align-self:center}}
 .workspace-modes button{color:var(--muted);font-size:11px;font-weight:800;cursor:pointer}
