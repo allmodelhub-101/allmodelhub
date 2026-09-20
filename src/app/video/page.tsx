@@ -1,4 +1,4 @@
-import { AppShell } from "@/components/app-shell";import { MediaStudio } from "@/components/media-studio";import { FeatureUnavailable } from "@/components/feature-unavailable";import { isFeatureEnabled } from "@/lib/feature-flags";export const dynamic="force-dynamic";export default async function Page(){const enabled=await isFeatureEnabled("video_studio");return <AppShell>{enabled?<MediaStudio modality="video" title="Create cinematic videos" subtitle="Create AI video with explicit cost confirmation, wallet reservations and asynchronous jobs designed for expensive generation."/>:<FeatureUnavailable title="Video Studio"/>}</AppShell>}
+import { AppShell } from "@/components/app-shell";import { VideoStudio } from "@/components/video-studio";import { FeatureUnavailable } from "@/components/feature-unavailable";import { isFeatureEnabled } from "@/lib/feature-flags";export const dynamic="force-dynamic";export default async function Page(){const enabled=await isFeatureEnabled("video_studio");return <AppShell>{enabled?<VideoStudio/>:<FeatureUnavailable title="Video Studio"/>}</AppShell>}
 
 
 
