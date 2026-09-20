@@ -2,7 +2,7 @@
 
 import type { Icon } from "@phosphor-icons/react";
 import {
-  ArrowsLeftRight, Bell, CaretLeft, CaretRight, ChatCircle, ClockCounterClockwise,
+  ArrowsLeftRight, Bell, CaretLeft, CaretRight, ChatCircle, ClockCounterClockwise, Coins,
   DotsThree, File, Folder, GearSix, ImageSquare, Lifebuoy, Receipt,
   ShieldCheck, SignOut, Sparkle, SquaresFour, VideoCamera, Wallet, Waveform, X
 } from "@phosphor-icons/react";
@@ -100,6 +100,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
       <nav className="sidebar-scroll">
         <div className="sidebar-group"><div className="sidebar-section">{language==="ur"?"ورک اسپیس":language==="roman-ur"?"Workspace":"Workspace"}</div><div className="sidebar-nav">{primaryItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div>
         <div className="sidebar-group sidebar-quick-access"><div className="sidebar-section">{language==="ur"?"فوری رسائی":language==="roman-ur"?"Fori rasai":"Quick access"}</div><div className="sidebar-nav">{quickAccessItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div>
+        <Link className="sidebar-credit-cta" href="/wallet" title={collapsed ? "Add credits" : undefined} aria-label="Add credits in Wallet"><span className="sidebar-credit-icon"><Coins size={18} weight="fill" aria-hidden="true" /></span><span className="sidebar-credit-copy"><strong>Keep creating</strong><small>Top up credits anytime.</small></span><b>Add credits</b></Link>
         <details className="sidebar-more" open={moreOpen} onToggle={(event) => setMoreOpen(event.currentTarget.open)}><summary><DotsThree className="sidebar-icon" size={20} weight="bold" aria-hidden="true" /><span className="sidebar-label">{language==="ur"?"مزید ٹولز":language==="roman-ur"?"Mazeed tools":"More tools"}</span></summary><div className="sidebar-more-menu"><div className="sidebar-more-title"><span>{language==="ur"?"ورک اسپیس ٹولز":language==="roman-ur"?"Workspace tools":"Workspace tools"}</span><small>{language==="ur"?"انتظام، موازنہ اور ترتیب":language==="roman-ur"?"Manage, muqabla aur settings":"Manage, compare and configure"}</small></div><div className="sidebar-more-grid">{moreItems.map((item) => <NavLink item={item} pathname={pathname} collapsed={collapsed} language={language} key={item.href} />)}</div></div></details>
         {isAdmin && <div className="sidebar-group"><div className="sidebar-nav"><Link className={`sidebar-link ${isActive(pathname, "/admin") ? "active" : ""}`} href="/admin" title={collapsed ? "Admin Control Center" : undefined}><ShieldCheck className="sidebar-icon" size={19} aria-hidden="true" /><span className="sidebar-label">Admin Control Center</span></Link></div></div>}
       </nav>
