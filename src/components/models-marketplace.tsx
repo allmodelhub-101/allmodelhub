@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ChatCircle, ImageSquare, MagnifyingGlass, SquaresFour, VideoCamera, Waveform } from "@phosphor-icons/react";
+import { CaretDown, ChatCircle, ImageSquare, MagnifyingGlass, SlidersHorizontal, SquaresFour, VideoCamera, Waveform } from "@phosphor-icons/react";
 import { ModelBrand } from "@/components/model-brand";
 import type { CatalogModel } from "@/lib/models";
 import { creditsFromUsd } from "@/lib/pricing";
@@ -93,17 +93,16 @@ export function ModelsMarketplace({ models, fxRate }: Props) {
     <section className="marketplace-controls glass" aria-label="Browse models">
       <div className="model-search-row">
         <label className="model-search"><MagnifyingGlass size={17} aria-hidden="true" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search models, providers or capabilities…" aria-label="Search models" /></label>
-        <label className="model-sort"><span>Sort</span><select value={sort} onChange={(event) => setSort(event.target.value as Sort)} aria-label="Sort models"><option value="recommended">Recommended</option><option value="price">Lowest estimated cost</option><option value="name">Name</option></select></label>
+        <label className="model-sort"><span className="model-sort-label"><SlidersHorizontal aria-hidden="true" weight="bold" /><small>Sort by</small></span><select value={sort} onChange={(event) => setSort(event.target.value as Sort)} aria-label="Sort models"><option value="recommended">Recommended</option><option value="price">Lowest estimated cost</option><option value="name">Name</option></select><CaretDown className="model-sort-caret" aria-hidden="true" weight="bold" /></label>
       </div>
       <div className="marketplace-filter-row">
         <div className="filter-group" role="group" aria-label="Filter by capability"><span className="filter-label">Capability</span>{modalities.map((item) => <button type="button" key={item} className={`mode-pill ${modality === item ? "active" : ""}`} aria-pressed={modality === item} onClick={() => setModality(item)}>{titleCase(item)}</button>)}</div>
-        <div className="filter-group" role="group" aria-label="Filter by tier"><span className="filter-label">Tier</span>{tiers.map((item) => <button type="button" key={item} className={`mode-pill ${tier === item ? "active" : ""}`} aria-pressed={tier === item} onClick={() => setTier(item)}>{titleCase(item)}</button>)}</div>
+        <div className="marketplace-tier-cluster"><div className="filter-group" role="group" aria-label="Filter by tier"><span className="filter-label">Tier</span>{tiers.map((item) => <button type="button" key={item} className={`mode-pill ${tier === item ? "active" : ""}`} aria-pressed={tier === item} onClick={() => setTier(item)}>{titleCase(item)}</button>)}</div><span className="marketplace-result-count" aria-live="polite">{filtered.length} models</span></div>
       </div>
       <div className="marketplace-stats marketplace-stats-mobile">
         <HeroStat icon={SquaresFour} value={models.length} label="models" detail="in one workspace" />
         <HeroStat icon={SquaresFour} value={capabilityCount} label="capabilities" detail="text, image, video, audio" />
       </div>
-      <span className="marketplace-result-count" aria-live="polite">{filtered.length} models</span>
     </section>
 
     {filtered.length > 0 ? <div className="model-grid" aria-live="polite">{filtered.map((model) => <ModelCard key={model.id} model={model} href={hrefFor(model)} />)}</div> : <div className="card marketplace-empty"><h2>No models match these filters</h2><p className="muted">Try another capability, tier, or search term.</p></div>}
