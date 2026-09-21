@@ -2141,7 +2141,7 @@ body .app-content:has(.notifications-page){padding:0;overflow:auto;background:ra
 
   .premium-workstation-shell .app-topbar { grid-template-columns:minmax(120px,1fr) auto;gap:6px;padding-right:max(8px,env(safe-area-inset-right)); }
   .premium-workstation-shell .topbar-actions { gap:4px;min-width:0; }
-  .premium-workstation-shell .topbar-icon-trigger,.premium-workstation-shell .topbar-profile { display:grid;flex:0 0 36px; }
+  .premium-workstation-shell .topbar-icon-trigger,.premium-workstation-shell .topbar-actions .theme-toggle,.premium-workstation-shell .topbar-profile { display:grid;flex:0 0 36px; }
   .premium-workstation-shell .topbar-profile { place-items:center;padding:0; }
 }
 @media (max-width:620px) {
