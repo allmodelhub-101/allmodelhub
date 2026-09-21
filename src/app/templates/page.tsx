@@ -1,1 +1,14 @@
-import Link from "next/link";import { AppShell } from "@/components/app-shell";import { requireUser } from "@/lib/auth";import { createAdminClient } from "@/lib/supabase/admin";export const dynamic="force-dynamic";export default async function Templates(){await requireUser();const a=createAdminClient();const {data:t}=await a.from("prompt_templates").select("id,slug,category,title,description,prompt,language,pakistan_focused").eq("active",true).order("category");return <AppShell><div className="page-head"><div><div className="kicker">Pakistan workflow library</div><h1 className="page-title">Start with a proven workflow.</h1><p className="muted">Local-first prompts for freelancers, creators, students, marketers and businesses.</p></div></div><div className="feature-grid">{t?.map(x=><article className="card feature-card compact-feature" key={x.id}><div className="kicker">{x.category}</div><h3>{x.title}</h3><p>{x.description}</p><Link className="btn" href={`/chat?template=${encodeURIComponent(x.prompt)}`}>Use template →</Link></article>)}</div></AppShell>}
+import { AppShell } from "@/components/app-shell";
+import { TemplateLibrary } from "@/components/template-library";
+import type { PromptTemplate } from "@/components/template-library";
+import { requireUser } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
+
+export const dynamic = "force-dynamic";
+
+export default async function Templates() {
+  await requireUser();
+  const admin = createAdminClient();
+  const { data } = await admin.from("prompt_templates").select("id,slug,category,title,description,prompt,language,pakistan_focused").eq("active", true).order("category");
+  return <AppShell><TemplateLibrary templates={(data || []) as PromptTemplate[]} /></AppShell>;
+}
