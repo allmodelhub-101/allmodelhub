@@ -32,7 +32,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Audio generation is currently unavailable." }, { status: 503 });
   }
 
-  const limit = await enforceRateLimit(`tts:${user.id}`);
+  const limit = await enforceRateLimit(`tts:${user.id}`, "tts");
+  if (limit.unavailable) return NextResponse.json({ error: "Request protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many TTS requests." }, { status: 429 });
 
   const parsed = schema.safeParse(await request.json().catch(() => null));

@@ -24,7 +24,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Prompt enhancement is currently unavailable." }, { status: 503 });
   }
 
-  const rate = await enforceRateLimit(`enhance:${data.user.id}`);
+  const rate = await enforceRateLimit(`enhance:${data.user.id}`, "prompt");
+  if (rate.unavailable) return NextResponse.json({ error: "Request protection is temporarily unavailable." }, { status: 503 });
   if (!rate.success) return NextResponse.json({ error: "Too many requests." }, { status: 429 });
 
   const parsed = schema.safeParse(await request.json().catch(() => null));

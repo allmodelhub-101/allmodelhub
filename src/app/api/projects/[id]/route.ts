@@ -12,6 +12,7 @@ const schema = z.object({
 });
 
 async function authProject(id: string) {
+  if (!z.string().uuid().safeParse(id).success) return { error: NextResponse.json({ error: "Project not found" }, { status: 404 }) };
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };

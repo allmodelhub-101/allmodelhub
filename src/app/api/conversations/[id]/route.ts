@@ -17,6 +17,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   const user = await auth();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Not found" }, { status: 404 });
   const parsed = patchSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid update" }, { status: 400 });
   const admin = createAdminClient();
@@ -30,6 +31,7 @@ export async function DELETE(_request: Request, context: { params: Promise<{ id:
   const user = await auth();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Not found" }, { status: 404 });
   const admin = createAdminClient();
   const { error } = await admin.from("conversations").delete().eq("id", id).eq("user_id", user.id);
   if (error) { logServerError("conversation-delete", error, { userId: user.id, conversationId: id }); return NextResponse.json({ error: "Could not delete conversation." }, { status: 500 }); }

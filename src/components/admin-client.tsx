@@ -122,7 +122,7 @@ export function AdminClient(props: {
     if (!note) return;
     const bucket = window.confirm("OK = purchased credits, Cancel = promotional credits") ? "purchased" : "promo";
     const response = await fetch(`/api/admin/users/${userId}/credit`, {
-      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ amount, bucket, note })
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ requestId: crypto.randomUUID(), amount, bucket, note })
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) return setStatus(data.error || "Adjustment failed");
@@ -198,6 +198,8 @@ export function AdminClient(props: {
 }
 
 function AdminOverview({payments,users,models,routes,jobs,tickets,profitSummary,openTab}:{payments:Payment[];users:UserRow[];models:Model[];routes:ProviderRoute[];jobs:Job[];tickets:Ticket[];profitSummary:ProfitSummary;openTab:(tab:AdminTab)=>void}) {
+  // Snapshot the dashboard window once per server-provided render.
+  // eslint-disable-next-line react-hooks/purity
   const now=Date.now(),day=86400000,approved=payments.filter(p=>p.status==="approved");
   const revenue30=approved.filter(p=>now-new Date(p.created_at).getTime()<=30*day).reduce((s,p)=>s+p.amount_pkr,0);
   const spend30=jobs.filter(j=>now-new Date(j.created_at).getTime()<=30*day).reduce((s,j)=>s+Number(j.charged_credits||0),0);

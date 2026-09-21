@@ -46,6 +46,8 @@ export function FilesClient() {
     if (projectsResponse.ok) setProjects((await projectsResponse.json()).projects || []);
   }
 
+  // Initial data synchronization is intentionally performed once after mount.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { void load(); }, []);
 
   function choose(next: File | null) {

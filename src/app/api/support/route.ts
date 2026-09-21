@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createPublicId } from "@/lib/security/ids";
 import { logServerError } from "@/lib/public-error";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 const schema = z.object({
@@ -27,8 +28,11 @@ export async function POST(request: Request) {
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const limit = await enforceRateLimit(`support:${data.user.id}`, "support");
+  if (limit.unavailable) return NextResponse.json({ error: "Ticket protection is temporarily unavailable." }, { status: 503 });
+  if (!limit.success) return NextResponse.json({ error: "Too many support requests. Please try again later." }, { status: 429 });
   const parsed = schema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success) return NextResponse.json({ error: "Invalid ticket", details: parsed.error.flatten() }, { status: 400 });
+  if (!parsed.success) return NextResponse.json({ error: "Invalid ticket." }, { status: 400 });
   const admin = createAdminClient();
   const { data: ticket, error } = await admin.from("support_tickets").insert({
     public_id: createPublicId("AMH-TKT"), user_id: data.user.id, category: parsed.data.category,

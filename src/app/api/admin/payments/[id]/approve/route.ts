@@ -30,6 +30,7 @@ export async function POST(
   }
 
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Payment not found." }, { status: 404 });
   const { data: payment, error: paymentError } = await admin
     .from("manual_payments")
     .select("id,user_id,public_id,credits,bonus_credits,status")

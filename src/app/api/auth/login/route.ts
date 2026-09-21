@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import { requestIp } from "@/lib/security/request";
 
 const loginSchema = z.object({
   email: z.string().trim().email(),
@@ -9,6 +11,9 @@ const loginSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    const limit = await enforceRateLimit(`login:${requestIp(request)}`, "auth");
+    if (limit.unavailable) return NextResponse.json({ error: "Sign-in protection is temporarily unavailable." }, { status: 503 });
+    if (!limit.success) return NextResponse.json({ error: "Too many sign-in attempts. Please try again later." }, { status: 429 });
     const body = loginSchema.parse(await request.json());
     const supabase = await createClient();
     const { error } = await supabase.auth.signInWithPassword(body);

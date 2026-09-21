@@ -49,7 +49,7 @@ if (!["image", "video", "audio"].includes(modality)) return NextResponse.json({ 
 const featureKey = `${modality}_studio` as FeatureKey;
 if (!(await isFeatureEnabled(featureKey))) return NextResponse.json({ error: `${modality[0].toUpperCase() + modality.slice(1)} generation is currently unavailable.` }, { status: 503 });
 
-const limit = await enforceRateLimit(`generation:${modality}:${user.id}`);
+const limit = await enforceRateLimit(`generation:${modality}:${user.id}`, modality as "image" | "video" | "audio");
 if (limit.unavailable) return NextResponse.json({ error: "Rate limiting is temporarily unavailable." }, { status: 503 });
 if (!limit.success) return NextResponse.json({ error: "Too many generation requests." }, { status: 429 });
 
@@ -95,7 +95,7 @@ await finalizeRequest(claimId, "failed");
 return NextResponse.json({ error: message.includes("DAILY_SPEND_LIMIT") ? "This generation would exceed your daily spending limit." : "This generation exceeds your single-generation spending limit." }, { status: 403 });
 }
 
-const holdKey = createIdempotencyKey(`${modality}-hold`, user.id);
+const holdKey = createIdempotencyKey(`${modality}-hold`, user.id, input.requestId);
 let holdId: string;
 try {
 holdId = await createWalletHold(user.id, reserve, holdKey, { model_id: model.id, modality, estimated_credits: estimated });
@@ -125,17 +125,11 @@ return NextResponse.json({ error: "Reference files must be images." }, { status:
 referenceImages = await Promise.all(imageFiles.map((file) => signedFileUrl(admin, file.storage_path)));
 }
 
-const baseUrl = (
-process.env.APP_URL ||
-process.env.NEXT_PUBLIC_APP_URL ||
-"https://allmodelhub-eta.vercel.app"
-).replace(/\/+$/, "");
+const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/+$/, "");
 
 const callbackUrl = process.env.CALLBACK_SECRET
 ? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}`
 : undefined;
-
-console.info("[generation] callback configured", Boolean(callbackUrl));
 
 const publicId = createPublicId("AMH-GEN");
 
@@ -149,6 +143,16 @@ prompt: input.prompt,
 ...(callbackUrl ? { callback_url: callbackUrl } : {})
 };
 
+const storedRequest = {
+  model: model.id,
+  prompt: input.prompt,
+  ...(input.duration ? { duration: input.duration } : {}),
+  ...(input.resolution ? { resolution: input.resolution } : {}),
+  ...(input.aspectRatio ? { aspect_ratio: input.aspectRatio } : {}),
+  ...(input.imageFileIds.length ? { image_file_ids: input.imageFileIds } : {}),
+  ...(input.mode ? { mode: input.mode } : {})
+};
+
 const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
 public_id: publicId,
   user_id: user.id,
@@ -158,7 +162,7 @@ model_id: model.id,
 provider_key: "apimodels",
 status: "queued",
 prompt: input.prompt,
-request_json: providerBody,
+request_json: storedRequest,
 estimated_credits: estimated,
 reserved_credits: reserve,
 supplier_cost_usd: supplierCostUsd,
@@ -176,11 +180,11 @@ return NextResponse.json({ error: "Could not create generation job." }, { status
 try {
 const result = await providerCreateTask({ modelId: model.id, modality: modality as "image" | "video" | "audio", body: providerBody, allowFallback: true });
 const task = result.task;
-const { error: providerUpdateError } = await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_urls: task.resultUrls ?? [], result_json: task.raw, updated_at: new Date().toISOString() }).eq("id", job.id);
-console.info("[v0] generation provider request", JSON.stringify({ jobId: job.id, provider: result.provider, modality, taskId: task.taskId, state: task.state, outputUrlCount: task.resultUrls?.length ?? 0, databaseUpdateOk: !providerUpdateError, databaseError: providerUpdateError?.message }));
+const providerSummary = { provider_state: task.state, result_url_count: task.resultUrls?.length ?? 0 };
+const { error: providerUpdateError } = await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_urls: [], result_json: providerSummary, updated_at: new Date().toISOString() }).eq("id", job.id);
 if (providerUpdateError) throw providerUpdateError;
 await finalizeRequest(claimId, "completed", { resourceId: job.id, response: { publicId: job.public_id, status: task.state } });
-return NextResponse.json({ job: { ...job, status: "submitted", provider_key: result.provider, provider_task_id: task.taskId, providerTaskId: task.taskId, result_urls: task.resultUrls ?? [], result_json: task.raw }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
+return NextResponse.json({ job: { ...job, status: task.state === "processing" ? "processing" : "submitted" }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
 } catch (error) {
 await releaseWalletHold(holdId, "provider_create_failed").catch(() => undefined);
 logServerError("generation-provider-create", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });

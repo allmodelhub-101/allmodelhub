@@ -62,7 +62,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Your session expired. Please sign in again to continue.", code: "AUTH_SESSION_EXPIRED" }, { status: 401 });
   }
 
-  const limit = await enforceRateLimit(`chat:${user.id}`);
+  const limit = await enforceRateLimit(`chat:${user.id}`, "chat");
+  if (limit.unavailable) return NextResponse.json({ error: "Request protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
@@ -172,10 +173,9 @@ export async function POST(request: Request) {
   }
 
   if (!upstream.response.ok || !upstream.response.body) {
-    const providerBody = await upstream.response.text().catch(() => "");
     await releaseWalletHold(holdId, `provider_http_${upstream.response.status}`).catch(() => undefined);
     await finalizeRequest(claimId, "failed");
-    logServerError("chat-provider-http", new Error(`Provider returned HTTP ${upstream.response.status}`), { userId: user.id, modelId: selected.id, providerStatus: upstream.response.status, providerBody: providerBody.slice(0, 500) });
+    logServerError("chat-provider-http", new Error(`Provider returned HTTP ${upstream.response.status}`), { userId: user.id, modelId: selected.id, providerStatus: upstream.response.status });
     return NextResponse.json({ error: "AI provider request failed." }, { status: upstream.response.status >= 500 ? 503 : 400 });
   }
 

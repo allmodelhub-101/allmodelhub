@@ -1,3 +1,4 @@
+import "server-only";
 import { getServerEnv } from "@/lib/env";
 import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
 
@@ -20,13 +21,12 @@ function logProviderResponse(provider: string, endpoint: string, model: string |
     console.info("[v0] provider request succeeded", JSON.stringify({ provider, endpoint, model, status: response.status }));
     return;
   }
-  void response.clone().text().then((body) => {
-    console.error("[v0] provider diagnostic", JSON.stringify({
-      environment: { apimodelsKeyPresent: Boolean(process.env.APIMODELS_API_KEY), apimodelsBaseUrlPresent: Boolean(process.env.APIMODELS_BASE_URL) },
-      outgoing: { provider, endpoint, model, method: "POST" },
-      incoming: { status: response.status, body: body.replace(/(api[_-]?key|authorization|token|secret)\s*[:=]\s*[\"']?[^,\"' }]+/gi, "$1:[REDACTED]").slice(0, 1000) }
-    }));
-  }).catch(() => undefined);
+  console.error("[provider] request failed", JSON.stringify({
+    provider,
+    endpoint: new URL(endpoint).pathname,
+    model,
+    status: response.status
+  }));
 }
 
 function headers() {

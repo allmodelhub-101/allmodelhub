@@ -4,6 +4,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
   const admin = createAdminClient();
+  // The server dashboard intentionally computes a request-time reporting cutoff.
+  // eslint-disable-next-line react-hooks/purity
   const economicsCutoff = new Date(Date.now() - 30 * 86_400_000).toISOString();
   const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, features] = await Promise.all([
     admin.from("manual_payments").select("id,public_id,user_id,method,amount_pkr,credits,bonus_percent,bonus_credits,status,transaction_reference,proof_path,created_at").order("created_at", { ascending: false }).limit(100),

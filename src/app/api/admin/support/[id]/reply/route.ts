@@ -8,6 +8,7 @@ import { logServerError } from "@/lib/public-error";
 const schema = z.object({ message: z.string().min(1).max(5000), status: z.enum(["open", "waiting_user", "in_review", "resolved", "closed"]).default("waiting_user") });
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const adminUser = await requireAdmin(); const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
   const parsed = schema.safeParse(await request.json().catch(() => null)); if (!parsed.success) return NextResponse.json({ error: "Invalid reply" }, { status: 400 });
   const admin = createAdminClient(); const { data: ticket } = await admin.from("support_tickets").select("user_id,public_id").eq("id", id).maybeSingle();
   if (!ticket) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });

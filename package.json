@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "check:homepage": "node scripts/verify-homepage-baseline.mjs",
+    "check:security": "node scripts/security-check.mjs",
+    "test:security": "node --experimental-strip-types --test tests/security/*.test.mjs",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
@@ -36,11 +38,6 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@10.34.3",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@10.34.3"
 }
 
