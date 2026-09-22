@@ -22,7 +22,7 @@ type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
 type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
 
-export function ChatClient() {
+export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +34,7 @@ export function ChatClient() {
   const loadedConversationRef = useRef("");
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
-  const [models, setModels] = useState<Model[]>([]);
+  const [models, setModels] = useState<Model[]>(initialModels);
   const [projects, setProjects] = useState<Project[]>([]);
   const [projectId, setProjectId] = useState(qs.get("project") || "");
   const [files, setFiles] = useState<UserFile[]>([]);
