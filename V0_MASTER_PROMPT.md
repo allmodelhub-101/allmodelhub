@@ -125,7 +125,7 @@ Do not weaken financial/security invariants to satisfy a cosmetic request.
 - Runtime pricing/model status comes from Supabase; static catalog data is bootstrap/fallback only.
 - Provider routing for text models uses `provider_models`; APIMODELS is intended primary and Haimaker is exact-model fallback only when mapped/authorized.
 - File uploads are private and may be converted to short-lived signed URLs for provider calls.
-- Public legal pages are product-ready starter text but still require the owner’s final legal review before accepting real money; respect `NEXT_PUBLIC_LEGAL_REVIEWED` if used in release workflow.
+- Public legal pages are product-ready starter text but still require the owner’s final legal review before accepting real money; respect the server-only `LEGAL_REVIEWED` release flag.
 
 ## How to work in this repo
 

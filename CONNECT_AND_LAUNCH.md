@@ -8,13 +8,8 @@ Upload the CONTENTS of this folder to the repository root. `package.json`, `src/
 ## 2. Connect the same GitHub repository to v0 and Vercel
 GitHub remains the source of truth. v0 may refine the UI or make focused patches, but it must not replace the financial/provider architecture.
 
-## 3. Create Supabase and run ALL migrations in this exact order
-1. `supabase/migrations/001_init.sql`
-2. `supabase/migrations/002_seed_models.sql`
-3. `supabase/migrations/003_completion.sql`
-4. `supabase/migrations/004_final_release.sql`
-
-Do not skip migration 004; it contains final release schema/storage/security additions.
+## 3. Create Supabase and apply the complete migration directory
+Use the Supabase CLI against a non-production project first, then production only after the RLS tests pass. Apply every file in `supabase/migrations/` in version order, including `011_production_security_hardening.sql` and the later dated financial-integrity migrations. Run `supabase/tests/security_policies.sql` after migration.
 
 ## 4. Add environment variables in Vercel
 Copy the names from `.env.example` into Vercel Project Settings → Environment Variables and fill in real values.
@@ -27,6 +22,9 @@ Required for core production:
 - `APIMODELS_API_KEY`
 - `APIMODELS_BASE_URL`
 - `CALLBACK_SECRET`
+- `PROVIDER_ASSET_HOST_ALLOWLIST`
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
 - `ADMIN_BOOTSTRAP_EMAIL` during initial owner bootstrap
 - `EASYPAISA_ACCOUNT_TITLE`
 - `EASYPAISA_ACCOUNT_NUMBER`
@@ -38,17 +36,15 @@ Recommended production values:
 - `INTERNAL_USD_PKR=310`
 - `WELCOME_CREDITS=10`
 
-Optional/fallback/observability:
+Optional/fallback/observability (server-only):
 - `HAIMAKER_API_KEY`
 - `HAIMAKER_BASE_URL`
 - `HAIMAKER_MODEL_MAP_JSON`
-- `UPSTASH_REDIS_REST_URL`
-- `UPSTASH_REDIS_REST_TOKEN`
 - `SENTRY_DSN`
-- `NEXT_PUBLIC_POSTHOG_KEY`
-- `NEXT_PUBLIC_POSTHOG_HOST`
-- `NEXT_PUBLIC_SUPPORT_WHATSAPP`
-- `NEXT_PUBLIC_SUPPORT_EMAIL`
+- `POSTHOG_KEY`
+- `POSTHOG_HOST`
+- `SUPPORT_WHATSAPP`
+- `SUPPORT_EMAIL`
 
 ## 5. Configure Supabase Auth
 Enable Email authentication. Enable Google OAuth if desired. Add the production callback URL:
