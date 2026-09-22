@@ -4,9 +4,10 @@ Every required box must be checked before accepting public registrations or mone
 
 ## Owner-only configuration
 
-- [ ] Create a staging Supabase project; reconcile the two legacy `006_*` migration versions before using the CLI.
-- [ ] Apply every migration, including `011_production_security_hardening.sql`, then run `supabase/tests/security_policies.sql` successfully.
-- [ ] Confirm Supabase Security Advisor has no exposed service-only table/view/function and no unintended `anon`/`authenticated` grants.
+- [x] Create an isolated staging Supabase project and reconcile the duplicate `006` source versions. Evidence: `docs/MIGRATION_RESOLUTION.md`.
+- [x] Apply every migration to staging, including `011_production_security_hardening.sql`, and run `supabase/tests/security_policies.sql` successfully.
+- [x] Run staging Security Advisor and confirm there are no warning/error findings. Informational no-policy notices are limited to intentionally service-only tables with client grants revoked.
+- [ ] Reconcile the complete production migration ledger described in `docs/MIGRATION_RESOLUTION.md`; do not run production `db push` or `migration repair` until the local/remote equivalence matrix is independently reviewed.
 - [ ] Confirm leaked-password protection, email confirmation, secure redirect allowlists and appropriate OTP/session settings in Supabase Auth.
 - [ ] Rotate the Supabase service-role key if it has ever appeared in a chat, screenshot, CI log or local shared file.
 - [ ] Generate a new 32+ byte `CALLBACK_SECRET`; keep `CALLBACK_SECRET_PREVIOUS` only for a documented rotation window.
