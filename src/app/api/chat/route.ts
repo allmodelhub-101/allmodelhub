@@ -181,7 +181,6 @@ export async function POST(request: Request) {
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
-  const providerReader = upstream.response.body.getReader();
   const captureKey = createIdempotencyKey("chat-capture", user.id, body.requestId);
 
   const stream = new ReadableStream<Uint8Array>({
@@ -192,41 +191,67 @@ export async function POST(request: Request) {
       let outputTokens = 0;
       let finalized = false;
       const emit = (payload: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
+      let activeProvider = upstream.provider;
 
-      try {
-        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: upstream.provider, tier: selected.tier, private: body.private });
-        const consumeLine = (rawLine: string) => {
-          const line = rawLine.trim();
-          if (!line.startsWith("data:")) return;
-          const chunk = safeSseJson(line);
+      const consumeProviderResponse = async (response: Response, protocol: typeof upstream.protocol) => {
+        if (!response.body) throw new Error("Provider returned an empty response stream.");
+        const reader = response.body.getReader();
+        let buffer = "";
+        const consumePayload = (payload: string) => {
+          const value = payload.trim();
+          if (!value || value === "[DONE]") return;
+          let chunk: unknown = safeSseJson(value);
+          if (!chunk && !value.startsWith("data:")) {
+            try { chunk = JSON.parse(value); } catch { return; }
+          }
           if (!chunk) return;
-          for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
+          for (const event of normalizeProviderChunk(chunk, protocol)) {
             if (event.type === "delta") { assistantText += event.text; emit({ type: "delta", text: event.text }); }
             if (event.type === "usage") { if (event.inputTokens) inputTokens = event.inputTokens; if (event.outputTokens) outputTokens = event.outputTokens; }
           }
         };
-        while (true) {
-          const { value, done } = await providerReader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-          lines.forEach(consumeLine);
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+            lines.forEach(consumePayload);
+          }
+          buffer += decoder.decode();
+          if (buffer.trim()) buffer.split("\n").forEach(consumePayload);
+        } finally {
+          reader.releaseLock();
         }
-        buffer += decoder.decode();
-        if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
-        if (!assistantText.trim()) throw new Error("Provider stream completed without response text.");
+      };
+
+      try {
+        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: upstream.provider, tier: selected.tier, private: body.private });
+        try {
+          await consumeProviderResponse(upstream.response, upstream.protocol);
+        } catch (error) {
+          if (assistantText.trim()) logServerError("chat-stream-partial", error, { userId: user.id, modelId: selected.id, conversationId });
+        }
+        if (!assistantText.trim()) {
+          const retry = await providerChatStream({ modelId: selected.id, upstreamModel: selected.upstreamModel, messages: effectiveMessages, maxTokens, deepThink: body.deepThink, allowFallback: true });
+          if (!retry.response.ok) throw new Error(`Provider retry returned HTTP ${retry.response.status}.`);
+          activeProvider = retry.provider;
+          await consumeProviderResponse(retry.response, retry.protocol);
+        }
+        if (!assistantText.trim()) throw new Error("Provider stream completed without response text after retry.");
         if (!inputTokens) inputTokens = Math.ceil(combinedInput.length / 3.4) + (selected.inputOverheadTokens ?? 0);
         if (!outputTokens) outputTokens = Math.max(1, Math.ceil(assistantText.length / 3.4));
         const actualCredits = Math.min(holdAmount, actualTextCredits(selected, inputTokens, outputTokens, fxRate));
         const supplierCostUsd = textSupplierUsd(selected, inputTokens, outputTokens);
         const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
-        const walletTransactionId = await captureWalletHold(holdId!, actualCredits, captureKey, { model_id: selected.id, provider: upstream.provider, input_tokens: inputTokens, output_tokens: outputTokens, conversation_id: conversationId, private: body.private, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
+        const walletTransactionId = await captureWalletHold(holdId!, actualCredits, captureKey, { model_id: selected.id, provider: activeProvider, input_tokens: inputTokens, output_tokens: outputTokens, conversation_id: conversationId, private: body.private, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
         finalized = true;
 
         let assistantMessageId: string | null = null;
         if (!body.private && conversationId) {
-          const { data: assistant } = await admin.from("messages").insert({ conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText || "[No text returned]", model_id: selected.id, provider_key: upstream.provider, input_tokens: inputTokens, output_tokens: outputTokens, credits_charged: actualCredits, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr, metadata: { deepThink: body.deepThink, walletTransactionId } }).select("id").single();
+          const { data: assistant, error: assistantError } = await admin.from("messages").insert({ conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText || "[No text returned]", model_id: selected.id, provider_key: activeProvider, input_tokens: inputTokens, output_tokens: outputTokens, credits_charged: actualCredits, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr, metadata: { deepThink: body.deepThink, walletTransactionId } }).select("id").single();
+          if (assistantError) throw assistantError;
           assistantMessageId = assistant?.id ?? null;
           await admin.from("conversations").update({ updated_at: new Date().toISOString(), preferred_model: selected.id }).eq("id", conversationId);
         }
@@ -243,7 +268,6 @@ export async function POST(request: Request) {
       }
     },
     async cancel() {
-      await providerReader.cancel().catch(() => undefined);
       if (holdId) await releaseWalletHold(holdId, "client_cancelled").catch(() => undefined);
       await finalizeRequest(claimId, "failed").catch(() => undefined);
     }
