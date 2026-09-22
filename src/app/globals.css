@@ -1517,10 +1517,13 @@ html:not([data-theme="light"]) .app-shell:has(.premium-chat-page){background:#08
 
 .model-brand{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 12%,var(--panel-2)),var(--panel));color:var(--text);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--line) 78%,transparent)}
 .model-brand svg{width:24px;height:24px;display:block}
+.model-brand .openai-logo{width:24px;height:24px;display:block;object-fit:contain}
 .model-brand.is-compact{width:24px;height:24px;border-radius:7px}
 .model-brand.is-compact svg{width:16px;height:16px}
+.model-brand.is-compact .openai-logo{width:16px;height:16px}
 .model-brand-openai{color:#111827}.model-brand-claude{color:#d97751;background:#fff0e9}.model-brand-gemini{color:#4f6ff5;background:linear-gradient(145deg,#fff0e9,#eaf1ff 55%,#e9fff3)}.model-brand-deepseek{color:#4265ef;background:#edf2ff}.model-brand-grok{color:#15171c;background:#f2f4f7}.model-brand-qwen{color:#7655ef;background:#f1ecff}.model-brand-auto{color:#1677ff;background:linear-gradient(145deg,#e5fbff,#edf0ff)}
 html:not([data-theme="light"]) :is(.model-brand-openai,.model-brand-grok){color:#f4f7fb;background:#172337}
+html:not([data-theme="light"]) .model-brand-openai .openai-logo{filter:invert(1)}
 
 .premium-chat-page .composer-model-button{gap:8px}
 .premium-chat-page .chat-row.assistant .avatar:has(.model-brand){padding:0;background:transparent;border:0}
