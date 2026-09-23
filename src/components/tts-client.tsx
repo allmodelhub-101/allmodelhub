@@ -44,7 +44,13 @@ export function TtsClient() {
   const selectedModel = models.find((item) => item.id === modelId);
   const per1k = Number(selectedModel?.retail?.per1kCharsCredits || 0);
   const flat = Number(selectedModel?.retail?.flatCredits || 0);
-  const estimate = useMemo(() => flat || per1k * Math.max(0.001, text.length / 1000), [flat, per1k, text.length]);
+  // Match estimateMediaCredits() in the TTS route while keeping an empty
+  // composer at zero: no script means there is no generation to charge for.
+  const estimate = useMemo(() => {
+    const textLength = text.trim().length;
+    if (textLength === 0) return 0;
+    return Math.max(0.05, flat + per1k * Math.max(0.001, textLength / 1000));
+  }, [flat, per1k, text]);
   const expensive = estimate >= 50;
 
   useEffect(() => () => { if (url) URL.revokeObjectURL(url); }, [url]);
@@ -75,7 +81,7 @@ export function TtsClient() {
       <label className={styles.field}><span>Script <small>{text.length.toLocaleString()} / 10,000</small></span><textarea value={text} onChange={(event) => { setText(event.target.value); setConfirmed(false); }} maxLength={10_000} required placeholder={"Write or paste your script here…\nE.g. a product explainer, narration, or any text you want to hear."} /></label>
       <label className={styles.field}><span>Voice</span><PremiumSelect className={styles.select} value={voice} onChange={setVoice} options={voices} aria-label="Voice" /></label>
       <div className={styles.advancedToggle}><button type="button" onClick={() => setAdvanced((current) => !current)}><GearSix />{advanced ? "Hide model details" : "Model details"}</button>{advanced && <div><b>Available capabilities</b><p>{selectedModel?.capabilities?.map((item) => item.replaceAll("-", " ")).join(" · ") || "Choose a model to view its capabilities."}</p><small>Only the selected model, script, and voice are sent with this request.</small></div>}</div>
-      <div className={styles.costRow}><span className={styles.costIcon}><Waveform /></span><span><small>Estimated cost</small><b>~ {estimate.toFixed(2)} credits</b></span></div>
+      <div className={styles.costRow}><span className={styles.costIcon}><Waveform /></span><span><small>Estimated cost</small><b>{estimate > 0 ? `~ ${estimate.toFixed(2)}` : "0.00"} credits</b></span></div>
       {expensive && <label className={styles.confirm}><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /> I authorize the displayed estimated usage.</label>}
       <button className={styles.generate} disabled={busy || !modelId || !text.trim() || (expensive && !confirmed)}><Sparkle weight="fill" />{busy ? "Generating speech…" : "Generate Audio"}</button>
       {error && <p className={styles.error} role="alert">{error}</p>}

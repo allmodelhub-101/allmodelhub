@@ -12,7 +12,7 @@ type AudioModel = {
   tier: string;
   description?: string;
   capabilities: string[];
-  retail?: { flatCredits?: number; perSecondCredits?: number };
+  retail?: { flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 type GenerationJob = {
   id?: string;
@@ -71,7 +71,17 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
   const desiredCapability = mode === "music" ? "music" : "sound-effects";
   const details = copy[mode];
   const model = models.find((item) => item.id === modelId);
-  const estimate = useMemo(() => Number(model?.retail?.flatCredits || 0), [model]);
+  // Keep the preview aligned with the server-side media estimate. A blank
+  // direction cannot be submitted, so it must never present a charge.
+  const estimate = useMemo(() => {
+    const textLength = prompt.trim().length;
+    if (!model || textLength === 0) return 0;
+    const retail = model.retail || {};
+    const calculated = Number(retail.flatCredits || 0)
+      + Number(retail.perSecondCredits || 0)
+      + Number(retail.per1kCharsCredits || 0) * Math.max(0.001, textLength / 1000);
+    return Math.max(0.05, calculated);
+  }, [model, prompt]);
   const resultUrl = job?.result_urls?.[0];
   const activeJob = Boolean(job && !["completed", "failed", "cancelled", "expired"].includes(job.status || ""));
   const failed = Boolean(job && ["failed", "cancelled", "expired"].includes(job.status || ""));
@@ -164,7 +174,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
 
       <div className={styles.costRow}>
         <span className={styles.costIcon}><Waveform /></span>
-        <span><small>Estimated cost</small><b>~ {estimate.toFixed(2)} credits</b></span>
+        <span><small>Estimated cost</small><b>{estimate > 0 ? `~ ${estimate.toFixed(2)}` : "0.00"} credits</b></span>
         {projectId && <em>Project connected</em>}
       </div>
       <button className={styles.generate} disabled={busy || !modelId || !prompt.trim()}><Sparkle weight="fill" />{busy ? "Submitting…" : details.label}</button>
