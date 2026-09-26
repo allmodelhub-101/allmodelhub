@@ -12,6 +12,7 @@ import {
   type QuoteKind,
 } from "./quote-reservation-core";
 import type { NormalizedUsage } from "./types";
+import { recordBillingShadowValidationBestEffort } from "./shadow-validation";
 
 type PersistedReservation = Readonly<{
   quote_id: string;
@@ -148,9 +149,26 @@ export async function createAndReserveBillingQuote(request: UniversalQuoteReques
     pricingVersion: pricingContext.rule.pricingVersion,
     internalUsdPkrRate: pricingContext.internalUsdPkrRate,
   });
+  const legacyShadowUsage = request.kind === "variable" && request.maximumUsage
+    ? { ...request.estimatedUsage, outputTokens: request.maximumUsage.outputTokens }
+    : request.estimatedUsage;
+  await recordBillingShadowValidationBestEffort({
+    phase: "quote",
+    quoteId: reservation.quote_id,
+    userId: request.userId,
+    providerKey: route.providerKey,
+    modelId: route.modelId,
+    pricingVersion: pricingContext.rule.pricingVersion,
+    internalUsdPkrRate: pricingContext.internalUsdPkrRate,
+    usage: legacyShadowUsage,
+    billingV2ChargeCredits: reservation.customer_quote_credits,
+    qualityMultiplier: typeof request.options?.qualityMultiplier === "string" ? request.options.qualityMultiplier : undefined,
+    details: { reservation_credits: reservation.reservation_credits, reservation_kind: reservation.reservation_kind },
+  });
 
   return {
     quoteId: reservation.quote_id,
+    userId: request.userId,
     walletHoldId: reservation.wallet_hold_id,
     requestIdempotencyId: request.requestIdempotencyId,
     status: reservation.status,
@@ -166,6 +184,7 @@ export async function createAndReserveBillingQuote(request: UniversalQuoteReques
     reservationCredits: reservation.reservation_credits,
     reservationKind: reservation.reservation_kind,
     reservationIsCustomerCharge: false as const,
+    estimatedUsage: request.estimatedUsage,
     pricingSnapshot: reservation.pricing_snapshot,
     authoritativeRule: pricingContext.rule,
     profitabilityPolicy,

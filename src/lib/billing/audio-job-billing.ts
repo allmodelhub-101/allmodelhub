@@ -1,6 +1,7 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { NormalizedUsage } from "./types";
+import { recordJobSettlementShadowBestEffort } from "./shadow-validation";
 
 export function audioGenerationUsage(input: Readonly<{
   prompt: string;
@@ -33,5 +34,8 @@ export async function completeAudioGenerationBilling(input: Readonly<{
     p_metadata: input.metadata,
   });
   if (error || !data) throw error ?? new Error("BILLING_AUDIO_JOB_SETTLEMENT_FAILED");
-  return data as Record<string, string>;
+  const result = data as Record<string, string>;
+  await recordJobSettlementShadowBestEffort({ jobId: input.jobId, receiptId: result.receipt_id,
+    usage: input.usage, billingV2ChargeCredits: result.charge_credits });
+  return result;
 }

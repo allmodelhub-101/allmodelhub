@@ -9,6 +9,7 @@ import { acceptBillingQuote, cancelBillingQuoteReservation, createAndReserveBill
 import type { Currency, NormalizedUsage } from "./types";
 import { countSubmittedCharacters } from "./audio-usage-core";
 import { prepareUsageSettlement } from "./usage-settlement-core";
+import { recordBillingShadowValidationBestEffort } from "./shadow-validation";
 
 type ReservedQuote = Awaited<ReturnType<typeof createAndReserveBillingQuote>>;
 
@@ -61,7 +62,13 @@ export async function beginTtsBillingAttempt(input: Readonly<{
       return { quote, billingClaimId: claim.id, response: upstream.response, providerRequestId: upstream.providerRequestId } as const;
     } catch (error) {
       lastError = error;
-      if (quote) await cancelBillingQuoteReservation(quote.quoteId, "tts_provider_attempt_failed").catch(() => undefined);
+      if (quote) {
+        await cancelBillingQuoteReservation(quote.quoteId, "tts_provider_attempt_failed").catch(() => undefined);
+        await recordBillingShadowValidationBestEffort({ phase: "failure", quoteId: quote.quoteId, userId: quote.userId,
+          providerKey: quote.route.providerKey, modelId: quote.route.modelId, pricingVersion: quote.pricing.version,
+          internalUsdPkrRate: quote.pricing.internalUsdPkrRate, usage: quote.estimatedUsage,
+          billingV2ChargeCredits: "0", details: { operation: "tts", reason: "provider_attempt_failed" } });
+      }
       await finalizeRequest(claim.id, "failed").catch(() => undefined);
       if (terminalFinancialError(error) || (error instanceof Error && error.message.startsWith("COST_CONFIRMATION_REQUIRED:"))) throw error;
     }
@@ -72,6 +79,10 @@ export async function beginTtsBillingAttempt(input: Readonly<{
 export async function cancelTtsBillingAttempt(attempt: TtsBillingAttempt, reason: string) {
   await attempt.response.body?.cancel().catch(() => undefined);
   await cancelBillingQuoteReservation(attempt.quote.quoteId, reason).catch(() => undefined);
+  await recordBillingShadowValidationBestEffort({ phase: "failure", quoteId: attempt.quote.quoteId, userId: attempt.quote.userId,
+    providerKey: attempt.quote.route.providerKey, modelId: attempt.quote.route.modelId, pricingVersion: attempt.quote.pricing.version,
+    internalUsdPkrRate: attempt.quote.pricing.internalUsdPkrRate, usage: attempt.quote.estimatedUsage,
+    billingV2ChargeCredits: "0", details: { operation: "tts", reason } });
   await finalizeRequest(attempt.billingClaimId, "failed").catch(() => undefined);
 }
 
@@ -114,6 +125,19 @@ export async function settleTtsBillingAttempt(input: Readonly<{
   if (error || !data) throw error ?? new Error("BILLING_TTS_SETTLEMENT_FAILED");
   await finalizeRequest(input.attempt.billingClaimId, "completed", { resourceId: String((data as Record<string, unknown>).receipt_id ?? ""), response: data });
   const result = data as Record<string, unknown>;
+  await recordBillingShadowValidationBestEffort({
+    phase: "settlement",
+    quoteId: input.attempt.quote.quoteId,
+    receiptId: String(result.receipt_id),
+    userId: input.attempt.quote.userId,
+    providerKey: input.attempt.quote.route.providerKey,
+    modelId: input.attempt.quote.route.modelId,
+    pricingVersion: input.attempt.quote.pricing.version,
+    internalUsdPkrRate: input.attempt.quote.pricing.internalUsdPkrRate,
+    usage: prepared.normalizedUsage,
+    billingV2ChargeCredits: prepared.chargeCredits,
+    details: { cost_status: prepared.costStatus, provider_request_id: input.attempt.providerRequestId ?? null },
+  });
   return {
     receiptId: String(result.receipt_id),
     usageEventId: String(result.usage_event_id),

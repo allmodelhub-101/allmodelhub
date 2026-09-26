@@ -5,9 +5,10 @@ import { validateProfitabilityPolicy } from "./quote-reservation-core";
 import { prepareUsageSettlement } from "./usage-settlement-core";
 import type { NormalizedMediaResult } from "./media-job-billing-core";
 import type { ValidatedPricingRule } from "./pricing-registry-core";
+import { recordBillingShadowValidationBestEffort, recordMediaFailureShadowBestEffort } from "./shadow-validation";
 
 type QuoteRow = {
-  id: string; provider_key: string; model_id: string; upstream_model: string; pricing_version: string;
+  id: string; user_id: string; provider_key: string; model_id: string; upstream_model: string; pricing_version: string;
   internal_usd_pkr_rate: string; reservation_credits: string; created_at: string;
   input_dimensions: { pricingDimensions?: Record<string, string> };
   pricing_snapshot: { profitabilityPolicy?: Record<string, unknown>; authoritativeRule?: ValidatedPricingRule };
@@ -24,7 +25,7 @@ export async function completeMediaGenerationBilling(input: Readonly<{
   const { data: job, error: jobError } = await admin.from("generation_jobs").select("id,billing_quote_id,provider_task_id").eq("id", input.jobId).single();
   if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
   const { data: quote, error: quoteError } = await admin.from("billing_quotes")
-    .select("id,provider_key,model_id,upstream_model,pricing_version,internal_usd_pkr_rate,reservation_credits,created_at,input_dimensions,pricing_snapshot")
+    .select("id,user_id,provider_key,model_id,upstream_model,pricing_version,internal_usd_pkr_rate,reservation_credits,created_at,input_dimensions,pricing_snapshot")
     .eq("id", job.billing_quote_id).single();
   if (quoteError || !quote) throw quoteError ?? new Error("BILLING_MEDIA_QUOTE_MISSING");
   const typedQuote = quote as QuoteRow;
@@ -70,7 +71,21 @@ export async function completeMediaGenerationBilling(input: Readonly<{
     p_metadata: { ...input.metadata, reservation_shortfall: !prepared.coverage.covered },
   });
   if (error || !data) throw error ?? new Error("BILLING_MEDIA_JOB_SETTLEMENT_FAILED");
-  return { result: data as Record<string, string>, prepared } as const;
+  const result = data as Record<string, string>;
+  await recordBillingShadowValidationBestEffort({
+    phase: "settlement",
+    quoteId: typedQuote.id,
+    receiptId: result.receipt_id,
+    userId: typedQuote.user_id,
+    providerKey: typedQuote.provider_key,
+    modelId: typedQuote.model_id,
+    pricingVersion: typedQuote.pricing_version,
+    internalUsdPkrRate: typedQuote.internal_usd_pkr_rate,
+    usage: prepared.normalizedUsage,
+    billingV2ChargeCredits: prepared.chargeCredits,
+    details: { cost_status: prepared.costStatus, generation_job_id: input.jobId },
+  });
+  return { result, prepared } as const;
 }
 
 export async function failMediaGenerationBilling(input: Readonly<{
@@ -89,5 +104,6 @@ export async function failMediaGenerationBilling(input: Readonly<{
     p_metadata: input.metadata ?? {},
   });
   if (error || !data) throw error ?? new Error("BILLING_MEDIA_JOB_FAILURE_FAILED");
+  await recordMediaFailureShadowBestEffort(input.jobId);
   return data as Record<string, string>;
 }

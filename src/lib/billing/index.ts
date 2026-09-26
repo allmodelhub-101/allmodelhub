@@ -13,6 +13,8 @@ export * from "./pricing-registry";
 export * from "./pricing-registry-core";
 export * from "./quote-reservation";
 export * from "./quote-reservation-core";
+export * from "./shadow-validation-core";
+export * from "./legacy-shadow-core";
 export * from "./text-billing";
 export * from "./text-billing-core";
 export * from "./tts-billing";
