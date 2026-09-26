@@ -42,6 +42,22 @@ insert into public.provider_pricing_rules (
 
 do $billing_pricing_checks$
 begin
+  if (
+    select input_token_price
+    from public.billing_provider_pricing_registry
+    where id = '33000000-0000-4000-8000-000000000001'
+  ) <> '0.000000000000000001' then
+    raise exception 'registry lost micro-cost decimal precision';
+  end if;
+
+  if (
+    select output_token_price
+    from public.billing_provider_pricing_registry
+    where id = '33000000-0000-4000-8000-000000000001'
+  ) <> '12345678901234567890.123456789012345678' then
+    raise exception 'registry lost large decimal precision';
+  end if;
+
   begin
     insert into public.provider_pricing_rules (
       provider_key, model_id, upstream_model, pricing_version,

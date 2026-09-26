@@ -2,6 +2,38 @@ do $billing_v2_schema$
 declare
   v_table text;
 begin
+  if to_regclass('public.billing_provider_pricing_registry') is null
+    or to_regclass('public.billing_internal_fx_registry') is null then
+    raise exception 'Missing Billing V2 exact-decimal registry view';
+  end if;
+
+  if has_table_privilege('anon', 'public.billing_provider_pricing_registry', 'SELECT')
+    or has_table_privilege('authenticated', 'public.billing_provider_pricing_registry', 'SELECT')
+    or has_table_privilege('authenticated', 'public.billing_internal_fx_registry', 'SELECT') then
+    raise exception 'Billing V2 registry view is exposed to a client role';
+  end if;
+
+  if not has_table_privilege('service_role', 'public.billing_provider_pricing_registry', 'SELECT')
+    or not has_table_privilege('service_role', 'public.billing_internal_fx_registry', 'SELECT') then
+    raise exception 'Billing V2 registry view is unavailable to service_role';
+  end if;
+
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'billing_provider_pricing_registry'
+      and column_name in (
+        'input_token_price', 'output_token_price', 'cached_token_price',
+        'cache_write_token_price', 'flat_price', 'per_image_price',
+        'per_second_price', 'per_minute_price', 'per_1k_character_price',
+        'per_reference_image_price', 'model_markup'
+      )
+      and data_type <> 'text'
+  ) then
+    raise exception 'Billing V2 registry contains a non-text financial projection';
+  end if;
+
   foreach v_table in array array[
     'provider_pricing_rules',
     'billing_quotes',
