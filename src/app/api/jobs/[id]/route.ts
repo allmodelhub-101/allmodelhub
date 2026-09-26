@@ -6,9 +6,8 @@ import { providerPollTask } from "@/lib/providers";
 import { logServerError } from "@/lib/public-error";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
-import { audioGenerationUsage, completeAudioGenerationBilling } from "@/lib/billing/audio-job-billing";
-import { cancelBillingQuoteReservation } from "@/lib/billing/quote-reservation";
+import { completeMediaGenerationBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
+import { mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "@/lib/billing/media-job-billing-core";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +19,7 @@ type GenerationJob = {
   modality: string; model_id: string; provider_key?: string | null; provider_task_id?: string | null;
   status: string; prompt?: string | null; estimated_credits?: number | null; reserved_credits?: number | null;
   charged_credits?: number | null; hold_id?: string | null; billing_quote_id?: string | null;
-  request_json?: { duration?: number } | null; result_json?: { amhStoredPaths?: unknown } | null;
+  request_json?: Record<string, unknown> | null; result_json?: { amhStoredPaths?: unknown } | null;
   result_urls?: string[] | null; error_message?: string | null; created_at?: string; updated_at?: string; completed_at?: string | null;
 };
 
@@ -78,25 +77,14 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       }
 
       const storedPaths = await persistGeneratedAssets(user.id, job.id, resultUrls);
-      const charge = Number(job.estimated_credits);
       try {
-        const billingV2Audio = job.modality === "audio" && Boolean(job.billing_quote_id);
-        const settlement = billingV2Audio
-          ? await completeAudioGenerationBilling({
-              jobId: job.id,
-              usage: audioGenerationUsage({ prompt: job.prompt ?? "", duration: job.request_json?.duration }),
-              providerTaskId: job.provider_task_id!,
-              resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
-              metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" },
-            })
-          : await completeGenerationJob({
-              jobId: job.id, chargedCredits: charge,
-              resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
-              metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" }
-            });
-        if (billingV2Audio || ("completedNow" in settlement && settlement.completedNow)) {
-          await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
-        }
+        if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
+        const requestUsage = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: job.prompt ?? "" } as MediaBillingInput);
+        const normalized = normalizeMediaResult(task, requestUsage);
+        const settlement = await completeMediaGenerationBilling({ jobId: job.id, normalized,
+          resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+          metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" } });
+        await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${Number(settlement.result.charge_credits ?? 0).toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
       } catch (settlementError) {
         await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
         logServerError("job-poll-settlement", settlementError, { jobId: job.id });
@@ -107,9 +95,9 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
     }
 
     if (task.state === "failed") {
-      if (job.billing_quote_id) await cancelBillingQuoteReservation(job.billing_quote_id, "provider_generation_failed").catch(() => undefined);
-      else if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_generation_failed").catch(() => undefined);
-      const { data: updated } = await admin.from("generation_jobs").update({ status: "failed", error_message: task.failMsg?.slice(0, 1000) || "Generation failed", result_json: summary, updated_at: new Date().toISOString() }).eq("id", job.id).select(jobFields).single();
+      if (!job.billing_quote_id || !providerFailureIsNonBillable(String(job.provider_key || ""))) throw new Error("BILLING_MEDIA_FAILURE_REQUIRES_RECONCILIATION");
+      await failMediaGenerationBilling({ jobId: job.id, providerState: "failed", errorMessage: task.failMsg || "Generation failed", rawUsage: (task.raw && typeof task.raw === "object" ? task.raw : {}) as Record<string, unknown>, metadata: { source: "job_poll" } });
+      const { data: updated } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).single();
       await notifyUser(user.id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });
       return NextResponse.json({ job: await clientJob(updated as GenerationJob) });
     }

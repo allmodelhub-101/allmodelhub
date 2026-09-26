@@ -4,7 +4,8 @@ import { notifyUser } from "@/lib/notifications";
 import { providerPollTask } from "@/lib/providers";
 import { logServerError } from "@/lib/public-error";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
+import { completeMediaGenerationBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
+import { mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "@/lib/billing/media-job-billing-core";
 import { assertTrustedAssetUrl, persistGeneratedAssets } from "@/lib/generated-assets";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { z } from "zod";
@@ -31,11 +32,18 @@ export async function POST(_request: Request, context: { params: Promise<{ id: s
       await Promise.all(resultUrls.map((url) => assertTrustedAssetUrl(url)));
       if (!resultUrls.length) return NextResponse.json({ error: "Provider reports completion without a trusted result." }, { status: 409 });
       const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
-      await completeGenerationJob({ jobId: job.id, chargedCredits: Number(job.estimated_credits), resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls, metadata: { source: "admin_reconciliation", actor_id: actor.id } });
+      if (!job.billing_quote_id) return NextResponse.json({ error: "This legacy job requires legacy reconciliation." }, { status: 409 });
+      const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", updated_at: new Date().toISOString() })
+        .eq("id", job.id).in("status", ["queued", "submitted", "processing"]).select("id").maybeSingle();
+      if (!claimed) return NextResponse.json({ error: "The job is already being settled." }, { status: 409 });
+      const fallback = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: String(job.prompt ?? "") } as MediaBillingInput);
+      await completeMediaGenerationBilling({ jobId: job.id, normalized: normalizeMediaResult(task, fallback),
+        resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls, metadata: { source: "admin_reconciliation", actor_id: actor.id } });
       await notifyUser(job.user_id, { type: "generation", title: "Generation complete", body: `${job.public_id} is ready.`, href: `/usage?job=${job.id}` });
     } else if (task.state === "failed") {
-      if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_failed_after_reconciliation");
-      await admin.from("generation_jobs").update({ status: "failed", error_message: task.failMsg?.slice(0, 1000) || "Provider reported failure", result_json: summary, updated_at: new Date().toISOString() }).eq("id", job.id);
+      if (!job.billing_quote_id || !providerFailureIsNonBillable(job.provider_key)) return NextResponse.json({ error: "Provider failure billing requires manual reconciliation." }, { status: 409 });
+      await failMediaGenerationBilling({ jobId: job.id, providerState: "failed", errorMessage: task.failMsg || "Provider reported failure",
+        rawUsage: (task.raw && typeof task.raw === "object" ? task.raw : {}) as Record<string, unknown>, metadata: { source: "admin_reconciliation", actor_id: actor.id } });
       await notifyUser(job.user_id, { type: "generation", title: "Generation failed", body: `${job.public_id} failed and its wallet hold was released.`, href: "/usage" });
     } else {
       await admin.from("generation_jobs").update({ status: task.state === "processing" ? "processing" : "submitted", result_json: summary, updated_at: new Date().toISOString() }).eq("id", job.id);

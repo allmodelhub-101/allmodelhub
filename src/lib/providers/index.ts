@@ -84,6 +84,23 @@ export async function providerChatStream(input: ProviderChatRequest & { modelId:
   throw new Error("No AI provider is currently available for this model.");
 }
 
+export async function providerCreateTaskExact(
+  route: ResolvedBillingProviderRoute,
+  modality: "image" | "video" | "audio",
+  body: Record<string, unknown>,
+) {
+  const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
+  const routedBody = { ...body, model: route.upstreamModel };
+  if (key === "apimodels" || key === "apimodelsapp") {
+    return { task: await apimodelsCreateTask(modality, routedBody), provider: route.providerKey } as const;
+  }
+  if ((key === "haimaker" || key === "haimakerai") && modality !== "audio") {
+    if (!process.env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
+    return { task: await haimakerCreateTask(modality, routedBody), provider: route.providerKey } as const;
+  }
+  throw new Error(`Unsupported ${modality} provider route: ${route.providerKey}`);
+}
+
 export async function providerChatStreamExact(
   route: ResolvedBillingProviderRoute,
   input: Omit<ProviderChatRequest, "upstreamModel">,

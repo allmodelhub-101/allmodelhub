@@ -7,9 +7,8 @@ import { logServerError } from "@/lib/public-error";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { requestIp } from "@/lib/security/request";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
-import { audioGenerationUsage, completeAudioGenerationBilling } from "@/lib/billing/audio-job-billing";
-import { cancelBillingQuoteReservation } from "@/lib/billing/quote-reservation";
+import { completeMediaGenerationBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
+import { mediaCallbackDecision, mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "@/lib/billing/media-job-billing-core";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -65,7 +64,9 @@ async function trustedResultUrls(payload: unknown) {
 function normalizeState(value: string, hasTrustedUrls: boolean) {
   const state = value.toLowerCase().replace(/[ -]/g, "_");
   if (["completed", "complete", "succeeded", "success", "done", "finished"].includes(state) || hasTrustedUrls) return "completed" as const;
-  if (["failed", "failure", "error", "cancelled", "canceled", "expired"].includes(state)) return "failed" as const;
+  if (["cancelled", "canceled"].includes(state)) return "cancelled" as const;
+  if (state === "expired") return "expired" as const;
+  if (["failed", "failure", "error"].includes(state)) return "failed" as const;
   if (["processing", "running", "in_progress", "inprogress", "pending", "queued"].includes(state)) return "processing" as const;
   return "submitted" as const;
 }
@@ -118,15 +119,15 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   const state = normalizeState(parsed.data.state, resultUrls.length > 0);
   const summary = callbackSummary(parsed.data, state, resultUrls);
   const admin = createAdminClient();
-  const jobFields = "id,user_id,public_id,modality,model_id,status,hold_id,billing_quote_id,estimated_credits,provider_task_id,prompt,request_json";
+  const jobFields = "id,user_id,public_id,modality,model_id,provider_key,status,hold_id,billing_quote_id,estimated_credits,provider_task_id,prompt,request_json";
   const { data: existingJob, error: lookupError } = await admin.from("generation_jobs").select(jobFields).eq("provider_task_id", parsed.data.taskId).maybeSingle();
   if (lookupError) {
     logServerError("provider-callback-lookup", lookupError, { source: "apimodels" });
     return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
   }
-  if (!existingJob || ["completed", "failed", "cancelled", "expired"].includes(existingJob.status)) return NextResponse.json({ ok: true });
+  if (!existingJob || mediaCallbackDecision(existingJob.status, state) === "duplicate") return NextResponse.json({ ok: true });
 
-  if (state !== "completed" && state !== "failed") {
+  if (!(["completed", "failed", "cancelled", "expired"] as string[]).includes(state)) {
     await admin.from("generation_jobs").update({ status: state, result_json: summary, updated_at: new Date().toISOString() })
       .eq("id", existingJob.id).in("status", ["queued", "submitted", "processing"]);
     return NextResponse.json({ ok: true });
@@ -148,28 +149,14 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     if (!job) return NextResponse.json({ ok: true });
 
     const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
-    const charge = Number(job.estimated_credits);
     try {
-      const billingV2Audio = job.modality === "audio" && Boolean(job.billing_quote_id);
-      const requestJson = (job.request_json && typeof job.request_json === "object" ? job.request_json : {}) as { duration?: number };
-      const settlement = billingV2Audio
-        ? await completeAudioGenerationBilling({
-            jobId: job.id,
-            usage: audioGenerationUsage({ prompt: String(job.prompt ?? ""), duration: requestJson.duration }),
-            providerTaskId: job.provider_task_id,
-            resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
-            metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" },
-          })
-        : await completeGenerationJob({
-            jobId: job.id,
-            chargedCredits: charge,
-            resultJson: { ...summary, amhStoredPaths: storedPaths },
-            resultUrls,
-            metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" }
-          });
-      if (billingV2Audio || ("completedNow" in settlement && settlement.completedNow)) {
-        await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.` });
-      }
+      if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
+      const fallback = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: String(job.prompt ?? "") } as MediaBillingInput);
+      const normalized = normalizeMediaResult({ raw: payload, resultUrls }, fallback);
+      const settlement = await completeMediaGenerationBilling({ jobId: job.id, normalized,
+        resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+        metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" } });
+      await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${Number(settlement.result.charge_credits ?? 0).toFixed(2)} Credits charged.` });
       return NextResponse.json({ ok: true });
     } catch (error) {
       await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
@@ -178,9 +165,11 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     }
   }
 
-  if (existingJob.billing_quote_id) await cancelBillingQuoteReservation(existingJob.billing_quote_id, "provider_callback_failed").catch(() => undefined);
-  else if (existingJob.hold_id) await releaseWalletHold(existingJob.hold_id, "provider_callback_failed").catch(() => undefined);
-  await admin.from("generation_jobs").update({ status: "failed", result_json: summary, error_message: parsed.data.failMsg || "Generation failed", updated_at: new Date().toISOString() }).eq("id", existingJob.id);
+  if (!existingJob.billing_quote_id || !providerFailureIsNonBillable(String(existingJob.provider_key ?? ""))) {
+    return NextResponse.json({ error: "Failure billing requires reconciliation" }, { status: 503 });
+  }
+  await failMediaGenerationBilling({ jobId: existingJob.id, providerState: state as "failed" | "cancelled" | "expired",
+    errorMessage: parsed.data.failMsg || `Generation ${state}`, rawUsage: base, metadata: { source: "provider_callback" } });
   await notifyUser(existingJob.user_id, { type: "generation", title: `${existingJob.modality} generation failed`, body: `${existingJob.public_id} failed. Eligible reserved Credits were released.` });
   return NextResponse.json({ ok: true });
 }

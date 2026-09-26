@@ -178,6 +178,7 @@ export function buildBillingQuotePlan(input: Readonly<{
       rawEstimatedCustomerChargeCredits: input.estimatedPrice.customerChargeCredits,
       explicitProductMinimumCredits: productMinimum,
       profitabilityPolicy: input.profitabilityPolicy,
+      authoritativeRule: input.rule,
     },
     reservationBasis: {
       kind: reservationKind,
