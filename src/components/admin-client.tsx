@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { PremiumSelect } from "@/components/premium-select";
-import { Activity, ArrowRight, ChartLineUp, CheckCircle, Clock, Coins, CreditCard, Gauge, UsersThree, WarningCircle } from "@phosphor-icons/react";
+import { Activity, ArrowRight, ChartLineUp, CheckCircle, Clock, Coins, CreditCard, Gauge, WarningCircle } from "@phosphor-icons/react";
 
 type Payment = {
   id: string; public_id: string; method: string; amount_pkr: number; credits: number; status: string;
@@ -23,12 +23,17 @@ type ProviderRoute = {
 };
 type Job = {
   id: string; public_id: string; email?: string | null; modality: string; model_id: string; provider_key?: string | null;
-  status: string; charged_credits: number; error_message?: string | null; created_at: string;
+  status: string; charged_credits: number; reserved_credits: number; error_message?: string | null; created_at: string; updated_at?: string;
+  last_provider_check_at?: string | null; next_reconcile_at?: string | null; reconcile_attempts?: number; reconciliation_required?: boolean;
+  reconciliation_state?: string | null; reconciliation_metadata?: Record<string, unknown>;
 };
 type Ticket = {
   id: string; public_id: string; email?: string | null; category: string; subject: string; status: string; priority: string; updated_at: string;
 };
-export type AdminTab = "overview" | "payments" | "models" | "providers" | "users" | "jobs" | "support" | "settings";
+type PricingRule = { id: string; provider_key: string; model_id: string; upstream_model: string; pricing_version: string; billing_type: string; status: string; active: boolean; verified_at: string | null; effective_from: string; effective_until: string | null; model_markup: number; model_active: boolean };
+type BillingReceipt = { id: string; provider_key: string; model_id: string; pricing_version: string; cost_status: string; provider_cost_pkr: number; charge_credits: number; profit_pkr: number; margin_percent: number | null; settled_at: string };
+type BillingAnomaly = { id: string; provider_key: string; model_id: string; anomaly_type: string; expected_cost_usd: number; observed_cost_usd: number; severity: string; status: string; detected_at: string };
+export type AdminTab = "overview" | "billing" | "payments" | "models" | "providers" | "users" | "jobs" | "support" | "settings";
 type FeatureFlags = Record<"audio_studio" | "image_studio" | "model_battle" | "private_chat" | "prompt_enhancer" | "teams" | "video_studio", boolean>;
 type ProfitSummary = { chatRevenue: number; chatCost: number; mediaRevenue: number; mediaCost: number };
 
@@ -36,6 +41,8 @@ export function AdminClient(props: {
   payments: Payment[]; models: Model[]; users: UserRow[]; routes: ProviderRoute[]; jobs: Job[]; tickets: Ticket[];
   settings: Record<string, number>; features: FeatureFlags; initialTab?: AdminTab;
   profitSummary: ProfitSummary;
+  pricingRules: PricingRule[]; billingReceipts: BillingReceipt[]; billingAnomalies: BillingAnomaly[];
+  billingInvariants: Record<string, string | number>;
 }) {
   const [tab, setTab] = useState<AdminTab>(props.initialTab ?? "overview");
   const [payments, setPayments] = useState(props.payments);
@@ -172,7 +179,7 @@ export function AdminClient(props: {
   }
 
   const tabs: { id: AdminTab; label: string }[] = [
-    { id: "overview", label: "Overview" }, { id: "payments", label: "Payments" }, { id: "models", label: "Models" }, { id: "providers", label: "Providers" },
+    { id: "overview", label: "Overview" }, { id: "billing", label: "Billing & Pricing" }, { id: "payments", label: "Payments" }, { id: "models", label: "Models" }, { id: "providers", label: "Providers" },
     { id: "users", label: "Users" }, { id: "jobs", label: "Jobs" }, { id: "support", label: "Support" }, { id: "settings", label: "Platform" }
   ];
 
@@ -180,6 +187,7 @@ export function AdminClient(props: {
     <div className="admin-tabs">{tabs.map((item) => <button key={item.id} className={tab === item.id ? "active" : ""} onClick={() => setTab(item.id)}>{item.label}</button>)}</div>
     {status && <div className="soft-card small" style={{ padding: 12 }}>{status}</div>}
     {tab === "overview" && <AdminOverview payments={payments} users={users} models={models} routes={routes} jobs={jobs} tickets={tickets} profitSummary={props.profitSummary} openTab={setTab} />}
+    {tab === "billing" && <BillingPanel pricingRules={props.pricingRules} receipts={props.billingReceipts} anomalies={props.billingAnomalies} invariants={props.billingInvariants} models={models} routes={routes} jobs={jobs} updateModel={updateModel} saveProviderRoute={saveProviderRoute} reconcileJob={reconcileJob} />}
 
     {tab === "payments" && <section><h2 className="page-title" style={{ marginBottom: 14 }}>Manual payments</h2><div className="table-wrap"><table><thead><tr><th>Order</th><th>User</th><th>Method</th><th>Credit breakdown</th><th>Reference</th><th>Status</th><th>Proof</th><th>Action</th></tr></thead><tbody>{payments.length ? payments.map((payment) => <tr key={payment.id}><td>{payment.public_id}</td><td>{payment.email || "—"}</td><td>{payment.method}</td><td><b>Paid: PKR {Number(payment.amount_pkr).toLocaleString()}</b><div className="muted small">Purchased {Number(payment.credits).toLocaleString()} · Bonus +{Number(payment.bonus_credits || 0).toLocaleString()} promo</div><div className="small">Total {(Number(payment.credits) + Number(payment.bonus_credits || 0)).toLocaleString()}</div></td><td>{payment.transaction_reference}</td><td><span className={`badge ${payment.status === "approved" ? "success" : payment.status === "rejected" ? "danger" : "warning"}`}>{payment.status}</span></td><td>{payment.proofUrl ? <a className="btn btn-ghost" href={payment.proofUrl} target="_blank" rel="noreferrer">View ↗</a> : "—"}</td><td>{!["approved", "rejected", "duplicate", "cancelled"].includes(payment.status) ? <div style={{ display: "flex", gap: 6 }}><button className="btn btn-primary" onClick={() => paymentAction(payment.id, "approve")}>Approve</button><button className="btn btn-danger" onClick={() => paymentAction(payment.id, "reject")}>Reject</button></div> : "—"}</td></tr>) : <tr><td colSpan={8} className="muted">No payment submissions.</td></tr>}</tbody></table></div></section>}
 
@@ -195,6 +203,42 @@ export function AdminClient(props: {
 
     {tab === "settings" && <section><h2 className="page-title" style={{ marginBottom: 6 }}>Platform controls</h2><p className="muted" style={{ marginBottom: 14 }}>Economics and feature availability are enforced server-side. Supplier acquisition costs remain hidden from customers.</p><form className="card studio-panel" onSubmit={savePlatformSettings}><div className="form-grid"><label className="label">Internal USD → PKR basis<input className="input" name="internalUsdPkr" type="number" min={1} step={0.01} defaultValue={platformSettings.internal_usd_pkr ?? 310} /></label><label className="label">Minimum top-up (PKR)<input className="input" name="minTopupPkr" type="number" min={1} step={1} defaultValue={platformSettings.min_topup_pkr ?? 500} /></label><label className="label">Welcome promotional credits<input className="input" name="welcomeCredits" type="number" min={0} step={1} defaultValue={platformSettings.welcome_credits ?? 10} /></label></div><h3 style={{ margin: "8px 0 0" }}>Feature flags</h3><div className="form-grid">{Object.entries(featureFlags).map(([key, enabled]) => <label className="label" key={key} style={{ display: "flex", alignItems: "center", gap: 10 }}><input type="checkbox" checked={enabled} onChange={(event) => setFeatureFlags((current) => ({ ...current, [key]: event.target.checked }))} />{key.replaceAll("_", " ")}</label>)}</div><button className="btn btn-primary" type="submit">Save platform controls</button></form></section>}
   </div>;
+}
+
+function BillingPanel({ pricingRules, receipts, anomalies, invariants, models, routes, jobs, updateModel, saveProviderRoute, reconcileJob }: {
+  pricingRules: PricingRule[]; receipts: BillingReceipt[]; anomalies: BillingAnomaly[]; invariants: Record<string, string | number>;
+  models: Model[]; routes: ProviderRoute[]; jobs: Job[];
+  updateModel: (id: string, patch: Record<string, unknown>) => Promise<void>;
+  saveProviderRoute: (route: ProviderRoute, patch: Partial<ProviderRoute>) => Promise<void>;
+  reconcileJob: (job: Job) => Promise<void>;
+}) {
+  const revenue = receipts.reduce((sum, receipt) => sum + receipt.charge_credits, 0);
+  const providerCost = receipts.reduce((sum, receipt) => sum + receipt.provider_cost_pkr, 0);
+  const grossProfit = receipts.reduce((sum, receipt) => sum + receipt.profit_pkr, 0);
+  const margin = revenue > 0 ? grossProfit / revenue * 100 : 0;
+  const unresolvedAnomalies = anomalies.filter((item) => ["open", "investigating"].includes(item.status));
+  const reconciliationJobs = jobs.filter((job) => job.reconciliation_required || ["due", "checking", "quarantined"].includes(job.reconciliation_state ?? ""));
+  const invariantEntries = Object.entries(invariants).filter(([key]) => key !== "checked_at");
+  const verified = pricingRules.filter((rule) => rule.status === "verified" && rule.active && rule.model_active).length;
+
+  return <section><header className="admin-page-head"><div><span className="kicker">Billing V2 operations</span><h1>Billing &amp; Pricing</h1><p>Provider-aware pricing health, realized economics, exceptions, and safe reconciliation controls.</p></div><span className="admin-live"><i/>Server records</span></header>
+    <div className="admin-metric-grid">
+      {[{ label: "Healthy pricing rules", value: `${verified}/${pricingRules.length}`, note: "Verified, active rules", icon: CheckCircle, tone: "green" }, { label: "Usage revenue · 30 days", value: `PKR ${revenue.toLocaleString(undefined, { maximumFractionDigits: 2 })}`, note: "Immutable Billing V2 receipts", icon: Coins, tone: "cyan" }, { label: "Gross profit · 30 days", value: `PKR ${grossProfit.toLocaleString(undefined, { maximumFractionDigits: 2 })}`, note: `${margin.toFixed(1)}% margin · PKR ${providerCost.toFixed(2)} provider cost`, icon: ChartLineUp, tone: "violet" }, { label: "Needs attention", value: String(unresolvedAnomalies.length + reconciliationJobs.length), note: `${unresolvedAnomalies.length} anomalies · ${reconciliationJobs.length} jobs`, icon: WarningCircle, tone: "amber" }].map((metric) => { const Icon = metric.icon; return <article className={`admin-metric ${metric.tone}`} key={metric.label}><span><Icon weight="duotone"/></span><small>{metric.label}</small><strong>{metric.value}</strong><p>{metric.note}</p></article>; })}
+    </div>
+
+    <section className="card studio-panel" style={{ marginBottom: 18 }}><h2 style={{ marginBottom: 4 }}>Pricing health by model and provider</h2><p className="muted small" style={{ marginBottom: 14 }}>New paid quotes fail closed unless an effective provider-specific rule is verified. Model and route controls below are server-enforced kill switches.</p><div className="table-wrap"><table><thead><tr><th>Model / provider</th><th>Billing</th><th>Version</th><th>Health</th><th>Last verified</th><th>Markup</th><th>Model switch</th><th>Route switch</th></tr></thead><tbody>{pricingRules.length ? pricingRules.map((rule) => {
+      const model = models.find((item) => item.id === rule.model_id);
+      const route = routes.find((item) => item.model_id === rule.model_id && item.provider_key === rule.provider_key);
+      const health = !rule.active || !rule.model_active ? "blocked" : rule.status;
+      return <tr key={rule.id}><td><b>{model?.display_name ?? rule.model_id}</b><div className="muted small">{rule.provider_key} · {rule.upstream_model}</div></td><td>{rule.billing_type.replaceAll("_", " ")}</td><td><code>{rule.pricing_version}</code></td><td><span className={`badge ${health === "verified" ? "success" : health === "blocked" ? "danger" : "warning"}`}>{health}</span></td><td>{rule.verified_at ? new Date(rule.verified_at).toLocaleString() : "Never"}</td><td>{rule.model_markup.toFixed(3)}×</td><td>{model ? <button className={`btn ${model.active ? "btn-primary" : "btn-danger"}`} onClick={() => updateModel(model.id, { active: !model.active })}>{model.active ? "Enabled" : "Disabled"}</button> : "—"}</td><td>{route ? <button className={`btn ${route.active ? "btn-primary" : "btn-danger"}`} onClick={() => saveProviderRoute(route, { active: !route.active })}>{route.active ? "Enabled" : "Disabled"}</button> : <span className="muted small">No route</span>}</td></tr>;
+    }) : <tr><td colSpan={8} className="muted">No pricing rules loaded. Paid requests will fail closed.</td></tr>}</tbody></table></div></section>
+
+    <section className="card studio-panel" style={{ marginBottom: 18 }}><h2 style={{ marginBottom: 4 }}>Realized billing receipts</h2><p className="muted small" style={{ marginBottom: 14 }}>Revenue and provider economics come from immutable receipts. Estimated cost is visibly distinct from provider-reported or reconciled cost.</p><div className="table-wrap"><table><thead><tr><th>Settled</th><th>Model / provider</th><th>Version</th><th>Cost status</th><th>Revenue</th><th>Provider cost</th><th>Gross profit</th><th>Margin</th></tr></thead><tbody>{receipts.length ? receipts.slice(0, 100).map((receipt) => <tr key={receipt.id}><td>{new Date(receipt.settled_at).toLocaleString()}</td><td><b>{receipt.model_id}</b><div className="muted small">{receipt.provider_key}</div></td><td><code>{receipt.pricing_version}</code></td><td><span className={`badge ${receipt.cost_status === "reconciled" || receipt.cost_status === "provider_reported" ? "success" : "warning"}`}>{receipt.cost_status.replaceAll("_", " ")}</span></td><td>{receipt.charge_credits.toFixed(4)} cr</td><td>PKR {receipt.provider_cost_pkr.toFixed(6)}</td><td>PKR {receipt.profit_pkr.toFixed(4)}</td><td>{receipt.margin_percent == null ? "—" : `${receipt.margin_percent.toFixed(2)}%`}</td></tr>) : <tr><td colSpan={8} className="muted">No Billing V2 receipts in this reporting window.</td></tr>}</tbody></table></div></section>
+
+    <div className="admin-dashboard-grid lower"><section className="admin-list-card"><div className="admin-card-head"><div><small>Immutable-state checks</small><h2>Billing invariants</h2></div><Gauge weight="duotone"/></div>{invariantEntries.map(([key, value]) => <div className="admin-activity-row" key={key}><span><b>{key.replaceAll("_", " ")}</b><small>Must remain zero</small></span><span><b>{String(value)}</b><small>{Number(value) === 0 ? "Healthy" : "Investigate"}</small></span></div>)}</section><section className="admin-list-card"><div className="admin-card-head"><div><small>Exception queue</small><h2>Billing anomalies</h2></div><WarningCircle weight="duotone"/></div>{unresolvedAnomalies.length ? unresolvedAnomalies.slice(0, 8).map((item) => <div className="admin-activity-row" key={item.id}><span><b>{item.anomaly_type.replaceAll("_", " ")}</b><small>{item.model_id} · {item.provider_key}</small></span><span><b>{item.severity}</b><small>${item.expected_cost_usd.toFixed(6)} expected / ${item.observed_cost_usd.toFixed(6)} observed</small></span></div>) : <p className="muted small">No unresolved billing anomalies.</p>}</section></div>
+
+    <section className="card studio-panel" style={{ marginTop: 18 }}><h2 style={{ marginBottom: 4 }}>Stale holds &amp; jobs</h2><p className="muted small" style={{ marginBottom: 14 }}>Reconciliation confirms provider state before capture or release. Unknown provider state stays quarantined.</p><div className="table-wrap"><table><thead><tr><th>Job</th><th>Model / provider</th><th>State</th><th>Reservation</th><th>Attempts</th><th>Last checked</th><th>Next check</th><th>Action</th></tr></thead><tbody>{reconciliationJobs.length ? reconciliationJobs.map((job) => <tr key={job.id}><td><b>{job.public_id}</b><div className="muted small">{job.email ?? job.id}</div></td><td>{job.model_id}<div className="muted small">{job.provider_key ?? "—"}</div></td><td><span className={`badge ${job.reconciliation_state === "quarantined" ? "danger" : "warning"}`}>{job.reconciliation_state ?? job.status}</span></td><td>{job.reserved_credits.toFixed(4)} cr</td><td>{job.reconcile_attempts ?? 0}</td><td>{job.last_provider_check_at ? new Date(job.last_provider_check_at).toLocaleString() : "Never"}</td><td>{job.next_reconcile_at ? new Date(job.next_reconcile_at).toLocaleString() : "Manual"}</td><td><button className="btn" onClick={() => reconcileJob(job)}>Reconcile</button></td></tr>) : <tr><td colSpan={8} className="muted">No jobs currently require reconciliation.</td></tr>}</tbody></table></div></section>
+  </section>;
 }
 
 function AdminOverview({payments,users,models,routes,jobs,tickets,profitSummary,openTab}:{payments:Payment[];users:UserRow[];models:Model[];routes:ProviderRoute[];jobs:Job[];tickets:Ticket[];profitSummary:ProfitSummary;openTab:(tab:AdminTab)=>void}) {

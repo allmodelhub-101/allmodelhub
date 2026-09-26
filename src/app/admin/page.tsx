@@ -1,7 +1,7 @@
 import { AdminWorkspace } from "@/components/admin-workspace";
 import type { AdminTab } from "@/components/admin-client";
 
-const tabs: AdminTab[] = ["overview", "payments", "models", "providers", "users", "jobs", "support", "settings"];
+const tabs: AdminTab[] = ["overview", "billing", "payments", "models", "providers", "users", "jobs", "support", "settings"];
 
 export default async function AdminDashboard({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const requested = (await searchParams).tab;
