@@ -3,19 +3,54 @@ declare
   v_table text;
 begin
   if to_regclass('public.billing_provider_pricing_registry') is null
-    or to_regclass('public.billing_internal_fx_registry') is null then
+    or to_regclass('public.billing_internal_fx_registry') is null
+    or to_regclass('public.billing_quote_policy_registry') is null then
     raise exception 'Missing Billing V2 exact-decimal registry view';
   end if;
 
   if has_table_privilege('anon', 'public.billing_provider_pricing_registry', 'SELECT')
     or has_table_privilege('authenticated', 'public.billing_provider_pricing_registry', 'SELECT')
-    or has_table_privilege('authenticated', 'public.billing_internal_fx_registry', 'SELECT') then
+    or has_table_privilege('authenticated', 'public.billing_internal_fx_registry', 'SELECT')
+    or has_table_privilege('authenticated', 'public.billing_quote_policy_registry', 'SELECT') then
     raise exception 'Billing V2 registry view is exposed to a client role';
   end if;
 
   if not has_table_privilege('service_role', 'public.billing_provider_pricing_registry', 'SELECT')
-    or not has_table_privilege('service_role', 'public.billing_internal_fx_registry', 'SELECT') then
+    or not has_table_privilege('service_role', 'public.billing_internal_fx_registry', 'SELECT')
+    or not has_table_privilege('service_role', 'public.billing_quote_policy_registry', 'SELECT') then
     raise exception 'Billing V2 registry view is unavailable to service_role';
+  end if;
+
+  if not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'billing_quotes'
+      and column_name = 'wallet_hold_id'
+  ) or not exists (
+    select 1 from information_schema.columns
+    where table_schema = 'public' and table_name = 'billing_quotes'
+      and column_name = 'reservation_kind'
+  ) then
+    raise exception 'Billing V2 quote reservation linkage is missing';
+  end if;
+
+  if has_function_privilege(
+    'authenticated',
+    'public.billing_reserve_quote(uuid,uuid,uuid,text,text,text,text,numeric,numeric,numeric,numeric,jsonb,jsonb,text,jsonb,text,jsonb)',
+    'EXECUTE'
+  ) or has_function_privilege(
+    'anon',
+    'public.billing_expire_quote_reservation(uuid)',
+    'EXECUTE'
+  ) then
+    raise exception 'Billing V2 quote reservation RPC is exposed to a client role';
+  end if;
+
+  if not has_function_privilege(
+    'service_role',
+    'public.billing_reserve_quote(uuid,uuid,uuid,text,text,text,text,numeric,numeric,numeric,numeric,jsonb,jsonb,text,jsonb,text,jsonb)',
+    'EXECUTE'
+  ) then
+    raise exception 'Billing V2 quote reservation RPC is unavailable to service_role';
   end if;
 
   if exists (

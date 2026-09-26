@@ -11,7 +11,7 @@ import {
 } from "@/lib/billing/pricing-registry-core";
 import type { NormalizedUsage } from "@/lib/billing/types";
 
-async function loadExactFxRate() {
+export async function loadExactFxRate() {
   const admin = createAdminClient();
   const { data, error } = await admin
     .from("billing_internal_fx_registry")
@@ -44,15 +44,20 @@ export async function priceProviderRequest(input: Readonly<{
   dimensions?: PricingDimensions;
   formulaEvaluators?: Readonly<Record<string, FormulaEvaluator>>;
 }>) {
-  const [rule, internalUsdPkrRate] = await Promise.all([
-    loadAuthoritativePricingRule(input.selector),
-    loadExactFxRate(),
-  ]);
+  const context = await loadAuthoritativePricingContext(input.selector);
   return calculateAuthoritativePrice({
-    rule,
+    rule: context.rule,
     usage: input.usage,
     dimensions: input.dimensions,
-    internalUsdPkrRate,
+    internalUsdPkrRate: context.internalUsdPkrRate,
     formulaEvaluators: input.formulaEvaluators,
   });
+}
+
+export async function loadAuthoritativePricingContext(selector: PricingRuleSelector) {
+  const [rule, internalUsdPkrRate] = await Promise.all([
+    loadAuthoritativePricingRule(selector),
+    loadExactFxRate(),
+  ]);
+  return { rule, internalUsdPkrRate } as const;
 }
