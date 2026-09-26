@@ -128,7 +128,10 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   if (!existingJob || mediaCallbackDecision(existingJob.status, state) === "duplicate") return NextResponse.json({ ok: true });
 
   if (!(["completed", "failed", "cancelled", "expired"] as string[]).includes(state)) {
-    await admin.from("generation_jobs").update({ status: state, result_json: summary, updated_at: new Date().toISOString() })
+    const checkedAt = new Date();
+    await admin.from("generation_jobs").update({ status: state, result_json: summary,
+      last_provider_check_at: checkedAt.toISOString(), next_reconcile_at: new Date(checkedAt.getTime() + 5 * 60_000).toISOString(),
+      reconciliation_state: "processing", updated_at: checkedAt.toISOString() })
       .eq("id", existingJob.id).in("status", ["queued", "submitted", "processing"]);
     return NextResponse.json({ ok: true });
   }

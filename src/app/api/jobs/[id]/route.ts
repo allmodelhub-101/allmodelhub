@@ -103,7 +103,10 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
     }
 
     const normalized = task.state === "processing" ? "processing" : "submitted";
-    const { data: updated } = await admin.from("generation_jobs").update({ status: normalized, result_json: summary, updated_at: new Date().toISOString() }).eq("id", job.id).select(jobFields).single();
+    const checkedAt = new Date();
+    const { data: updated } = await admin.from("generation_jobs").update({ status: normalized, result_json: summary,
+      last_provider_check_at: checkedAt.toISOString(), next_reconcile_at: new Date(checkedAt.getTime() + 5 * 60_000).toISOString(),
+      reconciliation_state: "processing", updated_at: checkedAt.toISOString() }).eq("id", job.id).select(jobFields).single();
     return NextResponse.json({ job: await clientJob(updated as GenerationJob) });
   } catch (pollError) {
     logServerError("job-poll-provider", pollError, { jobId: job.id });
