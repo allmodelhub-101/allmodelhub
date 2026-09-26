@@ -20,6 +20,7 @@ export type NormalizedUsage = Readonly<{
   resolution?: string;
   quality?: string;
   mode?: string;
+  inputType?: string;
   fps?: DecimalString;
   dimensions?: Readonly<Record<string, DecimalString | string | boolean>>;
 }>;

@@ -2,15 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getRuntimeModel } from "@/lib/model-store";
-import { estimateMediaCredits, getInternalUsdPkr, mediaSupplierUsd } from "@/lib/pricing";
-import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
-import { apimodelsTtsStream } from "@/lib/providers/apimodels";
-import { haimakerTtsStream } from "@/lib/providers/haimaker";
 import { enforceRateLimit } from "@/lib/rate-limit";
-import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
+import { beginTtsBillingAttempt, cancelTtsBillingAttempt, settleTtsBillingAttempt } from "@/lib/billing/tts-billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -50,45 +46,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "TTS model is unavailable." }, { status: 400 });
   }
 
-  const fxRate = await getInternalUsdPkr();
-  const estimated = estimateMediaCredits(model, { textLength: input.text.length }, fxRate);
-  if (estimated >= 50 && !input.confirmedCost) {
-    await finalizeRequest(claimId, "failed");
-    return NextResponse.json({ error: "Explicit cost confirmation is required for this voice generation.", estimatedCredits: estimated }, { status: 409 });
-  }
-  const reserve = Number((estimated * 1.05).toFixed(6));
-  let holdId: string | null = null;
-
+  let billingAttempt;
   try {
-    await assertSpendingAllowed(user.id, reserve);
-    holdId = await createWalletHold(user.id, reserve, `tts-hold:${user.id}:${input.requestId}`, { model_id: model.id, request_id: input.requestId });
-    let response = await apimodelsTtsStream({ model: model.upstreamModel, text: input.text, voice_id: input.voiceId });
-    if ((!response.ok || !response.body) && process.env.HAIMAKER_API_KEY) {
-      response = await haimakerTtsStream({ model: model.upstreamModel, input: input.text, voice: input.voiceId });
-    }
-    console.info("[v0] tts provider response", JSON.stringify({ primary: response.url.includes("audio/speech") ? "apimodels" : "haimaker", ok: response.ok, status: response.status, hasBody: Boolean(response.body), model: model.upstreamModel }));
-    if (!response.ok || !response.body) {
-      await releaseWalletHold(holdId, `tts_http_${response.status}`);
-      await finalizeRequest(claimId, "failed");
-      return NextResponse.json({ error: "TTS provider request failed." }, { status: response.status >= 500 ? 502 : 400 });
-    }
-
-    const supplierCostUsd = mediaSupplierUsd(model, { textLength: input.text.length });
-    const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
-    const transactionId = await captureWalletHold(holdId, estimated, `tts-capture:${user.id}:${input.requestId}`, { kind: "tts", model_id: model.id, characters: input.text.length, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
-    await finalizeRequest(claimId, "completed", { resourceId: transactionId, response: { credits: estimated } });
-    return new Response(response.body, {
+    billingAttempt = await beginTtsBillingAttempt({ userId: user.id, parentRequestId: claimId, modelId: model.id, text: input.text, voiceId: input.voiceId, confirmedCost: input.confirmedCost });
+    const settlement = await settleTtsBillingAttempt({ attempt: billingAttempt, text: input.text });
+    const credits = Number(settlement.prepared.chargeCredits);
+    await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, transactionId: settlement.walletTransactionId } });
+    return new Response(billingAttempt.response.body, {
       headers: {
-        "Content-Type": response.headers.get("content-type") || "audio/mpeg",
+        "Content-Type": billingAttempt.response.headers.get("content-type") || "audio/mpeg",
         "Cache-Control": "private, no-store",
-        "X-AMH-Credits": estimated.toString(),
+        "X-AMH-Credits": credits.toString(),
+        "X-AMH-Billing-Receipt": settlement.receiptId,
         "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"'
       }
     });
   } catch (error) {
-    if (holdId) await releaseWalletHold(holdId, "tts_exception").catch(() => undefined);
+    if (billingAttempt) await cancelTtsBillingAttempt(billingAttempt, "tts_exception");
     await finalizeRequest(claimId, "failed").catch(() => undefined);
     const message = error instanceof Error ? error.message : "TTS failed";
+    if (message.startsWith("COST_CONFIRMATION_REQUIRED:")) {
+      return NextResponse.json({ error: "Explicit cost confirmation is required for this voice generation.", estimatedCredits: Number(message.split(":")[1]) }, { status: 409 });
+    }
     const insufficient = message.includes("INSUFFICIENT_CREDITS");
     const safety = message.includes("SPEND_LIMIT");
     if (!insufficient && !safety) logServerError("tts-request", error, { userId: user.id, modelId: model.id });

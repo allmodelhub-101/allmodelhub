@@ -13,6 +13,8 @@ import { signedFileUrl } from "@/lib/file-extract";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled, type FeatureKey } from "@/lib/feature-flags";
+import { acceptBillingQuote, cancelBillingQuoteReservation, createAndReserveBillingQuote } from "@/lib/billing/quote-reservation";
+import { audioGenerationUsage } from "@/lib/billing/audio-job-billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -77,6 +79,77 @@ return NextResponse.json({ error: `${model.name} requires a dedicated source or 
 if (modality === "audio" && model.capabilities.includes("tts")) {
 await finalizeRequest(claimId, "failed");
 return NextResponse.json({ error: "Use the Speech workspace for text-to-speech models." }, { status: 400 });
+}
+
+if (modality === "audio") {
+  const usage = audioGenerationUsage({ prompt: input.prompt, duration: input.duration, references: input.imageFileIds.length });
+  let quote: Awaited<ReturnType<typeof createAndReserveBillingQuote>> | null = null;
+  try {
+    quote = await createAndReserveBillingQuote({
+      userId: user.id,
+      requestIdempotencyId: claimId,
+      modelId: model.id,
+      providerKey: "apimodels",
+      kind: "deterministic",
+      estimatedUsage: usage,
+      dimensions: { resolution: input.resolution, mode: input.mode },
+      options: { duration: input.duration ?? null, resolution: input.resolution ?? null, mode: input.mode ?? null },
+      metadata: { operation: "audio_generation", parent_request_id: claimId },
+    });
+    const estimated = Number(quote.estimatedCustomerChargeCredits);
+    const requiresCostConfirmation = estimated >= 50;
+    if (requiresCostConfirmation && !input.confirmedCost) {
+      await cancelBillingQuoteReservation(quote.quoteId, "cost_confirmation_required");
+      await finalizeRequest(claimId, "failed");
+      return NextResponse.json({ error: "Explicit cost confirmation is required for this generation.", estimatedCredits: estimated }, { status: 409 });
+    }
+    await assertSpendingAllowed(user.id, Number(quote.reservationCredits));
+    await acceptBillingQuote(quote.quoteId);
+
+    const admin = createAdminClient();
+    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/+$/, "");
+    const callbackUrl = process.env.CALLBACK_SECRET ? `${baseUrl}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}` : undefined;
+    const publicId = createPublicId("AMH-GEN");
+    const providerBody: Record<string, unknown> = {
+      model: quote.route.upstreamModel,
+      prompt: input.prompt,
+      ...(input.duration ? { duration: input.duration } : {}),
+      ...(input.mode ? { mode: input.mode } : {}),
+      ...(callbackUrl ? { callback_url: callbackUrl } : {}),
+    };
+    const storedRequest = { model: model.id, prompt: input.prompt, ...(input.duration ? { duration: input.duration } : {}), ...(input.mode ? { mode: input.mode } : {}) };
+    const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
+      public_id: publicId, user_id: user.id, project_id: input.projectId || null, modality, model_id: model.id,
+      provider_key: quote.route.providerKey, status: "queued", prompt: input.prompt, request_json: storedRequest,
+      estimated_credits: estimated, reserved_credits: Number(quote.reservationCredits),
+      supplier_cost_usd: Number(quote.estimatedProviderCostUsd),
+      internal_cost_pkr: Number(quote.estimatedProviderCostUsd) * Number(quote.pricing.internalUsdPkrRate),
+      hold_id: quote.walletHoldId, billing_quote_id: quote.quoteId,
+    }).select("id,public_id,status,estimated_credits,reserved_credits").single();
+    if (insertError) throw insertError;
+
+    try {
+      const result = await providerCreateTask({ modelId: model.id, modality: "audio", body: providerBody, allowFallback: false });
+      const task = result.task;
+      const providerSummary = { provider_state: task.state, result_url_count: task.resultUrls?.length ?? 0 };
+      const { error: updateError } = await admin.from("generation_jobs").update({ provider_key: result.provider, provider_task_id: task.taskId, status: task.state === "processing" ? "processing" : "submitted", result_json: providerSummary, updated_at: new Date().toISOString() }).eq("id", job.id);
+      if (updateError) throw updateError;
+      await finalizeRequest(claimId, "completed", { resourceId: job.id, response: { publicId: job.public_id, status: task.state } });
+      return NextResponse.json({ job: { ...job, status: task.state === "processing" ? "processing" : "submitted" }, requiresConfirmation: requiresCostConfirmation }, { status: 202 });
+    } catch (error) {
+      await cancelBillingQuoteReservation(quote.quoteId, "audio_provider_create_failed").catch(() => undefined);
+      await admin.from("generation_jobs").update({ status: "failed", error_message: "Provider request failed", updated_at: new Date().toISOString() }).eq("id", job.id);
+      throw error;
+    }
+  } catch (error) {
+    if (quote) await cancelBillingQuoteReservation(quote.quoteId, "audio_generation_failed").catch(() => undefined);
+    await finalizeRequest(claimId, "failed").catch(() => undefined);
+    const message = error instanceof Error ? error.message : "Audio generation failed";
+    const insufficient = message.includes("INSUFFICIENT_CREDITS");
+    const safety = message.includes("SPEND_LIMIT");
+    if (!insufficient && !safety) logServerError("audio-generation-billing", error, { userId: user.id, modelId: model.id });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : safety ? "This generation exceeds your spending safety limit." : "Generation provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 502 });
+  }
 }
 
 const fxRate = await getInternalUsdPkr();

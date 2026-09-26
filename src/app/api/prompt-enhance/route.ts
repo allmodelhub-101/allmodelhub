@@ -2,16 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { chooseRuntimeTextModel } from "@/lib/model-store";
-import { estimateTextHold, actualTextCredits, getInternalUsdPkr, textSupplierUsd } from "@/lib/pricing";
-import { providerChatStream } from "@/lib/providers";
-import { normalizeProviderChunk } from "@/lib/providers/stream-normalizer";
-import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
-import { createIdempotencyKey } from "@/lib/security/ids";
+import { mergeProviderUsage, normalizeProviderChunk } from "@/lib/providers/stream-normalizer";
+import type { NormalizedProviderUsage } from "@/lib/providers/types";
 import { enforceRateLimit } from "@/lib/rate-limit";
-import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
+import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt } from "@/lib/billing/text-billing";
 
 const schema = z.object({ requestId: z.string().uuid(), prompt: z.string().min(3).max(20_000) });
 export const runtime = "nodejs";
@@ -45,61 +42,42 @@ export async function POST(request: Request) {
     { role: "user" as const, content: parsed.data.prompt }
   ];
   const joined = messages.map((message) => message.content).join("\n");
-  const fxRate = await getInternalUsdPkr();
-  const hold = estimateTextHold(model, joined, 900, fxRate);
-
+  let billingAttempt;
   try {
-    await assertSpendingAllowed(data.user.id, hold);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Spending limit exceeded";
-    await finalizeRequest(claimId, "failed");
-    return NextResponse.json(
-      {
-        error: message.includes("DAILY_SPEND_LIMIT")
-          ? "Prompt enhancement would exceed your daily spending limit."
-          : "Prompt enhancement exceeds your single-generation spending limit."
-      },
-      { status: 403 }
-    );
-  }
-
-  let holdId: string;
-  try {
-    holdId = await createWalletHold(
-      data.user.id,
-      hold,
-      createIdempotencyKey("enhance-hold", data.user.id),
-      { kind: "prompt_enhancer", model_id: model.id }
-    );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Wallet error";
-    await finalizeRequest(claimId, "failed");
-    logServerError("prompt-enhance-wallet", error, { userId: data.user.id, modelId: model.id });
-    const insufficient = message.includes("INSUFFICIENT_CREDITS");
-    return NextResponse.json(
-      { error: insufficient ? "Insufficient credits." : "Could not reserve credits." },
-      { status: insufficient ? 402 : 500 }
-    );
-  }
-
-  try {
-    const upstream = await providerChatStream({
-      modelId: model.id,
-      upstreamModel: model.upstreamModel,
-      messages,
-      maxTokens: 900,
-      allowFallback: true
+    billingAttempt = await beginTextBillingAttempt({
+      userId: data.user.id, parentRequestId: claimId, modelId: model.id,
+      textForReservation: joined, inputOverheadTokens: model.inputOverheadTokens,
+      maxOutputTokens: 900, messages, allowFallback: true, operation: "prompt_enhancer",
     });
-    if (!upstream.response.ok || !upstream.response.body) {
-      throw new Error("Prompt enhancer provider unavailable.");
-    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Billing unavailable";
+    await finalizeRequest(claimId, "failed");
+    const insufficient = message.includes("INSUFFICIENT_CREDITS");
+    const safety = message.includes("SPEND_LIMIT");
+    if (!insufficient && !safety) logServerError("prompt-enhance-billing", error, { userId: data.user.id, modelId: model.id });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits." : safety ? "This request exceeds your spending safety limit." : "Prompt enhancement is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 503 });
+  }
 
-    const reader = upstream.response.body.getReader();
+  try {
+    const upstream = billingAttempt.upstream;
+
+    const reader = upstream.response.body!.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
     let text = "";
-    let inputTokens = 0;
-    let outputTokens = 0;
+    let usage: NormalizedProviderUsage = { providerRequestId: upstream.providerRequestId };
+    const consumeLine = (raw: string) => {
+      const line = raw.trim();
+      if (!line.startsWith("data:")) return;
+      const payload = line.slice(5).trim();
+      if (!payload || payload === "[DONE]") return;
+      let chunk: unknown;
+      try { chunk = JSON.parse(payload); } catch { return; }
+      for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
+        if (event.type === "delta") text += event.text;
+        if (event.type === "usage") usage = mergeProviderUsage(usage, event);
+      }
+    };
 
     while (true) {
       const { value, done } = await reader.read();
@@ -107,42 +85,18 @@ export async function POST(request: Request) {
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split("\n");
       buffer = lines.pop() || "";
-      for (const raw of lines) {
-        const line = raw.trim();
-        if (!line.startsWith("data:")) continue;
-        const payload = line.slice(5).trim();
-        if (!payload || payload === "[DONE]") continue;
-        let chunk: unknown;
-        try {
-          chunk = JSON.parse(payload);
-        } catch {
-          continue;
-        }
-        for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
-          if (event.type === "delta") text += event.text;
-          if (event.type === "usage") {
-            if (event.inputTokens) inputTokens = event.inputTokens;
-            if (event.outputTokens) outputTokens = event.outputTokens;
-          }
-        }
-      }
+      lines.forEach(consumeLine);
     }
+    buffer += decoder.decode();
+    if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
 
-    if (!inputTokens) inputTokens = Math.ceil(joined.length / 3.4);
-    if (!outputTokens) outputTokens = Math.max(1, Math.ceil(text.length / 3.4));
-    const credits = Math.min(hold, actualTextCredits(model, inputTokens, outputTokens, fxRate));
-    const supplierCostUsd = textSupplierUsd(model, inputTokens, outputTokens);
-    const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
-    await captureWalletHold(
-      holdId,
-      credits,
-      createIdempotencyKey("enhance-capture", data.user.id),
-      { kind: "prompt_enhancer", model_id: model.id, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr }
-    );
-    await finalizeRequest(claimId, "completed", { response: { credits, model: model.id } });
+    if (!text.trim()) throw new Error("Prompt enhancer provider returned no text.");
+    const settlement = await settleTextBillingAttempt({ attempt: billingAttempt, usage, rawUsage: { protocol: upstream.protocol, normalized: usage }, metadata: { operation: "prompt_enhancer" } });
+    const credits = Number(settlement.prepared.chargeCredits);
+    await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, model: model.id } });
     return NextResponse.json({ prompt: text.trim(), credits });
   } catch (error) {
-    await releaseWalletHold(holdId, "prompt_enhancer_failed").catch(() => undefined);
+    await cancelTextBillingAttempt(billingAttempt, "prompt_enhancer_failed");
     await finalizeRequest(claimId, "failed").catch(() => undefined);
     logServerError("prompt-enhance-provider", error, { userId: data.user.id, modelId: model.id });
     return NextResponse.json(

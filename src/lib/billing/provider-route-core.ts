@@ -60,3 +60,13 @@ export function selectBillingProviderRoute(
     metadata: routeMetadata(selected.metadata),
   };
 }
+
+export function listBillingProviderRoutes(rows: readonly BillingProviderRouteRow[], modelId: string) {
+  const ordered = rows
+    .filter((row) => row.active && row.model_id === modelId)
+    .sort((left, right) => left.priority - right.priority || left.provider_key.localeCompare(right.provider_key));
+  if (!ordered.length) {
+    throw new BillingRouteUnavailableError("ROUTE_NOT_FOUND", "No active provider route is configured for this paid request.");
+  }
+  return ordered.map((row) => selectBillingProviderRoute([row], { modelId, providerKey: row.provider_key }));
+}

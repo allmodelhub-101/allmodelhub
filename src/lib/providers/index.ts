@@ -1,6 +1,7 @@
-import { apimodelsChatStream, apimodelsCreateTask, apimodelsPollTask } from "@/lib/providers/apimodels";
-import { haimakerChatStream, haimakerCreateTask, haimakerModelFor, haimakerPollTask } from "@/lib/providers/haimaker";
+import { apimodelsChatStream, apimodelsCreateTask, apimodelsPollTask, apimodelsTtsStream } from "@/lib/providers/apimodels";
+import { haimakerChatStream, haimakerCreateTask, haimakerModelFor, haimakerPollTask, haimakerTtsStream } from "@/lib/providers/haimaker";
 import type { ProviderChatRequest, ProviderChatResult } from "@/lib/providers/types";
+import type { ResolvedBillingProviderRoute } from "@/lib/billing/provider-route-core";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 type ProviderRoute = { provider_key: string; upstream_model: string; priority: number; active: boolean };
@@ -81,4 +82,56 @@ export async function providerChatStream(input: ProviderChatRequest & { modelId:
   if (lastResponse) return { response: lastResponse, provider: lastProvider, protocol: lastProtocol };
   if (lastError instanceof Error) throw lastError;
   throw new Error("No AI provider is currently available for this model.");
+}
+
+export async function providerChatStreamExact(
+  route: ResolvedBillingProviderRoute,
+  input: Omit<ProviderChatRequest, "upstreamModel">,
+): Promise<ProviderChatResult> {
+  const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
+  if (key === "apimodels" || key === "apimodelsapp") {
+    const result = await apimodelsChatStream({ ...input, upstreamModel: route.upstreamModel });
+    return {
+      response: result.response,
+      provider: route.providerKey,
+      protocol: result.protocol,
+      providerRequestId: result.response.headers.get("x-request-id") ?? result.response.headers.get("request-id") ?? undefined,
+    };
+  }
+  if (key === "haimaker" || key === "haimakerai") {
+    if (!process.env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
+    const response = await haimakerChatStream({
+      ...input,
+      upstreamModel: route.upstreamModel,
+      modelId: route.modelId,
+      upstreamOverride: route.upstreamModel,
+    });
+    return {
+      response,
+      provider: route.providerKey,
+      protocol: "openai",
+      providerRequestId: response.headers.get("x-request-id") ?? response.headers.get("request-id") ?? undefined,
+    };
+  }
+  throw new Error(`Unsupported provider route: ${route.providerKey}`);
+}
+
+export async function providerTtsStreamExact(
+  route: ResolvedBillingProviderRoute,
+  input: Readonly<{ text: string; voiceId: string; languageCode?: string }>,
+) {
+  const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
+  let response: Response;
+  if (key === "apimodels" || key === "apimodelsapp") {
+    response = await apimodelsTtsStream({ model: route.upstreamModel, text: input.text, voice_id: input.voiceId, language_code: input.languageCode });
+  } else if (key === "haimaker" || key === "haimakerai") {
+    response = await haimakerTtsStream({ model: route.upstreamModel, input: input.text, voice: input.voiceId });
+  } else {
+    throw new Error(`Unsupported TTS provider route: ${route.providerKey}`);
+  }
+  return {
+    response,
+    provider: route.providerKey,
+    providerRequestId: response.headers.get("x-request-id") ?? response.headers.get("request-id") ?? undefined,
+  } as const;
 }

@@ -162,10 +162,14 @@ export async function createAndReserveBillingQuote(request: UniversalQuoteReques
       internalUsdPkrRate: pricingContext.internalUsdPkrRate,
     },
     estimatedCustomerChargeCredits: reservation.customer_quote_credits,
+    estimatedProviderCostUsd: plan.estimatedProviderCostUsd,
     reservationCredits: reservation.reservation_credits,
     reservationKind: reservation.reservation_kind,
     reservationIsCustomerCharge: false as const,
     pricingSnapshot: reservation.pricing_snapshot,
+    authoritativeRule: pricingContext.rule,
+    profitabilityPolicy,
+    dimensions: request.dimensions ?? {},
   } as const;
 }
 
@@ -174,4 +178,19 @@ export async function expireBillingQuoteReservation(quoteId: string) {
   const { data, error } = await admin.rpc("billing_expire_quote_reservation", { p_quote_id: quoteId });
   if (error) throw error;
   return Boolean(data);
+}
+
+export async function acceptBillingQuote(quoteId: string) {
+  const admin = createAdminClient();
+  const { data, error } = await admin.rpc("billing_accept_quote", { p_quote_id: quoteId });
+  if (error || !data) throw error ?? new Error("BILLING_QUOTE_ACCEPT_FAILED");
+}
+
+export async function cancelBillingQuoteReservation(quoteId: string, reason: string) {
+  const admin = createAdminClient();
+  const { data, error } = await admin.rpc("billing_cancel_quote_reservation", {
+    p_quote_id: quoteId,
+    p_reason: reason,
+  });
+  if (error || !data) throw error ?? new Error("BILLING_QUOTE_CANCEL_FAILED");
 }

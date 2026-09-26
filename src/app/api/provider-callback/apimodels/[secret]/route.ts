@@ -8,6 +8,8 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { requestIp } from "@/lib/security/request";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
+import { audioGenerationUsage, completeAudioGenerationBilling } from "@/lib/billing/audio-job-billing";
+import { cancelBillingQuoteReservation } from "@/lib/billing/quote-reservation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -116,7 +118,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   const state = normalizeState(parsed.data.state, resultUrls.length > 0);
   const summary = callbackSummary(parsed.data, state, resultUrls);
   const admin = createAdminClient();
-  const jobFields = "id,user_id,public_id,modality,model_id,status,hold_id,estimated_credits,provider_task_id";
+  const jobFields = "id,user_id,public_id,modality,model_id,status,hold_id,billing_quote_id,estimated_credits,provider_task_id,prompt,request_json";
   const { data: existingJob, error: lookupError } = await admin.from("generation_jobs").select(jobFields).eq("provider_task_id", parsed.data.taskId).maybeSingle();
   if (lookupError) {
     logServerError("provider-callback-lookup", lookupError, { source: "apimodels" });
@@ -148,14 +150,24 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
     const charge = Number(job.estimated_credits);
     try {
-      const settlement = await completeGenerationJob({
-        jobId: job.id,
-        chargedCredits: charge,
-        resultJson: { ...summary, amhStoredPaths: storedPaths },
-        resultUrls,
-        metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" }
-      });
-      if (settlement.completedNow) {
+      const billingV2Audio = job.modality === "audio" && Boolean(job.billing_quote_id);
+      const requestJson = (job.request_json && typeof job.request_json === "object" ? job.request_json : {}) as { duration?: number };
+      const settlement = billingV2Audio
+        ? await completeAudioGenerationBilling({
+            jobId: job.id,
+            usage: audioGenerationUsage({ prompt: String(job.prompt ?? ""), duration: requestJson.duration }),
+            providerTaskId: job.provider_task_id,
+            resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+            metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" },
+          })
+        : await completeGenerationJob({
+            jobId: job.id,
+            chargedCredits: charge,
+            resultJson: { ...summary, amhStoredPaths: storedPaths },
+            resultUrls,
+            metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" }
+          });
+      if (billingV2Audio || ("completedNow" in settlement && settlement.completedNow)) {
         await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.` });
       }
       return NextResponse.json({ ok: true });
@@ -166,7 +178,8 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     }
   }
 
-  if (existingJob.hold_id) await releaseWalletHold(existingJob.hold_id, "provider_callback_failed").catch(() => undefined);
+  if (existingJob.billing_quote_id) await cancelBillingQuoteReservation(existingJob.billing_quote_id, "provider_callback_failed").catch(() => undefined);
+  else if (existingJob.hold_id) await releaseWalletHold(existingJob.hold_id, "provider_callback_failed").catch(() => undefined);
   await admin.from("generation_jobs").update({ status: "failed", result_json: summary, error_message: parsed.data.failMsg || "Generation failed", updated_at: new Date().toISOString() }).eq("id", existingJob.id);
   await notifyUser(existingJob.user_id, { type: "generation", title: `${existingJob.modality} generation failed`, body: `${existingJob.public_id} failed. Eligible reserved Credits were released.` });
   return NextResponse.json({ ok: true });

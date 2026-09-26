@@ -7,17 +7,20 @@ import { logServerError } from "@/lib/public-error";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { completeGenerationJob, releaseWalletHold } from "@/lib/wallet";
+import { audioGenerationUsage, completeAudioGenerationBilling } from "@/lib/billing/audio-job-billing";
+import { cancelBillingQuoteReservation } from "@/lib/billing/quote-reservation";
 
 export const dynamic = "force-dynamic";
 
 const idSchema = z.string().uuid();
-const jobFields = "id,public_id,user_id,project_id,modality,model_id,provider_key,provider_task_id,status,prompt,estimated_credits,reserved_credits,charged_credits,hold_id,result_json,result_urls,error_message,created_at,updated_at,completed_at";
+const jobFields = "id,public_id,user_id,project_id,modality,model_id,provider_key,provider_task_id,status,prompt,request_json,estimated_credits,reserved_credits,charged_credits,hold_id,billing_quote_id,result_json,result_urls,error_message,created_at,updated_at,completed_at";
 
 type GenerationJob = {
   id: string; public_id: string; user_id: string; project_id?: string | null;
   modality: string; model_id: string; provider_key?: string | null; provider_task_id?: string | null;
   status: string; prompt?: string | null; estimated_credits?: number | null; reserved_credits?: number | null;
-  charged_credits?: number | null; hold_id?: string | null; result_json?: { amhStoredPaths?: unknown } | null;
+  charged_credits?: number | null; hold_id?: string | null; billing_quote_id?: string | null;
+  request_json?: { duration?: number } | null; result_json?: { amhStoredPaths?: unknown } | null;
   result_urls?: string[] | null; error_message?: string | null; created_at?: string; updated_at?: string; completed_at?: string | null;
 };
 
@@ -77,12 +80,21 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       const storedPaths = await persistGeneratedAssets(user.id, job.id, resultUrls);
       const charge = Number(job.estimated_credits);
       try {
-        const settlement = await completeGenerationJob({
-          jobId: job.id, chargedCredits: charge,
-          resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
-          metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" }
-        });
-        if (settlement.completedNow) {
+        const billingV2Audio = job.modality === "audio" && Boolean(job.billing_quote_id);
+        const settlement = billingV2Audio
+          ? await completeAudioGenerationBilling({
+              jobId: job.id,
+              usage: audioGenerationUsage({ prompt: job.prompt ?? "", duration: job.request_json?.duration }),
+              providerTaskId: job.provider_task_id!,
+              resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+              metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" },
+            })
+          : await completeGenerationJob({
+              jobId: job.id, chargedCredits: charge,
+              resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+              metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" }
+            });
+        if (billingV2Audio || ("completedNow" in settlement && settlement.completedNow)) {
           await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${charge.toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
         }
       } catch (settlementError) {
@@ -95,7 +107,8 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
     }
 
     if (task.state === "failed") {
-      if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_generation_failed").catch(() => undefined);
+      if (job.billing_quote_id) await cancelBillingQuoteReservation(job.billing_quote_id, "provider_generation_failed").catch(() => undefined);
+      else if (job.hold_id) await releaseWalletHold(job.hold_id, "provider_generation_failed").catch(() => undefined);
       const { data: updated } = await admin.from("generation_jobs").update({ status: "failed", error_message: task.failMsg?.slice(0, 1000) || "Generation failed", result_json: summary, updated_at: new Date().toISOString() }).eq("id", job.id).select(jobFields).single();
       await notifyUser(user.id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });
       return NextResponse.json({ job: await clientJob(updated as GenerationJob) });

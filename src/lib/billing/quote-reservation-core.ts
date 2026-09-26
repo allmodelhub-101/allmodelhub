@@ -86,19 +86,19 @@ export function validateProfitabilityPolicy(input: Readonly<{
   };
 }
 
-function configuredProductMinimum(rule: ValidatedPricingRule): DecimalString | null {
+export function configuredProductMinimum(rule: ValidatedPricingRule): DecimalString | null {
   const value = rule.metadata.productMinimumCredits;
   return value === undefined
     ? null
     : nonnegativeExact(value, "PRODUCT_MINIMUM_INVALID", "metadata.productMinimumCredits");
 }
 
-function chargeWithMinimum(rawCharge: DecimalString, minimum: DecimalString | null) {
+export function chargeWithMinimum(rawCharge: DecimalString, minimum: DecimalString | null) {
   if (!minimum) return rawCharge;
   return decimalString(Decimal.max(decimal(rawCharge), decimal(minimum)));
 }
 
-function roundReservationUp(amount: DecimalString, quantum: DecimalString) {
+export function roundWalletAmountUp(amount: DecimalString, quantum: DecimalString) {
   const unit = decimal(quantum);
   return decimalString(decimal(amount).div(unit).ceil().mul(unit));
 }
@@ -141,7 +141,7 @@ export function buildBillingQuotePlan(input: Readonly<{
   const estimatedCharge = chargeWithMinimum(input.estimatedPrice.customerChargeCredits, productMinimum);
   const maximumPrice = input.kind === "deterministic" ? input.estimatedPrice : input.maximumPrice!;
   const maximumCharge = chargeWithMinimum(maximumPrice.customerChargeCredits, productMinimum);
-  const reservationCharge = roundReservationUp(maximumCharge, input.profitabilityPolicy.walletReservationQuantumCredits);
+  const reservationCharge = roundWalletAmountUp(maximumCharge, input.profitabilityPolicy.walletReservationQuantumCredits);
   if (decimal(maximumCharge).lt(decimal(estimatedCharge))
     || decimal(maximumPrice.providerCostUsd).lt(decimal(input.estimatedPrice.providerCostUsd))) {
     throw new QuoteReservationError("MAXIMUM_BELOW_ESTIMATE", "The maximum usage envelope cannot cost less than the estimate.");
