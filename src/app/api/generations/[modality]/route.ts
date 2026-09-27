@@ -99,7 +99,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           await admin.from("generation_jobs").update({ status: "failed", error_message: "Cost confirmation required" }).eq("id", job.id);
           return NextResponse.json({ error: "Explicit cost confirmation is required for this generation.", estimatedCredits: estimated }, { status: 409 });
         }
-        await assertSpendingAllowed(user.id, Number(quote.reservationCredits));
+        await assertSpendingAllowed(user.id, quote.reservationCredits);
         await acceptBillingQuote(quote.quoteId);
         await admin.from("generation_jobs").update({
           provider_key: route.providerKey, billing_quote_id: quote.quoteId, hold_id: quote.walletHoldId,

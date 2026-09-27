@@ -10,7 +10,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
-import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt } from "@/lib/billing/text-billing";
+import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, type TextBillingAttempt } from "@/lib/billing/text-billing";
 import { prepareTextSettlement } from "@/lib/billing/text-billing-core";
 import { multiply } from "@/lib/billing/money";
 
@@ -117,22 +117,23 @@ export async function POST(request: Request) {
   const effectiveMessages = [{ role: "system" as const, content: systemParts.join("\n\n") }, ...body.messages.filter((m) => m.role !== "system")];
   const combinedInput = effectiveMessages.map((m) => `${m.role}:${m.content}`).join("\n");
   const maxTokens = body.deepThink ? Math.max(body.maxTokens, 4096) : body.maxTokens;
-  let billingAttempt;
+  const billingInput = {
+    userId: user.id,
+    parentRequestId: claimId,
+    modelId: selected.id,
+    textForReservation: combinedInput,
+    inputOverheadTokens: selected.inputOverheadTokens,
+    maxOutputTokens: maxTokens,
+    messages: effectiveMessages,
+    deepThink: body.deepThink,
+    allowFallback: true,
+    operation: "chat" as const,
+    options: { deepThink: body.deepThink, private: body.private },
+    metadata: { conversation_id: body.conversationId ?? null },
+  };
+  let billingAttempt: TextBillingAttempt;
   try {
-    billingAttempt = await beginTextBillingAttempt({
-      userId: user.id,
-      parentRequestId: claimId,
-      modelId: selected.id,
-      textForReservation: combinedInput,
-      inputOverheadTokens: selected.inputOverheadTokens,
-      maxOutputTokens: maxTokens,
-      messages: effectiveMessages,
-      deepThink: body.deepThink,
-      allowFallback: true,
-      operation: "chat",
-      options: { deepThink: body.deepThink, private: body.private },
-      metadata: { conversation_id: body.conversationId ?? null },
-    });
+    billingAttempt = await beginTextBillingAttempt(billingInput);
   } catch (error) {
     const message = errorMessage(error);
     const insufficient = message.includes("INSUFFICIENT_CREDITS");
@@ -170,44 +171,60 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Could not save chat conversation." }, { status: 500 });
   }
 
-  const upstream = billingAttempt.upstream;
-
   const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
-  const providerReader = upstream.response.body!.getReader();
+  let activeReader: ReadableStreamDefaultReader<Uint8Array> | null = null;
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
-      let buffer = "";
       let assistantText = "";
-      let providerUsage: NormalizedProviderUsage = { providerRequestId: upstream.providerRequestId };
+      let providerUsage: NormalizedProviderUsage = { providerRequestId: billingAttempt.upstream.providerRequestId };
       let finalized = false;
       let assistantMessageId: string | null = null;
       const emit = (payload: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
 
-      try {
-        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: upstream.provider, tier: selected.tier, private: body.private });
+      const consumeAttempt = async (attempt: typeof billingAttempt) => {
+        const decoder = new TextDecoder();
+        const reader = attempt.upstream.response.body!.getReader();
+        activeReader = reader;
+        let buffer = "";
         const consumeLine = (rawLine: string) => {
           const line = rawLine.trim();
           if (!line.startsWith("data:")) return;
           const chunk = safeSseJson(line);
           if (!chunk) return;
-          for (const event of normalizeProviderChunk(chunk, upstream.protocol)) {
+          for (const event of normalizeProviderChunk(chunk, attempt.upstream.protocol)) {
             if (event.type === "delta") { assistantText += event.text; emit({ type: "delta", text: event.text }); }
             if (event.type === "usage") providerUsage = mergeProviderUsage(providerUsage, event);
           }
         };
-        while (true) {
-          const { value, done } = await providerReader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-          lines.forEach(consumeLine);
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+            lines.forEach(consumeLine);
+          }
+          buffer += decoder.decode();
+          if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
+        } finally {
+          reader.releaseLock();
+          if (activeReader === reader) activeReader = null;
         }
-        buffer += decoder.decode();
-        if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
-        if (!assistantText.trim()) throw new Error("Provider stream completed without response text.");
+      };
+
+      try {
+        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: billingAttempt.upstream.provider, tier: selected.tier, private: body.private });
+        await consumeAttempt(billingAttempt);
+        if (!assistantText.trim()) {
+          await cancelTextBillingAttempt(billingAttempt, "empty_provider_stream");
+          billingAttempt = await beginTextBillingAttempt(billingInput);
+          providerUsage = { providerRequestId: billingAttempt.upstream.providerRequestId };
+          emit({ type: "provider_retry", provider: billingAttempt.upstream.provider });
+          await consumeAttempt(billingAttempt);
+        }
+        if (!assistantText.trim()) throw new Error("Provider stream completed without response text after provider fallback.");
         const prepared = prepareTextSettlement({
           rule: billingAttempt.quote.authoritativeRule,
           usage: providerUsage,
@@ -220,7 +237,7 @@ export async function POST(request: Request) {
         if (!body.private && conversationId) {
           const { data: assistant, error: assistantError } = await admin.from("messages").insert({
             conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText,
-            model_id: selected.id, provider_key: upstream.provider,
+            model_id: selected.id, provider_key: billingAttempt.upstream.provider,
             input_tokens: Number(providerUsage.inputTokens), output_tokens: Number(providerUsage.outputTokens),
             credits_charged: Number(prepared.chargeCredits), supplier_cost_usd: Number(prepared.finalProviderCostUsd),
             internal_cost_pkr: Number(multiply(prepared.finalProviderCostUsd, billingAttempt.quote.pricing.internalUsdPkrRate)),
@@ -234,7 +251,7 @@ export async function POST(request: Request) {
           attempt: billingAttempt,
           usage: providerUsage,
           messageId: assistantMessageId,
-          rawUsage: { protocol: upstream.protocol, normalized: providerUsage },
+          rawUsage: { protocol: billingAttempt.upstream.protocol, normalized: providerUsage },
           metadata: { operation: "chat", conversation_id: conversationId, private: body.private },
         });
         finalized = true;
@@ -256,7 +273,7 @@ export async function POST(request: Request) {
       }
     },
     async cancel() {
-      await providerReader.cancel().catch(() => undefined);
+      await activeReader?.cancel().catch(() => undefined);
       await cancelTextBillingAttempt(billingAttempt, "client_cancelled");
       await finalizeRequest(claimId, "failed").catch(() => undefined);
     }

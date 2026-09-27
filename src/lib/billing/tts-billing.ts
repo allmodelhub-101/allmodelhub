@@ -55,7 +55,7 @@ export async function beginTtsBillingAttempt(input: Readonly<{
       if (Number(quote.estimatedCustomerChargeCredits) >= 50 && !input.confirmedCost) {
         throw new Error(`COST_CONFIRMATION_REQUIRED:${quote.estimatedCustomerChargeCredits}`);
       }
-      await assertSpendingAllowed(input.userId, Number(quote.reservationCredits));
+      await assertSpendingAllowed(input.userId, quote.reservationCredits);
       await acceptBillingQuote(quote.quoteId);
       const upstream = await providerTtsStreamExact(route, input);
       if (!upstream.response.ok || !upstream.response.body) throw new Error(`Provider returned HTTP ${upstream.response.status}`);

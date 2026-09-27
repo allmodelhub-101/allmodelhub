@@ -72,7 +72,7 @@ export async function beginTextBillingAttempt(input: Readonly<{
         options: input.options,
         metadata: { operation: input.operation, parent_request_id: input.parentRequestId, ...input.metadata },
       });
-      await assertSpendingAllowed(input.userId, Number(quote.reservationCredits));
+      await assertSpendingAllowed(input.userId, quote.reservationCredits);
       await acceptBillingQuote(quote.quoteId);
       const upstream = await providerChatStreamExact(route, {
         messages: input.messages,
