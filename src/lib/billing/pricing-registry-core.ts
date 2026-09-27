@@ -423,11 +423,20 @@ export function calculateAuthoritativePrice(input: Readonly<{
   const lines: PricingBreakdown[] = [];
   let total = new Decimal(0);
   const additions: Array<[string, Decimal, Decimal]> = [];
+  const cachedTokens = usageDecimal(input.usage.cachedInputTokens, "cachedInputTokens")
+    .plus(usageDecimal(input.usage.cachedOutputTokens, "cachedOutputTokens"));
+  const cacheWriteTokens = usageDecimal(input.usage.cacheWriteTokens, "cacheWriteTokens");
+  if (cachedTokens.gt(0) && !rates.cachedToken) {
+    fail("RULE_INVALID", "Nonzero cached-token usage requires a validated cached-token price.");
+  }
+  if (cacheWriteTokens.gt(0) && !rates.cacheWriteToken) {
+    fail("RULE_INVALID", "Nonzero cache-write usage requires a validated cache-write price.");
+  }
   if (rates.flat) additions.push(["flat", new Decimal(1), new Decimal(rates.flat)]);
   if (rates.inputToken) additions.push(["input_tokens", usageDecimal(input.usage.inputTokens, "inputTokens", true), new Decimal(rates.inputToken)]);
   if (rates.outputToken) additions.push(["output_tokens", usageDecimal(input.usage.outputTokens, "outputTokens", true), new Decimal(rates.outputToken)]);
-  if (rates.cachedToken) additions.push(["cached_tokens", usageDecimal(input.usage.cachedInputTokens, "cachedInputTokens").plus(usageDecimal(input.usage.cachedOutputTokens, "cachedOutputTokens")), new Decimal(rates.cachedToken)]);
-  if (rates.cacheWriteToken) additions.push(["cache_write_tokens", usageDecimal(input.usage.cacheWriteTokens, "cacheWriteTokens"), new Decimal(rates.cacheWriteToken)]);
+  if (rates.cachedToken) additions.push(["cached_tokens", cachedTokens, new Decimal(rates.cachedToken)]);
+  if (rates.cacheWriteToken) additions.push(["cache_write_tokens", cacheWriteTokens, new Decimal(rates.cacheWriteToken)]);
   if (rates.perImage) additions.push(["images", usageDecimal(input.usage.images, "images", true), new Decimal(rates.perImage)]);
   if (rates.perReferenceImage) additions.push(["reference_images", usageDecimal(input.usage.references, "references"), new Decimal(rates.perReferenceImage)]);
   if (rates.perSecond) additions.push(["seconds", usageDecimal(input.usage.seconds, "seconds", true), new Decimal(rates.perSecond)]);

@@ -184,3 +184,18 @@ test("rejects missing billable usage and invalid financial configuration", () =>
   assertPricingError(() => price(row(), {}, {}, { fx: "0" }), "FX_RATE_UNAVAILABLE");
   assertPricingError(() => resolve(row({ flat_price: 0.1 })), "RULE_INVALID");
 });
+
+test("fails closed when providers report cache usage without validated cache rates", () => {
+  assert.throws(
+    () => price(row({ billing_type: "token", input_token_price: "0.000001", output_token_price: "0.000002", cached_token_price: null }), {
+      inputTokens: "10", outputTokens: "2", cachedInputTokens: "1",
+    }),
+    (error) => error instanceof PricingUnavailableError && error.code === "RULE_INVALID",
+  );
+  assert.throws(
+    () => price(row({ billing_type: "token", input_token_price: "0.000001", output_token_price: "0.000002", cache_write_token_price: null }), {
+      inputTokens: "10", outputTokens: "2", cacheWriteTokens: "1",
+    }),
+    (error) => error instanceof PricingUnavailableError && error.code === "RULE_INVALID",
+  );
+});
