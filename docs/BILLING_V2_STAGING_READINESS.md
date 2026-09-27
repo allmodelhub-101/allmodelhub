@@ -76,3 +76,5 @@ Because no real staging operation could safely traverse quote → reserve → pr
 5. Deploy that exact SHA to staging, then run the real call matrix and verify wallet balances, holds, usage events, receipts, anomalies, idempotency, failure release, and provider-reported costs before reconsidering production.
 
 Production remains blocked until all three release blockers are resolved and the real staging matrix passes without a known loss or overcharge condition.
+
+Preview deployment trigger: 2026-09-27
