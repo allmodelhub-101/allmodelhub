@@ -181,7 +181,6 @@ export async function POST(request: Request) {
       let finalized = false;
       let assistantMessageId: string | null = null;
       const emit = (payload: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
-
       const consumeAttempt = async (attempt: typeof billingAttempt) => {
         const decoder = new TextDecoder();
         const reader = attempt.upstream.response.body!.getReader();
