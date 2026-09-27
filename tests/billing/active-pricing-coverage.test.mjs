@@ -7,7 +7,7 @@ const migration = readFileSync(
   "utf8",
 );
 const executionGateMigration = readFileSync(
-  new URL("../../supabase/migrations/20260927123000_disable_unverified_billing_routes.sql", import.meta.url),
+  new URL("../../supabase/migrations/20260927061138_disable_unverified_billing_routes.sql", import.meta.url),
   "utf8",
 );
 

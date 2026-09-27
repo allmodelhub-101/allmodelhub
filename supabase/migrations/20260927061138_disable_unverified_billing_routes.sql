@@ -1,4 +1,4 @@
--- Keep models without a current authoritative Billing V2 rule out of every
+-- Keep models without a current authoritative Billing V2 rule out of all
 -- executable provider route. The pricing decision remains in the immutable
 -- registry so admins can see the exact temporary-unavailable reason.
 
