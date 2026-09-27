@@ -6,6 +6,10 @@ const migration = readFileSync(
   new URL("../../supabase/migrations/20260927020934_complete_billing_v2_pricing_registry.sql", import.meta.url),
   "utf8",
 );
+const executionGateMigration = readFileSync(
+  new URL("../../supabase/migrations/20260927123000_disable_unverified_billing_routes.sql", import.meta.url),
+  "utf8",
+);
 
 const previouslyVerified = [
   "eleven-tts-flash", "eleven-tts-multilingual", "eleven-tts-v3", "kling-sound-effects",
@@ -47,6 +51,14 @@ test("unverified routes are explicit fail-closed registry state", () => {
   assert.match(migration, /jsonb_build_object\('kind', 'blocked', 'reason', reason\)/);
   assert.match(migration, /v_active_routes <> 57/);
   assert.match(migration, /v_covered_routes <> v_active_routes/);
+});
+
+test("unverified routes are removed from executable customer routing", () => {
+  assert.match(executionGateMigration, /update public\.provider_models/);
+  assert.match(executionGateMigration, /billing_v2_status', 'temporarily_unavailable'/);
+  assert.match(executionGateMigration, /update public\.models/);
+  assert.match(executionGateMigration, /auto_eligible = false/);
+  assert.match(executionGateMigration, /An executable provider route has non-verified Billing V2 pricing/);
 });
 
 test("verified rules preserve all distinct media strategies", () => {
