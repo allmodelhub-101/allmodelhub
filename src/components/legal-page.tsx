@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export function LegalPage({ title, updated = "August 29, 2026", children }: { title: string; updated?: string; children: ReactNode }) {
-  const reviewed = process.env.NEXT_PUBLIC_LEGAL_REVIEWED === "true";
+  const reviewed = process.env.LEGAL_REVIEWED === "true";
   return (
     <main className="legal-page">
       <div className="container legal-wrap">

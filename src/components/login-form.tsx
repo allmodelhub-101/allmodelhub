@@ -2,8 +2,10 @@
 import {FormEvent,useState} from "react";
 import {ArrowRight,Check,Eye,EyeSlash,GoogleLogo,LockKey,ShieldCheck} from "@phosphor-icons/react";
 import {createClient} from "@/lib/supabase/client";
+import {safeInternalPath} from "@/lib/security/request";
 type Mode="login"|"signup"|"recovery";
 export function LoginForm({nextPath="/chat"}:{nextPath?:string}){
+ nextPath=safeInternalPath(nextPath);
  const[mode,setMode]=useState<Mode>("login"),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[showPassword,setShowPassword]=useState(false),[message,setMessage]=useState(""),[success,setSuccess]=useState(false),[loading,setLoading]=useState(false);
  const callback=(next=nextPath)=>`${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
  async function google(){setLoading(true);setMessage("");setSuccess(false);const{error}=await createClient().auth.signInWithOAuth({provider:"google",options:{redirectTo:callback(),skipBrowserRedirect:false}});if(error){setMessage(error.message.includes("provider")?"Google sign-in is not enabled yet. Please continue with email.":error.message);setLoading(false)}}

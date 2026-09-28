@@ -16,13 +16,24 @@ export type ProviderChatRequest = {
 
 export type ProviderChatResult = {
   response: Response;
-  provider: ProviderName;
+  provider: string;
   protocol: ProviderProtocol;
+  providerRequestId?: string;
+};
+
+export type NormalizedProviderUsage = {
+  inputTokens?: string;
+  outputTokens?: string;
+  cachedInputTokens?: string;
+  cacheWriteTokens?: string;
+  reasoningTokens?: string;
+  providerRequestId?: string;
+  providerReportedCost?: { amount: string; currency: "USD" | "PKR" | "CREDIT" };
 };
 
 export type NormalizedStreamEvent =
   | { type: "delta"; text: string }
-  | { type: "usage"; inputTokens?: number; outputTokens?: number };
+  | ({ type: "usage" } & NormalizedProviderUsage);
 
 export type AsyncTaskResult = {
   taskId: string;

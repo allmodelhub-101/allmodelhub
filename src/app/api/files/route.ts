@@ -43,7 +43,8 @@ export async function POST(request: Request) {
   const user = data.user;
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const limit = await enforceRateLimit(`files:${user.id}`);
+  const limit = await enforceRateLimit(`files:${user.id}`, "files");
+  if (limit.unavailable) return NextResponse.json({ error: "Upload protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many uploads. Try again shortly." }, { status: 429 });
 
   const form = await request.formData();

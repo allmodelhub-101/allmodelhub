@@ -4,16 +4,15 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { ModelTier } from "@/lib/models";
 import { chooseRuntimeTextModel, getRuntimeModel } from "@/lib/model-store";
-import { estimateTextHold, actualTextCredits, getInternalUsdPkr, textSupplierUsd } from "@/lib/pricing";
-import { providerChatStream } from "@/lib/providers";
-import { normalizeProviderChunk } from "@/lib/providers/stream-normalizer";
-import { createWalletHold, captureWalletHold, releaseWalletHold } from "@/lib/wallet";
-import { createIdempotencyKey } from "@/lib/security/ids";
+import { mergeProviderUsage, normalizeProviderChunk } from "@/lib/providers/stream-normalizer";
+import type { NormalizedProviderUsage } from "@/lib/providers/types";
 import { enforceRateLimit } from "@/lib/rate-limit";
-import { assertSpendingAllowed } from "@/lib/spending";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
+import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, type TextBillingAttempt } from "@/lib/billing/text-billing";
+import { prepareTextSettlement } from "@/lib/billing/text-billing-core";
+import { multiply } from "@/lib/billing/money";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -62,7 +61,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Your session expired. Please sign in again to continue.", code: "AUTH_SESSION_EXPIRED" }, { status: 401 });
   }
 
-  const limit = await enforceRateLimit(`chat:${user.id}`);
+  const limit = await enforceRateLimit(`chat:${user.id}`, "chat");
+  if (limit.unavailable) return NextResponse.json({ error: "Request protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
@@ -117,21 +117,30 @@ export async function POST(request: Request) {
   const effectiveMessages = [{ role: "system" as const, content: systemParts.join("\n\n") }, ...body.messages.filter((m) => m.role !== "system")];
   const combinedInput = effectiveMessages.map((m) => `${m.role}:${m.content}`).join("\n");
   const maxTokens = body.deepThink ? Math.max(body.maxTokens, 4096) : body.maxTokens;
-  const fxRate = await getInternalUsdPkr();
-  const holdAmount = estimateTextHold(selected, combinedInput, maxTokens, fxRate);
-  const holdKey = createIdempotencyKey("chat-hold", user.id, body.requestId);
-  let holdId: string | null = null;
-
+  const billingInput = {
+    userId: user.id,
+    parentRequestId: claimId,
+    modelId: selected.id,
+    textForReservation: combinedInput,
+    inputOverheadTokens: selected.inputOverheadTokens,
+    maxOutputTokens: maxTokens,
+    messages: effectiveMessages,
+    deepThink: body.deepThink,
+    allowFallback: true,
+    operation: "chat" as const,
+    options: { deepThink: body.deepThink, private: body.private },
+    metadata: { conversation_id: body.conversationId ?? null },
+  };
+  let billingAttempt: TextBillingAttempt;
   try {
-    await assertSpendingAllowed(user.id, holdAmount);
-    holdId = await createWalletHold(user.id, holdAmount, holdKey, { model_id: selected.id, kind: "chat", private: body.private });
+    billingAttempt = await beginTextBillingAttempt(billingInput);
   } catch (error) {
     const message = errorMessage(error);
     const insufficient = message.includes("INSUFFICIENT_CREDITS");
     const safety = message.includes("SPEND_LIMIT");
     await finalizeRequest(claimId, "failed");
     if (!insufficient && !safety) logServerError("chat-wallet", error, { userId: user.id, modelId: selected.id });
-    return NextResponse.json({ error: insufficient ? "Insufficient credits. Add credits to continue." : safety ? "This request exceeds your spending safety limit. Update it in Settings to continue." : "Could not reserve credits for chat." }, { status: insufficient ? 402 : safety ? 403 : 500 });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits. Add credits to continue." : safety ? "This request exceeds your spending safety limit. Update it in Settings to continue." : "Chat provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 503 });
   }
 
   let conversationId: string | null = body.private ? null : (body.conversationId ?? null);
@@ -155,59 +164,36 @@ export async function POST(request: Request) {
       }
     }
   } catch (error) {
-    await releaseWalletHold(holdId, "conversation_persistence_failed").catch(() => undefined);
+    await billingAttempt.upstream.response.body?.cancel().catch(() => undefined);
+    await cancelTextBillingAttempt(billingAttempt, "conversation_persistence_failed");
     await finalizeRequest(claimId, "failed");
     logServerError("chat-persistence", error, { userId: user.id, conversationId });
     return NextResponse.json({ error: "Could not save chat conversation." }, { status: 500 });
   }
 
-  let upstream;
-  try {
-    upstream = await providerChatStream({ modelId: selected.id, upstreamModel: selected.upstreamModel, messages: effectiveMessages, maxTokens, deepThink: body.deepThink, allowFallback: true });
-  } catch (error) {
-    await releaseWalletHold(holdId, "provider_unavailable").catch(() => undefined);
-    await finalizeRequest(claimId, "failed");
-    logServerError("chat-provider-connect", error, { userId: user.id, modelId: selected.id });
-    return NextResponse.json({ error: "Chat provider is temporarily unavailable." }, { status: 503 });
-  }
-
-  if (!upstream.response.ok || !upstream.response.body) {
-    const providerBody = await upstream.response.text().catch(() => "");
-    await releaseWalletHold(holdId, `provider_http_${upstream.response.status}`).catch(() => undefined);
-    await finalizeRequest(claimId, "failed");
-    logServerError("chat-provider-http", new Error(`Provider returned HTTP ${upstream.response.status}`), { userId: user.id, modelId: selected.id, providerStatus: upstream.response.status, providerBody: providerBody.slice(0, 500) });
-    return NextResponse.json({ error: "AI provider request failed." }, { status: upstream.response.status >= 500 ? 503 : 400 });
-  }
-
   const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
-  const captureKey = createIdempotencyKey("chat-capture", user.id, body.requestId);
+  let activeReader: ReadableStreamDefaultReader<Uint8Array> | null = null;
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
-      let buffer = "";
       let assistantText = "";
-      let inputTokens = 0;
-      let outputTokens = 0;
+      let providerUsage: NormalizedProviderUsage = { providerRequestId: billingAttempt.upstream.providerRequestId };
       let finalized = false;
+      let assistantMessageId: string | null = null;
       const emit = (payload: unknown) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
-      let activeProvider = upstream.provider;
-
-      const consumeProviderResponse = async (response: Response, protocol: typeof upstream.protocol) => {
-        if (!response.body) throw new Error("Provider returned an empty response stream.");
-        const reader = response.body.getReader();
+      const consumeAttempt = async (attempt: typeof billingAttempt) => {
+        const decoder = new TextDecoder();
+        const reader = attempt.upstream.response.body!.getReader();
+        activeReader = reader;
         let buffer = "";
-        const consumePayload = (payload: string) => {
-          const value = payload.trim();
-          if (!value || value === "[DONE]") return;
-          let chunk: unknown = safeSseJson(value);
-          if (!chunk && !value.startsWith("data:")) {
-            try { chunk = JSON.parse(value); } catch { return; }
-          }
+        const consumeLine = (rawLine: string) => {
+          const line = rawLine.trim();
+          if (!line.startsWith("data:")) return;
+          const chunk = safeSseJson(line);
           if (!chunk) return;
-          for (const event of normalizeProviderChunk(chunk, protocol)) {
+          for (const event of normalizeProviderChunk(chunk, attempt.upstream.protocol)) {
             if (event.type === "delta") { assistantText += event.text; emit({ type: "delta", text: event.text }); }
-            if (event.type === "usage") { if (event.inputTokens) inputTokens = event.inputTokens; if (event.outputTokens) outputTokens = event.outputTokens; }
+            if (event.type === "usage") providerUsage = mergeProviderUsage(providerUsage, event);
           }
         };
         try {
@@ -217,49 +203,67 @@ export async function POST(request: Request) {
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split("\n");
             buffer = lines.pop() || "";
-            lines.forEach(consumePayload);
+            lines.forEach(consumeLine);
           }
           buffer += decoder.decode();
-          if (buffer.trim()) buffer.split("\n").forEach(consumePayload);
+          if (buffer.trim()) buffer.split("\n").forEach(consumeLine);
         } finally {
           reader.releaseLock();
+          if (activeReader === reader) activeReader = null;
         }
       };
 
       try {
-        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: upstream.provider, tier: selected.tier, private: body.private });
-        try {
-          await consumeProviderResponse(upstream.response, upstream.protocol);
-        } catch (error) {
-          if (assistantText.trim()) logServerError("chat-stream-partial", error, { userId: user.id, modelId: selected.id, conversationId });
-        }
+        emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: billingAttempt.upstream.provider, tier: selected.tier, private: body.private });
+        await consumeAttempt(billingAttempt);
         if (!assistantText.trim()) {
-          const retry = await providerChatStream({ modelId: selected.id, upstreamModel: selected.upstreamModel, messages: effectiveMessages, maxTokens, deepThink: body.deepThink, allowFallback: true });
-          if (!retry.response.ok) throw new Error(`Provider retry returned HTTP ${retry.response.status}.`);
-          activeProvider = retry.provider;
-          await consumeProviderResponse(retry.response, retry.protocol);
+          await cancelTextBillingAttempt(billingAttempt, "empty_provider_stream");
+          billingAttempt = await beginTextBillingAttempt(billingInput);
+          providerUsage = { providerRequestId: billingAttempt.upstream.providerRequestId };
+          emit({ type: "provider_retry", provider: billingAttempt.upstream.provider });
+          await consumeAttempt(billingAttempt);
         }
-        if (!assistantText.trim()) throw new Error("Provider stream completed without response text after retry.");
-        if (!inputTokens) inputTokens = Math.ceil(combinedInput.length / 3.4) + (selected.inputOverheadTokens ?? 0);
-        if (!outputTokens) outputTokens = Math.max(1, Math.ceil(assistantText.length / 3.4));
-        const actualCredits = Math.min(holdAmount, actualTextCredits(selected, inputTokens, outputTokens, fxRate));
-        const supplierCostUsd = textSupplierUsd(selected, inputTokens, outputTokens);
-        const internalCostPkr = Number((supplierCostUsd * fxRate).toFixed(6));
-        const walletTransactionId = await captureWalletHold(holdId!, actualCredits, captureKey, { model_id: selected.id, provider: activeProvider, input_tokens: inputTokens, output_tokens: outputTokens, conversation_id: conversationId, private: body.private, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr });
-        finalized = true;
+        if (!assistantText.trim()) throw new Error("Provider stream completed without response text after provider fallback.");
+        const prepared = prepareTextSettlement({
+          rule: billingAttempt.quote.authoritativeRule,
+          usage: providerUsage,
+          dimensions: billingAttempt.quote.dimensions,
+          internalUsdPkrRate: billingAttempt.quote.pricing.internalUsdPkrRate,
+          profitabilityPolicy: billingAttempt.quote.profitabilityPolicy,
+          reservationCredits: billingAttempt.quote.reservationCredits,
+        });
 
-        let assistantMessageId: string | null = null;
         if (!body.private && conversationId) {
-          const { data: assistant, error: assistantError } = await admin.from("messages").insert({ conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText || "[No text returned]", model_id: selected.id, provider_key: activeProvider, input_tokens: inputTokens, output_tokens: outputTokens, credits_charged: actualCredits, supplier_cost_usd: supplierCostUsd, internal_cost_pkr: internalCostPkr, metadata: { deepThink: body.deepThink, walletTransactionId } }).select("id").single();
+          const { data: assistant, error: assistantError } = await admin.from("messages").insert({
+            conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText,
+            model_id: selected.id, provider_key: billingAttempt.upstream.provider,
+            input_tokens: Number(providerUsage.inputTokens), output_tokens: Number(providerUsage.outputTokens),
+            credits_charged: Number(prepared.chargeCredits), supplier_cost_usd: Number(prepared.finalProviderCostUsd),
+            internal_cost_pkr: Number(multiply(prepared.finalProviderCostUsd, billingAttempt.quote.pricing.internalUsdPkrRate)),
+            metadata: { deepThink: body.deepThink, billingQuoteId: billingAttempt.quote.quoteId },
+          }).select("id").single();
           if (assistantError) throw assistantError;
           assistantMessageId = assistant?.id ?? null;
           await admin.from("conversations").update({ updated_at: new Date().toISOString(), preferred_model: selected.id }).eq("id", conversationId);
         }
-        await finalizeRequest(claimId, "completed", { resourceId: assistantMessageId ?? conversationId, response: { credits: actualCredits, model: selected.id, transactionId: walletTransactionId } });
-        emit({ type: "usage", credits: actualCredits, inputTokens, outputTokens, model: selected.name, transactionId: walletTransactionId, messageId: assistantMessageId });
+        const settlement = await settleTextBillingAttempt({
+          attempt: billingAttempt,
+          usage: providerUsage,
+          messageId: assistantMessageId,
+          rawUsage: { protocol: billingAttempt.upstream.protocol, normalized: providerUsage },
+          metadata: { operation: "chat", conversation_id: conversationId, private: body.private },
+        });
+        finalized = true;
+        const transactionId = settlement.walletTransactionId;
+        const credits = Number(settlement.prepared.chargeCredits);
+        await finalizeRequest(claimId, "completed", { resourceId: assistantMessageId ?? conversationId, response: { credits, model: selected.id, transactionId } });
+        emit({ type: "usage", credits, inputTokens: Number(providerUsage.inputTokens), outputTokens: Number(providerUsage.outputTokens), model: selected.name, transactionId, messageId: assistantMessageId });
         emit({ type: "done" });
       } catch (error) {
-        if (!finalized) await releaseWalletHold(holdId!, "chat_stream_failed").catch(() => undefined);
+        if (!finalized && assistantMessageId) {
+          try { await admin.from("messages").delete().eq("id", assistantMessageId).eq("user_id", user.id); } catch { /* best-effort compatibility cleanup */ }
+        }
+        if (!finalized) await cancelTextBillingAttempt(billingAttempt, "chat_stream_failed");
         await finalizeRequest(claimId, "failed").catch(() => undefined);
         logServerError("chat-stream", error, { userId: user.id, modelId: selected.id, conversationId });
         emit({ type: "error", error: "Chat stream interrupted. Please try again." });
@@ -268,7 +272,8 @@ export async function POST(request: Request) {
       }
     },
     async cancel() {
-      if (holdId) await releaseWalletHold(holdId, "client_cancelled").catch(() => undefined);
+      await activeReader?.cancel().catch(() => undefined);
+      await cancelTextBillingAttempt(billingAttempt, "client_cancelled");
       await finalizeRequest(claimId, "failed").catch(() => undefined);
     }
   });

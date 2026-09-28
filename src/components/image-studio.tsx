@@ -212,7 +212,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     const input = promptInputRef.current;
     if (!input) return;
     input.style.height = "auto";
-    input.style.height = `${Math.min(input.scrollHeight, 154)}px`;
+    input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
   }, [prompt]);
 
   return <div className={`image-workspace ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); const file = event.dataTransfer.files[0]; if (file) void uploadReference(file); }}>

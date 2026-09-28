@@ -4,6 +4,7 @@ import { notifyUser } from "@/lib/notifications";
 import { logServerError } from "@/lib/public-error";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { z } from "zod";
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
@@ -14,6 +15,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
 
   const admin = createAdminClient();
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Payment not found" }, { status: 404 });
   const { data: payment } = await admin.from("manual_payments").select("user_id,public_id,status").eq("id", id).maybeSingle();
   if (!payment) return NextResponse.json({ error: "Payment not found" }, { status: 404 });
   if (payment.status === "approved") return NextResponse.json({ error: "Approved payments cannot be rejected." }, { status: 409 });

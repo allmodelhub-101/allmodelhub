@@ -57,4 +57,3 @@ revoke all on function public.reserve_file_upload(uuid,bigint,bigint) from publi
 revoke all on function public.release_file_upload_reservation(uuid,uuid) from public, anon, authenticated;
 grant execute on function public.reserve_file_upload(uuid,bigint,bigint) to service_role;
 grant execute on function public.release_file_upload_reservation(uuid,uuid) to service_role;
-

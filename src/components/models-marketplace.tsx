@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { CaretDown, ChatCircle, ImageSquare, MagnifyingGlass, SlidersHorizontal, SquaresFour, VideoCamera, Waveform } from "@phosphor-icons/react";
 import { ModelBrand } from "@/components/model-brand";
 import type { CatalogModel } from "@/lib/models";
-import { creditsFromUsd } from "@/lib/pricing";
+import { creditsFromUsd } from "@/lib/pricing-shared";
 
 type Props = { models: CatalogModel[]; fxRate: number };
 const modalities = ["all", "text", "image", "video", "audio"] as const;

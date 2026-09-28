@@ -8,6 +8,7 @@ import { notifyUser } from "@/lib/notifications";
 import { getMinimumTopupPkr } from "@/lib/system-settings";
 import { logServerError } from "@/lib/public-error";
 import { calculateTopupBonus, TOPUP_MAX_PKR, TOPUP_MIN_PKR } from "@/lib/topup-bonus";
+import { verifyPaymentProof } from "@/lib/security/uploads";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,7 +29,8 @@ export async function POST(request: Request) {
   const user = data.user;
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const limit = await enforceRateLimit(`manual-payment:${user.id}`);
+  const limit = await enforceRateLimit(`manual-payment:${user.id}`, "payments");
+  if (limit.unavailable) return NextResponse.json({ error: "Payment submission protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many payment submissions." }, { status: 429 });
 
   const form = await request.formData();
@@ -53,10 +55,11 @@ export async function POST(request: Request) {
 
   const publicId = createPublicId("AMH-PAY");
   const bonus = calculateTopupBonus(amount);
-  const ext = proof.name.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "bin";
-  const path = `${user.id}/${publicId}/proof.${ext}`;
   const bytes = new Uint8Array(await proof.arrayBuffer());
-  const { error: uploadError } = await admin.storage.from("payment-proofs").upload(path, bytes, { contentType: proof.type, upsert: false });
+  const verifiedProof = verifyPaymentProof(bytes, proof.type);
+  if (!verifiedProof) return NextResponse.json({ error: "Payment proof contents do not match the selected file type." }, { status: 400 });
+  const path = `${user.id}/${publicId}/proof.${verifiedProof.extension}`;
+  const { error: uploadError } = await admin.storage.from("payment-proofs").upload(path, bytes, { contentType: verifiedProof.contentType, upsert: false });
   if (uploadError) { logServerError("manual-payment-proof-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not store payment proof. Try again." }, { status: 500 }); }
 
   const { data: payment, error } = await admin.from("manual_payments").insert({

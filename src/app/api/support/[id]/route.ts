@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logServerError } from "@/lib/public-error";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 const messageSchema = z.object({ message: z.string().min(1).max(5000) });
@@ -15,6 +16,7 @@ async function ownedTicket(id: string, userId: string) {
 
 export async function GET(_request: Request, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,9 +29,13 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
+  if (!z.string().uuid().safeParse(id).success) return NextResponse.json({ error: "Ticket not found" }, { status: 404 });
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   if (!data.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const limit = await enforceRateLimit(`support-reply:${data.user.id}`, "support");
+  if (limit.unavailable) return NextResponse.json({ error: "Reply protection is temporarily unavailable." }, { status: 503 });
+  if (!limit.success) return NextResponse.json({ error: "Too many support replies." }, { status: 429 });
   const parsed = messageSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid message" }, { status: 400 });
   const ticket = await ownedTicket(id, data.user.id);

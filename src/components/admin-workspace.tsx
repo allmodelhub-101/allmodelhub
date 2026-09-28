@@ -4,22 +4,28 @@ import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
   const admin = createAdminClient();
+  // The server dashboard intentionally computes a request-time reporting cutoff.
+  // eslint-disable-next-line react-hooks/purity
   const economicsCutoff = new Date(Date.now() - 30 * 86_400_000).toISOString();
-  const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, features] = await Promise.all([
+  const [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, pricingResult, receiptsResult, anomaliesResult, invariantsResult, features] = await Promise.all([
     admin.from("manual_payments").select("id,public_id,user_id,method,amount_pkr,credits,bonus_percent,bonus_credits,status,transaction_reference,proof_path,created_at").order("created_at", { ascending: false }).limit(100),
     admin.from("models").select("id,display_name,tier,modality,markup,active,featured,auto_eligible,provider_family,upstream_model").order("modality").order("tier").order("display_name"),
     admin.from("profiles").select("id,email,display_name,role,created_at,welcome_granted_at").order("created_at", { ascending: false }).limit(500),
     admin.from("wallets").select("user_id,purchased_balance,promo_balance,reserved_balance"),
     admin.from("provider_models").select("id,model_id,provider_key,upstream_model,priority,active").order("model_id").order("priority"),
-    admin.from("generation_jobs").select("id,public_id,user_id,modality,model_id,provider_key,status,charged_credits,error_message,created_at").order("created_at", { ascending: false }).limit(200),
+    admin.from("generation_jobs").select("id,public_id,user_id,modality,model_id,provider_key,status,charged_credits,reserved_credits,error_message,created_at,updated_at,last_provider_check_at,next_reconcile_at,reconcile_attempts,reconciliation_required,reconciliation_state,reconciliation_metadata").order("created_at", { ascending: false }).limit(200),
     admin.from("support_tickets").select("id,public_id,user_id,category,subject,status,priority,updated_at").order("updated_at", { ascending: false }).limit(100),
     admin.from("system_settings").select("key,value").in("key", ["internal_usd_pkr", "min_topup_pkr", "welcome_credits"]),
     admin.from("messages").select("credits_charged,internal_cost_pkr").eq("role", "assistant").gte("created_at", economicsCutoff),
     admin.from("generation_jobs").select("charged_credits,internal_cost_pkr").eq("status", "completed").gte("completed_at", economicsCutoff),
+    admin.from("billing_provider_pricing_registry").select("id,provider_key,model_id,upstream_model,pricing_version,billing_type,status,active,verified_at,effective_from,effective_until,model_markup,model_active").order("model_id").order("provider_key"),
+    admin.from("billing_receipts").select("id,provider_key,model_id,pricing_version,cost_status,provider_cost_pkr,charge_credits,profit_pkr,margin_percent,settled_at").gte("settled_at", economicsCutoff).order("settled_at", { ascending: false }).limit(500),
+    admin.from("billing_anomalies").select("id,provider_key,model_id,anomaly_type,expected_cost_usd,observed_cost_usd,severity,status,detected_at").order("detected_at", { ascending: false }).limit(100),
+    admin.rpc("billing_reconciliation_invariants"),
     getFeatureFlags()
   ]);
 
-  const failed = [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult].find((result) => result.error);
+  const failed = [paymentsResult, modelsResult, profilesResult, walletsResult, routesResult, jobsResult, ticketsResult, settingsResult, messageEconomicsResult, mediaEconomicsResult, pricingResult, receiptsResult, anomaliesResult, invariantsResult].find((result) => result.error);
   if (failed?.error) throw new Error(`Could not load admin workspace: ${failed.error.message}`);
 
   const profiles = profilesResult.data ?? [];
@@ -38,10 +44,14 @@ export async function AdminWorkspace({ initialTab }: { initialTab: AdminTab }) {
     models={(modelsResult.data ?? []).map((model) => ({ ...model, markup: Number(model.markup) }))}
     users={profiles.map((profile) => { const wallet = walletById.get(profile.id); return { ...profile, wallet: wallet ? { purchased_balance: Number(wallet.purchased_balance), promo_balance: Number(wallet.promo_balance), reserved_balance: Number(wallet.reserved_balance) } : null }; })}
     routes={(routesResult.data ?? []).map((route) => ({ ...route, provider_key: route.provider_key as "apimodels" | "haimaker" }))}
-    jobs={(jobsResult.data ?? []).map((job) => ({ ...job, charged_credits: Number(job.charged_credits), email: profileById.get(job.user_id)?.email }))}
+    jobs={(jobsResult.data ?? []).map((job) => ({ ...job, charged_credits: Number(job.charged_credits), reserved_credits: Number(job.reserved_credits ?? 0), email: profileById.get(job.user_id)?.email }))}
     tickets={(ticketsResult.data ?? []).map((ticket) => ({ ...ticket, email: profileById.get(ticket.user_id)?.email }))}
     settings={Object.fromEntries((settingsResult.data ?? []).map((row) => [row.key, Number(row.value)]))}
     features={features}
+    pricingRules={(pricingResult.data ?? []).map((rule) => ({ ...rule, model_markup: Number(rule.model_markup) }))}
+    billingReceipts={(receiptsResult.data ?? []).map((receipt) => ({ ...receipt, provider_cost_pkr: Number(receipt.provider_cost_pkr), charge_credits: Number(receipt.charge_credits), profit_pkr: Number(receipt.profit_pkr), margin_percent: receipt.margin_percent == null ? null : Number(receipt.margin_percent) }))}
+    billingAnomalies={(anomaliesResult.data ?? []).map((anomaly) => ({ ...anomaly, expected_cost_usd: Number(anomaly.expected_cost_usd), observed_cost_usd: Number(anomaly.observed_cost_usd) }))}
+    billingInvariants={(invariantsResult.data ?? {}) as Record<string, string | number>}
     profitSummary={{
       chatRevenue: (messageEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.credits_charged || 0), 0),
       chatCost: (messageEconomicsResult.data ?? []).reduce((sum, row) => sum + Number(row.internal_cost_pkr || 0), 0),
