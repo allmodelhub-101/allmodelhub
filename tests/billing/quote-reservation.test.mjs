@@ -172,7 +172,7 @@ test("tiny real prices are preserved unless an explicit product minimum is confi
   assert.equal(explicit.explicitProductMinimumCredits, "0.05");
 });
 
-test("reservation shortfalls surface a critical anomaly and never cap the real charge", () => {
+test("reservation shortfalls surface a critical anomaly for fail-closed settlement", () => {
   const result = evaluateReservationCoverage("1.25", "1");
   assert.equal(result.covered, false);
   assert.equal(result.actualChargeCredits, "1.25");

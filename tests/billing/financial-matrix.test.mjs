@@ -93,4 +93,6 @@ test("database contracts enforce duplicate request, concurrent capture, shadow i
   assert.match(sql, /billing_shadow_validations_phase_key unique \(quote_id, phase\)/);
   assert.match(sql, /wallet_reserved_balance_mismatches/);
   assert.match(sql, /duplicate_settlements/);
+  assert.match(sql, /billing_capture_exceeds_authorization/);
+  assert.match(sql, /billing_receipts_capture_authorization_guard/);
 });
