@@ -65,8 +65,26 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     if (!options?.includeInactive) query = query.eq("active", true);
     const { data, error } = await query;
     if (error) throw error;
-    return (data as DbModel[]).map(toCatalogModel);
+    const rows = data as DbModel[];
+    if (options?.includeInactive || !rows.length) return rows.map(toCatalogModel);
+
+    // Customer-facing runtime catalogs must only expose models that have an
+    // executable provider route. Billing V2 keeps routes without a current,
+    // verified rule inactive, so filtering here prevents a user from selecting
+    // a model that is guaranteed to fail closed after submission.
+    const { data: routes, error: routeError } = await admin
+      .from("provider_models")
+      .select("model_id")
+      .eq("active", true)
+      .in("model_id", rows.map((row) => row.id));
+    if (routeError) throw routeError;
+    const executable = new Set((routes ?? []).map((route) => String(route.model_id)));
+    return rows.filter((row) => executable.has(row.id)).map(toCatalogModel);
   } catch {
+    // Static catalog data is UI metadata only. Never turn it into an
+    // executable production fallback when the authoritative route registry is
+    // unavailable.
+    if (process.env.NODE_ENV === "production") return [];
     return ALL_MODELS.filter((model) => (!options?.modality || model.modality === options.modality));
   }
 }
@@ -77,8 +95,18 @@ export async function getRuntimeModel(id: string) {
     const { data, error } = await admin.from("models").select("*").or(`id.eq.${id},upstream_model.eq.${id}`).eq("active", true).limit(1).maybeSingle();
     if (error) throw error;
     if (!data) return undefined;
+    const { data: route, error: routeError } = await admin
+      .from("provider_models")
+      .select("id")
+      .eq("model_id", data.id)
+      .eq("active", true)
+      .limit(1)
+      .maybeSingle();
+    if (routeError) throw routeError;
+    if (!route) return undefined;
     return toCatalogModel(data as DbModel);
   } catch {
+    if (process.env.NODE_ENV === "production") return undefined;
     return getStaticModel(id);
   }
 }
