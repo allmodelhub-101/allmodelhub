@@ -10,6 +10,10 @@ const executionGateMigration = readFileSync(
   new URL("../../supabase/migrations/20260927061138_disable_unverified_billing_routes.sql", import.meta.url),
   "utf8",
 );
+const qwenPricingMigration = readFileSync(
+  new URL("../../supabase/migrations/20260928162500_verify_qwen_3_8_text_pricing.sql", import.meta.url),
+  "utf8",
+);
 
 const previouslyVerified = [
   "eleven-tts-flash", "eleven-tts-multilingual", "eleven-tts-v3", "kling-sound-effects",
@@ -67,4 +71,12 @@ test("verified rules preserve all distinct media strategies", () => {
   assert.match(migration, /0\.006, 0\.0015.*per image plus each reference image/s);
   assert.match(migration, /"720p":\{"perSecond":"0\.07"\}.*"4K":\{"perSecond":"0\.20"\}/s);
   assert.match(migration, /'veo-3-1-fast-fhd'.*'flat'.*0\.07/s);
+});
+
+test("Qwen 3.8 text routes use current authoritative per-token prices", () => {
+  assert.match(qwenPricingMigration, /'qwen3-8-flash'.*0\.00000015, 0\.00000047, 0\.000000016/s);
+  assert.match(qwenPricingMigration, /'qwen3-8-max'.*0\.000002, 0\.000006, 0\.00000025/s);
+  assert.match(qwenPricingMigration, /reasoning tokens are included in provider completion tokens/);
+  assert.match(qwenPricingMigration, /billing_v2_executable', true/);
+  assert.match(qwenPricingMigration, /verified_count <> 2/);
 });
