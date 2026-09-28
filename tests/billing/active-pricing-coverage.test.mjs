@@ -14,6 +14,14 @@ const qwenPricingMigration = readFileSync(
   new URL("../../supabase/migrations/20260928162500_verify_qwen_3_8_text_pricing.sql", import.meta.url),
   "utf8",
 );
+const exactMediaQuoteMigration = readFileSync(
+  new URL("../../supabase/migrations/20260928171000_add_exact_media_settlement_quote_view.sql", import.meta.url),
+  "utf8",
+);
+const mediaSettlement = readFileSync(
+  new URL("../../src/lib/billing/media-job-billing.ts", import.meta.url),
+  "utf8",
+);
 
 const previouslyVerified = [
   "eleven-tts-flash", "eleven-tts-multilingual", "eleven-tts-v3", "kling-sound-effects",
@@ -79,4 +87,11 @@ test("Qwen 3.8 text routes use current authoritative per-token prices", () => {
   assert.match(qwenPricingMigration, /reasoning tokens are included in provider completion tokens/);
   assert.match(qwenPricingMigration, /billing_v2_executable', true/);
   assert.match(qwenPricingMigration, /verified_count <> 2/);
+});
+
+test("async media settlement reloads authoritative quote numerics as exact strings", () => {
+  assert.match(exactMediaQuoteMigration, /internal_usd_pkr_rate::text as internal_usd_pkr_rate/);
+  assert.match(exactMediaQuoteMigration, /reservation_credits::text as reservation_credits/);
+  assert.match(exactMediaQuoteMigration, /revoke all on table public\.billing_media_settlement_quotes/);
+  assert.match(mediaSettlement, /from\("billing_media_settlement_quotes"\)/);
 });
