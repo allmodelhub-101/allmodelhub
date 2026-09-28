@@ -12,7 +12,7 @@ export type PickerModel = {
   description?: string;
   capabilities?: string[];
   autoEligible?: boolean;
-  uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; maxReferences?: number };
+  uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; resolutionOptions?: string[]; maxReferences?: number };
   retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 

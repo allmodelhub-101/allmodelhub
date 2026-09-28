@@ -29,6 +29,10 @@ const bodySchema = z.object({
 });
 
 const catalogOnlyModels = new Set(["real-esrgan", "flashvsr", "eleven-dialogue", "eleven-dubbing", "eleven-isolator"]);
+// These providers document image_url/image_urls, rather than the generic
+// images field. Keep the selected reference mode identical in the UI, quote,
+// stored job request, and upstream request.
+const imageUrlsReferenceModels = new Set(["gemini-3-1-flash-image", "gemini-3-pro-image", "gpt-image-2", "gpt-image-2-5-flare", "gpt-image-2-5-sunburst"]);
 const terminalFinancialError = (error: unknown) => {
   const message = error instanceof Error ? error.message : String(error);
   return message.includes("INSUFFICIENT_CREDITS") || message.includes("SPEND_LIMIT");
@@ -115,7 +119,11 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           ...(input.resolution ? { resolution: input.resolution } : {}), ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
           ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(input.aspectRatio ? { aspect_ratio: input.aspectRatio } : {}),
           ...(mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
-          ...(referenceImages.length ? { images: referenceImages } : {}), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
+          ...(referenceImages.length
+            ? imageUrlsReferenceModels.has(model.id)
+              ? { image_urls: referenceImages }
+              : { images: referenceImages }
+            : {}), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
         const task = (await providerCreateTaskExact(route, modality as "image" | "video" | "audio", providerBody)).task;
         const status = task.state === "processing" ? "processing" : "submitted";

@@ -185,6 +185,21 @@ test("rejects missing billable usage and invalid financial configuration", () =>
   assertPricingError(() => resolve(row({ flat_price: 0.1 })), "RULE_INVALID");
 });
 
+test("uses the selected provider resolution price exactly for restored image routes", () => {
+  const ruleRow = row({
+    billing_type: "image",
+    flat_price: null,
+    resolution_dimensions: {
+      "512": { perImage: "0.04" }, "1K": { perImage: "0.06" },
+      "2K": { perImage: "0.06" }, "4K": { perImage: "0.10" },
+    },
+  });
+  assert.equal(price(ruleRow, { images: "1" }, { resolution: "512" }).providerCost.amount, "0.04");
+  assert.equal(price(ruleRow, { images: "1" }, { resolution: "4K" }).providerCost.amount, "0.1");
+  assertPricingError(() => price(ruleRow, { images: "1" }, {}), "DIMENSION_REQUIRED");
+  assertPricingError(() => price(ruleRow, { images: "1" }, { resolution: "8K" }), "DIMENSION_UNSUPPORTED");
+});
+
 test("fails closed when providers report cache usage without validated cache rates", () => {
   assert.throws(
     () => price(row({ billing_type: "token", input_token_price: "0.000001", output_token_price: "0.000002", cached_token_price: null }), {

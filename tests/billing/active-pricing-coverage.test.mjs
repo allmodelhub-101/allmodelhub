@@ -18,6 +18,10 @@ const exactMediaQuoteMigration = readFileSync(
   new URL("../../supabase/migrations/20260928171000_add_exact_media_settlement_quote_view.sql", import.meta.url),
   "utf8",
 );
+const restoredImagePricingMigration = readFileSync(
+  new URL("../../supabase/migrations/20260928190000_verify_current_image_resolution_pricing.sql", import.meta.url),
+  "utf8",
+);
 const mediaSettlement = readFileSync(
   new URL("../../src/lib/billing/media-job-billing.ts", import.meta.url),
   "utf8",
@@ -32,6 +36,7 @@ const newlyVerified = [
   "eleven-dialogue", "eleven-dubbing", "eleven-isolator",
   "flux-2-klein-4b", "gemini-2-5-flash-image", "kling-v3-image", "qwen3-image", "real-esrgan",
   "gemini-omni-1-1-flash", "grok-video-3", "minimax-h3", "veo-3-1-fast-fhd",
+  "doubao-seedream-5-0-pro", "gemini-3-1-flash-image", "gemini-3-pro-image", "gpt-image-2",
 ];
 
 const blocked = [
@@ -39,7 +44,6 @@ const blocked = [
   "deepseek-v4-flash", "deepseek-v4-pro", "gemini-3-8-flash", "gemini-3-pro-preview", "glm-5-3",
   "gpt-5-6-luna", "gpt-5-6-sol", "gpt-5-6-terra", "gpt-6-astra", "grok-4-6",
   "qwen3-7-plus", "qwen3-8-flash", "qwen3-8-max",
-  "doubao-seedream-5-0-pro", "gemini-3-1-flash-image", "gemini-3-pro-image", "gpt-image-2",
   "gpt-image-2-5-flare", "gpt-image-2-5-sunburst", "grok-imagine-image-2", "qwen3-image-pro",
   "flashvsr", "grok-imagine-video-1-5", "kling-v3", "ltx-2-3", "minimax-h3-lite",
   "minimax-h3-max-turbo", "seedance-2-0", "seedance-2-0-fast", "seedance-2-0-mini",
@@ -94,4 +98,12 @@ test("async media settlement reloads authoritative quote numerics as exact strin
   assert.match(exactMediaQuoteMigration, /reservation_credits::text as reservation_credits/);
   assert.match(exactMediaQuoteMigration, /revoke all on table public\.billing_media_settlement_quotes/);
   assert.match(mediaSettlement, /from\("billing_media_settlement_quotes"\)/);
+});
+
+test("restored image routes require the current documented resolution tier", () => {
+  assert.match(restoredImagePricingMigration, /'doubao-seedream-5-0-pro'.*"1K".*"2K"/s);
+  assert.match(restoredImagePricingMigration, /'gemini-3-1-flash-image'.*"512".*"4K"/s);
+  assert.match(restoredImagePricingMigration, /'gemini-3-pro-image'.*"1K".*"4K"/s);
+  assert.match(restoredImagePricingMigration, /'gpt-image-2'.*"1K".*"4K"/s);
+  assert.match(restoredImagePricingMigration, /billing_v2_executable', true/);
 });

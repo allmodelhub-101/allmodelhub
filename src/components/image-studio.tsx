@@ -21,6 +21,7 @@ type ImageJob = {
 };
 
 const fallbackAspectRatios = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+const noResolutionOptions: string[] = [];
 const directionStarters = [
   { label: "Product", prompt: "Clean commercial product photography, precise materials, sculpted studio light, editorial art direction" },
   { label: "Portrait", prompt: "Expressive editorial portrait, natural skin texture, cinematic lighting, quiet confidence" },
@@ -50,6 +51,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   const [modelId, setModelId] = useState("");
   const [prompt, setPrompt] = useState(qs.get("prompt") || "");
   const [aspect, setAspect] = useState("1:1");
+  const [resolution, setResolution] = useState("");
   const [references, setReferences] = useState<ReferenceAsset[]>([]);
   const [job, setJob] = useState<ImageJob | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -85,6 +87,8 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
 
   const model = useMemo(() => models.find((item) => item.id === modelId), [modelId, models]);
   const aspectRatios = model?.uiSchema?.aspectRatios?.length ? model.uiSchema.aspectRatios : fallbackAspectRatios;
+  const resolutionOptions = model?.uiSchema?.resolutionOptions ?? noResolutionOptions;
+  const effectiveResolution = resolutionOptions.length ? (resolutionOptions.includes(resolution) ? resolution : resolutionOptions[0]) : undefined;
   const maxReferences = Math.max(0, model?.uiSchema?.maxReferences ?? (model?.capabilities?.includes("multi-reference") ? 10 : model?.capabilities?.includes("editing") ? 1 : 0));
   const estimate = Number(model?.retail?.flatCredits || 0);
   const expensive = estimate >= 50;
@@ -107,9 +111,10 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
 
   useEffect(() => {
     const timer=window.setTimeout(()=>{if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
+      if (resolutionOptions.length && !resolutionOptions.includes(resolution)) setResolution(resolutionOptions[0]);
       setReferences((current) => {current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));return current.slice(0, maxReferences);});},0);
     return()=>window.clearTimeout(timer);
-  }, [aspect,aspectRatios,maxReferences,modelId]);
+  }, [aspect,aspectRatios,maxReferences,modelId,resolution,resolutionOptions]);
 
   async function uploadReference(file: File) {
     setUploading(true); setError("");
@@ -161,7 +166,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     try {
       const response = await fetch("/api/generations/image", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ requestId: crypto.randomUUID(), modelId, prompt: prompt.trim(), aspectRatio: aspect, imageFileIds: references.map((reference) => reference.id), mode: references.length ? "edit" : "create", confirmedCost: confirmed || !expensive })
+        body: JSON.stringify({ requestId: crypto.randomUUID(), modelId, prompt: prompt.trim(), aspectRatio: aspect, ...(effectiveResolution ? { resolution: effectiveResolution } : {}), imageFileIds: references.map((reference) => reference.id), mode: references.length ? "edit" : "create", confirmedCost: confirmed || !expensive })
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || "Generation request failed.");
@@ -233,7 +238,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         <div className="inspector-section"><span className="inspector-label">Model</span><button className="inspector-model" type="button" onClick={() => setPickerOpen(true)}><ModelBrand compact modelName={model?.name || "Auto"} provider={model?.providerFamily || ""} /><span><strong>{model?.name || "Loading models"}</strong><small>{model?.providerFamily || "Image model"} · {model?.tier || ""}</small></span><b>Change</b></button>{model?.description && <p className="inspector-help">{model.description}</p>}<div className="capability-list">{model?.capabilities?.map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</div></div>
         <div className="inspector-section"><span className="inspector-label">Mode</span><div className="mode-readout"><strong>{references.length ? "Edit image" : "Create image"}</strong><small>{references.length ? "Your reference supplies the visual starting point." : "Text prompt to a new image."}</small></div></div>
         <div className="inspector-section"><span className="inspector-label">Reference images</span><input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadReference(file); event.currentTarget.value = ""; }} />{supportsEditing ? <button type="button" className="reference-upload" disabled={uploading || references.length >= maxReferences} onClick={() => fileInputRef.current?.click()}><strong><Plus aria-hidden="true" />{uploading ? "Uploading…" : references.length ? "Add another reference" : "Add a reference image"}</strong><small>PNG, JPEG or WebP · {supportsMultipleReferences ? `up to ${maxReferences}` : "one image"}</small></button> : <div className="mode-readout"><strong>Text creation only</strong><small>{model?.name || "This model"} does not accept a reference image.</small></div>}{references.length > 0 && <div className="reference-list">{references.map((reference) => <div className="reference-item" key={reference.id}><Image src={reference.previewUrl} alt="" width={80} height={80} unoptimized /><span><strong>{reference.name}</strong><small>{Math.max(1, Math.round(reference.size / 1024)).toLocaleString()} KB</small></span><button type="button" onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}><X aria-hidden="true" /></button></div>)}</div>}</div>
-        <div className="inspector-section"><span className="inspector-label">Aspect ratio</span><div className="aspect-grid">{aspectRatios.map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div><div className="output-count"><span>Outputs</span><strong>1 image</strong><small>Current provider capability</small></div></div>
+        <div className="inspector-section"><span className="inspector-label">Aspect ratio</span><div className="aspect-grid">{aspectRatios.map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div>{resolutionOptions.length > 0 && <><span className="inspector-label">Resolution</span><div className="aspect-grid">{resolutionOptions.map((value) => <button type="button" key={value} className={effectiveResolution === value ? "active" : ""} onClick={() => { setResolution(value); setConfirmed(false); }}>{value}</button>)}</div></>}<div className="output-count"><span>Outputs</span><strong>1 image</strong><small>Current provider capability</small></div></div>
         <div className="inspector-cost"><span>Estimated cost</span><strong>{estimate ? `~${estimate.toFixed(2)} credits` : "Calculating…"}</strong><small>Actual charge is shown after completion.</small>{availableCredits != null && <small>{availableCredits.toFixed(2)} credits available</small>}</div>
         {expensive && <label className="image-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /><span>I authorize the displayed estimated usage.</span></label>}
       </aside>
