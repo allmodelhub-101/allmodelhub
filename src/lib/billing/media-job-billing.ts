@@ -24,7 +24,7 @@ export async function completeMediaGenerationBilling(input: Readonly<{
   const admin = createAdminClient();
   const { data: job, error: jobError } = await admin.from("generation_jobs").select("id,billing_quote_id,provider_task_id").eq("id", input.jobId).single();
   if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
-  const { data: quote, error: quoteError } = await admin.from("billing_quotes")
+  const { data: quote, error: quoteError } = await admin.from("billing_media_settlement_quotes")
     .select("id,user_id,provider_key,model_id,upstream_model,pricing_version,internal_usd_pkr_rate,reservation_credits,created_at,input_dimensions,pricing_snapshot")
     .eq("id", job.billing_quote_id).single();
   if (quoteError || !quote) throw quoteError ?? new Error("BILLING_MEDIA_QUOTE_MISSING");
