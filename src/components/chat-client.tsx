@@ -16,8 +16,8 @@ type ChatMessage = { id?: string; role: "user" | "assistant"; content: string; m
 type Project = { id: string; name: string };
 type Model = PickerModel & { modality: string };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
-type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null };
-type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; model?: string; modelName?: string; error?: string };
+type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null; metadata?: { billingStatus?: string } | null };
+type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; billingStatus?: string; model?: string; modelName?: string; error?: string };
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
 type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
@@ -130,8 +130,9 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     fetch(`/api/conversations?id=${conversationId}`).then((response) => response.json()).then((data) => {
       if (data.messages) setMessages(data.messages.filter((message: ConversationMessage) => message.role !== "system").map((message: ConversationMessage) => ({
         id: message.id, role: message.role, content: message.content,
-        credits: message.credits_charged == null ? undefined : Number(message.credits_charged),
-        meta: message.credits_charged == null ? undefined : `${message.model_id || "AI"} · ${Number(message.credits_charged).toFixed(4)} credits`
+        credits: message.metadata?.billingStatus === "pending_reconciliation" || message.credits_charged == null ? undefined : Number(message.credits_charged),
+        meta: message.metadata?.billingStatus === "pending_reconciliation" ? `${message.model_id || "AI"} · Billing pending`
+          : message.credits_charged == null ? undefined : `${message.model_id || "AI"} · ${Number(message.credits_charged).toFixed(4)} credits`
       })));
       if (data.conversation?.mode) setMode(data.conversation.mode as Mode);
       if (data.conversation?.project_id) setProjectId(data.conversation.project_id);
@@ -142,7 +143,7 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const exact = useMemo(() => models.find((model) => model.id === modelId), [models, modelId]);
   const popularModels = useMemo(() => {
     const preferred = ["gpt", "claude", "gemini", "llama", "mistral", "deepseek"];
-    return [...models].sort((left, right) => {
+    return models.filter((model) => model.available !== false).sort((left, right) => {
       const leftIndex = preferred.findIndex((name) => left.name.toLowerCase().includes(name));
       const rightIndex = preferred.findIndex((name) => right.name.toLowerCase().includes(name));
       return (leftIndex < 0 ? preferred.length : leftIndex) - (rightIndex < 0 ? preferred.length : rightIndex);
@@ -252,7 +253,10 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
           });
           if (streamEvent.type === "usage") {
             setMessages((current) => {
-              return current.map((message) => message.id === pendingId ? { ...message, id: streamEvent.messageId || message.id, credits: Number(streamEvent.credits), meta: `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` } : message);
+              const pendingBilling = streamEvent.billingStatus === "pending_reconciliation";
+              return current.map((message) => message.id === pendingId ? { ...message, id: streamEvent.messageId || message.id,
+                credits: pendingBilling || streamEvent.credits == null ? undefined : Number(streamEvent.credits),
+                meta: pendingBilling ? `${streamEvent.model} · Billing pending` : `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` } : message);
             });
           }
           if (streamEvent.type === "error") throw new Error(streamEvent.error || "Generation failed.");

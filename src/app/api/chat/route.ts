@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -10,7 +10,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
-import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, type TextBillingAttempt } from "@/lib/billing/text-billing";
+import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, settleTextBillingInBackground, type TextBillingAttempt } from "@/lib/billing/text-billing";
 import { prepareTextSettlement } from "@/lib/billing/text-billing-core";
 import { multiply } from "@/lib/billing/money";
 
@@ -263,9 +263,21 @@ export async function POST(request: Request) {
           rawUsage: { protocol: billingAttempt.upstream.protocol, normalized: providerUsage },
           metadata: { operation: "chat", conversation_id: conversationId, private: body.private },
         });
+        if (settlement.billingStatus === "pending_reconciliation" && billingAttempt.engine === "v3_provider_authoritative") {
+          const backgroundAttempt = billingAttempt;
+          after(async () => {
+            await settleTextBillingInBackground({
+              attempt: backgroundAttempt,
+              usage: providerUsage,
+              messageId: assistantMessageId,
+              rawUsage: { protocol: backgroundAttempt.upstream.protocol, normalized: providerUsage },
+              metadata: { operation: "chat", conversation_id: conversationId, private: body.private },
+            });
+          });
+        }
         finalized = true;
         const transactionId = settlement.walletTransactionId;
-        const credits = Number(settlement.chargeCredits);
+        const credits = settlement.billingStatus === "settled" ? Number(settlement.chargeCredits) : undefined;
         await finalizeRequest(claimId, "completed", { resourceId: assistantMessageId ?? conversationId, response: { credits, model: selected.id, transactionId } });
         emit({ type: "usage", credits, billingStatus: settlement.billingStatus, inputTokens: Number(providerUsage.inputTokens), outputTokens: Number(providerUsage.outputTokens), model: selected.name, transactionId, messageId: assistantMessageId });
         emit({ type: "done" });

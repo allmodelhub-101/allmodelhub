@@ -12,6 +12,8 @@ export type PickerModel = {
   description?: string;
   capabilities?: string[];
   autoEligible?: boolean;
+  available?: boolean;
+  availabilityReason?: "billing_authorization_pending" | "provider_route_unavailable" | null;
   uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; maxReferences?: number };
   retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
@@ -119,11 +121,11 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
         {modality === "text" && !query && filter === "recommended" && <button type="button" className={`model-picker-option auto-option ${value ? "" : "selected"}`} onClick={() => { onChange(""); onOpenChange(false); }}>
           <ModelBrand modelName="Auto" /><span className="model-option-copy"><strong>Auto — best available</strong><small>Routes each prompt by complexity, speed, and value.</small><span className="capability-list"><em>Recommended</em><em>Automatic routing</em></span></span><span className="model-option-side"><span className="availability"><i />Available</span><b>Select</b></span>
         </button>}
-        {visibleModels.map((model) => <button type="button" key={model.id} className={`model-picker-option ${value === model.id ? "selected" : ""}`} onClick={() => { onChange(model.id); onOpenChange(false); }}>
+        {visibleModels.map((model) => { const unavailable = model.available === false; return <button type="button" key={model.id} disabled={unavailable} aria-disabled={unavailable} className={`model-picker-option ${value === model.id ? "selected" : ""} ${unavailable ? "unavailable" : ""}`} onClick={() => { if (unavailable) return; onChange(model.id); onOpenChange(false); }}>
           <ModelBrand modelName={model.name} provider={model.providerFamily} />
           <span className="model-option-copy"><strong>{model.name}</strong><small>{model.description || `${model.providerFamily || "AI"} ${model.tier} model`}</small><span className="capability-list">{(model.capabilities || []).slice(0, 4).map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</span></span>
-          <span className="model-option-side"><span className="availability"><i />Available</span><small>{priceLabel(model)}</small><b>{value === model.id ? "Selected" : "Select"}</b></span>
-        </button>)}
+          <span className="model-option-side"><span className="availability"><i />{unavailable ? "Billing setup pending" : "Available"}</span><small>{unavailable ? "Not executable yet" : priceLabel(model)}</small><b>{unavailable ? "Unavailable" : value === model.id ? "Selected" : "Select"}</b></span>
+        </button>})}
         {visibleModels.length === 0 && <div className="model-picker-empty"><strong>No matching models</strong><span>Try another capability or search term.</span></div>}
       </div>
     </section>

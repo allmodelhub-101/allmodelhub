@@ -12,6 +12,7 @@ type AudioModel = {
   tier: string;
   description?: string;
   capabilities: string[];
+  available?: boolean;
   retail?: { flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 type GenerationJob = {
@@ -91,8 +92,9 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
       .then((response) => response.json())
       .then((data) => {
         const list = (data.models || []).filter((item: AudioModel) => item.capabilities?.includes(desiredCapability));
+        const executable = list.filter((item: AudioModel) => item.available !== false);
         setModels(list);
-        setModelId((current) => current && list.some((item: AudioModel) => item.id === current) ? current : list[0]?.id || "");
+        setModelId((current) => current && executable.some((item: AudioModel) => item.id === current) ? current : executable[0]?.id || "");
       })
       .catch(() => setError("Audio models are unavailable right now."));
   }, [desiredCapability]);
@@ -157,7 +159,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
 
       <label className={styles.field}>
         <span>{details.modelLabel}</span>
-        <PremiumSelect className={styles.select} value={modelId} onChange={setModelId} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}` }))} aria-label={details.modelLabel} />
+        <PremiumSelect className={styles.select} value={modelId} onChange={setModelId} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}${item.available === false ? " · Billing setup pending" : ""}`, disabled: item.available === false }))} aria-label={details.modelLabel} />
         {model?.description && <small>{model.description}</small>}
       </label>
 

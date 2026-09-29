@@ -5,7 +5,7 @@ import { CheckCircle, DownloadSimple, GearSix, Microphone, Play, Sparkle, UsersT
 import { PremiumSelect } from "@/components/premium-select";
 import styles from "@/components/audio-studio.module.css";
 
-type AudioModel = { id: string; name: string; tier: string; description?: string; capabilities: string[]; retail?: { per1kCharsCredits?: number; flatCredits?: number } };
+type AudioModel = { id: string; name: string; tier: string; description?: string; capabilities: string[]; available?: boolean; retail?: { per1kCharsCredits?: number; flatCredits?: number } };
 
 const voices = [
   { value: "EXAVITQu4vr4xnSDxMaL", label: "Sarah · Reassuring female", note: "Reassuring female" },
@@ -26,7 +26,7 @@ export function TtsClient() {
   const [url, setUrl] = useState<string>();
   const [credits, setCredits] = useState<string>();
   const [models, setModels] = useState<AudioModel[]>([]);
-  const [modelId, setModelId] = useState("eleven-tts-flash");
+  const [modelId, setModelId] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -36,8 +36,9 @@ export function TtsClient() {
     fetch("/api/models").then((response) => response.json()).then((data) => {
       const list = (data.models || []).filter((item: AudioModel) => item.capabilities?.includes("tts"));
       setModels(list);
+      const executable = list.filter((item: AudioModel) => item.available !== false);
       const requested = new URLSearchParams(window.location.search).get("model");
-      if (requested && list.some((item: AudioModel) => item.id === requested)) setModelId(requested);
+      setModelId(requested && executable.some((item: AudioModel) => item.id === requested) ? requested : executable[0]?.id || "");
     }).catch(() => setError("Speech models are unavailable right now."));
   }, []);
 
@@ -77,7 +78,7 @@ export function TtsClient() {
   return <div className={styles.workspace}>
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}><span className={styles.headIcon}><Microphone weight="fill" /></span><div><h2>Generate Speech</h2><p>Turn your script into natural, lifelike speech.</p></div><i>01</i></div>
-      <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}` }))} aria-label="Speech model" />{selectedModel?.description && <small>{selectedModel.description}</small>}</label>
+      <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}${model.available === false ? " · Billing setup pending" : ""}`, disabled: model.available === false }))} aria-label="Speech model" />{selectedModel?.description && <small>{selectedModel.description}</small>}</label>
       <label className={styles.field}><span>Script <small>{text.length.toLocaleString()} / 10,000</small></span><textarea value={text} onChange={(event) => { setText(event.target.value); setConfirmed(false); }} maxLength={10_000} required placeholder={"Write or paste your script here…\nE.g. a product explainer, narration, or any text you want to hear."} /></label>
       <label className={styles.field}><span>Voice</span><PremiumSelect className={styles.select} value={voice} onChange={setVoice} options={voices} aria-label="Voice" /></label>
       <div className={styles.advancedToggle}><button type="button" onClick={() => setAdvanced((current) => !current)}><GearSix />{advanced ? "Hide model details" : "Model details"}</button>{advanced && <div><b>Available capabilities</b><p>{selectedModel?.capabilities?.map((item) => item.replaceAll("-", " ")).join(" · ") || "Choose a model to view its capabilities."}</p><small>Only the selected model, script, and voice are sent with this request.</small></div>}</div>

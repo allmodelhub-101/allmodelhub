@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const { data: conversation } = await admin.from("conversations").select("*").eq("id", id).eq("user_id", data.user.id).maybeSingle();
     if (!conversation) return NextResponse.json({ error: "Not found" }, { status: 404 });
     const { data: messages } = await admin.from("messages")
-      .select("id,role,content,model_id,provider_key,input_tokens,output_tokens,credits_charged,created_at,parent_message_id")
+      .select("id,role,content,model_id,provider_key,input_tokens,output_tokens,credits_charged,metadata,created_at,parent_message_id")
       .eq("conversation_id", id).eq("user_id", data.user.id).order("created_at");
     return NextResponse.json({ conversation, messages: messages ?? [] });
   }

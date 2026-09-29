@@ -28,6 +28,8 @@ export type CatalogModel = {
   uiSchema?: ModelUiSchema;
   inputOverheadTokens?: number;
   autoEligible?: boolean;
+  available?: boolean;
+  availabilityReason?: "billing_authorization_pending" | "provider_route_unavailable" | null;
 };
 
 export const TEXT_MODELS: CatalogModel[] = [

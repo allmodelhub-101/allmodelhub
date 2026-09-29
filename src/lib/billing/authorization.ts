@@ -1,9 +1,7 @@
 import "server-only";
-import Decimal from "decimal.js";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createIdempotencyKey } from "@/lib/security/ids";
-import { calculateAuthoritativePrice, type PricingDimensions } from "./pricing-registry-core";
-import { loadAuthoritativePricingContext } from "./pricing-registry";
+import type { PricingDimensions } from "./pricing-registry-core";
 import { decimal, decimalString, type DecimalString } from "./money";
 import { roundWalletAmountUp } from "./quote-reservation-core";
 import type { NormalizedUsage } from "./types";
@@ -85,37 +83,22 @@ async function calculateRequestAuthorization(input: Readonly<{
   dimensions?: PricingDimensions;
 }>) {
   const pricingVersion = exactMetadataString(input.policy.metadata, "derived_from_verified_pricing_version");
-  const [pricingContext, quantum] = await Promise.all([
-    loadAuthoritativePricingContext({
-      providerKey: input.route.providerKey,
-      modelId: input.route.modelId,
-      upstreamModel: input.route.upstreamModel,
-      pricingVersion,
-    }),
-    loadAuthorizationQuantum(),
-  ]);
-  if (!new Decimal(pricingContext.internalUsdPkrRate).eq(input.policy.internal_usd_pkr_rate)
-    || !new Decimal(pricingContext.rule.markup).eq(input.policy.model_markup)) {
-    throw new Error("BILLING_V3_AUTHORIZATION_POLICY_STALE");
-  }
-  const price = calculateAuthoritativePrice({
-    rule: pricingContext.rule,
-    usage: input.usageEnvelope,
-    dimensions: input.dimensions,
-    internalUsdPkrRate: pricingContext.internalUsdPkrRate,
-  });
-  if (new Decimal(price.providerCostUsd).gt(input.policy.maximum_provider_cost_usd)) {
-    throw new Error("BILLING_V3_AUTHORIZATION_PROVIDER_COST_EXCEEDS_POLICY");
-  }
-  const authorizationCredits = roundWalletAmountUp(
-    price.customerChargeCredits,
+  const quantum = await loadAuthorizationQuantum();
+  const safePolicyCharge = roundWalletAmountUp(
+    decimal(input.policy.maximum_provider_cost_usd)
+      .mul(input.policy.internal_usd_pkr_rate)
+      .mul(input.policy.model_markup)
+      .toFixed() as DecimalString,
     quantum as DecimalString,
   );
-  if (!decimal(authorizationCredits).gt(0)
-    || decimal(authorizationCredits).gt(input.policy.maximum_authorization_credits)) {
-    throw new Error("BILLING_V3_AUTHORIZATION_EXCEEDS_POLICY");
+  const policyMaximum = decimalString(input.policy.maximum_authorization_credits);
+  if (!decimal(policyMaximum).gt(0) || decimal(policyMaximum).lt(safePolicyCharge)) {
+    throw new Error("BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED");
   }
-  return { authorizationCredits, pricingVersion, pricingRuleId: pricingContext.rule.id } as const;
+  // Provider-visible output is not a safe proxy for billed reasoning/completion
+  // tokens. Unless request parameters prove a smaller mathematical ceiling, hold
+  // the policy maximum and let the provider record determine the exact capture.
+  return { authorizationCredits: policyMaximum, pricingVersion, pricingRuleId: null } as const;
 }
 
 export async function createProviderAuthorization(input: Readonly<{
