@@ -9,6 +9,8 @@ import { requestIp } from "@/lib/security/request";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { completeMediaGenerationBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
 import { mediaCallbackDecision, mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "@/lib/billing/media-job-billing-core";
+import { callbackProviderCost, extractExactJsonDecimal, type ApimodelsBillingRecord } from "@/lib/providers/apimodels-billing-core";
+import { recordProviderBillingObservation, releaseAuthoritativeProviderFailure, settleApimodelsTask, settleProviderBillingRecord } from "@/lib/billing/provider-authoritative-settlement";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -117,6 +119,11 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     return NextResponse.json({ error: "Untrusted callback asset" }, { status: 400 });
   }
   const state = normalizeState(parsed.data.state, resultUrls.length > 0);
+  let callbackCost: { amount: string; currency: "USD" } | undefined;
+  try { callbackCost = callbackProviderCost(payload, extractExactJsonDecimal(text, "credits")); }
+  catch (error) {
+    logServerError("provider-callback-cost", error, { source: "apimodels", taskId: parsed.data.taskId });
+  }
   const summary = callbackSummary(parsed.data, state, resultUrls);
   const admin = createAdminClient();
   const jobFields = "id,user_id,public_id,modality,model_id,provider_key,status,hold_id,billing_quote_id,estimated_credits,provider_task_id,prompt,request_json";
@@ -126,6 +133,10 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
   }
   if (!existingJob || mediaCallbackDecision(existingJob.status, state) === "duplicate") return NextResponse.json({ ok: true });
+  const { data: quote } = existingJob.billing_quote_id
+    ? await admin.from("billing_quotes").select("billing_engine").eq("id", existingJob.billing_quote_id).maybeSingle()
+    : { data: null };
+  const usesV3 = quote?.billing_engine === "v3_provider_authoritative";
 
   if (!(["completed", "failed", "cancelled", "expired"] as string[]).includes(state)) {
     const checkedAt = new Date();
@@ -156,6 +167,38 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
       const fallback = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: String(job.prompt ?? "") } as MediaBillingInput);
       const normalized = normalizeMediaResult({ raw: payload, resultUrls }, fallback);
+      if (usesV3) {
+        let settlement: Record<string, unknown>;
+        if (callbackCost) {
+          const record: ApimodelsBillingRecord = {
+            taskId: parsed.data.taskId, state: "completed", settled: true,
+            creditsUsd: callbackCost.amount, currency: "USD", usage: normalized.rawUsage,
+          };
+          const ledgerId = await recordProviderBillingObservation({
+            quoteId: job.billing_quote_id, providerTaskId: parsed.data.taskId,
+            record, source: "callback", rawRecord: base, links: { generationJobId: job.id },
+          });
+          settlement = await settleProviderBillingRecord({ providerBillingRecordId: ledgerId,
+            usage: normalized.usage, links: { generationJobId: job.id },
+            metadata: { source: "provider_callback", billing_v3: true } });
+        } else {
+          settlement = await settleApimodelsTask({ quoteId: job.billing_quote_id,
+            taskId: parsed.data.taskId, providerTaskId: parsed.data.taskId,
+            source: "records_api", usage: normalized.usage, links: { generationJobId: job.id },
+            metadata: { source: "provider_callback_records_fallback", billing_v3: true } });
+        }
+        if (String(settlement.status) !== "settled") {
+          await admin.from("generation_jobs").update({ status: "processing",
+            result_json: { ...summary, amhStoredPaths: storedPaths },
+            reconciliation_required: true, reconciliation_state: "due",
+            next_reconcile_at: new Date(Date.now() + 5 * 60_000).toISOString(),
+            error_message: "Provider billing record pending reconciliation." }).eq("id", job.id);
+          return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
+        }
+        await admin.from("generation_jobs").update({ result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls }).eq("id", job.id);
+        await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready.` });
+        return NextResponse.json({ ok: true });
+      }
       const settlement = await completeMediaGenerationBilling({ jobId: job.id, normalized,
         resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
         metadata: { job_id: job.id, model_id: job.model_id, source: "provider_callback" } });
@@ -165,6 +208,38 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
       logServerError("provider-callback-settlement", error, { jobId: job.id });
       return NextResponse.json({ error: "Settlement pending" }, { status: 503 });
+    }
+  }
+
+  if (usesV3 && existingJob.billing_quote_id) {
+    try {
+      let settlement: Record<string, unknown>;
+      if (callbackCost?.amount === "0") {
+        const record: ApimodelsBillingRecord = {
+          taskId: parsed.data.taskId,
+          state: state === "cancelled" || state === "expired" ? "cancelled" : "failed",
+          settled: true, creditsUsd: "0", currency: "USD", usage: {},
+        };
+        const ledgerId = await recordProviderBillingObservation({
+          quoteId: existingJob.billing_quote_id, providerTaskId: parsed.data.taskId,
+          record, source: "callback", rawRecord: base, links: { generationJobId: existingJob.id },
+        });
+        settlement = await releaseAuthoritativeProviderFailure({ providerBillingRecordId: ledgerId,
+          generationJobId: existingJob.id, metadata: { source: "provider_callback", billing_v3: true } });
+      } else {
+        settlement = await settleApimodelsTask({ quoteId: existingJob.billing_quote_id,
+          taskId: parsed.data.taskId, providerTaskId: parsed.data.taskId,
+          source: "records_api", links: { generationJobId: existingJob.id },
+          metadata: { source: "provider_callback_failure_records_fallback", billing_v3: true } });
+      }
+      if (String(settlement.status) === "released") {
+        await notifyUser(existingJob.user_id, { type: "generation", title: `${existingJob.modality} generation failed`, body: `${existingJob.public_id} failed. Reserved Credits were released.` });
+        return NextResponse.json({ ok: true });
+      }
+      return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
+    } catch (error) {
+      logServerError("provider-callback-v3-failure", error, { jobId: existingJob.id });
+      return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
     }
   }
 

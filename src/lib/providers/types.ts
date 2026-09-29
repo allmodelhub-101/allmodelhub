@@ -19,6 +19,7 @@ export type ProviderChatResult = {
   provider: string;
   protocol: ProviderProtocol;
   providerRequestId?: string;
+  providerReportedCost?: { amount: string; currency: "USD" };
 };
 
 export type NormalizedProviderUsage = {
@@ -40,5 +41,6 @@ export type AsyncTaskResult = {
   state: "pending" | "processing" | "completed" | "failed";
   resultUrls?: string[];
   failMsg?: string;
+  providerReportedCost?: { amount: string; currency: "USD" };
   raw?: unknown;
 };

@@ -8,6 +8,8 @@ import { completeGenerationJob } from "@/lib/wallet";
 import { completeMediaGenerationBilling, failMediaGenerationBilling } from "./media-job-billing";
 import { mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "./media-job-billing-core";
 import { nextReconcileAt, rawProviderTerminalState, reconciliationDecision, type ReconciliationOutcome } from "./reconciliation-core";
+import { getBillingV3Settings } from "./billing-v3-settings";
+import { settleApimodelsTask } from "./provider-authoritative-settlement";
 
 export type ReconciliationJob = {
   id: string; user_id: string; public_id: string; modality: "image" | "video" | "audio";
@@ -15,6 +17,68 @@ export type ReconciliationJob = {
   prompt: string | null; request_json: Record<string, unknown> | null; result_json: Record<string, unknown> | null;
   estimated_credits: number | string; billing_quote_id: string | null; reconcile_attempts: number;
 };
+
+type ProviderBillingReconciliationRow = {
+  id: string;
+  quote_id: string;
+  provider_key: string;
+  provider_request_id: string | null;
+  provider_task_id: string | null;
+  reconciliation_attempts: number;
+  message_id: string | null;
+  generation_job_id: string | null;
+};
+
+async function runProviderBillingReconciliation(limit: number) {
+  const admin = createAdminClient();
+  const { data, error } = await admin.rpc("billing_v3_claim_reconciliation_batch", { p_limit: limit });
+  if (error) throw error;
+  const records = (data ?? []) as ProviderBillingReconciliationRow[];
+  const results: Array<Record<string, unknown>> = [];
+  for (const record of records) {
+    const provider = record.provider_key.toLowerCase().replace(/[-_.]/g, "");
+    const taskId = record.provider_task_id ?? record.provider_request_id;
+    if (!taskId || (provider !== "apimodels" && provider !== "apimodelsapp")) {
+      const next = nextReconcileAt(new Date(), record.reconciliation_attempts);
+      await admin.rpc("billing_v3_mark_reconciliation_retry", {
+        p_provider_billing_record_id: record.id,
+        p_status: "anomaly",
+        p_next_reconcile_at: next,
+        p_details: { reason: "unsupported_provider_or_missing_identifier" },
+      });
+      results.push({ providerBillingRecordId: record.id, outcome: "anomaly" });
+      continue;
+    }
+    try {
+      const settlement = await settleApimodelsTask({
+        quoteId: record.quote_id,
+        taskId,
+        providerRequestId: record.provider_request_id,
+        providerTaskId: record.provider_task_id,
+        source: "reconciliation",
+        links: { messageId: record.message_id, generationJobId: record.generation_job_id },
+        metadata: { source: "billing_v3_reconciliation" },
+      });
+      results.push({
+        providerBillingRecordId: record.id,
+        outcome: String((settlement as Record<string, unknown>).status ?? "pending_reconciliation"),
+      });
+    } catch (providerError) {
+      const next = nextReconcileAt(new Date(), record.reconciliation_attempts);
+      try {
+        await admin.rpc("billing_v3_mark_reconciliation_retry", {
+          p_provider_billing_record_id: record.id,
+          p_status: "retry",
+          p_next_reconcile_at: next,
+          p_details: { reason: "provider_record_temporarily_unavailable" },
+        });
+      } catch { /* the next cron run can reclaim an unchanged record */ }
+      logServerError("billing-v3-reconciliation", providerError, { providerBillingRecordId: record.id });
+      results.push({ providerBillingRecordId: record.id, outcome: "retry" });
+    }
+  }
+  return { claimed: records.length, results } as const;
+}
 
 async function recordResult(job: ReconciliationJob, outcome: ReconciliationOutcome, metadata: Record<string, unknown>, next?: string) {
   const admin = createAdminClient();
@@ -38,6 +102,47 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
       .update({ last_provider_check_at: new Date().toISOString() }).eq("id", job.id);
     if (checkError) throw checkError;
     const urls = task.state === "completed" ? await trustedUrls(task.resultUrls ?? []) : [];
+    const { data: quote } = job.billing_quote_id
+      ? await admin.from("billing_quotes").select("billing_engine").eq("id", job.billing_quote_id).maybeSingle()
+      : { data: null };
+    if (quote?.billing_engine === "v3_provider_authoritative") {
+      if (task.state === "pending" || task.state === "processing") {
+        const next = nextReconcileAt(new Date(), Math.min(job.reconcile_attempts, 3));
+        await recordResult(job, "processing", { provider_state: task.state, billing_engine: "v3_provider_authoritative" }, next);
+        return { jobId: job.id, outcome: "processing" } as const;
+      }
+      if (task.state === "completed" && !urls.length) {
+        const next = nextReconcileAt(new Date(), job.reconcile_attempts);
+        await recordResult(job, "quarantined", { provider_state: task.state, reason: "completed_without_trusted_output" }, next);
+        return { jobId: job.id, outcome: "quarantined" } as const;
+      }
+      const storedPaths = task.state === "completed" ? await persistGeneratedAssets(job.user_id, job.id, urls) : [];
+      const settlement = await settleApimodelsTask({
+        quoteId: job.billing_quote_id!, taskId: job.provider_task_id,
+        providerTaskId: job.provider_task_id, source: "reconciliation",
+        links: { generationJobId: job.id },
+        metadata: { source: "scheduled_generation_reconciliation", billing_v3: true },
+      });
+      const status = String((settlement as Record<string, unknown>).status ?? "pending_reconciliation");
+      if (status === "settled") {
+        await admin.from("generation_jobs").update({ result_json: { provider_state: task.state,
+          result_url_count: urls.length, amhStoredPaths: storedPaths, reconciliation: "confirmed_success" },
+          result_urls: urls, reconciliation_required: false, reconciliation_state: "resolved",
+          next_reconcile_at: null }).eq("id", job.id);
+        await notifyUser(job.user_id, { type: "generation", title: "Generation complete",
+          body: `${job.public_id} is ready.`, href: `/usage?job=${job.id}` }).catch(() => undefined);
+        return { jobId: job.id, outcome: "settled" } as const;
+      }
+      if (status === "released") {
+        await notifyUser(job.user_id, { type: "generation", title: "Generation failed",
+          body: `${job.public_id} failed and its reserved Credits were released.`, href: "/usage" }).catch(() => undefined);
+        return { jobId: job.id, outcome: "released" } as const;
+      }
+      const next = nextReconcileAt(new Date(), job.reconcile_attempts);
+      await recordResult(job, "quarantined", { provider_state: task.state,
+        reason: status === "authorization_shortfall" ? "authorization_shortfall" : "provider_billing_unsettled" }, next);
+      return { jobId: job.id, outcome: "quarantined" } as const;
+    }
     const decision = reconciliationDecision({ providerState: task.state, hasTrustedOutput: urls.length > 0,
       failureIsNonBillable: providerFailureIsNonBillable(job.provider_key) });
     if (decision === "retain") {
@@ -106,5 +211,9 @@ export async function runBillingReconciliation(limit = 20) {
   for (const job of jobs) results.push(await reconcileGenerationJob(job));
   const { data: invariants, error: invariantError } = await admin.rpc("billing_reconciliation_invariants");
   if (invariantError) throw invariantError;
-  return { claimed: jobs.length, results, invariants } as const;
+  const settings = await getBillingV3Settings();
+  const providerAuthoritative = settings.reconciliationEnabled
+    ? await runProviderBillingReconciliation(limit)
+    : { claimed: 0, results: [] };
+  return { claimed: jobs.length, results, providerAuthoritative, invariants } as const;
 }
