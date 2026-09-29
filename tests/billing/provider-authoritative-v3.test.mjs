@@ -136,8 +136,37 @@ test("streaming and callback paths retain successful output while provider billi
   const chat = readFileSync(join(root, "src", "app", "api", "chat", "route.ts"), "utf8");
   const callback = readFileSync(join(root, "src", "app", "api", "provider-callback", "apimodels", "[secret]", "route.ts"), "utf8");
   assert.match(chat, /billingStatus: settlement\.billingStatus/);
-  assert.match(chat, /billingAttempt\.engine === "v2"/);
+  assert.doesNotMatch(chat, /billingAttempt\.engine === "v2"/);
   assert.match(callback, /provider_callback_records_fallback/);
   assert.match(callback, /pending_reconciliation/);
   assert.match(callback, /settleProviderBillingRecord/);
+});
+
+test("new request entry points use Billing V3 only", () => {
+  const paths = [
+    ["src", "lib", "billing", "text-billing.ts"],
+    ["src", "lib", "billing", "tts-billing.ts"],
+    ["src", "app", "api", "chat", "route.ts"],
+    ["src", "app", "api", "prompt-enhance", "route.ts"],
+    ["src", "app", "api", "tts", "route.ts"],
+    ["src", "app", "api", "generations", "[modality]", "route.ts"],
+  ];
+  for (const path of paths) {
+    const source = readFileSync(join(root, ...path), "utf8");
+    assert.doesNotMatch(source, /createAndReserveBillingQuote/);
+    assert.doesNotMatch(source, /prepareTextSettlement/);
+    assert.doesNotMatch(source, /engine\s*===\s*["']v2["']/);
+  }
+  const store = readFileSync(join(root, "src", "lib", "model-store.ts"), "utf8");
+  assert.doesNotMatch(store, /provider_pricing_rules/);
+});
+
+test("consolidation migration makes V3 permanent and adds exactly 20 defensible policies", () => {
+  const sql = readFileSync(join(root, "supabase", "migrations", "20260929160000_make_billing_v3_only_runtime.sql"), "utf8").toLowerCase();
+  assert.match(sql, /billing_runtime_engine', '\"v3_provider_authoritative\"'/);
+  assert.match(sql, /billing_v3_provider_authoritative_enabled', 'true'/);
+  assert.match(sql, /billing_v3_canary_models', '\[\]'/);
+  assert.match(sql, /expected 20 new defensible billing v3 authorization policies/);
+  assert.match(sql, /apimodels_records_api/);
+  assert.doesNotMatch(sql, /delete\s+from\s+public\.(wallets|wallet_transactions|billing_receipts)/);
 });

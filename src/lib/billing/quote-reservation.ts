@@ -99,6 +99,7 @@ async function persistQuoteReservation(input: Readonly<{
   return data as PersistedReservation;
 }
 
+/** @deprecated Historical Billing V2 creation only. Do not call for new AI requests. */
 export async function createAndReserveBillingQuote(request: UniversalQuoteRequest) {
   // This input intentionally contains no client-supplied price, markup, FX rate,
   // provider cost, customer charge, or reservation amount.
