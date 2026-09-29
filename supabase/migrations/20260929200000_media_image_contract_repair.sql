@@ -4,36 +4,29 @@
 
 insert into public.provider_pricing_rules (
   provider_key, model_id, upstream_model, pricing_version, billing_type, currency,
-  resolution_dimensions, mode_dimensions, formula, metadata,
+  per_image_price, per_reference_image_price, resolution_dimensions, mode_dimensions, formula, metadata,
   effective_from, verified_at, source_name, source_url, source_metadata, status, active
 )
 values
-  ('apimodels', 'doubao-seedream-5-0-pro', 'doubao-seedream-5-0-pro', 'apimodels-image-2026-09-29', 'image', 'USD',
+  ('apimodels', 'doubao-seedream-5-0-pro', 'doubao-seedream-5-0-pro', 'apimodels-image-2026-09-29', 'image', 'USD', 0, null,
    '{"1K":{"perImage":"0.03"},"2K":{"perImage":"0.06"}}'::jsonb,
    '{"create":{"multiplier":"1"},"edit":{"multiplier":"1"}}'::jsonb, '{}'::jsonb,
    '{"authorization_only":true,"failed_requests_billable":false}'::jsonb,
    '2026-09-29T20:00:00Z', now(), 'APIMODELS Seedream 5.0 Pro', 'https://apimodels.app/docs/seedream-5-0-pro',
    '{"verified_by":"media-runtime-repair"}'::jsonb, 'verified', true),
-  ('apimodels', 'gpt-image-2', 'gpt-image-2', 'apimodels-gpt-image-2-2026-09-29', 'image', 'USD',
+  ('apimodels', 'gpt-image-2', 'gpt-image-2', 'apimodels-gpt-image-2-2026-09-29', 'image', 'USD', 0, null,
    '{"1K":{"perImage":"0.025"},"2K":{"perImage":"0.03"},"4K":{"perImage":"0.05"}}'::jsonb,
    '{"create":{"multiplier":"1"},"edit":{"multiplier":"1"}}'::jsonb, '{}'::jsonb,
    '{"authorization_only":true,"failed_requests_billable":false}'::jsonb,
    '2026-09-29T20:00:00Z', now(), 'APIMODELS GPT Image 2', 'https://apimodels.app/docs/gpt-image-2',
    '{"verified_by":"media-runtime-repair"}'::jsonb, 'verified', true),
-  ('apimodels', 'qwen3-image-pro', 'qwen3-image-pro', 'apimodels-image-2026-09-29', 'image', 'USD',
-   null, null, '{}'::jsonb, '{}'::jsonb,
+  ('apimodels', 'qwen3-image-pro', 'qwen3-image-pro', 'apimodels-image-2026-09-29', 'image', 'USD', 0, 0.004,
+   '{"1K":{"perImage":"0.037"},"2K":{"perImage":"0.075"}}'::jsonb,
+   '{"create":{"multiplier":"1"},"edit":{"multiplier":"1"}}'::jsonb, '{}'::jsonb,
    '{"authorization_only":true,"failed_requests_billable":false}'::jsonb,
    '2026-09-29T20:00:00Z', now(), 'APIMODELS Qwen Image 3 Pro', 'https://apimodels.app/models/qwen3-image-pro',
    '{"verified_by":"media-runtime-repair"}'::jsonb, 'verified', true)
 on conflict (provider_key, model_id, upstream_model, pricing_version) do nothing;
-
--- qwen3-image-pro uses resolution tiers plus a reference surcharge.
-update public.provider_pricing_rules
-set resolution_dimensions = '{"1K":{"perImage":"0.037"},"2K":{"perImage":"0.075"}}'::jsonb,
-    per_reference_image_price = 0.004,
-    mode_dimensions = '{"create":{"multiplier":"1"},"edit":{"multiplier":"1"}}'::jsonb
-where provider_key = 'apimodels' and model_id = 'qwen3-image-pro'
-  and pricing_version = 'apimodels-image-2026-09-29';
 
 update public.models set ui_schema = case id
   when 'doubao-seedream-5-0-pro' then '{"inputModes":["text","image"],"resolutionOptions":["1K","2K"],"aspectRatios":["1:1","4:3","3:4","16:9","9:16","3:2","2:3","5:4","4:5","21:9"],"maxReferences":10}'::jsonb

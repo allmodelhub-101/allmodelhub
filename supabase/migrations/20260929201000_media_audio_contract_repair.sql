@@ -2,6 +2,17 @@
 -- Unsupported specialized workflows retain their catalog rows but are gated by
 -- the server execution-contract registry.
 
+with retired as (
+  update public.billing_authorization_policies
+  set active = false,
+      effective_until = case when effective_until is null or effective_until > now() then now() else effective_until end
+  where active and modality = 'audio'
+    and model_id in ('eleven-tts-flash','eleven-tts-multilingual','eleven-tts-v3','kling-tts','kling-sound-effects','suno-v5')
+    and policy_version <> 'billing-v3-auth-2026-09-29-audio-runtime'
+  returning provider_key, model_id, upstream_model, modality,
+    maximum_provider_cost_usd, maximum_authorization_credits, fx_rate_snapshot,
+    markup_snapshot, request_constraints, metadata
+)
 insert into public.billing_authorization_policies (
   provider_key, model_id, upstream_model, modality, policy_version,
   maximum_provider_cost_usd, maximum_authorization_credits, fx_rate_snapshot,
@@ -17,17 +28,9 @@ select provider_key, model_id, upstream_model, modality,
     'provider_acceptance_required', true,
     'failed_pre_acceptance_billable', false
   ),
-  now() - interval '1 minute', null, true
-from public.billing_authorization_policies
-where active and modality = 'audio' and model_id in
-  ('eleven-tts-flash','eleven-tts-multilingual','eleven-tts-v3','kling-tts','kling-sound-effects','suno-v5')
+  now(), null, true
+from retired
 on conflict (provider_key, model_id, upstream_model, modality, policy_version) do nothing;
-
-update public.billing_authorization_policies
-set active = false, effective_until = coalesce(effective_until, now())
-where active and modality = 'audio'
-  and model_id in ('eleven-tts-flash','eleven-tts-multilingual','eleven-tts-v3','kling-tts','kling-sound-effects','suno-v5')
-  and policy_version <> 'billing-v3-auth-2026-09-29-audio-runtime';
 
 update public.models set ui_schema = case id
   when 'eleven-tts-flash' then '{"inputModes":["text"],"maxReferences":0}'::jsonb
