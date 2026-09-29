@@ -3,6 +3,7 @@ import { haimakerChatStream, haimakerCreateTask, haimakerModelFor, haimakerPollT
 import type { ProviderChatRequest, ProviderChatResult } from "@/lib/providers/types";
 import type { ResolvedBillingProviderRoute } from "@/lib/billing/provider-route-core";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { apimodelsRequestId, apimodelsResponseCost } from "@/lib/providers/apimodels-billing-core";
 
 type ProviderRoute = { provider_key: string; upstream_model: string; priority: number; active: boolean };
 
@@ -112,7 +113,8 @@ export async function providerChatStreamExact(
       response: result.response,
       provider: route.providerKey,
       protocol: result.protocol,
-      providerRequestId: result.response.headers.get("x-request-id") ?? result.response.headers.get("request-id") ?? undefined,
+      providerRequestId: apimodelsRequestId(result.response.headers),
+      providerReportedCost: apimodelsResponseCost(result.response.headers),
     };
   }
   if (key === "haimaker" || key === "haimakerai") {
@@ -149,6 +151,11 @@ export async function providerTtsStreamExact(
   return {
     response,
     provider: route.providerKey,
-    providerRequestId: response.headers.get("x-request-id") ?? response.headers.get("request-id") ?? undefined,
+    providerRequestId: key === "apimodels" || key === "apimodelsapp"
+      ? apimodelsRequestId(response.headers)
+      : response.headers.get("x-request-id") ?? response.headers.get("request-id") ?? undefined,
+    providerReportedCost: key === "apimodels" || key === "apimodelsapp"
+      ? apimodelsResponseCost(response.headers)
+      : undefined,
   } as const;
 }

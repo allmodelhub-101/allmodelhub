@@ -7,6 +7,8 @@ import {
   type Modality,
   type ModelTier
 } from "@/lib/models";
+import { getBillingV3Settings } from "@/lib/billing/billing-v3-settings";
+import { executableModelIds } from "@/lib/billing/model-availability-core";
 
 type DbModel = {
   id: string;
@@ -60,6 +62,7 @@ function toCatalogModel(row: DbModel): CatalogModel {
 export async function listRuntimeModels(options?: { modality?: Modality; includeInactive?: boolean }) {
   try {
     const admin = createAdminClient();
+    const now = new Date().toISOString();
     let query = admin.from("models").select("*").order("tier").order("display_name");
     if (options?.modality) query = query.eq("modality", options.modality);
     if (!options?.includeInactive) query = query.eq("active", true);
@@ -68,17 +71,37 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     const rows = data as DbModel[];
     if (options?.includeInactive || !rows.length) return rows.map(toCatalogModel);
 
-    // Customer-facing runtime catalogs must only expose models that have an
-    // executable provider route. Billing V2 keeps routes without a current,
-    // verified rule inactive, so filtering here prevents a user from selecting
-    // a model that is guaranteed to fail closed after submission.
-    const { data: routes, error: routeError } = await admin
+    // Route activity means operational availability. The active billing engine
+    // independently requires either current V2 pricing or a V3 authorization
+    // policy, so the customer catalog still fails closed without conflating the
+    // route lifecycle with local final-cost formulas.
+    const [{ data: routes, error: routeError }, { data: prices, error: priceError },
+      { data: policies, error: policyError }, settings] = await Promise.all([admin
       .from("provider_models")
       .select("model_id")
       .eq("active", true)
-      .in("model_id", rows.map((row) => row.id));
-    if (routeError) throw routeError;
-    const executable = new Set((routes ?? []).map((route) => String(route.model_id)));
+      .in("model_id", rows.map((row) => row.id)), admin
+      .from("provider_pricing_rules")
+      .select("model_id")
+      .eq("active", true).eq("status", "verified")
+      .lte("effective_from", now)
+      .or(`effective_until.is.null,effective_until.gt.${now}`)
+      .in("model_id", rows.map((row) => row.id)), admin
+      .from("billing_authorization_policies")
+      .select("model_id")
+      .eq("active", true)
+      .lte("effective_from", now)
+      .or(`effective_until.is.null,effective_until.gt.${now}`)
+      .in("model_id", rows.map((row) => row.id)), getBillingV3Settings()]);
+    if (routeError || priceError || policyError) throw routeError ?? priceError ?? policyError;
+    const executable = executableModelIds({
+      activeModelIds: rows.map((row) => row.id),
+      operationalRouteModelIds: (routes ?? []).map((route) => String(route.model_id)),
+      verifiedPricingModelIds: (prices ?? []).map((rule) => String(rule.model_id)),
+      authorizationPolicyModelIds: (policies ?? []).map((policy) => String(policy.model_id)),
+      billingV3Enabled: settings.enabled,
+      billingV3CanaryModels: settings.canaryModels,
+    });
     return rows.filter((row) => executable.has(row.id)).map(toCatalogModel);
   } catch {
     // Static catalog data is UI metadata only. Never turn it into an
@@ -92,18 +115,31 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
 export async function getRuntimeModel(id: string) {
   try {
     const admin = createAdminClient();
+    const now = new Date().toISOString();
     const { data, error } = await admin.from("models").select("*").or(`id.eq.${id},upstream_model.eq.${id}`).eq("active", true).limit(1).maybeSingle();
     if (error) throw error;
     if (!data) return undefined;
-    const { data: route, error: routeError } = await admin
+    const [{ data: route, error: routeError }, { data: price, error: priceError },
+      { data: policy, error: policyError }, settings] = await Promise.all([admin
       .from("provider_models")
       .select("id")
       .eq("model_id", data.id)
       .eq("active", true)
       .limit(1)
-      .maybeSingle();
-    if (routeError) throw routeError;
-    if (!route) return undefined;
+      .maybeSingle(), admin.from("provider_pricing_rules").select("id")
+      .eq("model_id", data.id).eq("active", true).eq("status", "verified")
+      .lte("effective_from", now)
+      .or(`effective_until.is.null,effective_until.gt.${now}`)
+      .limit(1).maybeSingle(),
+      admin.from("billing_authorization_policies").select("id")
+      .eq("model_id", data.id).eq("active", true)
+      .lte("effective_from", now)
+      .or(`effective_until.is.null,effective_until.gt.${now}`)
+      .limit(1).maybeSingle(),
+      getBillingV3Settings()]);
+    if (routeError || priceError || policyError) throw routeError ?? priceError ?? policyError;
+    const v3 = settings.enabled || settings.canaryModels.includes(data.id);
+    if (!route || (v3 ? !policy : !price)) return undefined;
     return toCatalogModel(data as DbModel);
   } catch {
     if (process.env.NODE_ENV === "production") return undefined;

@@ -14,6 +14,9 @@ import { createPublicId } from "@/lib/security/ids";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { usesProviderAuthoritativeBilling } from "@/lib/billing/billing-v3-settings";
+import { createProviderAuthorization } from "@/lib/billing/authorization";
+import { markProviderSettlementPending, recordProviderBillingAnomaly } from "@/lib/billing/provider-authoritative-settlement";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -69,10 +72,15 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     referenceImages = await Promise.all((files ?? []).map((file) => signedFileUrl(admin, file.storage_path)));
   }
   const mode = input.mode ?? input.audioMode;
-  const usage = mediaUsageFromRequest({ ...input, mode, referenceCount: input.imageFileIds.length });
+  const aspectRatio = modality === "audio" ? undefined : input.aspectRatio;
+  const usage = {
+    ...mediaUsageFromRequest({ ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length }),
+    inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
+  };
   const dimensions = { resolution: input.resolution, quality: input.quality, mode, inputType: referenceImages.length ? "image" : "text" };
-  const storedRequest = { ...input, mode, referenceCount: input.imageFileIds.length };
+  const storedRequest = { ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
+  const useV3 = await usesProviderAuthoritativeBilling(model.id);
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
     public_id: publicId, user_id: user.id, project_id: input.projectId ?? null, modality, model_id: model.id,
     status: "queued", prompt: input.prompt, request_json: storedRequest,
@@ -80,31 +88,46 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   if (insertError || !job) { await finalizeRequest(claim.id, "failed"); return NextResponse.json({ error: "Could not create generation job." }, { status: 500 }); }
 
   let lastError: unknown = new Error("No billable provider route is available.");
+  let providerSubmissionPending = false;
   try {
     for (const route of await resolveBillingProviderRoutes(model.id)) {
-      const attemptClaim = await claimRequest(user.id, `billing-v2:media:${claim.id}`, route.routeId);
+      const attemptClaim = await claimRequest(user.id, `${useV3 ? "billing-v3" : "billing-v2"}:media:${claim.id}`, route.routeId);
       if (!attemptClaim.claimed) continue;
       let quote: Awaited<ReturnType<typeof createAndReserveBillingQuote>> | null = null;
+      let authorization: Awaited<ReturnType<typeof createProviderAuthorization>> | null = null;
+      let providerStarted = false;
+      let providerTaskId: string | undefined;
       try {
-        quote = await createAndReserveBillingQuote({
-          userId: user.id, requestIdempotencyId: attemptClaim.id, modelId: model.id, providerKey: route.providerKey,
-          kind: "deterministic", estimatedUsage: usage, dimensions, options: storedRequest,
-          metadata: { operation: `${modality}_generation`, parent_request_id: claim.id, generation_job_id: job.id },
-        });
-        const estimated = Number(quote.estimatedCustomerChargeCredits);
-        const requiresConfirmation = modality === "video" || estimated >= 50;
+        if (useV3) {
+          authorization = await createProviderAuthorization({
+            userId: user.id, requestIdempotencyId: attemptClaim.id, route, modality,
+            usageEnvelope: usage, dimensions, options: storedRequest,
+            metadata: { operation: `${modality}_generation`, parent_request_id: claim.id, generation_job_id: job.id },
+          });
+        } else {
+          quote = await createAndReserveBillingQuote({
+            userId: user.id, requestIdempotencyId: attemptClaim.id, modelId: model.id, providerKey: route.providerKey,
+            kind: "deterministic", estimatedUsage: usage, dimensions, options: storedRequest,
+            metadata: { operation: `${modality}_generation`, parent_request_id: claim.id, generation_job_id: job.id },
+          });
+        }
+        const authorizationCredits = authorization?.authorizationCredits ?? quote!.reservationCredits;
+        const estimated = useV3 ? 0 : Number(quote!.estimatedCustomerChargeCredits);
+        const requiresConfirmation = modality === "video" || Number(authorizationCredits) >= 50;
         if (requiresConfirmation && !input.confirmedCost) {
-          await cancelBillingQuoteReservation(quote.quoteId, "cost_confirmation_required");
+          await cancelBillingQuoteReservation(authorization?.quoteId ?? quote!.quoteId, "cost_confirmation_required");
           await finalizeRequest(attemptClaim.id, "failed"); await finalizeRequest(claim.id, "failed", { resourceId: job.id });
           await admin.from("generation_jobs").update({ status: "failed", error_message: "Cost confirmation required" }).eq("id", job.id);
           return NextResponse.json({ error: "Explicit cost confirmation is required for this generation.", estimatedCredits: estimated }, { status: 409 });
         }
-        await assertSpendingAllowed(user.id, quote.reservationCredits);
-        await acceptBillingQuote(quote.quoteId);
+        await assertSpendingAllowed(user.id, authorizationCredits);
+        if (quote) await acceptBillingQuote(quote.quoteId);
         await admin.from("generation_jobs").update({
-          provider_key: route.providerKey, billing_quote_id: quote.quoteId, hold_id: quote.walletHoldId,
-          estimated_credits: estimated, reserved_credits: Number(quote.reservationCredits), supplier_cost_usd: Number(quote.estimatedProviderCostUsd),
-          internal_cost_pkr: Number(quote.estimatedProviderCostUsd) * Number(quote.pricing.internalUsdPkrRate),
+          provider_key: route.providerKey, billing_quote_id: authorization?.quoteId ?? quote!.quoteId,
+          hold_id: authorization?.walletHoldId ?? quote!.walletHoldId,
+          estimated_credits: estimated, reserved_credits: Number(authorizationCredits),
+          supplier_cost_usd: quote ? Number(quote.estimatedProviderCostUsd) : 0,
+          internal_cost_pkr: quote ? Number(quote.estimatedProviderCostUsd) * Number(quote.pricing.internalUsdPkrRate) : 0,
         }).eq("id", job.id);
         const callbackBase = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/+$/, "");
         const isApiModels = route.providerKey.toLowerCase().replace(/[-_.]/g, "") === "apimodels";
@@ -113,30 +136,60 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           prompt: input.prompt, ...(input.duration ? { duration: input.duration } : {}),
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
           ...(input.resolution ? { resolution: input.resolution } : {}), ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
-          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(input.aspectRatio ? { aspect_ratio: input.aspectRatio } : {}),
+          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(aspectRatio ? { aspect_ratio: aspectRatio } : {}),
           ...(mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
           ...(referenceImages.length ? { images: referenceImages } : {}), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
         const task = (await providerCreateTaskExact(route, modality as "image" | "video" | "audio", providerBody)).task;
+        providerStarted = true;
+        providerSubmissionPending = true;
+        providerTaskId = task.taskId;
+        if (authorization) {
+          if (!task.taskId) throw new Error("BILLING_V3_PROVIDER_TASK_ID_MISSING");
+          await markProviderSettlementPending({ quoteId: authorization.quoteId,
+            providerTaskId: task.taskId, source: "response_header", links: { generationJobId: job.id } });
+        }
         const status = task.state === "processing" ? "processing" : "submitted";
         await admin.from("generation_jobs").update({ provider_task_id: task.taskId, status, result_json: { provider_state: task.state, result_url_count: task.resultUrls?.length ?? 0 }, updated_at: new Date().toISOString() }).eq("id", job.id);
-        await finalizeRequest(attemptClaim.id, "completed", { resourceId: job.id, response: { quoteId: quote.quoteId } });
+        await finalizeRequest(attemptClaim.id, "completed", { resourceId: job.id,
+          response: { quoteId: authorization?.quoteId ?? quote!.quoteId, billingEngine: useV3 ? "v3_provider_authoritative" : "v2" } });
         await finalizeRequest(claim.id, "completed", { resourceId: job.id, response: { publicId: job.public_id, status } });
-        return NextResponse.json({ job: { ...job, status, estimated_credits: estimated, reserved_credits: Number(quote.reservationCredits) }, requiresConfirmation }, { status: 202 });
+        return NextResponse.json({ job: { ...job, status, estimated_credits: estimated,
+          reserved_credits: Number(authorizationCredits) }, requiresConfirmation }, { status: 202 });
       } catch (error) {
         lastError = error;
-        if (quote) await cancelBillingQuoteReservation(quote.quoteId, "media_provider_attempt_failed").catch(() => undefined);
-        await finalizeRequest(attemptClaim.id, "failed").catch(() => undefined);
+        if (authorization && providerStarted) {
+          if (providerTaskId) {
+            await markProviderSettlementPending({ quoteId: authorization.quoteId,
+              providerTaskId, source: "response_header", links: { generationJobId: job.id } }).catch(() => undefined);
+          } else {
+            await recordProviderBillingAnomaly({ quoteId: authorization.quoteId,
+              anomalyType: "provider_record_missing_identifier",
+              details: { operation: `${modality}_generation`, generation_job_id: job.id, hold_retained: true } }).catch(() => undefined);
+          }
+        }
+        if (!providerStarted) {
+          if (authorization) await cancelBillingQuoteReservation(authorization.quoteId, "media_provider_attempt_failed").catch(() => undefined);
+          if (quote) await cancelBillingQuoteReservation(quote.quoteId, "media_provider_attempt_failed").catch(() => undefined);
+        }
+        await finalizeRequest(attemptClaim.id, providerStarted ? "completed" : "failed", providerStarted
+          ? { resourceId: job.id, response: { billingStatus: "pending_reconciliation" } } : undefined).catch(() => undefined);
+        if (providerStarted) throw error;
         if (terminalFinancialError(error)) throw error;
       }
     }
     throw lastError;
   } catch (error) {
-    await admin.from("generation_jobs").update({ status: "failed", error_message: "Generation provider is temporarily unavailable.", updated_at: new Date().toISOString() }).eq("id", job.id);
-    await finalizeRequest(claim.id, "failed", { resourceId: job.id }).catch(() => undefined);
+    await admin.from("generation_jobs").update(providerSubmissionPending
+      ? { status: "processing", error_message: "Provider billing reconciliation pending.",
+          reconciliation_required: true, reconciliation_state: "due", next_reconcile_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+      : { status: "failed", error_message: "Generation provider is temporarily unavailable.", updated_at: new Date().toISOString() })
+      .eq("id", job.id);
+    await finalizeRequest(claim.id, providerSubmissionPending ? "completed" : "failed", { resourceId: job.id,
+      response: providerSubmissionPending ? { billingStatus: "pending_reconciliation" } : undefined }).catch(() => undefined);
     const message = error instanceof Error ? error.message : "Generation failed";
     const insufficient = message.includes("INSUFFICIENT_CREDITS"); const safety = message.includes("SPEND_LIMIT");
     if (!insufficient && !safety) logServerError("generation-billing-v2", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });
-    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : safety ? "This generation exceeds your spending safety limit." : "Generation provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 502 });
+    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : safety ? "This generation exceeds your spending safety limit." : providerSubmissionPending ? "Generation was submitted and is pending provider reconciliation." : "Generation provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : providerSubmissionPending ? 202 : 502 });
   }
 }

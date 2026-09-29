@@ -1,6 +1,11 @@
 import "server-only";
 import { getServerEnv } from "@/lib/env";
 import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
+import {
+  ApimodelsBillingRecordError,
+  extractExactJsonDecimal,
+  normalizeApimodelsBillingRecord,
+} from "@/lib/providers/apimodels-billing-core";
 
 export type ProviderFailureKind = "authentication" | "model_unavailable" | "temporary" | "configuration";
 
@@ -14,6 +19,17 @@ export class ProviderRequestError extends Error {
 function apiUrl(path: string) {
   const base = getServerEnv().APIMODELS_BASE_URL.replace(/\/+$/, "").replace(/\/v1$/i, "");
   return `${base}/v1/${path.replace(/^\/+/, "")}`;
+}
+
+const BILLING_RECORD_RETRY_DELAYS_MS = [0, 250, 750] as const;
+
+function retryableBillingStatus(status: number) {
+  return status === 404 || status === 409 || status === 425 || status === 429 || status >= 500;
+}
+
+async function wait(milliseconds: number) {
+  if (milliseconds <= 0) return;
+  await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 function logProviderResponse(provider: string, endpoint: string, model: string | undefined, response: Response) {
@@ -131,5 +147,44 @@ export async function apimodelsTtsStream(body: { model: string; text: string; vo
   });
   logProviderResponse("apimodels", endpoint, body.model, response);
   return response;
+}
+
+export async function getApimodelsBillingRecord(taskId: string) {
+  const normalizedTaskId = taskId.trim();
+  if (!normalizedTaskId || normalizedTaskId.length > 240) {
+    throw new ApimodelsBillingRecordError("MALFORMED_RECORD", "Invalid APIMODELS billing task ID.");
+  }
+  let lastStatus: number | undefined;
+  for (const delay of BILLING_RECORD_RETRY_DELAYS_MS) {
+    await wait(delay);
+    try {
+      const response = await fetch(apiUrl(`records/${encodeURIComponent(normalizedTaskId)}`), {
+        headers: headers(),
+        cache: "no-store",
+        signal: AbortSignal.timeout(8_000),
+      });
+      lastStatus = response.status;
+      const responseText = await response.text();
+      if (!response.ok) {
+        if (retryableBillingStatus(response.status)) continue;
+        throw new ApimodelsBillingRecordError("RECORD_UNAVAILABLE", `APIMODELS billing record request failed (${response.status}).`);
+      }
+      let payload: unknown;
+      try {
+        payload = JSON.parse(responseText);
+      } catch {
+        throw new ApimodelsBillingRecordError("MALFORMED_RECORD", "APIMODELS billing record response is not valid JSON.");
+      }
+      const record = normalizeApimodelsBillingRecord(payload, extractExactJsonDecimal(responseText, "credits"));
+      if (record.taskId !== normalizedTaskId) {
+        throw new ApimodelsBillingRecordError("MALFORMED_RECORD", "APIMODELS billing record task ID does not match the request.");
+      }
+      return record;
+    } catch (error) {
+      if (error instanceof ApimodelsBillingRecordError && error.code !== "RECORD_UNAVAILABLE") throw error;
+      if (delay === BILLING_RECORD_RETRY_DELAYS_MS.at(-1)) throw error;
+    }
+  }
+  throw new ApimodelsBillingRecordError("RECORD_UNAVAILABLE", `APIMODELS billing record is temporarily unavailable${lastStatus ? ` (${lastStatus})` : ""}.`);
 }
 

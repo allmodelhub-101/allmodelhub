@@ -92,9 +92,9 @@ export async function POST(request: Request) {
 
     if (!text.trim()) throw new Error("Prompt enhancer provider returned no text.");
     const settlement = await settleTextBillingAttempt({ attempt: billingAttempt, usage, rawUsage: { protocol: upstream.protocol, normalized: usage }, metadata: { operation: "prompt_enhancer" } });
-    const credits = Number(settlement.prepared.chargeCredits);
+    const credits = Number(settlement.chargeCredits);
     await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, model: model.id } });
-    return NextResponse.json({ prompt: text.trim(), credits });
+    return NextResponse.json({ prompt: text.trim(), credits, billingStatus: settlement.billingStatus });
   } catch (error) {
     await cancelTextBillingAttempt(billingAttempt, "prompt_enhancer_failed");
     await finalizeRequest(claimId, "failed").catch(() => undefined);
