@@ -11,8 +11,6 @@ import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, settleTextBillingInBackground, type TextBillingAttempt } from "@/lib/billing/text-billing";
-import { prepareTextSettlement } from "@/lib/billing/text-billing-core";
-import { multiply } from "@/lib/billing/money";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -217,39 +215,21 @@ export async function POST(request: Request) {
         emit({ type: "meta", conversationId, model: selected.id, modelName: selected.name, provider: billingAttempt.upstream.provider, tier: selected.tier, private: body.private });
         await consumeAttempt(billingAttempt);
         if (!assistantText.trim()) {
-          if (billingAttempt.engine === "v3_provider_authoritative") {
-            throw new Error("Provider stream completed without response text; authoritative billing reconciliation is pending.");
-          }
-          await cancelTextBillingAttempt(billingAttempt, "empty_provider_stream");
-          billingAttempt = await beginTextBillingAttempt(billingInput);
-          providerUsage = { providerRequestId: billingAttempt.upstream.providerRequestId };
-          emit({ type: "provider_retry", provider: billingAttempt.upstream.provider });
-          await consumeAttempt(billingAttempt);
+          throw new Error("Provider stream completed without response text; authoritative billing reconciliation is pending.");
         }
-        if (!assistantText.trim()) throw new Error("Provider stream completed without response text after provider fallback.");
-        const prepared = billingAttempt.engine === "v2" ? prepareTextSettlement({
-          rule: billingAttempt.quote.authoritativeRule,
-          usage: providerUsage,
-          dimensions: billingAttempt.quote.dimensions,
-          internalUsdPkrRate: billingAttempt.quote.pricing.internalUsdPkrRate,
-          profitabilityPolicy: billingAttempt.quote.profitabilityPolicy,
-          reservationCredits: billingAttempt.quote.reservationCredits,
-        }) : null;
 
         if (!body.private && conversationId) {
           const { data: assistant, error: assistantError } = await admin.from("messages").insert({
             conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText,
             model_id: selected.id, provider_key: billingAttempt.upstream.provider,
             input_tokens: Number(providerUsage.inputTokens), output_tokens: Number(providerUsage.outputTokens),
-            credits_charged: prepared ? Number(prepared.chargeCredits) : 0,
-            supplier_cost_usd: prepared ? Number(prepared.finalProviderCostUsd) : 0,
-            internal_cost_pkr: prepared && billingAttempt.engine === "v2"
-              ? Number(multiply(prepared.finalProviderCostUsd, billingAttempt.quote.pricing.internalUsdPkrRate)) : 0,
+            credits_charged: 0,
+            supplier_cost_usd: 0,
+            internal_cost_pkr: 0,
             metadata: {
               deepThink: body.deepThink,
-              billingQuoteId: billingAttempt.engine === "v2" ? billingAttempt.quote.quoteId : billingAttempt.authorization.quoteId,
-              billingEngine: billingAttempt.engine,
-              ...(billingAttempt.engine === "v3_provider_authoritative" ? { billingStatus: "pending_reconciliation" } : {}),
+              billingQuoteId: billingAttempt.authorization.quoteId,
+              billingStatus: "pending_reconciliation",
             },
           }).select("id").single();
           if (assistantError) throw assistantError;
@@ -263,7 +243,7 @@ export async function POST(request: Request) {
           rawUsage: { protocol: billingAttempt.upstream.protocol, normalized: providerUsage },
           metadata: { operation: "chat", conversation_id: conversationId, private: body.private },
         });
-        if (settlement.billingStatus === "pending_reconciliation" && billingAttempt.engine === "v3_provider_authoritative") {
+        if (settlement.billingStatus === "pending_reconciliation") {
           const backgroundAttempt = billingAttempt;
           after(async () => {
             await settleTextBillingInBackground({
@@ -282,9 +262,6 @@ export async function POST(request: Request) {
         emit({ type: "usage", credits, billingStatus: settlement.billingStatus, inputTokens: Number(providerUsage.inputTokens), outputTokens: Number(providerUsage.outputTokens), model: selected.name, transactionId, messageId: assistantMessageId });
         emit({ type: "done" });
       } catch (error) {
-        if (!finalized && assistantMessageId && billingAttempt.engine === "v2") {
-          try { await admin.from("messages").delete().eq("id", assistantMessageId).eq("user_id", user.id); } catch { /* best-effort compatibility cleanup */ }
-        }
         if (!finalized) await cancelTextBillingAttempt(billingAttempt, "chat_stream_failed");
         await finalizeRequest(claimId, "failed").catch(() => undefined);
         logServerError("chat-stream", error, { userId: user.id, modelId: selected.id, conversationId });

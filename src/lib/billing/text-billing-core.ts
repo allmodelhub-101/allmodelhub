@@ -61,6 +61,7 @@ export type PreparedTextSettlement = Readonly<{
   usageSnapshot: Readonly<Record<string, unknown>>;
 }>;
 
+/** @deprecated Historical Billing V2 settlement only. New requests settle from APIMODELS records. */
 export function prepareTextSettlement(input: Readonly<{
   rule: ValidatedPricingRule;
   usage: NormalizedProviderUsage;

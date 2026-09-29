@@ -6,7 +6,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
-import { beginTtsBillingAttempt, cancelTtsBillingAttempt, settleTtsBillingAttempt } from "@/lib/billing/tts-billing";
+import { beginTtsBillingAttempt, cancelTtsBillingAttempt, settleTtsBillingAttempt, type TtsBillingAttempt } from "@/lib/billing/tts-billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -46,61 +46,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "TTS model is unavailable." }, { status: 400 });
   }
 
-  let billingAttempt;
+  let billingAttempt: TtsBillingAttempt | undefined;
   try {
     billingAttempt = await beginTtsBillingAttempt({ userId: user.id, parentRequestId: claimId, modelId: model.id, text: input.text, voiceId: input.voiceId, confirmedCost: input.confirmedCost });
-    if (billingAttempt.engine === "v3_provider_authoritative") {
-      const v3Attempt = billingAttempt;
-      const source = v3Attempt.response.body!;
-      const stream = new ReadableStream<Uint8Array>({
-        async start(controller) {
-          const reader = source.getReader();
-          try {
-            while (true) {
-              const { value, done } = await reader.read();
-              if (done) break;
-              controller.enqueue(value);
-            }
-            await settleTtsBillingAttempt({ attempt: v3Attempt, text: input.text });
-            await finalizeRequest(claimId, "completed", {
-              resourceId: v3Attempt.authorization.quoteId,
-              response: { billingStatus: "provider_authoritative" },
-            });
-            controller.close();
-          } catch (streamError) {
-            await cancelTtsBillingAttempt(v3Attempt, "tts_stream_or_settlement_pending");
-            logServerError("tts-v3-stream", streamError, { userId: user.id, modelId: model.id });
-            controller.error(streamError);
-          } finally {
-            reader.releaseLock();
+    const attempt = billingAttempt;
+    const source = attempt.response.body!;
+    const stream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const reader = source.getReader();
+        try {
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            controller.enqueue(value);
           }
-        },
-        async cancel() {
-          await source.cancel().catch(() => undefined);
-          await cancelTtsBillingAttempt(v3Attempt, "tts_client_cancelled");
-        },
-      });
-      return new Response(stream, {
-        headers: {
-          "Content-Type": v3Attempt.response.headers.get("content-type") || "audio/mpeg",
-          "Cache-Control": "private, no-store",
-          "X-AMH-Billing-Status": "provider-authoritative",
-          "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"',
-        },
-      });
-    }
-    const settlement = await settleTtsBillingAttempt({ attempt: billingAttempt, text: input.text });
-    const credits = Number(settlement.chargeCredits);
-    await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, transactionId: settlement.walletTransactionId } });
-    const responseHeaders: Record<string, string> = {
-      "Content-Type": billingAttempt.response.headers.get("content-type") || "audio/mpeg",
-      "Cache-Control": "private, no-store",
-      "X-AMH-Credits": credits.toString(),
-      "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"',
-    };
-    if (settlement.receiptId) responseHeaders["X-AMH-Billing-Receipt"] = settlement.receiptId;
-    return new Response(billingAttempt.response.body, {
-      headers: responseHeaders,
+          await settleTtsBillingAttempt({ attempt, text: input.text });
+          await finalizeRequest(claimId, "completed", {
+            resourceId: attempt.authorization.quoteId,
+            response: { billingStatus: "provider_authoritative" },
+          });
+          controller.close();
+        } catch (streamError) {
+          await cancelTtsBillingAttempt(attempt, "tts_stream_or_settlement_pending");
+          logServerError("tts-v3-stream", streamError, { userId: user.id, modelId: model.id });
+          controller.error(streamError);
+        } finally {
+          reader.releaseLock();
+        }
+      },
+      async cancel() {
+        await source.cancel().catch(() => undefined);
+        await cancelTtsBillingAttempt(attempt, "tts_client_cancelled");
+      },
+    });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": attempt.response.headers.get("content-type") || "audio/mpeg",
+        "Cache-Control": "private, no-store",
+        "X-AMH-Billing-Status": "provider-authoritative",
+        "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"',
+      },
     });
   } catch (error) {
     if (billingAttempt) await cancelTtsBillingAttempt(billingAttempt, "tts_exception");

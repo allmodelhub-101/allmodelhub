@@ -96,7 +96,7 @@ export async function POST(request: Request) {
 
     if (!text.trim()) throw new Error("Prompt enhancer provider returned no text.");
     const settlement = await settleTextBillingAttempt({ attempt: billingAttempt, usage, rawUsage: { protocol: upstream.protocol, normalized: usage }, metadata: { operation: "prompt_enhancer" } });
-    if (settlement.billingStatus === "pending_reconciliation" && billingAttempt.engine === "v3_provider_authoritative") {
+    if (settlement.billingStatus === "pending_reconciliation") {
       const backgroundAttempt = billingAttempt;
       after(() => settleTextBillingInBackground({
         attempt: backgroundAttempt,
