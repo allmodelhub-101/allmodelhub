@@ -36,6 +36,8 @@ test("runtime availability fails closed on missing adapter, pricing, or UI agree
   assert.match(modelStore, /authorization_pricing_unavailable/);
   assert.match(modelStore, /row\.modality !== "text" && !pricedPolicyModels\.has\(row\.id\)/,
     "media pricing-registry checks must not replace request-bounded text policy validation");
+  assert.match(modelStore, /policy\.modality === "text" \|\| pricingKeys\.has/,
+    "text executability must remain policy-bounded while media requires an exact pricing rule");
   assert.match(modelStore, /provider_adapter_unavailable/);
   assert.match(modelStore, /media_contract_mismatch/);
   assert.match(modelStore, /pricingKeys\.has/);

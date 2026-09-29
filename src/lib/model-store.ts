@@ -105,7 +105,7 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
       const mediaContract = policy.modality === "text" ? undefined : getMediaExecutionContract(String(policy.model_id));
       return routeKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}`)
         && isRuntimeAuthorizationPolicyComplete(policy)
-        && pricingKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}\u0000${String(metadata.derived_from_verified_pricing_version ?? "")}`)
+        && (policy.modality === "text" || pricingKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}\u0000${String(metadata.derived_from_verified_pricing_version ?? "")}`))
         && (policy.modality === "text" || Boolean(row && mediaContract && mediaUiSchemaMatchesContract(toCatalogModel(row).uiSchema, mediaContract)));
     });
     const executable = executableModelIds({
