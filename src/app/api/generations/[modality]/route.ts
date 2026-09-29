@@ -16,7 +16,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { createProviderAuthorization } from "@/lib/billing/authorization";
 import { markProviderSettlementPending, recordProviderBillingAnomaly } from "@/lib/billing/provider-authoritative-settlement";
-import { getMediaExecutionContract, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
+import { getMediaExecutionContract, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -90,11 +90,12 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     return NextResponse.json({ error: "One or more selected model options are unsupported." }, { status: 400 });
   }
   const providerAspectRatio = contract.aspectRatios?.length ? aspectRatio : undefined;
+  const pricingMode = modality === "video" && contract.nativeAudio ? (input.nativeAudio ? "native_audio" : "silent") : mode;
   const usage = {
-    ...mediaUsageFromRequest({ ...input, aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : mode, referenceCount: input.imageFileIds.length }),
+    ...mediaUsageFromRequest({ ...input, aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : pricingMode, referenceCount: input.imageFileIds.length }),
     inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
   };
-  const dimensions = { resolution: input.resolution, quality: input.quality, mode, inputType: referenceImages.length ? "image" : "text" };
+  const dimensions = { resolution: input.resolution, quality: input.quality, mode: pricingMode, inputType: referenceImages.length ? "image" : "text" };
   const storedRequest = { ...input, aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
@@ -139,11 +140,13 @@ export async function POST(request: Request, context: { params: Promise<{ modali
         const isApiModels = route.providerKey.toLowerCase().replace(/[-_.]/g, "") === "apimodels";
         const callbackUrl = isApiModels && process.env.CALLBACK_SECRET ? `${callbackBase}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}` : undefined;
         const providerBody: Record<string, unknown> = {
-          prompt: input.prompt, ...(input.duration ? { duration: input.duration } : {}),
+          prompt: input.prompt,
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
-          ...(input.resolution ? { resolution: input.resolution } : {}), ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
-          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(providerAspectRatio ? { aspect_ratio: providerAspectRatio } : {}),
-          ...(modality !== "image" && mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
+          ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
+          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}),
+          ...mediaProviderOptionPayload(contract, { duration: input.duration, resolution: input.resolution,
+            aspectRatio: providerAspectRatio, nativeAudio: input.nativeAudio }),
+          ...(modality === "audio" && mode ? { mode } : {}),
           ...referencePayload(contract, referenceImages), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
         if (model.id === "kling-tts") {
