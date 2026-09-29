@@ -34,6 +34,8 @@ test("every advertised media execution contract has all source-controlled runtim
 test("runtime availability fails closed on missing adapter, pricing, or UI agreement", () => {
   const modelStore = readFileSync(new URL("../../src/lib/model-store.ts", import.meta.url), "utf8");
   assert.match(modelStore, /authorization_pricing_unavailable/);
+  assert.match(modelStore, /row\.modality !== "text" && !pricedPolicyModels\.has\(row\.id\)/,
+    "media pricing-registry checks must not replace request-bounded text policy validation");
   assert.match(modelStore, /provider_adapter_unavailable/);
   assert.match(modelStore, /media_contract_mismatch/);
   assert.match(modelStore, /pricingKeys\.has/);
