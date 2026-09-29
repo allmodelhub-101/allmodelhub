@@ -72,7 +72,8 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         const requested = qs.get("model");
         const incomingReference=qs.get("reference");
         const acceptsReference=(item:ImageModel)=>Boolean((item.uiSchema?.maxReferences||0)>0||item.capabilities?.includes("editing")||item.capabilities?.includes("multi-reference"));
-        const chosen = requested && list.some((model: ImageModel) => model.id === requested && (!incomingReference||acceptsReference(model))) ? requested : incomingReference?list.find(acceptsReference)?.id:list[0]?.id;
+        const executable = list.filter((model: ImageModel) => model.available !== false);
+        const chosen = requested && executable.some((model: ImageModel) => model.id === requested && (!incomingReference||acceptsReference(model))) ? requested : incomingReference?executable.find(acceptsReference)?.id:executable[0]?.id;
         if (chosen) setModelId(chosen);
         if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       }).catch(() => setError("Could not load the Image workspace."));

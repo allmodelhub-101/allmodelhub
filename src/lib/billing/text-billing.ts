@@ -293,3 +293,41 @@ export async function settleTextBillingAttempt(input: Readonly<{
     chargeCredits: prepared.chargeCredits,
   } as const;
 }
+
+const BACKGROUND_SETTLEMENT_DELAYS_MS = [500, 1_500, 3_000, 5_000] as const;
+
+export async function settleTextBillingInBackground(input: Readonly<{
+  attempt: BillingV3TextAttempt;
+  usage: NormalizedProviderUsage;
+  messageId?: string | null;
+  rawUsage?: Readonly<Record<string, unknown>>;
+  metadata?: Readonly<Record<string, unknown>>;
+}>) {
+  const requestId = input.usage.providerRequestId ?? input.attempt.upstream.providerRequestId;
+  if (!requestId) return { billingStatus: "pending_reconciliation" } as const;
+  for (const delay of BACKGROUND_SETTLEMENT_DELAYS_MS) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    try {
+      const result = await settleApimodelsTask({
+        quoteId: input.attempt.authorization.quoteId,
+        taskId: requestId,
+        providerRequestId: requestId,
+        source: "records_api",
+        usage: input.rawUsage,
+        links: { messageId: input.messageId },
+        metadata: { billing_v3: true, operation: "text", background_settlement: true, ...input.metadata },
+      });
+      const status = String((result as Record<string, unknown>).status ?? "pending_reconciliation");
+      if (status !== "pending_reconciliation") {
+        await finalizeRequest(input.attempt.billingClaimId, "completed", {
+          resourceId: String((result as Record<string, unknown>).receipt_id ?? input.messageId ?? input.attempt.authorization.quoteId),
+          response: { billingStatus: status, chargeCredits: (result as Record<string, unknown>).charge_credits },
+        }).catch(() => undefined);
+        return { billingStatus: status } as const;
+      }
+    } catch {
+      // The daily reconciliation endpoint remains the disaster-recovery path.
+    }
+  }
+  return { billingStatus: "pending_reconciliation" } as const;
+}

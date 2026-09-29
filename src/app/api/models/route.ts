@@ -17,6 +17,8 @@ export async function GET() {
       capabilities: model.capabilities,
       uiSchema: model.uiSchema,
       autoEligible: model.autoEligible !== false,
+      available: model.available !== false,
+      availabilityReason: model.availabilityReason ?? null,
       retail: {
         inputPerMillionCredits: model.inputUsdPerMillion ? creditsFromUsd(model.inputUsdPerMillion, model.markup, fxRate) : undefined,
         outputPerMillionCredits: model.outputUsdPerMillion ? creditsFromUsd(model.outputUsdPerMillion, model.markup, fxRate) : undefined,

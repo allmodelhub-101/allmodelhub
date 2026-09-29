@@ -6,7 +6,7 @@ import { PremiumSelect } from "@/components/premium-select";
 import styles from "@/components/video-studio-v2.module.css";
 
 type Schema = { aspectRatios?: string[]; durationOptions?: number[]; resolutionOptions?: string[]; maxReferences?: number; nativeAudio?: boolean };
-type VideoModel = { id: string; name: string; tier: string; modality: string; description: string; capabilities: string[]; retail: { flatCredits?: number; perSecondCredits?: number }; uiSchema?: Schema };
+type VideoModel = { id: string; name: string; tier: string; modality: string; description: string; capabilities: string[]; available?: boolean; retail: { flatCredits?: number; perSecondCredits?: number }; uiSchema?: Schema };
 type Job = { id?: string; public_id?: string; status?: string; result_urls?: string[]; error_message?: string; charged_credits?: number; estimated_credits?: number };
 
 const starters = [
@@ -40,7 +40,8 @@ export function VideoStudio() {
   useEffect(() => {
     fetch("/api/models").then((response) => response.json()).then((data) => {
       const list = (data.models || []).filter((item: VideoModel) => item.modality === "video" && !["flashvsr"].includes(item.id));
-      setModels(list); setModelId((current) => current || list[0]?.id || "");
+      const executable = list.filter((item: VideoModel) => item.available !== false);
+      setModels(list); setModelId((current) => current && executable.some((item: VideoModel) => item.id === current) ? current : executable[0]?.id || "");
     }).catch(() => setError("Video models are unavailable right now."));
   }, []);
   useEffect(() => { const sync = () => setProjectId(localStorage.getItem("amh-active-project") || ""); sync(); window.addEventListener("amh-project-change", sync); return () => window.removeEventListener("amh-project-change", sync); }, []);
@@ -92,7 +93,7 @@ export function VideoStudio() {
     <header className={styles.hero}><div className={styles.heroIdentity}><span className={styles.heroIcon}><VideoCamera weight="fill" /></span><div><small>Video Studio</small><h1>Create cinematic <em>videos</em></h1><p>Turn your ideas into stunning videos with state-of-the-art AI models.</p></div></div><ol className={styles.steps}><li className={styles.current}><b>1</b><span>Set up<small>Configure your video</small></span></li><li><b>2</b><span>Generate<small>AI creates your video</small></span></li><li><b>3</b><span>Download<small>Preview & export</small></span></li></ol></header>
     <div className={styles.workspace}>
       <form className={styles.setup} onSubmit={submit}><div className={styles.cardHead}><span><b>1</b><div><small>Video setup</small><h2>Configure your video</h2><p>Choose a model, describe your idea, and set the options.</p></div></span><i>01</i></div>
-        <label className={styles.field}>Video model<PremiumSelect value={modelId} onChange={selectModel} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}` }))} /><small>{model?.description || "Choose the best model for your vision."}</small></label>
+        <label className={styles.field}>Video model<PremiumSelect value={modelId} onChange={selectModel} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}${item.available === false ? " · Billing setup pending" : ""}`, disabled: item.available === false }))} /><small>{model?.description || "Choose the best model for your vision."}</small></label>
         <label className={styles.field}>Prompt<textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Describe the video you want to create…" maxLength={20_000} required /><small>{prompt.length.toLocaleString()} / 20,000</small></label>
         <div className={styles.chips}>{starters.slice(0, 4).map((starter) => <button type="button" key={starter.label} onClick={() => applyStarter(starter)}>{starter.label}</button>)}</div>
         {maxReferences > 0 && <label className={`${styles.field} ${styles.upload}`}>Starting frame <small>Optional image to animate</small><input ref={uploadRef} type="file" accept="image/png,image/jpeg,image/webp" disabled={uploading || references.length >= maxReferences} onChange={(event) => { const file = event.currentTarget.files?.[0]; if (file) void upload(file); event.currentTarget.value = ""; }} /><span><FileImage />{uploading ? "Uploading image…" : references.length ? `${references.length} reference image ready` : "Upload an image"}</span></label>}

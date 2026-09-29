@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { chooseRuntimeTextModel } from "@/lib/model-store";
@@ -8,7 +8,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
-import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt } from "@/lib/billing/text-billing";
+import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, settleTextBillingInBackground } from "@/lib/billing/text-billing";
 
 const schema = z.object({ requestId: z.string().uuid(), prompt: z.string().min(3).max(20_000) });
 export const runtime = "nodejs";
@@ -33,6 +33,10 @@ export async function POST(request: Request) {
   const claimId = claim.id;
 
   const model = await chooseRuntimeTextModel({ tier: "budget", prompt: parsed.data.prompt });
+  if (!model) {
+    await finalizeRequest(claimId, "failed");
+    return NextResponse.json({ error: "Prompt enhancement is temporarily unavailable." }, { status: 503 });
+  }
   const messages = [
     {
       role: "system" as const,
@@ -92,7 +96,16 @@ export async function POST(request: Request) {
 
     if (!text.trim()) throw new Error("Prompt enhancer provider returned no text.");
     const settlement = await settleTextBillingAttempt({ attempt: billingAttempt, usage, rawUsage: { protocol: upstream.protocol, normalized: usage }, metadata: { operation: "prompt_enhancer" } });
-    const credits = Number(settlement.chargeCredits);
+    if (settlement.billingStatus === "pending_reconciliation" && billingAttempt.engine === "v3_provider_authoritative") {
+      const backgroundAttempt = billingAttempt;
+      after(() => settleTextBillingInBackground({
+        attempt: backgroundAttempt,
+        usage,
+        rawUsage: { protocol: upstream.protocol, normalized: usage },
+        metadata: { operation: "prompt_enhancer" },
+      }));
+    }
+    const credits = settlement.billingStatus === "settled" ? Number(settlement.chargeCredits) : undefined;
     await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, model: model.id } });
     return NextResponse.json({ prompt: text.trim(), credits, billingStatus: settlement.billingStatus });
   } catch (error) {

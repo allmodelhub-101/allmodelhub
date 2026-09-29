@@ -59,6 +59,10 @@ function toCatalogModel(row: DbModel): CatalogModel {
   };
 }
 
+function withAvailability(model: CatalogModel, available: boolean, reason: CatalogModel["availabilityReason"] = null) {
+  return { ...model, available, availabilityReason: available ? null : reason };
+}
+
 export async function listRuntimeModels(options?: { modality?: Modality; includeInactive?: boolean }) {
   try {
     const admin = createAdminClient();
@@ -102,13 +106,19 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
       billingV3Enabled: settings.enabled,
       billingV3CanaryModels: settings.canaryModels,
     });
-    return rows.filter((row) => executable.has(row.id)).map(toCatalogModel);
+    const operational = new Set((routes ?? []).map((route) => String(route.model_id)));
+    return rows.map((row) => withAvailability(
+      toCatalogModel(row),
+      executable.has(row.id),
+      operational.has(row.id) ? "billing_authorization_pending" : "provider_route_unavailable",
+    ));
   } catch {
     // Static catalog data is UI metadata only. Never turn it into an
     // executable production fallback when the authoritative route registry is
     // unavailable.
     if (process.env.NODE_ENV === "production") return [];
-    return ALL_MODELS.filter((model) => (!options?.modality || model.modality === options.modality));
+    return ALL_MODELS.filter((model) => (!options?.modality || model.modality === options.modality))
+      .map((model) => withAvailability(model, false, "billing_authorization_pending"));
   }
 }
 
@@ -149,8 +159,9 @@ export async function getRuntimeModel(id: string) {
 
 export async function chooseRuntimeTextModel(input: { tier?: ModelTier | "auto"; prompt: string; hasAttachments?: boolean; deepThink?: boolean }) {
   const desired = chooseTextModel(input);
-  const runtimeModels = (await listRuntimeModels({ modality: "text" })).filter((model) => model.autoEligible !== false);
-  if (!runtimeModels.length) return desired;
+  const runtimeModels = (await listRuntimeModels({ modality: "text" }))
+    .filter((model) => model.available !== false && model.autoEligible !== false);
+  if (!runtimeModels.length) return undefined;
 
   if (input.tier && input.tier !== "auto") {
     const runtimeDesired = runtimeModels.find((model) => model.id === desired.id);

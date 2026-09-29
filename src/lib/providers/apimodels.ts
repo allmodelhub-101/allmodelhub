@@ -82,13 +82,27 @@ function normalizeTask(json: unknown): AsyncTaskResult {
   };
 }
 
-function openAiBody(request: ProviderChatRequest) {
+type ReasoningControl = Readonly<Record<string, boolean | string | number | Readonly<Record<string, boolean | string | number>>>>;
+
+export function reasoningControlForModel(upstreamModel: string, deepThink: boolean): ReasoningControl {
+  const model = upstreamModel.toLowerCase();
+  if (model.startsWith("qwen3.7-") || model.startsWith("qwen3.8-") || model.startsWith("qwen3-7-") || model.startsWith("qwen3-8-")) {
+    return deepThink ? { enable_thinking: true, reasoning_effort: "medium" } : { enable_thinking: false };
+  }
+  if (model.startsWith("gpt-6-") || model.startsWith("gpt-5-6-")) {
+    return { reasoning_effort: deepThink ? "high" : "none" };
+  }
+  if (model === "grok-4.5") return { reasoning_effort: deepThink ? "high" : "none" };
+  return {};
+}
+
+export function openAiBody(request: ProviderChatRequest) {
   return {
     model: request.upstreamModel,
     messages: request.messages,
     max_tokens: request.maxTokens ?? 2048,
     temperature: request.temperature ?? 0.7,
-    ...(request.deepThink ? { reasoning_effort: "high" } : {}),
+    ...reasoningControlForModel(request.upstreamModel, Boolean(request.deepThink)),
     stream: true,
     stream_options: { include_usage: true }
   };

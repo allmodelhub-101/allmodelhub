@@ -10,7 +10,7 @@ import videoStyles from "@/components/video-studio.module.css";
 type Modality = "image"|"video"|"audio";
 type Retail = { flatCredits?: number; perSecondCredits?: number };
 type UiSchema = {inputModes?:string[];aspectRatios?:string[];durationOptions?:number[];resolutionOptions?:string[];audioModes?:Array<"music"|"sfx">;maxReferences?:number;nativeAudio?:boolean};
-type Model = {id:string;name:string;tier:string;modality:string;description:string;retail:Retail;capabilities:string[];uiSchema?:UiSchema};
+type Model = {id:string;name:string;tier:string;modality:string;description:string;retail:Retail;capabilities:string[];uiSchema?:UiSchema;available?:boolean};
 
 type Props = { modality: Modality; title:string; subtitle:string; embedded?:boolean; initialAudioMode?:"music"|"sfx"; hideAudioModeTabs?:boolean };
 
@@ -49,7 +49,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
   const [advanced,setAdvanced]=useState(false);
   const [audioMode,setAudioMode]=useState<"music"|"sfx">(initialAudioMode);
 
-  useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.capabilities.includes("tts")) && !CATALOG_ONLY_MODEL_IDS.has(m.id));setModels(list);const requested=qs.get("model");const chosen=requested&&list.some((m:Model)=>m.id===requested)?requested:list[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
+  useEffect(()=>{fetch("/api/models").then(r=>r.json()).then(d=>{const list=(d.models||[]).filter((m:Model)=>m.modality===modality && !(modality==="audio"&&m.capabilities.includes("tts")) && !CATALOG_ONLY_MODEL_IDS.has(m.id));setModels(list);const executable=list.filter((m:Model)=>m.available!==false);const requested=qs.get("model");const chosen=requested&&executable.some((m:Model)=>m.id===requested)?requested:executable[0]?.id;if(chosen)setModelId(chosen)}).catch(()=>undefined)},[modality,qs]);
   useEffect(()=>{const sync=()=>setProjectId(window.localStorage.getItem("amh-active-project")||"");sync();const listener=(event:Event)=>setProjectId((event as CustomEvent<string>).detail||"");window.addEventListener("amh-project-change",listener);return()=>window.removeEventListener("amh-project-change",listener)},[]);
   const model=models.find(m=>m.id===modelId);
   const schema=model?.uiSchema||{};
@@ -101,7 +101,7 @@ export function MediaStudio({modality,title,subtitle,embedded=false,initialAudio
       <form className="studio-panel inspector-panel" onSubmit={submit}>
         <div className="studio-control-head"><span><small>Video setup</small><strong>Create your scene</strong></span><i>01</i></div>
         {modality==="video"&&<div className="video-panel-scroll-hint"><span><b>Complete the setup</b><small>Model → frame → prompt → settings → generate</small></span><span>Scroll for every control <CaretDown weight="bold" /></span></div>}
-        <label className="label">AI video model <span className="control-hint">Choose speed and quality</span><PremiumSelect value={modelId} onChange={value=>{setModelId(value);setConfirmed(false)}} options={compatibleModels.map(m=>({value:m.id,label:`${m.name} · ${m.tier}`}))} /></label>
+        <label className="label">AI video model <span className="control-hint">Choose speed and quality</span><PremiumSelect value={modelId} onChange={value=>{setModelId(value);setConfirmed(false)}} options={compatibleModels.map(m=>({value:m.id,label:`${m.name} · ${m.tier}${m.available===false?" · Billing setup pending":""}`,disabled:m.available===false}))} /></label>
         {model&&<div className="video-selected-model"><span><CheckCircle weight="fill" /></span><div><small>Selected model · ready</small><b>{model.name}</b><p>{model.description}</p>{schema.inputModes?.length?<em>Accepts {schema.inputModes.join(" + ")}</em>:null}</div></div>}
         <label className="label">Describe the video <span className="control-hint">Scene, movement, camera and mood</span><textarea className="textarea prompt-editor" placeholder={modality==="image"?"Describe the image you want…":modality==="video"&&referenceFileIds.length?"Describe how this frame should move…":modality==="video"?"A cinematic scene with slow camera movement…":audioMode==="music"?"Describe the music, mood and instruments…":"Describe the sound effect and timing…"} value={prompt} onChange={e=>setPrompt(e.target.value)} required/></label>
         <div className="prompt-suggestions" aria-label="Prompt starters">{modality==="video"?videoStarters.map(starter=><button type="button" className="prompt-chip" key={starter.label} onClick={()=>setPrompt(starter.prompt)}>{starter.label}</button>):(modality==="image"?["Editorial product shot","Cinematic landscape","Character portrait"]:["Warm ambient loop","Cinematic sound design","Bright percussion bed"]).map(example=><button type="button" className="prompt-chip" key={example} onClick={()=>setPrompt(example)}>{example}</button>)}</div>
