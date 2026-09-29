@@ -28,7 +28,9 @@ const bodySchema = z.object({
   resolution: z.string().max(40).optional(), quality: z.string().max(40).optional(), fps: z.number().positive().max(240).optional(),
   imageCount: z.number().int().positive().max(20).default(1), aspectRatio: z.string().max(40).optional(),
   imageFileIds: z.array(z.string().uuid()).max(10).default([]), mode: z.string().max(40).optional(),
-  nativeAudio: z.boolean().optional(), audioMode: z.string().max(40).optional(), confirmedCost: z.boolean().default(false),
+  nativeAudio: z.boolean().optional(), audioMode: z.string().max(40).optional(),
+  voiceId: z.string().min(2).max(120).optional(), languageCode: z.string().min(2).max(12).optional(),
+  voiceSpeed: z.number().min(0.7).max(2).optional(), confirmedCost: z.boolean().default(false),
 });
 
 const catalogOnlyModels = new Set(["real-esrgan", "flashvsr", "eleven-dialogue", "eleven-dubbing", "eleven-isolator"]);
@@ -53,7 +55,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   const claim = await claimRequest(user.id, `media:${modality}`, input.requestId);
   if (!claim.claimed) return NextResponse.json({ error: "This generation request was already submitted.", existing: claim.existing }, { status: 409 });
   const model = await getRuntimeModel(input.modelId);
-  if (!model || model.modality !== modality || catalogOnlyModels.has(model.id) || (modality === "audio" && model.capabilities.includes("tts"))) {
+  const modelContract = model ? getMediaExecutionContract(model.id) : undefined;
+  const asyncTts = modality === "audio" && modelContract?.strategy === "apimodels_audio_async";
+  if (!model || model.modality !== modality || catalogOnlyModels.has(model.id) || (modality === "audio" && model.capabilities.includes("tts") && !asyncTts)) {
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "Model is not available for this studio." }, { status: 400 });
   }
@@ -73,7 +77,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   }
   const mode = input.mode ?? input.audioMode;
   const aspectRatio = modality === "audio" ? undefined : input.aspectRatio;
-  const contract = getMediaExecutionContract(model.id);
+  const contract = modelContract;
   if (!contract || contract.modality !== modality) {
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "This model workflow is not supported yet." }, { status: 400 });
@@ -142,11 +146,17 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           ...(modality !== "image" && mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
           ...referencePayload(contract, referenceImages), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
+        if (model.id === "kling-tts") {
+          if (!input.voiceId || !input.languageCode) throw new Error("MEDIA_OPTION_UNSUPPORTED:voice");
+          delete providerBody.prompt;
+          Object.assign(providerBody, { text: input.prompt, voice_id: input.voiceId,
+            voice_language: input.languageCode, voice_speed: input.voiceSpeed ?? 1 });
+        }
         const task = (await providerCreateTaskExact(route, modality as "image" | "video" | "audio", providerBody)).task;
-        providerStarted = true;
-        providerSubmissionPending = true;
         providerTaskId = task.taskId;
         if (!task.taskId) throw new Error("BILLING_V3_PROVIDER_TASK_ID_MISSING");
+        providerStarted = true;
+        providerSubmissionPending = true;
         await markProviderSettlementPending({ quoteId: authorization.quoteId,
           providerTaskId: task.taskId, source: "response_header", links: { generationJobId: job.id } });
         const status = task.state === "processing" ? "processing" : "submitted";

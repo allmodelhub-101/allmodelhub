@@ -139,6 +139,7 @@ export async function providerTtsStreamExact(
   route: ResolvedBillingProviderRoute,
   input: Readonly<{ text: string; voiceId: string; languageCode?: string }>,
 ) {
+  if (!route.modelId.startsWith("eleven-tts-")) throw new Error("TTS_STREAM_STRATEGY_UNAVAILABLE");
   const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
   let response: Response;
   if (key === "apimodels" || key === "apimodelsapp") {

@@ -55,10 +55,10 @@ export async function beginTtsBillingAttempt(input: Readonly<{
       }
       await assertSpendingAllowed(input.userId, authorization.authorizationCredits);
       const upstream = await providerTtsStreamExact(route, input);
-      providerStarted = true;
       providerRequestId = upstream.providerRequestId;
       if (!upstream.response.ok || !upstream.response.body) throw new Error(`Provider returned HTTP ${upstream.response.status}`);
       if (!upstream.providerRequestId) throw new Error("BILLING_V3_PROVIDER_REQUEST_ID_MISSING");
+      providerStarted = true;
       const pending = await markProviderSettlementPending({
         quoteId: authorization.quoteId, providerRequestId: upstream.providerRequestId, source: "response_header",
       });
