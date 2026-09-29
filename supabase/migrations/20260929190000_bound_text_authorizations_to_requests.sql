@@ -34,7 +34,7 @@ insert into public.billing_authorization_policies (
   provider_key, model_id, upstream_model, modality, policy_version,
   maximum_provider_cost_usd, maximum_authorization_credits, fx_rate_snapshot,
   markup_snapshot, request_constraints, metadata, effective_from,
-  effective_until, verified_at, active
+  effective_until, active
 )
 select
   provider_key, model_id, upstream_model, modality,
@@ -46,9 +46,38 @@ select
     'authorization_output_usd_per_million', output_usd_per_million::text,
     'authorization_basis', 'request_token_ceiling'
   ),
-  now() - interval '1 minute', null, now(), false
+  now() - interval '1 minute', null, false
 from current_policy
 on conflict (provider_key, model_id, upstream_model, modality, policy_version) do nothing;
+
+do $$
+declare v_count integer;
+begin
+  select count(*) into v_count
+  from public.billing_authorization_policies
+  where policy_version = 'billing-v3-auth-2026-09-29-request-bounded'
+    and provider_key = 'apimodels'
+    and modality = 'text'
+    and nullif(btrim(metadata ->> 'authorization_input_usd_per_million'), '') is not null
+    and (metadata ->> 'authorization_input_usd_per_million') ~ '^[0-9]+(\.[0-9]+)?$'
+    and (metadata ->> 'authorization_input_usd_per_million')::numeric > 0
+    and nullif(btrim(metadata ->> 'authorization_output_usd_per_million'), '') is not null
+    and (metadata ->> 'authorization_output_usd_per_million') ~ '^[0-9]+(\.[0-9]+)?$'
+    and (metadata ->> 'authorization_output_usd_per_million')::numeric > 0
+    and metadata ->> 'authorization_basis' = 'request_token_ceiling'
+    and nullif(btrim(metadata ->> 'derived_from_verified_pricing_version'), '') is not null
+    and nullif(btrim(metadata ->> 'final_cost_authority'), '') is not null
+    and nullif(btrim(request_constraints ->> 'maxInputTokens'), '') is not null
+    and (request_constraints ->> 'maxInputTokens') ~ '^[0-9]+(\.[0-9]+)?$'
+    and (request_constraints ->> 'maxInputTokens')::numeric > 0
+    and nullif(btrim(request_constraints ->> 'maxOutputTokens'), '') is not null
+    and (request_constraints ->> 'maxOutputTokens') ~ '^[0-9]+(\.[0-9]+)?$'
+    and (request_constraints ->> 'maxOutputTokens')::numeric > 0;
+  if v_count <> 18 then
+    raise exception 'Expected 18 complete request-bounded text policies before activation, found %', v_count;
+  end if;
+end
+$$;
 
 with text_models(model_id) as (
   values
@@ -79,9 +108,21 @@ begin
   select count(*) into v_count
   from public.billing_authorization_policies
   where policy_version = 'billing-v3-auth-2026-09-29-request-bounded'
-    and modality = 'text' and active;
+    and provider_key = 'apimodels'
+    and modality = 'text' and active
+    and nullif(btrim(metadata ->> 'authorization_input_usd_per_million'), '') is not null
+    and nullif(btrim(metadata ->> 'authorization_output_usd_per_million'), '') is not null
+    and metadata ->> 'authorization_basis' = 'request_token_ceiling'
+    and nullif(btrim(metadata ->> 'derived_from_verified_pricing_version'), '') is not null;
   if v_count <> 18 then
-    raise exception 'Expected 18 request-bounded active text policies, found %', v_count;
+    raise exception 'Expected 18 complete request-bounded active text policies, found %', v_count;
+  end if;
+  if exists (
+    select 1 from public.billing_authorization_policies
+    where provider_key = 'apimodels' and modality = 'text' and active
+      and policy_version <> 'billing-v3-auth-2026-09-29-request-bounded'
+  ) then
+    raise exception 'Older APIMODELS text authorization policies remain active';
   end if;
 end
 $$;

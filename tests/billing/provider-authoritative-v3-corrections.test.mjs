@@ -36,6 +36,33 @@ test("chat never resubmits empty failed assistant placeholders", () => {
   assert.match(route, /bodySchema\.safeParse\(sanitizedBody\)/);
 });
 
+test("text availability requires the same complete policy metadata as authorization", () => {
+  const store = source("src/lib/model-store.ts");
+  const core = source("src/lib/billing/model-availability-core.ts");
+  const authorization = source("src/lib/billing/authorization.ts");
+  assert.match(store, /isRuntimeAuthorizationPolicyComplete/);
+  assert.match(store, /billing_authorization_incomplete/);
+  assert.match(store, /completePolicies\.map/);
+  assert.match(core, /authorization_input_usd_per_million/);
+  assert.match(core, /authorization_output_usd_per_million/);
+  assert.match(core, /derived_from_verified_pricing_version/);
+  assert.ok(authorization.indexOf("authorizationProviderCost") < authorization.indexOf('admin.rpc("billing_v3_reserve_authorization"'));
+});
+
+test("request-bounded migration matches Production schema and switches policies atomically", () => {
+  const migration = source("supabase/migrations/20260929190000_bound_text_authorizations_to_requests.sql");
+  assert.doesNotMatch(migration, /verified_at/);
+  assert.match(migration, /authorization_input_usd_per_million/);
+  assert.match(migration, /authorization_output_usd_per_million/);
+  assert.match(migration, /authorization_basis', 'request_token_ceiling/);
+  const rateSeed = migration.slice(migration.indexOf("with rates"), migration.indexOf("), current_policy"));
+  assert.equal([...rateSeed.matchAll(/^\s+\('[^']+',/gm)].length, 18);
+  assert.match(migration, /Expected 18 complete request-bounded text policies before activation/);
+  assert.match(migration, /Expected 18 complete request-bounded active text policies/);
+  assert.ok(migration.indexOf("before activation") < migration.indexOf("set active = false"));
+  assert.doesNotMatch(migration, /\b(delete|truncate)\b/i);
+});
+
 test("successful provider output gets bounded background settlement retries", () => {
   const billing = source("src/lib/billing/text-billing.ts");
   const chat = source("src/app/api/chat/route.ts");

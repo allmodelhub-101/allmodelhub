@@ -21,7 +21,7 @@ import {
   parseAuthorizationConstraints,
   validateAuthorizationRequest,
 } from "../../src/lib/billing/authorization-core.ts";
-import { executableModelIds } from "../../src/lib/billing/model-availability-core.ts";
+import { executableModelIds, isRuntimeAuthorizationPolicyComplete } from "../../src/lib/billing/model-availability-core.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..", "..");
@@ -125,6 +125,30 @@ test("model availability uses authorization policy under V3, not detailed final 
   const v3 = executableModelIds({ activeModelIds: ["a", "b"], operationalRouteModelIds: ["a", "b"],
     verifiedPricingModelIds: [], authorizationPolicyModelIds: ["b"], billingV3Enabled: true, billingV3CanaryModels: [] });
   assert.deepEqual([...v3], ["b"]);
+});
+
+test("incomplete text authorization policies never become executable", () => {
+  const complete = {
+    modality: "text",
+    metadata: {
+      authorization_input_usd_per_million: "1.2",
+      authorization_output_usd_per_million: "6.4",
+      derived_from_verified_pricing_version: "provider-version-1",
+    },
+    request_constraints: { maxInputTokens: "150000", maxOutputTokens: "16384" },
+  };
+  assert.equal(isRuntimeAuthorizationPolicyComplete(complete), true);
+  assert.equal(isRuntimeAuthorizationPolicyComplete({ ...complete, metadata: {
+    authorization_output_usd_per_million: "6.4",
+    derived_from_verified_pricing_version: "provider-version-1",
+  } }), false);
+  assert.equal(isRuntimeAuthorizationPolicyComplete({ ...complete, request_constraints: {
+    maxInputTokens: "150000",
+  } }), false);
+  assert.equal(isRuntimeAuthorizationPolicyComplete({ ...complete, metadata: {
+    ...complete.metadata,
+    authorization_input_usd_per_million: "0",
+  } }), false);
 });
 
 test("public settlement summaries never expose supplier cost", () => {
