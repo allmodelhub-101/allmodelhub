@@ -11,6 +11,7 @@ import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, settleTextBillingInBackground, type TextBillingAttempt } from "@/lib/billing/text-billing";
+import { runBillingV3ReconciliationPump } from "@/lib/billing/reconciliation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -236,13 +237,14 @@ export async function POST(request: Request) {
             conversation_id: conversationId, user_id: user.id, role: "assistant", content: assistantText,
             model_id: selected.id, provider_key: billingAttempt.upstream.provider,
             input_tokens: Number(providerUsage.inputTokens), output_tokens: Number(providerUsage.outputTokens),
-            credits_charged: 0,
-            supplier_cost_usd: 0,
-            internal_cost_pkr: 0,
+            credits_charged: null,
+            supplier_cost_usd: null,
+            internal_cost_pkr: null,
             metadata: {
               deepThink: body.deepThink,
               billingQuoteId: billingAttempt.authorization.quoteId,
               billingStatus: "pending_reconciliation",
+              billingEngine: "v3_provider_authoritative",
             },
           }).select("id").single();
           if (assistantError) throw assistantError;
@@ -272,7 +274,10 @@ export async function POST(request: Request) {
         const transactionId = settlement.walletTransactionId;
         const credits = settlement.billingStatus === "settled" ? Number(settlement.chargeCredits) : undefined;
         await finalizeRequest(claimId, "completed", { resourceId: assistantMessageId ?? conversationId, response: { credits, model: selected.id, transactionId } });
-        emit({ type: "usage", credits, billingStatus: settlement.billingStatus, inputTokens: Number(providerUsage.inputTokens), outputTokens: Number(providerUsage.outputTokens), model: selected.name, transactionId, messageId: assistantMessageId });
+        emit({ type: "usage", credits, billingStatus: settlement.billingStatus, billingQuoteId: billingAttempt.authorization.quoteId, inputTokens: Number(providerUsage.inputTokens), outputTokens: Number(providerUsage.outputTokens), model: selected.name, transactionId, messageId: assistantMessageId });
+        after(() => runBillingV3ReconciliationPump(3).catch((error) => {
+          logServerError("billing-v3-traffic-reconciliation", error, { userId: user.id, modelId: selected.id });
+        }));
         emit({ type: "done" });
       } catch (error) {
         if (!finalized) await cancelTextBillingAttempt(billingAttempt, "chat_stream_failed");

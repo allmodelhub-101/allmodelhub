@@ -180,7 +180,9 @@ export async function settleTextBillingAttempt(input: Readonly<{
   }
 }
 
-const BACKGROUND_SETTLEMENT_DELAYS_MS = [500, 1_500, 3_000, 5_000] as const;
+// Provider billing records can lag a completed stream. This remains bounded
+// below the function runtime while covering an approximately 42 second window.
+export const BACKGROUND_SETTLEMENT_DELAYS_MS = [1_000, 2_000, 4_000, 8_000, 12_000, 15_000] as const;
 
 export async function settleTextBillingInBackground(input: Readonly<{
   attempt: BillingV3TextAttempt;
@@ -211,8 +213,12 @@ export async function settleTextBillingInBackground(input: Readonly<{
         }).catch(() => undefined);
         return { billingStatus: status } as const;
       }
-    } catch {
-      // The daily reconciliation endpoint remains the disaster-recovery path.
+    } catch (error) {
+      console.error("billing-v3-background-settlement", {
+        quoteId: input.attempt.authorization.quoteId,
+        attemptType: "after",
+        errorCode: error instanceof Error ? error.name : "UNKNOWN",
+      });
     }
   }
   return { billingStatus: "pending_reconciliation" } as const;

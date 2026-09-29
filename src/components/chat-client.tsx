@@ -17,7 +17,8 @@ type Project = { id: string; name: string };
 type Model = PickerModel & { modality: string };
 type UserFile = { id: string; name: string; size_bytes: number; extraction_status: string; project_id?: string | null };
 type ConversationMessage = { id?: string; role: "user" | "assistant" | "system"; content: string; credits_charged?: number | null; model_id?: string | null; metadata?: { billingStatus?: string } | null };
-type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; credits?: number; billingStatus?: string; model?: string; modelName?: string; error?: string };
+type StreamEvent = { type?: string; conversationId?: string; text?: string; messageId?: string; billingQuoteId?: string; credits?: number; billingStatus?: string; model?: string; modelName?: string; error?: string };
+type SettlementResponse = { billingStatus?: "pending" | "settled" | "released" | "authorization_shortfall"; chargeCredits?: string; receiptId?: string; quoteStatus?: string };
 type FeatureFlags = { private_chat?: boolean; prompt_enhancer?: boolean };
 type VoiceResult = { isFinal: boolean; 0: { transcript: string } };
 type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: string; start(): void; stop(): void; abort(): void; onresult: ((event: { resultIndex: number; results: ArrayLike<VoiceResult> }) => void) | null; onerror: ((event: { error: string }) => void) | null; onend: (() => void) | null };
@@ -52,6 +53,32 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+
+  async function pollPendingBilling(input: { pendingId: string; messageId?: string; quoteId?: string; model?: string }) {
+    for (const delay of [2_000, 3_000, 5_000, 8_000, 13_000, 20_000]) {
+      await new Promise((resolve) => window.setTimeout(resolve, delay));
+      const identifier = input.messageId ? { messageId: input.messageId } : input.quoteId ? { quoteId: input.quoteId } : null;
+      if (!identifier) return;
+      const response = await fetch("/api/billing/settle-pending", {
+        method: "POST", credentials: "same-origin", cache: "no-store",
+        headers: { "Content-Type": "application/json" }, body: JSON.stringify(identifier),
+      }).catch(() => null);
+      if (!response?.ok) continue;
+      const result = await response.json() as SettlementResponse;
+      if (!result.billingStatus || result.billingStatus === "pending") continue;
+      const targetId = input.messageId ?? input.pendingId;
+      setMessages((current) => current.map((message) => message.id === targetId || message.id === input.pendingId ? {
+        ...message,
+        credits: result.billingStatus === "settled" && result.chargeCredits != null ? Number(result.chargeCredits) : undefined,
+        meta: result.billingStatus === "settled"
+          ? `${input.model || "AI"} · ${Number(result.chargeCredits || 0).toFixed(4)} credits`
+          : result.billingStatus === "released" ? `${input.model || "AI"} · No charge`
+          : `${input.model || "AI"} · Billing authorization requires review`,
+      } : message));
+      window.dispatchEvent(new Event("amh-wallet-refresh"));
+      return;
+    }
+  }
   const [copiedKey, setCopiedKey] = useState("");
   const [voiceActive, setVoiceActive] = useState(false);
   const [voiceSeconds, setVoiceSeconds] = useState(0);
@@ -261,6 +288,9 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
                 credits: pendingBilling || streamEvent.credits == null ? undefined : Number(streamEvent.credits),
                 meta: pendingBilling ? `${streamEvent.model} · Billing pending` : `${streamEvent.model} · ${Number(streamEvent.credits).toFixed(4)} credits` } : message);
             });
+            if (streamEvent.billingStatus === "pending_reconciliation") {
+              void pollPendingBilling({ pendingId, messageId: streamEvent.messageId, quoteId: streamEvent.billingQuoteId, model: streamEvent.model });
+            }
           }
           if (streamEvent.type === "error") throw new Error(streamEvent.error || "Generation failed.");
         }
