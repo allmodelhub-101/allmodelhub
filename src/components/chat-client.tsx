@@ -212,7 +212,10 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     const recoveryDraft = recovery || { input, pasted: pastedContext };
     setError(""); setProcessingSeconds(0); setBusy(true);
     const controller = new AbortController(); abortRef.current = controller;
-    const working = [...history, { role: "user" as const, content: prompt.trim() }];
+    // Failed requests leave a visible retry card. Never send its empty assistant
+    // placeholder back to the API as conversation history.
+    const validHistory = history.filter((message) => message.content.trim().length > 0);
+    const working = [...validHistory, { role: "user" as const, content: prompt.trim() }];
     const pendingId = `pending-${crypto.randomUUID()}`;
     setActiveModelName(exact?.name || "");
     setMessages([...working, { id: pendingId, role: "assistant", content: "" }]);

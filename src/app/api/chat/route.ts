@@ -63,7 +63,20 @@ export async function POST(request: Request) {
   if (limit.unavailable) return NextResponse.json({ error: "Request protection is temporarily unavailable." }, { status: 503 });
   if (!limit.success) return NextResponse.json({ error: "Too many requests. Please try again shortly." }, { status: 429 });
 
-  const parsed = bodySchema.safeParse(await request.json().catch(() => null));
+  const rawBody = await request.json().catch(() => null);
+  const sanitizedBody = rawBody && typeof rawBody === "object" && !Array.isArray(rawBody)
+    ? {
+        ...rawBody,
+        messages: Array.isArray((rawBody as Record<string, unknown>).messages)
+          ? ((rawBody as Record<string, unknown>).messages as unknown[]).filter((message) => {
+              if (!message || typeof message !== "object" || Array.isArray(message)) return true;
+              const content = (message as Record<string, unknown>).content;
+              return typeof content !== "string" || content.trim().length > 0;
+            })
+          : (rawBody as Record<string, unknown>).messages,
+      }
+    : rawBody;
+  const parsed = bodySchema.safeParse(sanitizedBody);
   if (!parsed.success) return NextResponse.json({ error: "Invalid chat request", details: parsed.error.flatten() }, { status: 400 });
   const body = parsed.data;
   if (body.private && !(await isFeatureEnabled("private_chat"))) {

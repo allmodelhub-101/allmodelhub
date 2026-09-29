@@ -16,13 +16,24 @@ test("Qwen normal mode explicitly disables provider-default thinking", () => {
   assert.match(provider, /\.\.\.reasoningControlForModel\(request\.upstreamModel, Boolean\(request\.deepThink\)\)/);
 });
 
-test("V3 authorization holds the validated policy maximum instead of a token estimate", () => {
+test("V3 text authorization uses a policy-versioned request ceiling", () => {
   const authorization = source("src/lib/billing/authorization.ts");
   assert.match(authorization, /safePolicyCharge/);
   assert.match(authorization, /BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED/);
-  assert.match(authorization, /authorizationCredits: policyMaximum/);
+  assert.match(authorization, /calculateTextAuthorizationProviderCost/);
+  assert.match(authorization, /authorization_input_usd_per_million/);
+  assert.match(authorization, /authorizationCredits: requestAuthorization/);
   assert.doesNotMatch(authorization, /calculateAuthoritativePrice/);
   assert.doesNotMatch(authorization, /estimateTokensFromCharacters/);
+});
+
+test("chat never resubmits empty failed assistant placeholders", () => {
+  const chat = source("src/components/chat-client.tsx");
+  const route = source("src/app/api/chat/route.ts");
+  assert.match(chat, /history\.filter\(\(message\) => message\.content\.trim\(\)\.length > 0\)/);
+  assert.match(chat, /messages: working\.map/);
+  assert.match(route, /content\.trim\(\)\.length > 0/);
+  assert.match(route, /bodySchema\.safeParse\(sanitizedBody\)/);
 });
 
 test("successful provider output gets bounded background settlement retries", () => {

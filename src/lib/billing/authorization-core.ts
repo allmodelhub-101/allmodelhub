@@ -1,6 +1,8 @@
 import Decimal from "decimal.js";
 import type { NormalizedUsage } from "./types";
 
+const TOKENS_PER_MILLION = new Decimal("1000000");
+
 type Constraints = Readonly<{
   maxCharacters?: string;
   maxInputTokens?: string;
@@ -110,4 +112,19 @@ export function parseAuthorizationConstraints(value: unknown): Constraints {
     throw new AuthorizationPolicyError("POLICY_INVALID", "constraints.allowedNativeAudio must be an array of booleans.");
   }
   return constraints as Constraints;
+}
+
+export function calculateTextAuthorizationProviderCost(input: Readonly<{
+  usage: NormalizedUsage;
+  inputUsdPerMillion: string;
+  outputUsdPerMillion: string;
+}>) {
+  const inputTokens = decimal(input.usage.inputTokens ?? "0", "usage.inputTokens");
+  const outputTokens = decimal(input.usage.outputTokens ?? "0", "usage.outputTokens");
+  const inputRate = decimal(input.inputUsdPerMillion, "authorization.inputUsdPerMillion");
+  const outputRate = decimal(input.outputUsdPerMillion, "authorization.outputUsdPerMillion");
+  if (!inputRate.gt(0) || !outputRate.gt(0)) {
+    throw new AuthorizationPolicyError("POLICY_INVALID", "Text authorization rates must be positive exact decimals.");
+  }
+  return inputTokens.mul(inputRate).plus(outputTokens.mul(outputRate)).div(TOKENS_PER_MILLION).toFixed();
 }
