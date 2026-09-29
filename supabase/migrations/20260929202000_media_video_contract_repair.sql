@@ -39,6 +39,13 @@ update public.models set ui_schema = case id
   else ui_schema end
 where id in ('gemini-omni-1-1-flash','grok-video-3','kling-v3','minimax-h3','minimax-h3-lite','veo-3-1-fast-fhd');
 
+update public.billing_authorization_policies
+set active = false,
+    effective_until = case when effective_until is null or effective_until > now() then now() else effective_until end
+where active and modality = 'video'
+  and model_id in ('gemini-omni-1-1-flash','grok-video-3','kling-v3','minimax-h3','minimax-h3-lite','veo-3-1-fast-fhd')
+  and policy_version <> 'billing-v3-auth-2026-09-29-video-runtime';
+
 with policy(model_id, upstream_model, maximum_provider_cost_usd, constraints, pricing_version, source_url) as (
   values
     ('gemini-omni-1-1-flash', 'gemini-omni-1.1-flash', 2.000::numeric,
@@ -82,7 +89,7 @@ select 'apimodels', p.model_id, p.upstream_model, 'video',
     'provider_acceptance_required', true,
     'failed_pre_acceptance_billable', false
   ),
-  now() - interval '1 minute', null, true
+  now(), null, true
 from policy p
 join public.models m on m.id = p.model_id and m.active
 join public.provider_models route on route.provider_key = 'apimodels'
@@ -90,12 +97,6 @@ join public.provider_models route on route.provider_key = 'apimodels'
 cross join settings s
 where s.fx > 0 and s.quantum > 0
 on conflict (provider_key, model_id, upstream_model, modality, policy_version) do nothing;
-
-update public.billing_authorization_policies
-set active = false, effective_until = coalesce(effective_until, now())
-where active and modality = 'video'
-  and model_id in ('gemini-omni-1-1-flash','grok-video-3','kling-v3','minimax-h3','minimax-h3-lite','veo-3-1-fast-fhd')
-  and policy_version <> 'billing-v3-auth-2026-09-29-video-runtime';
 
 do $$
 declare v_versioned integer; v_rules integer;
