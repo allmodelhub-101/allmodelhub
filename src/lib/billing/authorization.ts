@@ -6,7 +6,7 @@ import { decimal, decimalString, type DecimalString } from "./money";
 import { roundWalletAmountUp } from "./quote-reservation-core";
 import type { NormalizedUsage } from "./types";
 import type { ResolvedBillingProviderRoute } from "./provider-route-core";
-import { parseAuthorizationConstraints, validateAuthorizationRequest } from "./authorization-core";
+import { calculateTextAuthorizationProviderCost, parseAuthorizationConstraints, validateAuthorizationRequest } from "./authorization-core";
 
 type PolicyRow = Readonly<{
   id: string;
@@ -61,6 +61,15 @@ function exactMetadataString(metadata: Record<string, unknown>, key: string) {
   return value;
 }
 
+function authorizationProviderCost(policy: PolicyRow, usageEnvelope: NormalizedUsage) {
+  if (policy.modality !== "text") return decimalString(policy.maximum_provider_cost_usd);
+  return decimalString(calculateTextAuthorizationProviderCost({
+    usage: usageEnvelope,
+    inputUsdPerMillion: exactMetadataString(policy.metadata, "authorization_input_usd_per_million"),
+    outputUsdPerMillion: exactMetadataString(policy.metadata, "authorization_output_usd_per_million"),
+  }));
+}
+
 async function loadAuthorizationQuantum() {
   const admin = createAdminClient();
   const { data, error } = await admin.from("system_settings")
@@ -95,10 +104,23 @@ async function calculateRequestAuthorization(input: Readonly<{
   if (!decimal(policyMaximum).gt(0) || decimal(policyMaximum).lt(safePolicyCharge)) {
     throw new Error("BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED");
   }
-  // Provider-visible output is not a safe proxy for billed reasoning/completion
-  // tokens. Unless request parameters prove a smaller mathematical ceiling, hold
-  // the policy maximum and let the provider record determine the exact capture.
-  return { authorizationCredits: policyMaximum, pricingVersion, pricingRuleId: null } as const;
+  const requestProviderCost = authorizationProviderCost(input.policy, input.usageEnvelope);
+  if (decimal(requestProviderCost).gt(decimal(input.policy.maximum_provider_cost_usd))) {
+    throw new Error("BILLING_V3_AUTHORIZATION_REQUEST_EXCEEDS_POLICY");
+  }
+  const requestAuthorization = roundWalletAmountUp(
+    decimal(requestProviderCost)
+      .mul(input.policy.internal_usd_pkr_rate)
+      .mul(input.policy.model_markup)
+      .toFixed() as DecimalString,
+    quantum as DecimalString,
+  );
+  if (!decimal(requestAuthorization).gt(0) || decimal(requestAuthorization).gt(policyMaximum)) {
+    throw new Error("BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED");
+  }
+  // This is only a conservative wallet authorization. APIMODELS' settled
+  // provider record remains the sole final-cost and capture authority.
+  return { authorizationCredits: requestAuthorization, pricingVersion, pricingRuleId: null } as const;
 }
 
 export async function createProviderAuthorization(input: Readonly<{

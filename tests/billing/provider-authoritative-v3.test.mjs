@@ -16,7 +16,11 @@ import {
   calculateProviderAuthoritativeCharge,
   publicSettlementSummary,
 } from "../../src/lib/billing/provider-authoritative-core.ts";
-import { parseAuthorizationConstraints, validateAuthorizationRequest } from "../../src/lib/billing/authorization-core.ts";
+import {
+  calculateTextAuthorizationProviderCost,
+  parseAuthorizationConstraints,
+  validateAuthorizationRequest,
+} from "../../src/lib/billing/authorization-core.ts";
 import { executableModelIds } from "../../src/lib/billing/model-availability-core.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -91,6 +95,24 @@ test("authorization constraints fail closed and shortfalls never become capped c
   assert.deepEqual(authorizationCoverage("10.000001", "10"), {
     covered: false, shortfallCredits: "0.000001", chargeCredits: "10.000001", authorizationCredits: "10",
   });
+});
+
+test("text authorization uses the exact request token ceiling without floating-point loss", () => {
+  assert.equal(calculateTextAuthorizationProviderCost({
+    usage: { inputTokens: "1", outputTokens: "1" },
+    inputUsdPerMillion: "0.000001",
+    outputUsdPerMillion: "0.000002",
+  }), "0.000000000003");
+  assert.equal(calculateTextAuthorizationProviderCost({
+    usage: { inputTokens: "150000", outputTokens: "2048" },
+    inputUsdPerMillion: "2.4",
+    outputUsdPerMillion: "12",
+  }), "0.384576");
+  assert.throws(() => calculateTextAuthorizationProviderCost({
+    usage: { inputTokens: "1", outputTokens: "1" },
+    inputUsdPerMillion: "0",
+    outputUsdPerMillion: "1",
+  }), /positive exact decimals/);
 });
 
 test("model availability uses authorization policy under V3, not detailed final pricing", () => {
