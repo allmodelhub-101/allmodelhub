@@ -72,7 +72,9 @@ export function WorkspaceTopbar({ balance, identity, language = "en" }: { balanc
       if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); setProjectOpen(false); }
     };
     window.addEventListener("keydown", shortcut);
-    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); };
+    const walletRefresh = () => void refreshWallet();
+    window.addEventListener("amh-wallet-refresh", walletRefresh);
+    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); window.removeEventListener("amh-wallet-refresh", walletRefresh); };
   }, []);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;

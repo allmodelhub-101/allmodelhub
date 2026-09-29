@@ -67,7 +67,7 @@ test("successful provider output gets bounded background settlement retries", ()
   const billing = source("src/lib/billing/text-billing.ts");
   const chat = source("src/app/api/chat/route.ts");
   const enhancer = source("src/app/api/prompt-enhance/route.ts");
-  assert.match(billing, /\[500, 1_500, 3_000, 5_000\]/);
+  assert.match(billing, /\[1_000, 2_000, 4_000, 8_000, 12_000, 15_000\]/);
   assert.match(billing, /settleApimodelsTask/);
   assert.match(chat, /after\(async \(\) =>/);
   assert.match(enhancer, /after\(\(\) => settleTextBillingInBackground/);
@@ -98,7 +98,42 @@ test("the full catalog stays visible while unavailable routes remain disabled", 
 
 test("wallet distinguishes spendable credits from temporary reservations", () => {
   const wallet = source("src/components/wallet-client.tsx");
-  assert.match(wallet, /label: "Spendable"/);
+  assert.match(wallet, /label: "Available"/);
   assert.match(wallet, /label: "Temporarily reserved"/);
-  assert.match(wallet, /not a final charge/i);
+  assert.match(wallet, /Not spent/i);
+});
+
+test("user-owned settlement polling is safe, bounded, and provider-authoritative", () => {
+  const endpoint = source("src/app/api/billing/settle-pending/route.ts");
+  const chat = source("src/components/chat-client.tsx");
+  assert.match(endpoint, /isTrustedMutation\(request\)/);
+  assert.match(endpoint, /enforceRateLimit/);
+  assert.match(endpoint, /\.eq\("user_id", user\.id\)/);
+  assert.match(endpoint, /settleApimodelsTask/);
+  assert.match(endpoint, /settleProviderBillingRecord/);
+  assert.match(endpoint, /releaseAuthoritativeProviderFailure/);
+  assert.doesNotMatch(endpoint, /credits_usd[^\n]*NextResponse/);
+  assert.match(chat, /\[2_000, 3_000, 5_000, 8_000, 13_000, 20_000\]/);
+  assert.match(chat, /quoteId: streamEvent\.billingQuoteId/);
+  assert.match(chat, /Billing pending/);
+  assert.match(chat, /No charge/);
+});
+
+test("pending V3 messages use nullable costs and never enter historical billing", () => {
+  const route = source("src/app/api/chat/route.ts");
+  const usage = source("src/app/usage/page.tsx");
+  assert.match(route, /credits_charged: null/);
+  assert.match(route, /supplier_cost_usd: null/);
+  assert.match(route, /internal_cost_pkr: null/);
+  assert.match(route, /billingEngine: "v3_provider_authoritative"/);
+  assert.match(usage, /metadata\.billingEngine!=="v3_provider_authoritative"/);
+  assert.match(usage, /released\?"No charge":"Billing pending"/);
+});
+
+test("traffic reconciliation uses the existing database claim function", () => {
+  const reconciliation = source("src/lib/billing/reconciliation.ts");
+  const chat = source("src/app/api/chat/route.ts");
+  assert.match(reconciliation, /export async function runBillingV3ReconciliationPump\(limit = 3\)/);
+  assert.match(reconciliation, /billing_v3_claim_reconciliation_batch/);
+  assert.match(chat, /runBillingV3ReconciliationPump\(3\)/);
 });

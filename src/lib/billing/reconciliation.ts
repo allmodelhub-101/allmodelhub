@@ -29,7 +29,7 @@ type ProviderBillingReconciliationRow = {
   generation_job_id: string | null;
 };
 
-async function runProviderBillingReconciliation(limit: number) {
+export async function runBillingV3ReconciliationPump(limit = 3) {
   const admin = createAdminClient();
   const { data, error } = await admin.rpc("billing_v3_claim_reconciliation_batch", { p_limit: limit });
   if (error) throw error;
@@ -213,7 +213,7 @@ export async function runBillingReconciliation(limit = 20) {
   if (invariantError) throw invariantError;
   const settings = await getBillingV3Settings();
   const providerAuthoritative = settings.reconciliationEnabled
-    ? await runProviderBillingReconciliation(limit)
+    ? await runBillingV3ReconciliationPump(limit)
     : { claimed: 0, results: [] };
   return { claimed: jobs.length, results, providerAuthoritative, invariants } as const;
 }

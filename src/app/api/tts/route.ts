@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getRuntimeModel } from "@/lib/model-store";
@@ -7,6 +7,7 @@ import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { beginTtsBillingAttempt, cancelTtsBillingAttempt, settleTtsBillingAttempt, type TtsBillingAttempt } from "@/lib/billing/tts-billing";
+import { runBillingV3ReconciliationPump } from "@/lib/billing/reconciliation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -79,6 +80,7 @@ export async function POST(request: Request) {
         await cancelTtsBillingAttempt(attempt, "tts_client_cancelled");
       },
     });
+    after(() => runBillingV3ReconciliationPump(3).catch((error) => logServerError("billing-v3-tts-traffic-pump", error, { userId: user.id, modelId: model.id })));
     return new Response(stream, {
       headers: {
         "Content-Type": attempt.response.headers.get("content-type") || "audio/mpeg",

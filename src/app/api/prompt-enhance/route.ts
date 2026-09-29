@@ -9,6 +9,7 @@ import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { beginTextBillingAttempt, cancelTextBillingAttempt, settleTextBillingAttempt, settleTextBillingInBackground } from "@/lib/billing/text-billing";
+import { runBillingV3ReconciliationPump } from "@/lib/billing/reconciliation";
 
 const schema = z.object({ requestId: z.string().uuid(), prompt: z.string().min(3).max(20_000) });
 export const runtime = "nodejs";
@@ -106,6 +107,7 @@ export async function POST(request: Request) {
       }));
     }
     const credits = settlement.billingStatus === "settled" ? Number(settlement.chargeCredits) : undefined;
+    after(() => runBillingV3ReconciliationPump(3).catch((error) => logServerError("billing-v3-prompt-traffic-pump", error, { userId: data.user.id, modelId: model.id })));
     await finalizeRequest(claimId, "completed", { resourceId: settlement.receiptId, response: { credits, model: model.id } });
     return NextResponse.json({ prompt: text.trim(), credits, billingStatus: settlement.billingStatus });
   } catch (error) {
