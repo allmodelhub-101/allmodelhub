@@ -8,6 +8,7 @@ import {
   type ModelTier
 } from "@/lib/models";
 import { executableModelIds, isRuntimeAuthorizationPolicyComplete } from "@/lib/billing/model-availability-core";
+import { getMediaExecutionContract, mediaUiSchemaMatchesContract } from "@/lib/media-execution-contract";
 
 type DbModel = {
   id: string;
@@ -78,7 +79,8 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     // requires a current authorization policy, so the catalog fails closed
     // without using historical local pricing as a final-cost authority.
     const [{ data: routes, error: routeError },
-      { data: policies, error: policyError }] = await Promise.all([admin
+      { data: policies, error: policyError },
+      { data: pricingRules, error: pricingError }] = await Promise.all([admin
       .from("provider_models")
       .select("provider_key,model_id,upstream_model")
       .eq("active", true)
@@ -88,12 +90,24 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
       .eq("active", true)
       .lte("effective_from", now)
       .or(`effective_until.is.null,effective_until.gt.${now}`)
+      .in("model_id", rows.map((row) => row.id)), admin
+      .from("billing_provider_pricing_registry")
+      .select("provider_key,model_id,upstream_model,pricing_version,status,active")
+      .eq("active", true).eq("status", "verified")
       .in("model_id", rows.map((row) => row.id))]);
-    if (routeError || policyError) throw routeError ?? policyError;
+    if (routeError || policyError || pricingError) throw routeError ?? policyError ?? pricingError;
     const routeKeys = new Set((routes ?? []).map((route) => `${route.provider_key}\u0000${route.model_id}\u0000${route.upstream_model}`));
-    const completePolicies = (policies ?? []).filter((policy) => routeKeys.has(
-      `${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}`,
-    ) && isRuntimeAuthorizationPolicyComplete(policy));
+    const pricingKeys = new Set((pricingRules ?? []).map((rule) => `${rule.provider_key}\u0000${rule.model_id}\u0000${rule.upstream_model}\u0000${rule.pricing_version}`));
+    const rowById = new Map(rows.map((row) => [row.id, row]));
+    const completePolicies = (policies ?? []).filter((policy) => {
+      const metadata = policy.metadata && typeof policy.metadata === "object" && !Array.isArray(policy.metadata) ? policy.metadata as Record<string, unknown> : {};
+      const row = rowById.get(String(policy.model_id));
+      const mediaContract = policy.modality === "text" ? undefined : getMediaExecutionContract(String(policy.model_id));
+      return routeKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}`)
+        && isRuntimeAuthorizationPolicyComplete(policy)
+        && pricingKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}\u0000${String(metadata.derived_from_verified_pricing_version ?? "")}`)
+        && (policy.modality === "text" || Boolean(row && mediaContract && mediaUiSchemaMatchesContract(toCatalogModel(row).uiSchema, mediaContract)));
+    });
     const executable = executableModelIds({
       activeModelIds: rows.map((row) => row.id),
       operationalRouteModelIds: (routes ?? []).map((route) => String(route.model_id)),
@@ -104,12 +118,21 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     });
     const operational = new Set((routes ?? []).map((route) => String(route.model_id)));
     const policyPresent = new Set((policies ?? []).map((policy) => String(policy.model_id)));
+    const completePolicyModels = new Set((policies ?? []).filter(isRuntimeAuthorizationPolicyComplete).map((policy) => String(policy.model_id)));
+    const pricedPolicyModels = new Set((policies ?? []).filter((policy) => {
+      const metadata = policy.metadata && typeof policy.metadata === "object" && !Array.isArray(policy.metadata) ? policy.metadata as Record<string, unknown> : {};
+      return pricingKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}\u0000${String(metadata.derived_from_verified_pricing_version ?? "")}`);
+    }).map((policy) => String(policy.model_id)));
     return rows.map((row) => withAvailability(
       toCatalogModel(row),
       executable.has(row.id),
-      operational.has(row.id)
-        ? policyPresent.has(row.id) ? "billing_authorization_incomplete" : "billing_authorization_pending"
-        : "provider_route_unavailable",
+      !operational.has(row.id) ? "provider_route_unavailable"
+        : !policyPresent.has(row.id) ? "billing_authorization_pending"
+        : !completePolicyModels.has(row.id) ? "billing_authorization_incomplete"
+        : !pricedPolicyModels.has(row.id) ? "authorization_pricing_unavailable"
+        : row.modality !== "text" && !getMediaExecutionContract(row.id) ? "provider_adapter_unavailable"
+        : row.modality !== "text" && !mediaUiSchemaMatchesContract(toCatalogModel(row).uiSchema, getMediaExecutionContract(row.id)!) ? "media_contract_mismatch"
+        : "billing_authorization_incomplete",
     ));
   } catch {
     // Static catalog data is UI metadata only. Never turn it into an
@@ -142,12 +165,21 @@ export async function getRuntimeModel(id: string) {
       .or(`effective_until.is.null,effective_until.gt.${now}`)
       .limit(1).maybeSingle()]);
     if (routeError || policyError) throw routeError ?? policyError;
-    if (!route || !policy
+    const policyMetadata = policy?.metadata && typeof policy.metadata === "object" && !Array.isArray(policy.metadata) ? policy.metadata as Record<string, unknown> : {};
+    const { data: pricingRule, error: pricingError } = policy ? await admin.from("billing_provider_pricing_registry")
+      .select("id").eq("provider_key", policy.provider_key).eq("model_id", policy.model_id)
+      .eq("upstream_model", policy.upstream_model).eq("pricing_version", String(policyMetadata.derived_from_verified_pricing_version ?? ""))
+      .eq("active", true).eq("status", "verified").maybeSingle() : { data: null, error: null };
+    if (pricingError) throw pricingError;
+    const catalog = toCatalogModel(data as DbModel);
+    const mediaContract = catalog.modality === "text" ? undefined : getMediaExecutionContract(catalog.id);
+    if (!route || !policy || !pricingRule
       || route.provider_key !== policy.provider_key
       || route.model_id !== policy.model_id
       || route.upstream_model !== policy.upstream_model
-      || !isRuntimeAuthorizationPolicyComplete(policy)) return undefined;
-    return toCatalogModel(data as DbModel);
+      || !isRuntimeAuthorizationPolicyComplete(policy)
+      || (catalog.modality !== "text" && (!mediaContract || !mediaUiSchemaMatchesContract(catalog.uiSchema, mediaContract)))) return undefined;
+    return catalog;
   } catch {
     if (process.env.NODE_ENV === "production") return undefined;
     return getStaticModel(id);

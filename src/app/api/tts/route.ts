@@ -8,6 +8,7 @@ import { logServerError } from "@/lib/public-error";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { beginTtsBillingAttempt, cancelTtsBillingAttempt, settleTtsBillingAttempt, type TtsBillingAttempt } from "@/lib/billing/tts-billing";
 import { runBillingV3ReconciliationPump } from "@/lib/billing/reconciliation";
+import { getMediaExecutionContract } from "@/lib/media-execution-contract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,7 +43,8 @@ export async function POST(request: Request) {
   const claimId = claim.id;
 
   const model = await getRuntimeModel(input.modelId);
-  if (!model || model.modality !== "audio" || !model.capabilities.includes("tts")) {
+  if (!model || model.modality !== "audio" || !model.capabilities.includes("tts")
+    || getMediaExecutionContract(model.id)?.strategy !== "apimodels_eleven_stream") {
     await finalizeRequest(claimId, "failed");
     return NextResponse.json({ error: "TTS model is unavailable." }, { status: 400 });
   }

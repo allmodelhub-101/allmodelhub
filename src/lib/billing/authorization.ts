@@ -7,6 +7,7 @@ import { roundWalletAmountUp } from "./quote-reservation-core";
 import type { NormalizedUsage } from "./types";
 import type { ResolvedBillingProviderRoute } from "./provider-route-core";
 import { calculateTextAuthorizationProviderCost, parseAuthorizationConstraints, validateAuthorizationRequest } from "./authorization-core";
+import { priceProviderRequest } from "./pricing-registry";
 
 type PolicyRow = Readonly<{
   id: string;
@@ -61,8 +62,7 @@ function exactMetadataString(metadata: Record<string, unknown>, key: string) {
   return value;
 }
 
-function authorizationProviderCost(policy: PolicyRow, usageEnvelope: NormalizedUsage) {
-  if (policy.modality !== "text") return decimalString(policy.maximum_provider_cost_usd);
+function textAuthorizationProviderCost(policy: PolicyRow, usageEnvelope: NormalizedUsage) {
   return decimalString(calculateTextAuthorizationProviderCost({
     usage: usageEnvelope,
     inputUsdPerMillion: exactMetadataString(policy.metadata, "authorization_input_usd_per_million"),
@@ -104,7 +104,17 @@ async function calculateRequestAuthorization(input: Readonly<{
   if (!decimal(policyMaximum).gt(0) || decimal(policyMaximum).lt(safePolicyCharge)) {
     throw new Error("BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED");
   }
-  const requestProviderCost = authorizationProviderCost(input.policy, input.usageEnvelope);
+  const priced = input.policy.modality === "text" ? null : await priceProviderRequest({
+    selector: {
+      providerKey: input.route.providerKey,
+      modelId: input.route.modelId,
+      upstreamModel: input.route.upstreamModel,
+      pricingVersion,
+    },
+    usage: input.usageEnvelope,
+    dimensions: input.dimensions,
+  });
+  const requestProviderCost = priced?.providerCostUsd ?? textAuthorizationProviderCost(input.policy, input.usageEnvelope);
   if (decimal(requestProviderCost).gt(decimal(input.policy.maximum_provider_cost_usd))) {
     throw new Error("BILLING_V3_AUTHORIZATION_REQUEST_EXCEEDS_POLICY");
   }
@@ -120,7 +130,7 @@ async function calculateRequestAuthorization(input: Readonly<{
   }
   // This is only a conservative wallet authorization. APIMODELS' settled
   // provider record remains the sole final-cost and capture authority.
-  return { authorizationCredits: requestAuthorization, pricingVersion, pricingRuleId: null } as const;
+  return { authorizationCredits: requestAuthorization, pricingVersion, pricingRuleId: priced?.snapshot.pricingRuleId ?? null } as const;
 }
 
 export async function createProviderAuthorization(input: Readonly<{

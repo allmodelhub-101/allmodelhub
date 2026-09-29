@@ -16,6 +16,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { createProviderAuthorization } from "@/lib/billing/authorization";
 import { markProviderSettlementPending, recordProviderBillingAnomaly } from "@/lib/billing/provider-authoritative-settlement";
+import { getMediaExecutionContract, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
+import { classifyMediaRuntimeFailure } from "@/lib/media-runtime-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,7 +29,9 @@ const bodySchema = z.object({
   resolution: z.string().max(40).optional(), quality: z.string().max(40).optional(), fps: z.number().positive().max(240).optional(),
   imageCount: z.number().int().positive().max(20).default(1), aspectRatio: z.string().max(40).optional(),
   imageFileIds: z.array(z.string().uuid()).max(10).default([]), mode: z.string().max(40).optional(),
-  nativeAudio: z.boolean().optional(), audioMode: z.string().max(40).optional(), confirmedCost: z.boolean().default(false),
+  nativeAudio: z.boolean().optional(), audioMode: z.string().max(40).optional(),
+  voiceId: z.string().min(2).max(120).optional(), languageCode: z.string().min(2).max(12).optional(),
+  voiceSpeed: z.number().min(0.7).max(2).optional(), confirmedCost: z.boolean().default(false),
 });
 
 const catalogOnlyModels = new Set(["real-esrgan", "flashvsr", "eleven-dialogue", "eleven-dubbing", "eleven-isolator"]);
@@ -52,7 +56,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   const claim = await claimRequest(user.id, `media:${modality}`, input.requestId);
   if (!claim.claimed) return NextResponse.json({ error: "This generation request was already submitted.", existing: claim.existing }, { status: 409 });
   const model = await getRuntimeModel(input.modelId);
-  if (!model || model.modality !== modality || catalogOnlyModels.has(model.id) || (modality === "audio" && model.capabilities.includes("tts"))) {
+  const modelContract = model ? getMediaExecutionContract(model.id) : undefined;
+  const asyncTts = modality === "audio" && modelContract?.strategy === "apimodels_audio_async";
+  if (!model || model.modality !== modality || catalogOnlyModels.has(model.id) || (modality === "audio" && model.capabilities.includes("tts") && !asyncTts)) {
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "Model is not available for this studio." }, { status: 400 });
   }
@@ -72,12 +78,26 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   }
   const mode = input.mode ?? input.audioMode;
   const aspectRatio = modality === "audio" ? undefined : input.aspectRatio;
+  const contract = modelContract;
+  if (!contract || contract.modality !== modality) {
+    await finalizeRequest(claim.id, "failed");
+    return NextResponse.json({ error: "This model workflow is not supported yet." }, { status: 400 });
+  }
+  try {
+    validateMediaContractRequest(contract, { referenceCount: referenceImages.length, resolution: input.resolution,
+      duration: input.duration, aspectRatio, nativeAudio: input.nativeAudio });
+  } catch {
+    await finalizeRequest(claim.id, "failed");
+    return NextResponse.json({ error: "One or more selected model options are unsupported." }, { status: 400 });
+  }
+  const providerAspectRatio = contract.aspectRatios?.length ? aspectRatio : undefined;
+  const pricingMode = modality === "video" && contract.nativeAudio ? (input.nativeAudio ? "native_audio" : "silent") : mode;
   const usage = {
-    ...mediaUsageFromRequest({ ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length }),
+    ...mediaUsageFromRequest({ ...input, aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : pricingMode, referenceCount: input.imageFileIds.length }),
     inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
   };
-  const dimensions = { resolution: input.resolution, quality: input.quality, mode, inputType: referenceImages.length ? "image" : "text" };
-  const storedRequest = { ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length };
+  const dimensions = { resolution: input.resolution, quality: input.quality, mode: pricingMode, inputType: referenceImages.length ? "image" : "text" };
+  const storedRequest = { ...input, aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
     public_id: publicId, user_id: user.id, project_id: input.projectId ?? null, modality, model_id: model.id,
@@ -121,18 +141,26 @@ export async function POST(request: Request, context: { params: Promise<{ modali
         const isApiModels = route.providerKey.toLowerCase().replace(/[-_.]/g, "") === "apimodels";
         const callbackUrl = isApiModels && process.env.CALLBACK_SECRET ? `${callbackBase}/api/provider-callback/apimodels/${process.env.CALLBACK_SECRET}` : undefined;
         const providerBody: Record<string, unknown> = {
-          prompt: input.prompt, ...(input.duration ? { duration: input.duration } : {}),
+          prompt: input.prompt,
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
-          ...(input.resolution ? { resolution: input.resolution } : {}), ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
-          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(aspectRatio ? { aspect_ratio: aspectRatio } : {}),
-          ...(mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
-          ...(referenceImages.length ? { images: referenceImages } : {}), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
+          ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
+          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}),
+          ...mediaProviderOptionPayload(contract, { duration: input.duration, resolution: input.resolution,
+            aspectRatio: providerAspectRatio, nativeAudio: input.nativeAudio }),
+          ...(modality === "audio" && mode ? { mode } : {}),
+          ...referencePayload(contract, referenceImages), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
+        if (model.id === "kling-tts") {
+          if (!input.voiceId || !input.languageCode) throw new Error("MEDIA_OPTION_UNSUPPORTED:voice");
+          delete providerBody.prompt;
+          Object.assign(providerBody, { text: input.prompt, voice_id: input.voiceId,
+            voice_language: input.languageCode, voice_speed: input.voiceSpeed ?? 1 });
+        }
         const task = (await providerCreateTaskExact(route, modality as "image" | "video" | "audio", providerBody)).task;
-        providerStarted = true;
-        providerSubmissionPending = true;
         providerTaskId = task.taskId;
         if (!task.taskId) throw new Error("BILLING_V3_PROVIDER_TASK_ID_MISSING");
+        providerStarted = true;
+        providerSubmissionPending = true;
         await markProviderSettlementPending({ quoteId: authorization.quoteId,
           providerTaskId: task.taskId, source: "response_header", links: { generationJobId: job.id } });
         const status = task.state === "processing" ? "processing" : "submitted";
@@ -165,16 +193,18 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     }
     throw lastError;
   } catch (error) {
+    const publicFailure = classifyMediaRuntimeFailure(error, providerSubmissionPending);
     await admin.from("generation_jobs").update(providerSubmissionPending
       ? { status: "processing", error_message: "Provider billing reconciliation pending.",
           reconciliation_required: true, reconciliation_state: "due", next_reconcile_at: new Date().toISOString(), updated_at: new Date().toISOString() }
-      : { status: "failed", error_message: "Generation provider is temporarily unavailable.", updated_at: new Date().toISOString() })
+      : { status: "failed", error_message: publicFailure.message, updated_at: new Date().toISOString() })
       .eq("id", job.id);
     await finalizeRequest(claim.id, providerSubmissionPending ? "completed" : "failed", { resourceId: job.id,
       response: providerSubmissionPending ? { billingStatus: "pending_reconciliation" } : undefined }).catch(() => undefined);
-    const message = error instanceof Error ? error.message : "Generation failed";
-    const insufficient = message.includes("INSUFFICIENT_CREDITS"); const safety = message.includes("SPEND_LIMIT");
-    if (!insufficient && !safety) logServerError("generation-billing-v3", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });
-    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : safety ? "This generation exceeds your spending safety limit." : providerSubmissionPending ? "Generation was submitted and is pending provider reconciliation." : "Generation provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : providerSubmissionPending ? 202 : 502 });
+    if (!["insufficient_credits", "spending_limit"].includes(publicFailure.category)) {
+      logServerError("generation-billing-v3", error, { userId: user.id, modelId: model.id, modality, jobId: job.id,
+        failureCategory: publicFailure.category });
+    }
+    return NextResponse.json({ error: publicFailure.message }, { status: publicFailure.status });
   }
 }

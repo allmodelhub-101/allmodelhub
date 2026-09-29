@@ -13,7 +13,9 @@ export type PickerModel = {
   capabilities?: string[];
   autoEligible?: boolean;
   available?: boolean;
-  availabilityReason?: "billing_authorization_pending" | "billing_authorization_incomplete" | "provider_route_unavailable" | null;
+  availabilityReason?: "billing_authorization_pending" | "billing_authorization_incomplete"
+    | "authorization_pricing_unavailable" | "provider_adapter_unavailable" | "media_contract_mismatch"
+    | "provider_route_unavailable" | null;
   uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; maxReferences?: number };
   retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
