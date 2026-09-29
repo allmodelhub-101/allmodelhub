@@ -118,12 +118,21 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     });
     const operational = new Set((routes ?? []).map((route) => String(route.model_id)));
     const policyPresent = new Set((policies ?? []).map((policy) => String(policy.model_id)));
+    const completePolicyModels = new Set((policies ?? []).filter(isRuntimeAuthorizationPolicyComplete).map((policy) => String(policy.model_id)));
+    const pricedPolicyModels = new Set((policies ?? []).filter((policy) => {
+      const metadata = policy.metadata && typeof policy.metadata === "object" && !Array.isArray(policy.metadata) ? policy.metadata as Record<string, unknown> : {};
+      return pricingKeys.has(`${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}\u0000${String(metadata.derived_from_verified_pricing_version ?? "")}`);
+    }).map((policy) => String(policy.model_id)));
     return rows.map((row) => withAvailability(
       toCatalogModel(row),
       executable.has(row.id),
-      operational.has(row.id)
-        ? policyPresent.has(row.id) ? "billing_authorization_incomplete" : "billing_authorization_pending"
-        : "provider_route_unavailable",
+      !operational.has(row.id) ? "provider_route_unavailable"
+        : !policyPresent.has(row.id) ? "billing_authorization_pending"
+        : !completePolicyModels.has(row.id) ? "billing_authorization_incomplete"
+        : !pricedPolicyModels.has(row.id) ? "authorization_pricing_unavailable"
+        : row.modality !== "text" && !getMediaExecutionContract(row.id) ? "provider_adapter_unavailable"
+        : row.modality !== "text" && !mediaUiSchemaMatchesContract(toCatalogModel(row).uiSchema, getMediaExecutionContract(row.id)!) ? "media_contract_mismatch"
+        : "billing_authorization_incomplete",
     ));
   } catch {
     // Static catalog data is UI metadata only. Never turn it into an

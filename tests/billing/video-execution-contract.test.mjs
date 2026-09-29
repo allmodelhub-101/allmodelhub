@@ -40,6 +40,9 @@ test("MiniMax H3 and Lite enforce only safely priced request subsets", () => {
   assert.doesNotThrow(() => validateMediaContractRequest(lite, {
     referenceCount: 9, duration: 1, resolution: "480p", aspectRatio: "9:16",
   }));
+  assert.deepEqual(mediaProviderOptionPayload(lite, {
+    duration: 1, resolution: "480p", aspectRatio: "9:16",
+  }), { duration: 1, resolution: "480p", ratio: "9:16" });
 });
 
 test("video migration has exact request-bounded maxima and current evidence", () => {

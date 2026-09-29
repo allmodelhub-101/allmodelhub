@@ -63,10 +63,6 @@ export function TtsClient() {
 
   useEffect(() => () => { if (url) URL.revokeObjectURL(url); }, [url]);
 
-  useEffect(() => {
-    setVoice((current) => voices.some((item) => item.value === current) ? current : voices[0]?.value || "");
-  }, [asyncKling]); // eslint-disable-line react-hooks/exhaustive-deps
-
   async function pollAsyncJob(id: string) {
     for (let attempt = 0; attempt < 120; attempt += 1) {
       await new Promise((resolve) => window.setTimeout(resolve, 3000));
@@ -114,7 +110,7 @@ export function TtsClient() {
   return <div className={styles.workspace}>
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}><span className={styles.headIcon}><Microphone weight="fill" /></span><div><h2>Generate Speech</h2><p>Turn your script into natural, lifelike speech.</p></div><i>01</i></div>
-      <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}${model.available === false ? " · Billing setup pending" : ""}`, disabled: model.available === false }))} aria-label="Speech model" />{selectedModel?.description && <small>{selectedModel.description}</small>}</label>
+      <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setVoice(value === "kling-tts" ? klingVoices[0]?.value ?? "" : elevenVoices[0]?.value ?? ""); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}${model.available === false ? " · Billing setup pending" : ""}`, disabled: model.available === false }))} aria-label="Speech model" />{selectedModel?.description && <small>{selectedModel.description}</small>}</label>
       <label className={styles.field}><span>Script <small>{text.length.toLocaleString()} / 10,000</small></span><textarea value={text} onChange={(event) => { setText(event.target.value); setConfirmed(false); }} maxLength={10_000} required placeholder={"Write or paste your script here…\nE.g. a product explainer, narration, or any text you want to hear."} /></label>
       <label className={styles.field}><span>Voice</span><PremiumSelect className={styles.select} value={voice} onChange={setVoice} options={voices} aria-label="Voice" /></label>
       {asyncKling && <><label className={styles.field}><span>Language</span><PremiumSelect className={styles.select} value={languageCode} onChange={setLanguageCode} options={[{ value: "en", label: "English" }, { value: "zh", label: "Chinese" }]} aria-label="Language" /></label><label className={styles.field}><span>Speed</span><PremiumSelect className={styles.select} value={voiceSpeed} onChange={setVoiceSpeed} options={[{ value: "0.8", label: "0.8×" }, { value: "1", label: "1.0×" }, { value: "1.2", label: "1.2×" }, { value: "1.5", label: "1.5×" }, { value: "2", label: "2.0×" }]} aria-label="Voice speed" /></label></>}

@@ -17,6 +17,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createProviderAuthorization } from "@/lib/billing/authorization";
 import { markProviderSettlementPending, recordProviderBillingAnomaly } from "@/lib/billing/provider-authoritative-settlement";
 import { getMediaExecutionContract, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
+import { classifyMediaRuntimeFailure } from "@/lib/media-runtime-error";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -192,16 +193,18 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     }
     throw lastError;
   } catch (error) {
+    const publicFailure = classifyMediaRuntimeFailure(error, providerSubmissionPending);
     await admin.from("generation_jobs").update(providerSubmissionPending
       ? { status: "processing", error_message: "Provider billing reconciliation pending.",
           reconciliation_required: true, reconciliation_state: "due", next_reconcile_at: new Date().toISOString(), updated_at: new Date().toISOString() }
-      : { status: "failed", error_message: "Generation provider is temporarily unavailable.", updated_at: new Date().toISOString() })
+      : { status: "failed", error_message: publicFailure.message, updated_at: new Date().toISOString() })
       .eq("id", job.id);
     await finalizeRequest(claim.id, providerSubmissionPending ? "completed" : "failed", { resourceId: job.id,
       response: providerSubmissionPending ? { billingStatus: "pending_reconciliation" } : undefined }).catch(() => undefined);
-    const message = error instanceof Error ? error.message : "Generation failed";
-    const insufficient = message.includes("INSUFFICIENT_CREDITS"); const safety = message.includes("SPEND_LIMIT");
-    if (!insufficient && !safety) logServerError("generation-billing-v3", error, { userId: user.id, modelId: model.id, modality, jobId: job.id });
-    return NextResponse.json({ error: insufficient ? "Insufficient credits for this generation." : safety ? "This generation exceeds your spending safety limit." : providerSubmissionPending ? "Generation was submitted and is pending provider reconciliation." : "Generation provider is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : providerSubmissionPending ? 202 : 502 });
+    if (!["insufficient_credits", "spending_limit"].includes(publicFailure.category)) {
+      logServerError("generation-billing-v3", error, { userId: user.id, modelId: model.id, modality, jobId: job.id,
+        failureCategory: publicFailure.category });
+    }
+    return NextResponse.json({ error: publicFailure.message }, { status: publicFailure.status });
   }
 }
