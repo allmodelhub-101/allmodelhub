@@ -1,3 +1,35 @@
+import Decimal from "decimal.js";
+
+type AuthorizationPolicyAvailability = Readonly<{
+  modality: string;
+  metadata: unknown;
+  request_constraints: unknown;
+}>;
+
+function positiveDecimalString(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) return false;
+  try {
+    const parsed = new Decimal(value);
+    return parsed.isFinite() && parsed.gt(0);
+  } catch {
+    return false;
+  }
+}
+
+export function isRuntimeAuthorizationPolicyComplete(policy: AuthorizationPolicyAvailability) {
+  if (policy.modality !== "text") return true;
+  if (!policy.metadata || typeof policy.metadata !== "object" || Array.isArray(policy.metadata)) return false;
+  if (!policy.request_constraints || typeof policy.request_constraints !== "object" || Array.isArray(policy.request_constraints)) return false;
+  const metadata = policy.metadata as Record<string, unknown>;
+  const constraints = policy.request_constraints as Record<string, unknown>;
+  return positiveDecimalString(metadata.authorization_input_usd_per_million)
+    && positiveDecimalString(metadata.authorization_output_usd_per_million)
+    && typeof metadata.derived_from_verified_pricing_version === "string"
+    && metadata.derived_from_verified_pricing_version.trim().length > 0
+    && positiveDecimalString(constraints.maxInputTokens)
+    && positiveDecimalString(constraints.maxOutputTokens);
+}
+
 export function executableModelIds(input: Readonly<{
   activeModelIds: readonly string[];
   operationalRouteModelIds: readonly string[];

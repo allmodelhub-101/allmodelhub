@@ -7,7 +7,7 @@ import {
   type Modality,
   type ModelTier
 } from "@/lib/models";
-import { executableModelIds } from "@/lib/billing/model-availability-core";
+import { executableModelIds, isRuntimeAuthorizationPolicyComplete } from "@/lib/billing/model-availability-core";
 
 type DbModel = {
   id: string;
@@ -80,29 +80,36 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
     const [{ data: routes, error: routeError },
       { data: policies, error: policyError }] = await Promise.all([admin
       .from("provider_models")
-      .select("model_id")
+      .select("provider_key,model_id,upstream_model")
       .eq("active", true)
       .in("model_id", rows.map((row) => row.id)), admin
       .from("billing_authorization_policies")
-      .select("model_id")
+      .select("provider_key,model_id,upstream_model,modality,metadata,request_constraints")
       .eq("active", true)
       .lte("effective_from", now)
       .or(`effective_until.is.null,effective_until.gt.${now}`)
       .in("model_id", rows.map((row) => row.id))]);
     if (routeError || policyError) throw routeError ?? policyError;
+    const routeKeys = new Set((routes ?? []).map((route) => `${route.provider_key}\u0000${route.model_id}\u0000${route.upstream_model}`));
+    const completePolicies = (policies ?? []).filter((policy) => routeKeys.has(
+      `${policy.provider_key}\u0000${policy.model_id}\u0000${policy.upstream_model}`,
+    ) && isRuntimeAuthorizationPolicyComplete(policy));
     const executable = executableModelIds({
       activeModelIds: rows.map((row) => row.id),
       operationalRouteModelIds: (routes ?? []).map((route) => String(route.model_id)),
       verifiedPricingModelIds: [],
-      authorizationPolicyModelIds: (policies ?? []).map((policy) => String(policy.model_id)),
+      authorizationPolicyModelIds: completePolicies.map((policy) => String(policy.model_id)),
       billingV3Enabled: true,
       billingV3CanaryModels: [],
     });
     const operational = new Set((routes ?? []).map((route) => String(route.model_id)));
+    const policyPresent = new Set((policies ?? []).map((policy) => String(policy.model_id)));
     return rows.map((row) => withAvailability(
       toCatalogModel(row),
       executable.has(row.id),
-      operational.has(row.id) ? "billing_authorization_pending" : "provider_route_unavailable",
+      operational.has(row.id)
+        ? policyPresent.has(row.id) ? "billing_authorization_incomplete" : "billing_authorization_pending"
+        : "provider_route_unavailable",
     ));
   } catch {
     // Static catalog data is UI metadata only. Never turn it into an
@@ -124,17 +131,22 @@ export async function getRuntimeModel(id: string) {
     const [{ data: route, error: routeError },
       { data: policy, error: policyError }] = await Promise.all([admin
       .from("provider_models")
-      .select("id")
+      .select("provider_key,model_id,upstream_model")
       .eq("model_id", data.id)
       .eq("active", true)
       .limit(1)
-      .maybeSingle(), admin.from("billing_authorization_policies").select("id")
+      .maybeSingle(), admin.from("billing_authorization_policies")
+      .select("provider_key,model_id,upstream_model,modality,metadata,request_constraints")
       .eq("model_id", data.id).eq("active", true)
       .lte("effective_from", now)
       .or(`effective_until.is.null,effective_until.gt.${now}`)
       .limit(1).maybeSingle()]);
     if (routeError || policyError) throw routeError ?? policyError;
-    if (!route || !policy) return undefined;
+    if (!route || !policy
+      || route.provider_key !== policy.provider_key
+      || route.model_id !== policy.model_id
+      || route.upstream_model !== policy.upstream_model
+      || !isRuntimeAuthorizationPolicyComplete(policy)) return undefined;
     return toCatalogModel(data as DbModel);
   } catch {
     if (process.env.NODE_ENV === "production") return undefined;

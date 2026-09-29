@@ -29,7 +29,7 @@ export type CatalogModel = {
   inputOverheadTokens?: number;
   autoEligible?: boolean;
   available?: boolean;
-  availabilityReason?: "billing_authorization_pending" | "provider_route_unavailable" | null;
+  availabilityReason?: "billing_authorization_pending" | "billing_authorization_incomplete" | "provider_route_unavailable" | null;
 };
 
 export const TEXT_MODELS: CatalogModel[] = [
