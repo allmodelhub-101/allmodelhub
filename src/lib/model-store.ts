@@ -129,7 +129,7 @@ export async function listRuntimeModels(options?: { modality?: Modality; include
       !operational.has(row.id) ? "provider_route_unavailable"
         : !policyPresent.has(row.id) ? "billing_authorization_pending"
         : !completePolicyModels.has(row.id) ? "billing_authorization_incomplete"
-        : !pricedPolicyModels.has(row.id) ? "authorization_pricing_unavailable"
+        : row.modality !== "text" && !pricedPolicyModels.has(row.id) ? "authorization_pricing_unavailable"
         : row.modality !== "text" && !getMediaExecutionContract(row.id) ? "provider_adapter_unavailable"
         : row.modality !== "text" && !mediaUiSchemaMatchesContract(toCatalogModel(row).uiSchema, getMediaExecutionContract(row.id)!) ? "media_contract_mismatch"
         : "billing_authorization_incomplete",
