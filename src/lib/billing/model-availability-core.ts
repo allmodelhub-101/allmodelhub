@@ -17,15 +17,15 @@ function positiveDecimalString(value: unknown) {
 }
 
 export function isRuntimeAuthorizationPolicyComplete(policy: AuthorizationPolicyAvailability) {
-  if (policy.modality !== "text") return true;
   if (!policy.metadata || typeof policy.metadata !== "object" || Array.isArray(policy.metadata)) return false;
   if (!policy.request_constraints || typeof policy.request_constraints !== "object" || Array.isArray(policy.request_constraints)) return false;
   const metadata = policy.metadata as Record<string, unknown>;
+  if (typeof metadata.derived_from_verified_pricing_version !== "string"
+    || metadata.derived_from_verified_pricing_version.trim().length === 0) return false;
+  if (policy.modality !== "text") return true;
   const constraints = policy.request_constraints as Record<string, unknown>;
   return positiveDecimalString(metadata.authorization_input_usd_per_million)
     && positiveDecimalString(metadata.authorization_output_usd_per_million)
-    && typeof metadata.derived_from_verified_pricing_version === "string"
-    && metadata.derived_from_verified_pricing_version.trim().length > 0
     && positiveDecimalString(constraints.maxInputTokens)
     && positiveDecimalString(constraints.maxOutputTokens);
 }

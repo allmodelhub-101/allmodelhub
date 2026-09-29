@@ -16,6 +16,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { createProviderAuthorization } from "@/lib/billing/authorization";
 import { markProviderSettlementPending, recordProviderBillingAnomaly } from "@/lib/billing/provider-authoritative-settlement";
+import { getMediaExecutionContract, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -72,12 +73,25 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   }
   const mode = input.mode ?? input.audioMode;
   const aspectRatio = modality === "audio" ? undefined : input.aspectRatio;
+  const contract = getMediaExecutionContract(model.id);
+  if (!contract || contract.modality !== modality) {
+    await finalizeRequest(claim.id, "failed");
+    return NextResponse.json({ error: "This model workflow is not supported yet." }, { status: 400 });
+  }
+  try {
+    validateMediaContractRequest(contract, { referenceCount: referenceImages.length, resolution: input.resolution,
+      duration: input.duration, aspectRatio, nativeAudio: input.nativeAudio });
+  } catch {
+    await finalizeRequest(claim.id, "failed");
+    return NextResponse.json({ error: "One or more selected model options are unsupported." }, { status: 400 });
+  }
+  const providerAspectRatio = contract.aspectRatios?.length ? aspectRatio : undefined;
   const usage = {
-    ...mediaUsageFromRequest({ ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length }),
+    ...mediaUsageFromRequest({ ...input, aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : mode, referenceCount: input.imageFileIds.length }),
     inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
   };
   const dimensions = { resolution: input.resolution, quality: input.quality, mode, inputType: referenceImages.length ? "image" : "text" };
-  const storedRequest = { ...input, aspectRatio, mode, referenceCount: input.imageFileIds.length };
+  const storedRequest = { ...input, aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
     public_id: publicId, user_id: user.id, project_id: input.projectId ?? null, modality, model_id: model.id,
@@ -124,9 +138,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           prompt: input.prompt, ...(input.duration ? { duration: input.duration } : {}),
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
           ...(input.resolution ? { resolution: input.resolution } : {}), ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
-          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(aspectRatio ? { aspect_ratio: aspectRatio } : {}),
-          ...(mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
-          ...(referenceImages.length ? { images: referenceImages } : {}), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
+          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}), ...(providerAspectRatio ? { aspect_ratio: providerAspectRatio } : {}),
+          ...(modality !== "image" && mode ? { mode } : {}), ...(input.nativeAudio !== undefined ? { native_audio: input.nativeAudio } : {}),
+          ...referencePayload(contract, referenceImages), ...(callbackUrl ? { callback_url: callbackUrl } : {}),
         };
         const task = (await providerCreateTaskExact(route, modality as "image" | "video" | "audio", providerBody)).task;
         providerStarted = true;
