@@ -32,7 +32,7 @@ export function MarketingNav() {
 
   return <>
     <nav className="marketing-nav" aria-label="Primary navigation">
-      <div className="container marketing-nav-inner">
+      <div className="container marketing-nav-inner marketing-nav-surface">
         <Brand />
         <div className="nav-links">{navLinks.map(([label, href]) => <a href={href} key={href}>{label}</a>)}</div>
         <div className="nav-actions">
