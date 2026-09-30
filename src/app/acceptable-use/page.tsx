@@ -1,2 +1,9 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
-export default function Page(){return <LegalPage title="Acceptable Use Policy"><p>Do not use Models Suite to facilitate illegal activity, fraud, unauthorized access, malware, sexual exploitation, non-consensual intimate content, dangerous wrongdoing, impersonation intended to deceive, harassment, or violations of another person’s rights.</p><h2>Media and voice</h2><p>Only upload or clone voices, faces, images and other media that you have the right and appropriate consent to use. Additional provider restrictions can apply to specific generation models.</p><h2>Platform abuse</h2><p>Do not bypass wallet charging, rate limits, safety controls, promotion restrictions, model limits or provider safeguards. Automated abuse, duplicate-account promotion farming and attempts to extract secret credentials are prohibited.</p><h2>Enforcement</h2><p>Requests can be blocked or reviewed, and accounts can be restricted when needed to protect users, providers or the platform.</p></LegalPage>}
+import { LEGAL_DOCUMENTS } from "@/lib/legal-documents";
+
+export const metadata: Metadata = { title: "Acceptable Use Policy", description: LEGAL_DOCUMENTS["acceptable-use"].description };
+
+export default function AcceptableUsePage() {
+  return <LegalPage document={LEGAL_DOCUMENTS["acceptable-use"]} />;
+}
