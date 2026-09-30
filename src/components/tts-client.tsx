@@ -99,7 +99,18 @@ export function TtsClient() {
       } else {
         const blob = await response.blob();
         setUrl(URL.createObjectURL(blob));
-        setCredits(response.headers.get("x-amh-credits") || undefined);
+        const finalCredits = response.headers.get("x-amh-credits") || undefined;
+        setCredits(finalCredits);
+        const quoteId = response.headers.get("x-amh-billing-quote-id");
+        if (!finalCredits && quoteId) {
+          for (let attempt = 0; attempt < 6; attempt += 1) {
+            await new Promise((resolve) => window.setTimeout(resolve, 1_000));
+            const settlement = await fetch("/api/billing/settle-pending", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ quoteId }) });
+            if (!settlement.ok) continue;
+            const result = await settlement.json().catch(() => ({}));
+            if (result.billingStatus === "settled" && result.chargeCredits != null) { setCredits(String(result.chargeCredits)); break; }
+          }
+        }
       }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "TTS failed");
@@ -133,3 +144,4 @@ export function TtsClient() {
     </div>
   </div>;
 }
+
