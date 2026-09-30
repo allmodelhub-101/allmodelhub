@@ -61,12 +61,16 @@ export async function beginTtsBillingAttempt(input: Readonly<{
       providerStarted = true;
       let providerBillingRecordId: string | undefined;
       let immediateSettlement: Record<string, unknown> | undefined;
+      try {
       if (upstream.providerReportedCost) {
         providerBillingRecordId = await recordProviderBillingObservation({
           quoteId: authorization.quoteId,
           providerRequestId: upstream.providerRequestId,
           record: {
-            taskId: upstream.providerRequestId ?? authorization.quoteId,
+            // The direct TTS endpoint can settle a response-header cost without
+            // issuing a task/request identifier. This marker is never persisted
+            // as a provider identifier; quote_id remains the idempotent key.
+            taskId: upstream.providerRequestId ?? "response-header-settlement",
             state: "completed", settled: true,
             creditsUsd: upstream.providerReportedCost.amount, currency: "USD", usage,
           },
@@ -83,9 +87,17 @@ export async function beginTtsBillingAttempt(input: Readonly<{
         providerBillingRecordId = pending.ledgerId;
       } else {
         await recordProviderBillingAnomaly({ quoteId: authorization.quoteId,
-          anomalyType: "provider_success_without_billing_identifier",
+          anomalyType: "provider_record_missing_identifier",
           details: { operation: "tts", hold_retained: true, response_ok: true,
             request_id_header_present: false, cost_header_present: false } });
+      }
+      } catch (billingError) {
+        // A successful provider stream must remain playable if recording its
+        // settlement needs later reconciliation.
+        await recordProviderBillingAnomaly({ quoteId: authorization.quoteId,
+          anomalyType: "provider_record_missing_identifier",
+          details: { operation: "tts", hold_retained: true, response_ok: true,
+            billing_write_failed: true, error: billingError instanceof Error ? billingError.message : String(billingError) } }).catch(() => undefined);
       }
       return { engine: "v3_provider_authoritative", authorization, billingClaimId: claim.id,
         response: upstream.response, providerRequestId: upstream.providerRequestId,
@@ -174,3 +186,4 @@ export async function settleTtsBillingAttempt(input: Readonly<{
     }
   }
 }
+
