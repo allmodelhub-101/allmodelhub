@@ -153,7 +153,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       return NextResponse.json({ ok: true });
     }
 
-    const providerAuthoritativeOutput = usesV3 && (existingJob.modality === "image" || existingJob.modality === "audio");
+    const providerAuthoritativeOutput = usesV3 && (existingJob.modality === "image" || existingJob.modality === "audio" || existingJob.modality === "video");
     const { data: job, error: claimError } = await admin.from("generation_jobs")
       .update({ status: "settling", result_json: summary, updated_at: new Date().toISOString() })
       .eq("id", existingJob.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();

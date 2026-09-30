@@ -70,7 +70,7 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       }
       if (!resultUrls.length) return NextResponse.json({ job: await clientJob(job), warning: "Provider has not supplied a usable output yet." });
 
-      const providerAuthoritativeOutput = job.modality === "image" || job.modality === "audio";
+      const providerAuthoritativeOutput = job.modality === "image" || job.modality === "audio" || job.modality === "video";
       const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", result_json: summary,
         updated_at: new Date().toISOString() })
         .eq("id", job.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();

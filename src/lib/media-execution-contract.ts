@@ -11,7 +11,7 @@ export type MediaExecutionContract = Readonly<{
   modality: Exclude<Modality, "text">;
   strategy: MediaExecutionStrategy;
   inputModes: readonly ("text" | "image" | "video" | "audio")[];
-  referenceField?: "image" | "image_url" | "image_urls" | "image_reference" | "images" | "first_frame_url";
+  referenceField?: "image" | "image_url" | "image_urls" | "image_reference" | "images" | "first_frame_url" | "reference_image_urls";
   maxReferences: number;
   referenceRequired?: boolean;
   resolutions?: readonly string[];
@@ -63,9 +63,14 @@ const contracts: readonly MediaExecutionContract[] = [
 
   video("gemini-omni-1-1-flash", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 7, durations: [4, 6, 8, 10], resolutions: ["720p", "1080p", "4K"], aspectRatios: ["16:9", "9:16"], providerDuration: "string" }),
   video("grok-video-3", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 7, durations: [6, 10, 15], resolutions: ["480p", "720p"], aspectRatios: ["16:9", "9:16", "1:1", "4:3", "3:4"] }),
+  // These two routes have complete current APIMODELS request contracts and
+  // deterministic maximum authorization envelopes. Their final charge still
+  // comes exclusively from the APIMODELS task record.
+  video("grok-imagine-video-1-5", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 7, durationRange: { min: 1, max: 15, integer: true }, resolutions: ["480p", "720p", "1080p"], aspectRatios: ["16:9", "9:16", "1:1", "3:2", "2:3"] }),
   video("kling-v3", { inputModes: ["text", "image"], referenceField: "image", maxReferences: 1, durationRange: { min: 3, max: 15, integer: true }, resolutions: ["720p", "1080p"], aspectRatios: ["16:9", "9:16", "1:1", "4:3", "3:4", "3:2", "2:3", "21:9"], nativeAudio: [false, true], providerDuration: "string", providerResolution: "kling_mode", providerNativeAudio: "kling_sound" }),
   video("minimax-h3", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 5, durationRange: { min: 5, max: 15, integer: true }, resolutions: ["768p", "2K"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"], providerAspectRatio: "ratio" }),
   video("minimax-h3-lite", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 9, durationRange: { min: 1, max: 15, integer: true }, resolutions: ["480p", "768p"], aspectRatios: ["16:9", "9:16"], providerAspectRatio: "ratio" }),
+  video("minimax-h3-max-turbo", { inputModes: ["text", "image"], referenceField: "first_frame_url", maxReferences: 1, durationRange: { min: 5, max: 15, integer: true }, resolutions: ["480p", "768p"], aspectRatios: ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
   video("veo-3-1-fast-fhd", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 2, durations: [8], resolutions: ["1080p"], aspectRatios: ["16:9", "9:16"], providerDuration: "omit", providerResolution: "omit", providerNativeAudio: "omit" }),
 ];
 
@@ -126,7 +131,7 @@ export function referencePayload(contract: MediaExecutionContract, urls: readonl
   if (!urls.length) return {};
   switch (contract.referenceField) {
     case "image": case "image_url": case "image_reference": case "first_frame_url": return { [contract.referenceField]: urls[0] };
-    case "image_urls": case "images": return { [contract.referenceField]: [...urls] };
+    case "image_urls": case "images": case "reference_image_urls": return { [contract.referenceField]: [...urls] };
     default: throw new Error("MEDIA_ADAPTER_REFERENCE_UNAVAILABLE");
   }
 }
