@@ -1,6 +1,6 @@
-# All Model Hub
+# Models Suite
 
-All Model Hub is a Next.js 16 application for multi-model chat, image/video/audio studios, file and project context, wallet-based credit accounting, manual PKR payments, and an authenticated operations console backed by Supabase.
+Models Suite is a Next.js 16 application for multi-model chat, image/video/audio studios, file and project context, wallet-based credit accounting, manual PKR payments, and an authenticated operations console backed by Supabase.
 
 ## Local development
 

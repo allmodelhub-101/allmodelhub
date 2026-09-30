@@ -4,7 +4,7 @@ Subject: Commercial SaaS Authorization and Volume Pricing Inquiry
 
 Hello,
 
-We are developing **All Model Hub**, a customer-facing AI SaaS initially focused on Pakistan. Users will access AI capabilities through our own interface, PKR wallet, billing controls, safety layer and support system. End users will not receive our upstream API credential.
+We are developing **Models Suite**, a customer-facing AI SaaS initially focused on Pakistan. Users will access AI capabilities through our own interface, PKR wallet, billing controls, safety layer and support system. End users will not receive our upstream API credential.
 
 Before public launch, please confirm in writing:
 
@@ -20,4 +20,4 @@ Before public launch, please confirm in writing:
 10. Any other commercial onboarding requirements.
 
 Thank you,
-All Model Hub
+Models Suite

@@ -1,12 +1,12 @@
-# All Model Hub — Final Offline Audit Report
+# Models Suite — Final Offline Audit Report
 
 Audit date: 2026-08-29
 
 ## Release audited
-This report applies to the repository packaged as `all-model-hub-FINAL-VERIFIED-v1.0.zip`.
+This report applies to the repository packaged as `models-suite-FINAL-VERIFIED-v1.0.zip`.
 
 ## Specification basis
-The repository was audited against the locked All Model Hub V1 requirements finalized in the conversation: Pakistan-first/global-ready premium AI SaaS, PKR wallet, 1 Credit = PKR 1, non-expiring purchased credits, 10 protected welcome credits, Budget/Balanced/Premium/Flagship tiers, Auto Best, exact models, Model Battle, files/projects, image/video/audio, manual Easypaisa/Meezan payments, admin controls, provider abstraction, security, dark/light UX, and the other locked V1 requirements.
+The repository was audited against the locked Models Suite V1 requirements finalized in the conversation: Pakistan-first/global-ready premium AI SaaS, PKR wallet, 1 Credit = PKR 1, non-expiring purchased credits, 10 protected welcome credits, Budget/Balanced/Premium/Flagship tiers, Auto Best, exact models, Model Battle, files/projects, image/video/audio, manual Easypaisa/Meezan payments, admin controls, provider abstraction, security, dark/light UX, and the other locked V1 requirements.
 
 ## Offline checks completed
 
@@ -117,6 +117,6 @@ npm run build
 Then perform the live integration checklist in `CONNECT_AND_LAUNCH.md`.
 
 ## Audit conclusion
-This package is the **final audited source-code release candidate** from this ChatGPT workspace and supersedes every earlier All Model Hub ZIP shared in the conversation. It is suitable to upload to GitHub and import into v0 for connection/integration work.
+This package is the **final audited source-code release candidate** from this ChatGPT workspace and supersedes every earlier Models Suite ZIP shared in the conversation. It is suitable to upload to GitHub and import into v0 for connection/integration work.
 
 It would be inaccurate to claim that any repository is proven “perfect and live-ready” before dependency installation, a clean Next.js production build, real Supabase migrations, real provider credentials, provider commercial authorization and live end-to-end tests are completed. Those are connection/deployment tasks, not missing source-code placeholders.

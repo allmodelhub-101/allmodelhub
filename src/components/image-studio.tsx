@@ -209,7 +209,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   async function shareResult() {
     if (!resultUrl) return;
     if (navigator.share) {
-      try { await navigator.share({ title: "Created with All Model Hub", text: prompt, url: resultUrl }); return; }
+      try { await navigator.share({ title: "Created with Models Suite", text: prompt, url: resultUrl }); return; }
       catch (caught) { if (caught instanceof DOMException && caught.name === "AbortError") return; }
     }
     await navigator.clipboard.writeText(resultUrl); setCopied("link"); window.setTimeout(() => setCopied(""), 1500);

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { PwaRegister } from "@/components/pwa-register";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = {
-  title: { default: "All Model Hub — Every Leading AI. One PKR Wallet.", template: "%s | All Model Hub" },
+  title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: "Use leading AI chat, image, video and audio models from one premium PKR-first workspace.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000")
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  icons: { icon: BRAND.logoPath, apple: BRAND.logoPath },
+  openGraph: { title: `${BRAND.name} — ${BRAND.tagline}`, siteName: BRAND.name, images: [BRAND.logoPath] }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

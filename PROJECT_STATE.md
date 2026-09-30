@@ -1,8 +1,8 @@
-# All Model Hub — Project State
+# Models Suite — Project State
 
 ## Current phase
 
-Final frontend redesign and polishing of the authenticated/internal All Model Hub application.
+Final frontend redesign and polishing of the authenticated/internal Models Suite application.
 
 The public homepage is already acceptable and is not part of the current redesign unless explicitly requested.
 
@@ -71,7 +71,7 @@ None currently recorded.
 
 ## Recently completed
 
-- Existing All Model Hub repository was connected in the new Codex workspace.
+- Existing Models Suite repository was connected in the new Codex workspace.
 - Existing AGENTS.md was found and read.
 - No application/UI changes have been made yet.
 

@@ -1,6 +1,6 @@
 # Architecture
 
-Browser → Next.js UI → authenticated Route Handler → spending/wallet check → AMH router → provider adapter → upstream API.
+Browser → Next.js UI → authenticated Route Handler → spending/wallet check → Models Suite router → provider adapter → upstream API.
 
 For async media: UI → quote/confirmation → wallet hold → `generation_jobs` → APIMODELS task → callback/poll → capture/release → result.
 

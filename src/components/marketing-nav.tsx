@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Brand } from "@/components/brand";
 import styles from "./marketing-nav.module.css";
 
 const navLinks = [
@@ -32,7 +33,7 @@ export function MarketingNav() {
   return <>
     <nav className="marketing-nav" aria-label="Primary navigation">
       <div className="container marketing-nav-inner">
-        <Link href="/" className="brand"><span className="brand-mark" />All Model Hub</Link>
+        <Brand />
         <div className="nav-links">{navLinks.map(([label, href]) => <a href={href} key={href}>{label}</a>)}</div>
         <div className="nav-actions">
           <ThemeToggle />

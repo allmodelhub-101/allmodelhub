@@ -42,7 +42,7 @@ const storyScenes = [
 ];
 
 const faqs = [
-  ["What is one All Model Hub Credit worth?", "One credit equals PKR 1. Purchased credits do not expire under the current product policy."],
+  ["What is one Models Suite Credit worth?", "One credit equals PKR 1. Purchased credits do not expire under the current product policy."],
   ["Do I need to select an AI model?", "No. Auto Best can route your task automatically, while advanced users can choose an exact model."],
   ["Can I compare answers from different models?", "Yes. Model Battle runs the same prompt through two or three selected models for a direct comparison."],
   ["How are expensive media generations protected?", "The workspace shows the estimated cost and reserves the required credits before starting eligible video or media jobs."],
@@ -77,7 +77,7 @@ export function CinematicHome() {
             <div className="cin-hub-glow" />
             <div className="cin-orbit cin-orbit-outer" />
             <div className="cin-orbit cin-orbit-inner" />
-            <div className="cin-hub-core"><span>AMH</span><small>Auto Best</small></div>
+            <div className="cin-hub-core"><span>MS</span><small>Auto Best</small></div>
             {modelNodes.map((node) => <div className={`cin-model-node ${node.className}`} key={node.name}><i />{node.name}</div>)}
           </div>
         </div>
@@ -98,7 +98,7 @@ export function CinematicHome() {
           <div className="container cin-story-layout">
             <div className="cin-scene-copy">
               <p className="cin-section-number">01 / 05</p>
-              <h2 id="cin-story-title" className="cin-sr-only">Explore the All Model Hub product experience</h2>
+              <h2 id="cin-story-title" className="cin-sr-only">Explore the Models Suite product experience</h2>
               {storyScenes.map((scene, index) => (
                 <article className="cin-story-card" data-scene-index={index} key={scene.title}>
                   <span className="cin-overline"><i />{scene.eyebrow}</span>
@@ -110,12 +110,12 @@ export function CinematicHome() {
               <div className="cin-progress" aria-hidden="true"><span /></div>
             </div>
 
-            <div className="cin-product-stage" aria-label="Animated preview of All Model Hub">
+            <div className="cin-product-stage" aria-label="Animated preview of Models Suite">
               <div className="cin-stage-glow" aria-hidden="true" />
               <div className="cin-app-window">
-                <header className="cin-app-top"><div className="cin-mini-brand"><i />All Model Hub</div><div className="cin-window-actions"><span /><span /><span /></div></header>
+                <header className="cin-app-top"><div className="cin-mini-brand"><i />Models Suite</div><div className="cin-window-actions"><span /><span /><span /></div></header>
                 <aside className="cin-app-nav" aria-hidden="true">
-                  <b>AMH</b>
+                  <b>MS</b>
                   {creationModes.map((mode, index) => <span className={index === 0 ? "active" : ""} key={mode}>{mode.slice(0, 1)}</span>)}
                 </aside>
 
@@ -215,10 +215,10 @@ export function CinematicHome() {
 
       <section className="cin-final-cta" aria-labelledby="cin-final-title">
         <div className="cin-final-glow" aria-hidden="true" />
-        <div className="container"><span className="cin-overline"><i />One workspace. Every direction.</span><h2 id="cin-final-title">Start with one prompt.</h2><p>Use the model you want, or let All Model Hub choose intelligently for you.</p><Link className="btn btn-primary cin-primary" href="/auth/login">Create your account <span aria-hidden="true">↗</span></Link></div>
+        <div className="container"><span className="cin-overline"><i />One workspace. Every direction.</span><h2 id="cin-final-title">Start with one prompt.</h2><p>Use the model you want, or let Models Suite choose intelligently for you.</p><Link className="btn btn-primary cin-primary" href="/auth/login">Create your account <span aria-hidden="true">↗</span></Link></div>
       </section>
 
-      <footer className="cin-footer"><div className="container"><div><strong>All Model Hub</strong><span>Every Leading AI. One PKR Wallet.</span></div><nav aria-label="Legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/acceptable-use">Acceptable Use</a><a href="/refunds">Refunds</a></nav><small>© 2026 All Model Hub</small></div></footer>
+      <footer className="cin-footer"><div className="container"><div><strong>Models Suite</strong><span>Every Leading AI. One PKR Wallet.</span></div><nav aria-label="Legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/acceptable-use">Acceptable Use</a><a href="/refunds">Refunds</a></nav><small>© 2026 Models Suite</small></div></footer>
     </main>
   );
 }
