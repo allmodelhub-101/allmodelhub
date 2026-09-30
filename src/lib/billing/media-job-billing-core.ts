@@ -3,6 +3,7 @@ import type { DecimalString } from "./money";
 import type { NormalizedUsage } from "./types";
 
 export type MediaBillingInput = Readonly<{
+  modality?: "image" | "video" | "audio";
   prompt: string;
   duration?: number;
   resolution?: string;
@@ -38,11 +39,13 @@ function first(...values: unknown[]) {
 
 export function mediaUsageFromRequest(input: MediaBillingInput): NormalizedUsage {
   const outputDuration = input.outputDuration ?? input.duration;
+  const isImage = input.modality === "image";
+  const isVisual = isImage || input.modality === "video";
   return {
     characters: Array.from(input.prompt).length.toString() as DecimalString,
     ...(outputDuration === undefined ? {} : { seconds: outputDuration.toString() as DecimalString }),
-    images: String(input.imageCount ?? 1) as DecimalString,
-    references: String(input.referenceCount ?? 0) as DecimalString,
+    ...(isImage ? { images: String(input.imageCount ?? 1) as DecimalString } : {}),
+    ...(isVisual && input.referenceCount !== undefined ? { references: String(input.referenceCount) as DecimalString } : {}),
     ...(input.resolution ? { resolution: input.resolution } : {}),
     ...(input.quality ? { quality: input.quality } : {}),
     ...(input.mode ? { mode: input.mode } : {}),
@@ -50,8 +53,8 @@ export function mediaUsageFromRequest(input: MediaBillingInput): NormalizedUsage
     dimensions: {
       ...(input.inputDuration === undefined ? {} : { inputDuration: input.inputDuration.toString() as DecimalString }),
       ...(outputDuration === undefined ? {} : { outputDuration: outputDuration.toString() as DecimalString }),
-      ...(input.nativeAudio === undefined ? {} : { nativeAudio: input.nativeAudio }),
-      ...(input.aspectRatio ? { aspectRatio: input.aspectRatio } : {}),
+      ...(isVisual && input.nativeAudio !== undefined ? { nativeAudio: input.nativeAudio } : {}),
+      ...(isVisual && input.aspectRatio ? { aspectRatio: input.aspectRatio } : {}),
     },
   };
 }
@@ -107,3 +110,4 @@ export function providerFailureIsNonBillable(providerKey: string, metadata: Read
   if (metadata.failedRequestsBillable === false) return true;
   return providerKey.toLowerCase().replace(/[-_.]/g, "") === "apimodels";
 }
+

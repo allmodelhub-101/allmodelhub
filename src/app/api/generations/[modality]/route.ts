@@ -27,7 +27,7 @@ const bodySchema = z.object({
   prompt: z.string().min(1).max(20_000), duration: z.number().positive().max(600).optional(),
   inputDuration: z.number().nonnegative().max(3600).optional(), outputDuration: z.number().positive().max(3600).optional(),
   resolution: z.string().max(40).optional(), quality: z.string().max(40).optional(), fps: z.number().positive().max(240).optional(),
-  imageCount: z.number().int().positive().max(20).default(1), aspectRatio: z.string().max(40).optional(),
+  imageCount: z.number().int().positive().max(20).optional(), aspectRatio: z.string().max(40).optional(),
   imageFileIds: z.array(z.string().uuid()).max(10).default([]), mode: z.string().max(40).optional(),
   nativeAudio: z.boolean().optional(), audioMode: z.string().max(40).optional(),
   voiceId: z.string().min(2).max(120).optional(), languageCode: z.string().min(2).max(12).optional(),
@@ -97,13 +97,14 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   }
   const providerAspectRatio = contract.aspectRatios?.length ? aspectRatio : undefined;
   const pricingMode = modality === "video" && contract.nativeAudio ? (input.nativeAudio ? "native_audio" : "silent") : mode;
+  const imageCount = modality === "image" ? input.imageCount ?? 1 : undefined;
   const usage = {
-    ...mediaUsageFromRequest({ ...input, quality: effectiveQuality, imageCount: modality === "audio" ? 0 : input.imageCount,
+    ...mediaUsageFromRequest({ ...input, modality: modality as "image" | "video" | "audio", quality: effectiveQuality, imageCount,
       aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : pricingMode, referenceCount: input.imageFileIds.length }),
     inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
   };
   const dimensions = { resolution: input.resolution, quality: effectiveQuality, mode: pricingMode, inputType: referenceImages.length ? "image" : "text" };
-  const storedRequest = { ...input, imageCount: modality === "audio" ? 0 : input.imageCount,
+  const storedRequest = { ...input, ...(imageCount === undefined ? {} : { imageCount }),
     aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
@@ -151,7 +152,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
           prompt: input.prompt,
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
           ...(effectiveQuality ? { quality: effectiveQuality } : {}), ...(input.fps ? { fps: input.fps } : {}),
-          ...(input.imageCount !== 1 ? { n: input.imageCount } : {}),
+          ...(modality === "image" && imageCount !== 1 ? { n: imageCount } : {}),
           ...mediaProviderOptionPayload(contract, { duration: input.duration, resolution: input.resolution,
             aspectRatio: providerAspectRatio, nativeAudio: input.nativeAudio }),
           ...(modality === "audio" && mode ? { mode } : {}),
@@ -215,3 +216,4 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     return NextResponse.json({ error: publicFailure.message }, { status: publicFailure.status });
   }
 }
+

@@ -99,7 +99,18 @@ export function TtsClient() {
       } else {
         const blob = await response.blob();
         setUrl(URL.createObjectURL(blob));
-        setCredits(response.headers.get("x-amh-credits") || undefined);
+        const finalCredits = response.headers.get("x-amh-credits") || undefined;
+        setCredits(finalCredits);
+        const quoteId = response.headers.get("x-amh-billing-quote-id");
+        if (!finalCredits && quoteId) {
+          for (let attempt = 0; attempt < 6; attempt += 1) {
+            await new Promise((resolve) => window.setTimeout(resolve, 1_000));
+            const settlement = await fetch("/api/billing/settle-pending", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ quoteId }) });
+            if (!settlement.ok) continue;
+            const result = await settlement.json().catch(() => ({}));
+            if (result.billingStatus === "settled" && result.chargeCredits != null) { setCredits(String(result.chargeCredits)); break; }
+          }
+        }
       }
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "TTS failed");
@@ -125,7 +136,7 @@ export function TtsClient() {
     <div className={styles.sideColumn}>
       <section className={styles.preview} aria-label="Audio preview"><div className={styles.previewHead}><span><i className={busy ? styles.live : ""} />{url ? "Voice ready" : busy ? "Generating" : "Audio preview"}</span><small>{selectedModel?.name || "Choose a model"}</small></div><p>{url ? "Listen, download, or create another take." : "Your generated voice will appear here when it is ready."}</p>
         <div className={`${styles.waveArea} ${busy ? styles.isBusy : ""}`}><div className={styles.waveBars}>{Array.from({ length: 38 }, (_, index) => <i key={index} />)}</div>{busy && <span>Creating your voice…</span>}</div>
-        {url ? <div className={styles.resultPlayer}><audio controls src={url} /><div><a className={styles.secondaryAction} href={url} download="voiceover.mp3"><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setUrl(undefined)}><Play />New take</button></div><small>Ready · Charged {Number(credits || estimate).toFixed(2)} credits</small></div> : <div className={styles.emptyPreview}><span><Waveform weight="fill" /></span><h2>Your voice, beautifully rendered.</h2><p>Choose a model and voice, write your script, then preview the finished audio here.</p><small>MODEL → SCRIPT → VOICE → GENERATE</small></div>}
+        {url ? <div className={styles.resultPlayer}><audio controls src={url} /><div><a className={styles.secondaryAction} href={url} download="voiceover.mp3"><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setUrl(undefined)}><Play />New take</button></div><small>{credits ? `Ready · Charged ${Number(credits).toFixed(2)} credits` : "Ready · Billing pending"}</small></div> : <div className={styles.emptyPreview}><span><Waveform weight="fill" /></span><h2>Your voice, beautifully rendered.</h2><p>Choose a model and voice, write your script, then preview the finished audio here.</p><small>MODEL → SCRIPT → VOICE → GENERATE</small></div>}
         <div className={styles.qualityStrip}><span className={styles.qualityIcon}><CheckCircle weight="fill" /></span><div><b>Focused, provider-aware generation.</b><p>Only settings supported by the selected speech workflow are shown.</p></div></div>
       </section>
       <section className={styles.quick}><div className={styles.sectionHead}><span><UsersThree weight="fill" /><div><h2>Quick voices</h2><p>Popular voices to get you started.</p></div></span></div><div className={styles.voiceList}>{voices.map((item) => <button type="button" key={item.value} className={`${styles.voiceCard} ${voice === item.value ? styles.voiceSelected : ""}`} onClick={() => setVoice(item.value)} aria-pressed={voice === item.value}><span className={styles.voicePlay}><Play weight="fill" /></span><span><b>{item.label.split(" · ")[0]}</b><small>{item.note}</small></span></button>)}</div></section>
@@ -133,3 +144,4 @@ export function TtsClient() {
     </div>
   </div>;
 }
+
