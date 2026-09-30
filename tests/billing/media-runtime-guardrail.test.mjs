@@ -13,6 +13,7 @@ const repairSql = [
   "20260929200000_media_image_contract_repair.sql",
   "20260929201000_media_audio_contract_repair.sql",
   "20260929202000_media_video_contract_repair.sql",
+  "20260930010000_final_image_audio_repair.sql",
 ].map((name) => readFileSync(new URL(`../../supabase/migrations/${name}`, import.meta.url), "utf8")).join("\n");
 
 test("every advertised media execution contract has all source-controlled runtime layers", () => {

@@ -26,8 +26,15 @@ test("image contracts reject unsupported editing and require explicit priced res
 });
 
 test("advertised UI options stay inside the executable adapter contract", () => {
-  for (const modelId of ["doubao-seedream-5-0-pro", "flux-2-klein-4b", "gpt-image-2", "qwen3-image-pro", "real-esrgan"]) {
+  for (const modelId of ["doubao-seedream-5-0-pro", "flux-2-klein-4b", "gpt-image-2", "qwen3-image-pro", "real-esrgan",
+    "gemini-3-1-flash-image", "gemini-3-pro-image", "gpt-image-2-5-flare", "gpt-image-2-5-sunburst"]) {
     const contract = getMediaExecutionContract(modelId);
     assert.equal(mediaUiSchemaMatchesContract(mediaContractUiSchema(contract), contract), true, modelId);
   }
+});
+
+test("quality-bound image contracts reject unsupported provider options", () => {
+  const flare = getMediaExecutionContract("gpt-image-2-5-flare");
+  assert.doesNotThrow(() => validateMediaContractRequest(flare, { referenceCount: 0, resolution: "1K", quality: "medium" }));
+  assert.throws(() => validateMediaContractRequest(flare, { referenceCount: 0, resolution: "1K", quality: "high" }), /quality/);
 });

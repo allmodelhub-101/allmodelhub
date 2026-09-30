@@ -177,6 +177,21 @@ test("supports safe extensible formulas and blocks unknown formula kinds", () =>
   assertPricingError(() => price(custom), "FORMULA_UNSUPPORTED");
 });
 
+test("option-matrix authorization pricing uses the exact resolution and quality", () => {
+  const matrix = row({
+    billing_type: "image",
+    flat_price: null,
+    formula: {
+      kind: "option_matrix",
+      dimensionKeys: ["resolution", "quality"],
+      values: { "1K|medium": "0.020", "2K|medium": "0.025", "4K|medium": "0.045" },
+    },
+  });
+  assert.equal(price(matrix, {}, { resolution: "4K", quality: "medium" }).providerCost.amount, "0.045");
+  assertPricingError(() => price(matrix, {}, { resolution: "4K", quality: "high" }), "DIMENSION_UNSUPPORTED");
+  assertPricingError(() => price(matrix, {}, { resolution: "4K" }), "USAGE_REQUIRED");
+});
+
 test("rejects missing billable usage and invalid financial configuration", () => {
   assertPricingError(() => price(row({ billing_type: "time", flat_price: null, per_second_price: "0.02" })), "USAGE_REQUIRED");
   assertPricingError(() => resolve(row({ model_markup: "0" })), "MARKUP_INVALID");
