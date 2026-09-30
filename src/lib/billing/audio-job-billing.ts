@@ -11,8 +11,7 @@ export function audioGenerationUsage(input: Readonly<{
   return {
     characters: Array.from(input.prompt).length.toString(),
     ...(input.duration === undefined ? {} : { seconds: input.duration.toString() }),
-    images: "1",
-    references: String(input.references ?? 0),
+    ...(input.references === undefined ? {} : { references: String(input.references) }),
   } as NormalizedUsage;
 }
 
@@ -39,3 +38,4 @@ export async function completeAudioGenerationBilling(input: Readonly<{
     usage: input.usage, billingV2ChargeCredits: result.charge_credits });
   return result;
 }
+
