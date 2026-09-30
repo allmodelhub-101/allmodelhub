@@ -21,29 +21,51 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
       return;
     }
 
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const rect = story.getBoundingClientRect();
-      const distance = Math.max(story.offsetHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, -rect.top / distance));
-      const scene = Math.min(sceneCount - 1, Math.floor(progress * sceneCount));
-      story.style.setProperty("--story-progress", progress.toFixed(4));
-      story.dataset.scene = String(scene);
+    let scrollFrame = 0;
+    let pointerFrame = 0;
+    let storyDistance = 1;
+    let lastProgress = "";
+    let lastScene = -1;
+    let pointerX = "";
+    let pointerY = "";
+    let lastPointerX = "";
+    let lastPointerY = "";
 
-      if (site) {
-        const pageDistance = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-        site.style.setProperty("--cin-page-progress", (window.scrollY / pageDistance).toFixed(4));
-        site.style.setProperty("--cin-scroll-y", `${Math.round(window.scrollY)}px`);
+    const measureStory = () => {
+      storyDistance = Math.max(story.offsetHeight - window.innerHeight, 1);
+    };
+
+    const update = () => {
+      scrollFrame = 0;
+      const rect = story.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, -rect.top / storyDistance));
+      const scene = Math.min(sceneCount - 1, Math.floor(progress * sceneCount));
+      const progressValue = progress.toFixed(4);
+
+      if (progressValue !== lastProgress) {
+        story.style.setProperty("--story-progress", progressValue);
+        lastProgress = progressValue;
+      }
+
+      if (scene !== lastScene) {
+        story.dataset.scene = String(scene);
+        lastScene = scene;
       }
     };
 
     const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
+      if (!scrollFrame) scrollFrame = window.requestAnimationFrame(update);
     };
 
+    measureStory();
     update();
     site?.setAttribute("data-cinematic-ready", "true");
+
+    const storyResizeObserver = new ResizeObserver(() => {
+      measureStory();
+      requestUpdate();
+    });
+    storyResizeObserver.observe(story);
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -60,20 +82,43 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
 
     const updatePointer = (event: PointerEvent) => {
       if (!site || event.pointerType === "touch") return;
-      site.style.setProperty("--cin-pointer-x", `${(event.clientX / window.innerWidth) * 100}%`);
-      site.style.setProperty("--cin-pointer-y", `${(event.clientY / window.innerHeight) * 100}%`);
+      pointerX = `${(event.clientX / window.innerWidth) * 100}%`;
+      pointerY = `${(event.clientY / window.innerHeight) * 100}%`;
+
+      if (!pointerFrame) {
+        pointerFrame = window.requestAnimationFrame(() => {
+          pointerFrame = 0;
+          if (!site) return;
+
+          if (pointerX !== lastPointerX) {
+            site.style.setProperty("--cin-pointer-x", pointerX);
+            lastPointerX = pointerX;
+          }
+          if (pointerY !== lastPointerY) {
+            site.style.setProperty("--cin-pointer-y", pointerY);
+            lastPointerY = pointerY;
+          }
+        });
+      }
+    };
+
+    const handleResize = () => {
+      measureStory();
+      requestUpdate();
     };
 
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    window.addEventListener("resize", handleResize);
     window.addEventListener("pointermove", updatePointer, { passive: true });
     return () => {
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("pointermove", updatePointer);
       revealObserver.disconnect();
+      storyResizeObserver.disconnect();
       site?.removeAttribute("data-cinematic-ready");
-      if (frame) window.cancelAnimationFrame(frame);
+      if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
+      if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
     };
   }, [sceneCount]);
 
