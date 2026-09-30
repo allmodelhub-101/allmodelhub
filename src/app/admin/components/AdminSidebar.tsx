@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { BRAND } from "@/lib/brand";
+
 const links=[["Overview","/admin","OV"],["Payments","/admin?tab=payments","$"],["Models","/admin?tab=models","AI"],["Providers","/admin?tab=providers","PR"],["Users","/admin?tab=users","US"],["Jobs","/admin?tab=jobs","JB"],["Support","/admin?tab=support","SP"],["Platform","/admin?tab=settings","ST"]] as const;
 export default function AdminSidebar(){
 
@@ -10,10 +13,10 @@ return (
 
 <div className="brand">
 
-<div className="brand-mark"></div>
+<Image className="brand-logo" src={BRAND.logoPath} alt="" width={48} height={48}/>
 
 <span>
-All Model Hub
+{BRAND.name}
 </span>
 
 </div>

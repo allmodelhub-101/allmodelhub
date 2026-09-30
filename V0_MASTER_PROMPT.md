@@ -1,6 +1,6 @@
-# v0 Master Project Instruction — All Model Hub Final V1
+# v0 Master Project Instruction — Models Suite Final V1
 
-You are working inside the production GitHub repository for **All Model Hub**, a Pakistan-first, globally extensible premium AI SaaS. Treat this repository as an existing product to preserve and improve, not as a blank project to regenerate.
+You are working inside the production GitHub repository for **Models Suite**, a Pakistan-first, globally extensible premium AI SaaS. Treat this repository as an existing product to preserve and improve, not as a blank project to regenerate.
 
 ## Locked product promise
 
@@ -11,7 +11,7 @@ You are working inside the production GitHub repository for **All Model Hub**, a
 - Pay-as-you-go for individual AI usage.
 - Pakistan first; architecture remains global-ready.
 - Primary users: freelancers, creators, students. Secondary: agencies/businesses.
-- Curated Budget, Balanced, Premium and Flagship tiers plus **All Model Hub Auto** and exact-model selection.
+- Curated Budget, Balanced, Premium and Flagship tiers plus **Models Suite Auto** and exact-model selection.
 - Text, image, video and audio are public V1 capabilities.
 - Manual launch payments: Easypaisa + Meezan Bank proof upload and admin approval.
 
@@ -89,7 +89,7 @@ Workspace:
 
 ## Core product behavior to preserve
 
-- All Model Hub Auto routes based on tier/task/capability/provider availability and admin eligibility.
+- Models Suite Auto routes based on tier/task/capability/provider availability and admin eligibility.
 - Exact-model selection remains available.
 - Model Battle compares 2–3 models and bills each selected model independently.
 - Prompt Enhancer is a real billable AI request and respects wallet/spending protections.

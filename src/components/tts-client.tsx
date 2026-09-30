@@ -18,7 +18,7 @@ const klingVoices = [
 ];
 
 const templates = [
-  { label: "Product explainer", copy: "Welcome to All Model Hub. Create more, explore leading AI models, and bring your best ideas to life." },
+  { label: "Product explainer", copy: "Welcome to Models Suite. Create more, explore leading AI models, and bring your best ideas to life." },
   { label: "YouTube narration", copy: "Today, we are breaking down the five ideas that can make your next project stand out." },
   { label: "Social media", copy: "Stop scrolling. Your next great idea starts right here." }
 ];

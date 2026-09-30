@@ -1,6 +1,6 @@
-# All Model Hub — Final Connect & Launch Guide
+# Models Suite — Final Connect & Launch Guide
 
-This repository contains the full frontend/backend application code for the audited All Model Hub release candidate. Never paste production secrets into source files or GitHub.
+This repository contains the full frontend/backend application code for the audited Models Suite release candidate. Never paste production secrets into source files or GitHub.
 
 ## 1. Upload to GitHub
 Upload the CONTENTS of this folder to the repository root. `package.json`, `src/`, `supabase/`, `.env.example`, and `next.config.ts` must be at the root.

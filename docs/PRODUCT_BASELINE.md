@@ -2,7 +2,7 @@
 
 Established: 2026-09-11
 
-This document is the release boundary for the phased All Model Hub workspace program. It protects working product foundations while allowing small, reversible improvements to the authenticated application.
+This document is the release boundary for the phased Models Suite workspace program. It protects working product foundations while allowing small, reversible improvements to the authenticated application.
 
 ## Protected surfaces
 

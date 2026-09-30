@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { BRAND } from "@/lib/brand";
 
 type NavItem = { label: string; href: string; icon: Icon };
 
@@ -61,7 +63,7 @@ function NavLink({ item, pathname, collapsed = false, language = "en" }: { item:
   );
 }
 
-export function AppSidebar({ balance, displayName, email, isAdmin, language = "en" }: { balance: number; displayName?: string | null; email?: string | null; isAdmin: boolean; language?: string }) {
+export function AppSidebar({ displayName, email, isAdmin, language = "en" }: { balance: number; displayName?: string | null; email?: string | null; isAdmin: boolean; language?: string }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
@@ -102,7 +104,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
   return <>
     <aside className={`app-sidebar ${collapsed ? "is-collapsed" : ""}`} aria-label="Workspace navigation">
       <div className="sidebar-head">
-        <Link href="/chat" className="sidebar-brand" aria-label="All Model Hub workspace"><span className="brand-mark" /><span className="sidebar-brand-copy">All Model Hub</span></Link>
+        <Link href="/chat" className="sidebar-brand" aria-label={`${BRAND.name} workspace`}><Image className="brand-logo" src={BRAND.logoPath} alt="" width={44} height={44} priority /><span className="sidebar-brand-copy">{BRAND.name}</span></Link>
         <button className="sidebar-collapse" type="button" aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} onClick={toggleCollapsed}>{collapsed ? <CaretRight size={16} /> : <CaretLeft size={16} />}</button>
       </div>
       <nav className="sidebar-scroll">
@@ -115,7 +117,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
       <div className="sidebar-bottom"><div className="sidebar-profile"><span className="profile-avatar">{initials}</span><span className="profile-copy"><strong>{displayName || "Member"}</strong><small>{email || "Account"}</small></span></div><form action="/auth/logout" method="post"><button className="sidebar-signout" type="submit" title={collapsed ? "Sign out" : undefined}><SignOut size={18} aria-hidden="true" /><span className="sidebar-label">{language==="ur"?"سائن آؤٹ":language==="roman-ur"?"Sign out":"Sign out"}</span></button></form></div>
     </aside>
 
-    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>All Model Hub</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{[...primaryItems.slice(4), ...quickAccessItems, ...moreItems].map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{item.label}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
+    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>{BRAND.name}</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{[...primaryItems.slice(4), ...quickAccessItems, ...moreItems].map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{item.label}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
 
     <nav className="mobile-nav" aria-label="Mobile workspace navigation">{creationItems.map((item) => { const ItemIcon = item.icon; const active = isActive(pathname, item.href); return <Link className={active ? "active" : ""} href={item.href} key={item.href}><ItemIcon size={21} weight={active ? "fill" : "regular"} aria-hidden="true" /><small>{item.label}</small></Link>; })}<button className={mobileMoreOpen ? "active" : ""} type="button" onClick={() => setMobileMoreOpen(true)} aria-label="Open more navigation" aria-expanded={mobileMoreOpen}><DotsThree size={22} weight="bold" aria-hidden="true" /><small>More</small></button></nav>
   </>;

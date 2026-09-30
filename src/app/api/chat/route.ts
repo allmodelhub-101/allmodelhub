@@ -100,7 +100,7 @@ export async function POST(request: Request) {
   if (!selected || selected.modality !== "text") { await finalizeRequest(claimId, "failed"); return NextResponse.json({ error: "Selected text model is not available." }, { status: 400 }); }
 
   const systemParts: string[] = [
-    "You are responding inside All Model Hub. Follow the user's request precisely, be useful, accurate and concise unless more detail is requested."
+    "You are responding inside Models Suite. Follow the user's request precisely, be useful, accurate and concise unless more detail is requested."
   ];
   if (profile?.custom_instructions) systemParts.push(`User custom instructions:\n${profile.custom_instructions}`);
   const language = body.language && body.language !== "auto" ? body.language : profile?.default_language || "auto";

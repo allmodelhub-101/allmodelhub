@@ -15,7 +15,7 @@ function brandKind(modelName = "", provider = "") {
 
 export function ModelBrand({ modelName = "Auto", provider = "", compact = false }: ModelBrandProps) {
   const kind = brandKind(modelName, provider);
-  const label = kind === "auto" ? "All Model Hub automatic routing" : `${provider || modelName} model`;
+  const label = kind === "auto" ? "Models Suite automatic routing" : `${provider || modelName} model`;
   return <span className={`model-brand model-brand-${kind}${compact ? " is-compact" : ""}`} role="img" aria-label={label} title={label}>
     {kind === "openai" && <Image className="openai-logo" src="/openai-logo.png" alt="" width={32} height={32} aria-hidden="true" />}
     {kind === "claude" && <svg viewBox="0 0 32 32" aria-hidden="true"><g stroke="currentColor" strokeWidth="3" strokeLinecap="round"><path d="M16 3v9M16 20v9M3 16h9M20 16h9M6.8 6.8l6.3 6.3M18.9 18.9l6.3 6.3M25.2 6.8l-6.3 6.3M13.1 18.9l-6.3 6.3"/></g></svg>}

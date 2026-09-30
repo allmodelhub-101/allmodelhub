@@ -107,7 +107,7 @@ export async function POST(request: Request) {
         "X-AMH-Billing-Status": billingStatus,
         "X-AMH-Billing-Quote-Id": attempt.authorization.quoteId,
         ...(settledCredits ? { "X-AMH-Credits": settledCredits } : {}),
-        "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"',
+        "Content-Disposition": 'inline; filename="models-suite-voice.mp3"',
       },
     });
   } catch (error) {

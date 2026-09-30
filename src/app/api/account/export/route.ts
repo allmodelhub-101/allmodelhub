@@ -28,5 +28,5 @@ export async function GET() {
   ]);
   const payload = { exportedAt: new Date().toISOString(), account: { id: userId, email: data.user.email, createdAt: data.user.created_at }, profile: profile.data, wallet: wallet.data, transactions: transactions.data, conversations: conversations.data, messages: messages.data, projects: projects.data, files: files.data, generations: jobs.data, payments: payments.data, supportTickets: tickets.data };
   await admin.from("audit_logs").insert({ actor_user_id: userId, action: "account_data.exported", entity_type: "user", entity_id: userId });
-  return new NextResponse(JSON.stringify(payload, null, 2), { headers: { ...privateNoStoreHeaders, "Content-Type": "application/json", "Content-Disposition": `attachment; filename="all-model-hub-export-${new Date().toISOString().slice(0, 10)}.json"` } });
+  return new NextResponse(JSON.stringify(payload, null, 2), { headers: { ...privateNoStoreHeaders, "Content-Type": "application/json", "Content-Disposition": `attachment; filename="models-suite-export-${new Date().toISOString().slice(0, 10)}.json"` } });
 }
