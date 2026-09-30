@@ -2251,3 +2251,182 @@ html:not([data-theme="light"]) .image-workspace .image-prompt-dock textarea{back
 .marketing-nav .brand-logo{width:34px;height:34px}
 .app-shell:has(.premium-chat-page) .brand-logo,.premium-workstation-shell .brand-logo{width:39px;height:39px;border-radius:13px}
 @media(max-width:720px){.marketing-nav .brand-logo{width:30px;height:30px}.premium-workstation-shell.app-shell .brand-logo{width:30px;height:30px;flex-basis:30px}}
+
+/* Public homepage navigation: a contained, seamless glass surface keeps the
+   marketing header crisp above the cinematic grid in both color themes. */
+.cin-site { overflow-x:clip; }
+.cin-site .marketing-nav {
+  position:sticky;
+  isolation:isolate;
+  padding:12px 0;
+  background:linear-gradient(180deg,rgba(4,9,16,.9) 0%,rgba(4,9,16,.62) 70%,transparent 100%);
+  border:0;
+  box-shadow:none;
+  backdrop-filter:blur(20px) saturate(135%);
+}
+.cin-site .marketing-nav::before {
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:1px;
+  background:linear-gradient(90deg,transparent 2%,rgba(117,232,255,.18) 22%,rgba(143,134,255,.24) 50%,rgba(117,232,255,.18) 78%,transparent 98%);
+  pointer-events:none;
+}
+.cin-site .marketing-nav::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.7;
+  background:linear-gradient(105deg,transparent 18%,rgba(117,232,255,.07) 47%,rgba(143,134,255,.06) 55%,transparent 80%);
+  background-size:210% 100%;
+  animation:marketing-nav-sheen 12s ease-in-out infinite;
+}
+.cin-site .marketing-nav-surface {
+  position:relative;
+  min-height:68px;
+  padding:8px 12px 8px 17px;
+  border:1px solid rgba(155,221,255,.16);
+  border-radius:22px;
+  background:linear-gradient(115deg,rgba(21,35,54,.78),rgba(9,16,28,.7) 54%,rgba(18,28,50,.76));
+  box-shadow:0 18px 48px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.09),inset 0 -1px 0 rgba(117,232,255,.04);
+  backdrop-filter:blur(22px) saturate(145%);
+}
+.cin-site .marketing-nav-surface::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,.08),transparent 26%,transparent 72%,rgba(117,232,255,.05));
+}
+.cin-site .marketing-nav .brand {
+  position:relative;
+  z-index:1;
+  color:#f5fbff;
+  font-size:20px;
+  font-weight:900;
+}
+.cin-site .marketing-nav .brand-logo {
+  width:38px;
+  height:38px;
+  filter:drop-shadow(0 0 18px rgba(82,210,255,.42));
+}
+.cin-site .marketing-nav .nav-links {
+  position:relative;
+  z-index:1;
+  gap:3px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:999px;
+  background:rgba(2,8,16,.2);
+  color:#c7d8e7;
+  box-shadow:inset 0 1px rgba(255,255,255,.035);
+}
+.cin-site .marketing-nav .nav-links a {
+  padding:9px 13px;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  transition:color .2s ease,background .2s ease,transform .2s ease;
+}
+.cin-site .marketing-nav .nav-links a:hover {
+  color:#f7fdff;
+  background:rgba(117,232,255,.1);
+  transform:translateY(-1px);
+}
+.cin-site .marketing-nav .nav-actions { position:relative; z-index:1; gap:8px; }
+.cin-site .marketing-nav .theme-toggle {
+  width:42px;
+  height:42px;
+  min-height:42px;
+  border-color:rgba(155,221,255,.2);
+  border-radius:14px;
+  background:rgba(5,14,26,.36);
+  color:#e9f8ff;
+  box-shadow:inset 0 1px rgba(255,255,255,.08);
+}
+.cin-site .marketing-nav .theme-toggle:hover {
+  border-color:rgba(117,232,255,.52);
+  background:rgba(117,232,255,.1);
+  box-shadow:0 10px 26px rgba(38,183,255,.16),inset 0 1px rgba(255,255,255,.1);
+}
+.cin-site .marketing-nav .nav-actions .btn {
+  min-height:42px;
+  padding-inline:17px;
+  border-radius:14px;
+  font-weight:850;
+  letter-spacing:-.015em;
+}
+.cin-site .marketing-nav .nav-actions .btn-ghost {
+  border-color:rgba(155,221,255,.18);
+  background:rgba(5,14,26,.28);
+  color:#eef8ff;
+  box-shadow:inset 0 1px rgba(255,255,255,.07);
+}
+.cin-site .marketing-nav .nav-actions .btn-ghost:hover {
+  border-color:rgba(117,232,255,.48);
+  background:rgba(117,232,255,.09);
+  transform:translateY(-1px);
+}
+.cin-site .marketing-nav .nav-actions .btn-primary {
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(151,231,255,.3);
+  background:linear-gradient(118deg,#0b81a8,#177de0 58%,#665fe3);
+  color:#fff;
+  box-shadow:0 13px 30px rgba(22,116,215,.26),inset 0 1px rgba(255,255,255,.27);
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+}
+.cin-site .marketing-nav .nav-actions .btn-primary::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg,transparent 22%,rgba(255,255,255,.38) 49%,transparent 65%);
+  transform:translateX(-130%);
+  animation:marketing-cta-sheen 5.8s ease-in-out infinite;
+}
+.cin-site .marketing-nav .nav-actions .btn-primary:hover {
+  transform:translateY(-2px);
+  filter:saturate(1.12) brightness(1.05);
+  box-shadow:0 17px 36px rgba(22,116,215,.34),inset 0 1px rgba(255,255,255,.32);
+}
+html[data-theme="light"] .cin-site .marketing-nav {
+  background:linear-gradient(180deg,rgba(249,253,255,.94) 0%,rgba(245,251,255,.78) 72%,transparent 100%);
+  box-shadow:none;
+}
+html[data-theme="light"] .cin-site .marketing-nav-surface {
+  border-color:rgba(43,159,205,.21);
+  background:linear-gradient(112deg,rgba(255,255,255,.92),rgba(244,251,255,.86) 52%,rgba(239,247,255,.93));
+  box-shadow:0 17px 42px rgba(32,96,129,.11),inset 0 1px rgba(255,255,255,.92),inset 0 -1px rgba(38,146,196,.06);
+}
+html[data-theme="light"] .cin-site .marketing-nav-surface::before { background:linear-gradient(112deg,rgba(255,255,255,.9),transparent 27%,transparent 72%,rgba(70,181,235,.08)); }
+html[data-theme="light"] .cin-site .marketing-nav .brand { color:#10253b; }
+html[data-theme="light"] .cin-site .marketing-nav .nav-links { border-color:rgba(25,98,132,.11); background:rgba(228,243,251,.58); color:#365166; }
+html[data-theme="light"] .cin-site .marketing-nav .nav-links a:hover { color:#0b658c; background:rgba(36,163,215,.1); }
+html[data-theme="light"] .cin-site .marketing-nav .theme-toggle,
+html[data-theme="light"] .cin-site .marketing-nav .nav-actions .btn-ghost { border-color:rgba(21,107,147,.16); background:rgba(255,255,255,.72); color:#143147; }
+html[data-theme="light"] .cin-site .marketing-nav .theme-toggle:hover,
+html[data-theme="light"] .cin-site .marketing-nav .nav-actions .btn-ghost:hover { border-color:rgba(27,153,205,.44); background:#fff; }
+@keyframes marketing-nav-sheen { 0%,22%,100% { background-position:120% 0; } 55% { background-position:-30% 0; } }
+@keyframes marketing-cta-sheen { 0%,68%,100% { transform:translateX(-130%); } 82% { transform:translateX(130%); } }
+@media (max-width:760px) {
+  .cin-site .marketing-nav { padding:8px 0; }
+  .cin-site .marketing-nav-surface { min-height:58px; padding:7px 9px 7px 13px; border-radius:17px; }
+  .cin-site .marketing-nav .brand { font-size:15px; }
+  .cin-site .marketing-nav .brand-logo { width:31px; height:31px; }
+  .cin-site .marketing-nav .nav-actions { gap:6px; }
+  .cin-site .marketing-nav .theme-toggle,.cin-site .marketing-nav .nav-actions .btn { min-height:38px; height:38px; }
+  .cin-site .marketing-nav .theme-toggle { width:38px; }
+  .cin-site .marketing-nav .nav-actions .btn { padding-inline:12px; }
+}
+@media (max-width:430px) {
+  .cin-site .marketing-nav .brand { font-size:0; gap:0; }
+  .cin-site .marketing-nav .nav-actions .btn-ghost { display:none; }
+  .cin-site .marketing-nav .nav-actions .btn-primary { padding-inline:13px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .cin-site .marketing-nav::after,.cin-site .marketing-nav .nav-actions .btn-primary::after { animation:none; }
+  .cin-site .marketing-nav .nav-links a,.cin-site .marketing-nav .nav-actions .btn-primary,.cin-site .marketing-nav .nav-actions .btn-ghost { transition:none; }
+}
