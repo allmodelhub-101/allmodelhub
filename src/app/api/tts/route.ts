@@ -54,6 +54,10 @@ export async function POST(request: Request) {
     billingAttempt = await beginTtsBillingAttempt({ userId: user.id, parentRequestId: claimId, modelId: model.id, text: input.text, voiceId: input.voiceId, confirmedCost: input.confirmedCost });
     const attempt = billingAttempt;
     const source = attempt.response.body!;
+    let billingStatus = attempt.immediateSettlement ? "settled" : "pending";
+    let settledCredits = attempt.immediateSettlement?.charge_credits == null
+      ? undefined
+      : String(attempt.immediateSettlement.charge_credits);
     const stream = new ReadableStream<Uint8Array>({
       async start(controller) {
         const reader = source.getReader();
@@ -63,10 +67,23 @@ export async function POST(request: Request) {
             if (done) break;
             controller.enqueue(value);
           }
-          await settleTtsBillingAttempt({ attempt, text: input.text });
+          try {
+            const settlement = await settleTtsBillingAttempt({ attempt, text: input.text });
+            billingStatus = settlement.billingStatus === "settled" ? "settled" : "pending";
+            settledCredits = settlement.billingStatus === "settled" ? settlement.chargeCredits : undefined;
+          } catch (billingError) {
+            // The provider audio has completed. Preserve it and reconcile the
+            // authorization separately instead of converting a successful
+            // generation into a failed stream.
+            billingStatus = "pending";
+            logServerError("tts-v3-post-stream-settlement", billingError, { userId: user.id, modelId: model.id });
+          }
           await finalizeRequest(claimId, "completed", {
             resourceId: attempt.authorization.quoteId,
-            response: { billingStatus: "provider_authoritative" },
+            response: { billingStatus: billingStatus === "settled" ? "settled" : "pending_reconciliation" },
+          }).catch((billingError) => {
+            billingStatus = "pending";
+            logServerError("tts-v3-post-stream-finalize", billingError, { userId: user.id, modelId: model.id });
           });
           controller.close();
         } catch (streamError) {
@@ -87,7 +104,9 @@ export async function POST(request: Request) {
       headers: {
         "Content-Type": attempt.response.headers.get("content-type") || "audio/mpeg",
         "Cache-Control": "private, no-store",
-        "X-AMH-Billing-Status": "provider-authoritative",
+        "X-AMH-Billing-Status": billingStatus,
+        "X-AMH-Billing-Quote-Id": attempt.authorization.quoteId,
+        ...(settledCredits ? { "X-AMH-Credits": settledCredits } : {}),
         "Content-Disposition": 'inline; filename="all-model-hub-voice.mp3"',
       },
     });
@@ -104,4 +123,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: insufficient ? "Insufficient credits." : safety ? "This request exceeds your spending safety limit." : "Voice generation is temporarily unavailable." }, { status: insufficient ? 402 : safety ? 403 : 500 });
   }
 }
+
 
