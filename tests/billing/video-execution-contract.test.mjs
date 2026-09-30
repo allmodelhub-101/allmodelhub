@@ -70,6 +70,33 @@ test("newly verified video contracts forward only their documented request field
   }), /MEDIA_OPTION_UNSUPPORTED:references/);
 });
 
+test("current Seedance, Wan, and LTX contracts expose only documented safe subsets", () => {
+  const seedance = getMediaExecutionContract("seedance-2-5");
+  const ltx = getMediaExecutionContract("ltx-2-3");
+  const wan = getMediaExecutionContract("wan-3-0-video");
+  assert.equal(seedance.referenceField, "reference_image_urls");
+  assert.equal(seedance.maxReferences, 10);
+  assert.deepEqual(referencePayload(seedance, ["https://example.test/look.png"]), {
+    reference_image_urls: ["https://example.test/look.png"],
+  });
+  assert.throws(() => validateMediaContractRequest(ltx, {
+    referenceCount: 1, duration: 16, resolution: "1080p", aspectRatio: "16:9",
+  }), /MEDIA_OPTION_UNSUPPORTED:duration/);
+  assert.deepEqual(mediaProviderOptionPayload(wan, {
+    duration: 5, resolution: "720p", aspectRatio: "16:9",
+  }), { duration: 5, resolution: "720P", ratio: "16:9" });
+});
+
+test("verified Seedance, Wan, and LTX migration uses provider-record settlement and bounded maxima", () => {
+  const sql = readFileSync(new URL("../../supabase/migrations/20260930110000_video_verified_seedance_wan_ltx.sql", import.meta.url), "utf8");
+  assert.match(sql, /'seedance-2-5'.*8\.100::numeric/s);
+  assert.match(sql, /'seedance-2-0'.*7\.380::numeric/s);
+  assert.match(sql, /'wan-3-0-video'.*5\.400::numeric/s);
+  assert.match(sql, /'ltx-2-3'.*0\.675::numeric/s);
+  assert.match(sql, /apimodels_records_api/);
+  assert.match(sql, /prime_blocked/);
+});
+
 test("video output persists while exact provider-record billing reconciles", () => {
   const jobs = readFileSync(new URL("../../src/app/api/jobs/[id]/route.ts", import.meta.url), "utf8");
   const callback = readFileSync(new URL("../../src/app/api/provider-callback/apimodels/[secret]/route.ts", import.meta.url), "utf8");

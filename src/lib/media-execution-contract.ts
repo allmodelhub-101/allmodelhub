@@ -22,7 +22,7 @@ export type MediaExecutionContract = Readonly<{
   aspectRatios?: readonly string[];
   nativeAudio?: readonly boolean[];
   providerDuration?: "number" | "string" | "omit";
-  providerResolution?: "resolution" | "kling_mode" | "omit";
+  providerResolution?: "resolution" | "kling_mode" | "upper_p" | "omit";
   providerNativeAudio?: "native_audio" | "kling_sound" | "omit";
   providerAspectRatio?: "aspect_ratio" | "ratio";
 }>;
@@ -71,6 +71,19 @@ const contracts: readonly MediaExecutionContract[] = [
   video("minimax-h3", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 5, durationRange: { min: 5, max: 15, integer: true }, resolutions: ["768p", "2K"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"], providerAspectRatio: "ratio" }),
   video("minimax-h3-lite", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 9, durationRange: { min: 1, max: 15, integer: true }, resolutions: ["480p", "768p"], aspectRatios: ["16:9", "9:16"], providerAspectRatio: "ratio" }),
   video("minimax-h3-max-turbo", { inputModes: ["text", "image"], referenceField: "first_frame_url", maxReferences: 1, durationRange: { min: 5, max: 15, integer: true }, resolutions: ["480p", "768p"], aspectRatios: ["21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
+  // Seedance's provider record is the only settlement authority.  These
+  // contracts intentionally expose only text/reference-image generation;
+  // video/audio reference and edit/extend modes require measured input media.
+  video("seedance-2-5", { inputModes: ["text", "image"], referenceField: "reference_image_urls", maxReferences: 10, durationRange: { min: 4, max: 30, integer: true }, resolutions: ["480p", "720p"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
+  video("seedance-2-0", { inputModes: ["text", "image"], referenceField: "reference_image_urls", maxReferences: 9, durationRange: { min: 4, max: 15, integer: true }, resolutions: ["480p", "720p", "1080p"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
+  video("seedance-2-0-fast", { inputModes: ["text", "image"], referenceField: "reference_image_urls", maxReferences: 9, durationRange: { min: 4, max: 15, integer: true }, resolutions: ["480p", "720p"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
+  video("seedance-2-0-mini", { inputModes: ["text", "image"], referenceField: "reference_image_urls", maxReferences: 9, durationRange: { min: 4, max: 15, integer: true }, resolutions: ["480p", "720p"], aspectRatios: ["adaptive", "21:9", "16:9", "4:3", "1:1", "3:4", "9:16"] }),
+  // The documented I2V ceiling is 20 seconds.  We deliberately retain the
+  // 15-second common ceiling until the UI presents a mode-specific hold.
+  video("ltx-2-3", { inputModes: ["text", "image"], referenceField: "image", maxReferences: 1, durationRange: { min: 5, max: 15, integer: true }, resolutions: ["480p", "720p", "1080p"], aspectRatios: ["16:9", "9:16"] }),
+  // Wan's standard tier is fully priced. Prime and reference-video modes are
+  // withheld until their separate UI/typed-media authorization is available.
+  video("wan-3-0-video", { inputModes: ["text", "image"], referenceField: "reference_image_urls", maxReferences: 10, durationRange: { min: 2, max: 30, integer: true }, resolutions: ["480p", "720p", "1080p"], aspectRatios: ["adaptive", "16:9", "4:3", "1:1", "3:4", "9:16"], providerResolution: "upper_p", providerAspectRatio: "ratio" }),
   video("veo-3-1-fast-fhd", { inputModes: ["text", "image"], referenceField: "images", maxReferences: 2, durations: [8], resolutions: ["1080p"], aspectRatios: ["16:9", "9:16"], providerDuration: "omit", providerResolution: "omit", providerNativeAudio: "omit" }),
 ];
 
@@ -145,6 +158,7 @@ export function mediaProviderOptionPayload(contract: MediaExecutionContract, inp
   }
   if (input.resolution && contract.providerResolution !== "omit") {
     if (contract.providerResolution === "kling_mode") payload.mode = input.resolution === "1080p" ? "pro" : "std";
+    else if (contract.providerResolution === "upper_p") payload.resolution = input.resolution.replace(/p$/i, "P");
     else payload.resolution = input.resolution === "4K" ? "4k" : input.resolution;
   }
   if (input.aspectRatio) payload[contract.providerAspectRatio ?? "aspect_ratio"] = input.aspectRatio;
