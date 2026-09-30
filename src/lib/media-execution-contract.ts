@@ -15,6 +15,8 @@ export type MediaExecutionContract = Readonly<{
   maxReferences: number;
   referenceRequired?: boolean;
   resolutions?: readonly string[];
+  qualities?: readonly string[];
+  defaultQuality?: string;
   durations?: readonly number[];
   durationRange?: Readonly<{ min: number; max: number; integer: boolean }>;
   aspectRatios?: readonly string[];
@@ -41,6 +43,16 @@ const contracts: readonly MediaExecutionContract[] = [
   image("qwen3-image", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 3, resolutions: ["1K", "2K"], aspectRatios: ["1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9"] }),
   image("qwen3-image-pro", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 3, resolutions: ["1K", "2K"], aspectRatios: ["1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9"] }),
   image("real-esrgan", { inputModes: ["image"], referenceField: "image_url", maxReferences: 1, referenceRequired: true, resolutions: ["4K", "8K", "10K"] }),
+  image("gemini-3-1-flash-image", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 5,
+    resolutions: ["512", "1K", "2K", "4K"], aspectRatios: ["auto", "1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"] }),
+  image("gemini-3-pro-image", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 5,
+    resolutions: ["1K", "2K", "4K"], aspectRatios: ["auto", "1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"] }),
+  image("gpt-image-2-5-flare", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 16,
+    resolutions: ["1K", "2K", "4K"], qualities: ["medium"], defaultQuality: "medium",
+    aspectRatios: ["1:1", "16:9", "9:16", "4:3", "3:4"] }),
+  image("gpt-image-2-5-sunburst", { inputModes: ["text", "image"], referenceField: "image_urls", maxReferences: 16,
+    resolutions: ["1K", "2K", "4K"], qualities: ["high"], defaultQuality: "high",
+    aspectRatios: ["1:1", "16:9", "9:16", "4:3", "3:4"] }),
 
   { modelId: "eleven-tts-flash", modality: "audio", strategy: "apimodels_eleven_stream", inputModes: ["text"], maxReferences: 0 },
   { modelId: "eleven-tts-multilingual", modality: "audio", strategy: "apimodels_eleven_stream", inputModes: ["text"], maxReferences: 0 },
@@ -95,12 +107,13 @@ export function mediaUiSchemaMatchesContract(uiSchema: ModelUiSchema | undefined
 }
 
 export function validateMediaContractRequest(contract: MediaExecutionContract, input: Readonly<{
-  referenceCount: number; resolution?: string; duration?: number; aspectRatio?: string; nativeAudio?: boolean;
+  referenceCount: number; resolution?: string; quality?: string; duration?: number; aspectRatio?: string; nativeAudio?: boolean;
 }>) {
   if (input.referenceCount > contract.maxReferences) throw new Error("MEDIA_OPTION_UNSUPPORTED:references");
   if (contract.referenceRequired && input.referenceCount === 0) throw new Error("MEDIA_OPTION_UNSUPPORTED:reference_required");
   if (input.referenceCount > 0 && !contract.inputModes.includes("image")) throw new Error("MEDIA_OPTION_UNSUPPORTED:image_input");
   if (contract.resolutions?.length && (!input.resolution || !contract.resolutions.includes(input.resolution))) throw new Error("MEDIA_OPTION_UNSUPPORTED:resolution");
+  if (input.quality && (!contract.qualities?.length || !contract.qualities.includes(input.quality))) throw new Error("MEDIA_OPTION_UNSUPPORTED:quality");
   if (input.duration !== undefined) {
     if (contract.durations && !contract.durations.includes(input.duration)) throw new Error("MEDIA_OPTION_UNSUPPORTED:duration");
     if (contract.durationRange && (input.duration < contract.durationRange.min || input.duration > contract.durationRange.max || (contract.durationRange.integer && !Number.isInteger(input.duration)))) throw new Error("MEDIA_OPTION_UNSUPPORTED:duration");

@@ -6,6 +6,7 @@ import { prepareUsageSettlement } from "./usage-settlement-core";
 import type { NormalizedMediaResult } from "./media-job-billing-core";
 import type { ValidatedPricingRule } from "./pricing-registry-core";
 import { recordBillingShadowValidationBestEffort, recordMediaFailureShadowBestEffort } from "./shadow-validation";
+import { settleApimodelsTask } from "./provider-authoritative-settlement";
 
 type QuoteRow = {
   id: string; user_id: string; provider_key: string; model_id: string; upstream_model: string; pricing_version: string;
@@ -86,6 +87,36 @@ export async function completeMediaGenerationBilling(input: Readonly<{
     details: { cost_status: prepared.costStatus, generation_job_id: input.jobId },
   });
   return { result, prepared } as const;
+}
+
+export async function completeProviderAuthoritativeMediaBilling(input: Readonly<{
+  jobId: string;
+  providerTaskId: string;
+  usage?: Readonly<Record<string, unknown>>;
+  metadata?: Readonly<Record<string, unknown>>;
+}>) {
+  const admin = createAdminClient();
+  const { data: job, error: jobError } = await admin.from("generation_jobs")
+    .select("id,billing_quote_id,modality")
+    .eq("id", input.jobId).single();
+  if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
+  if (job.modality !== "image" && job.modality !== "audio") {
+    throw new Error("BILLING_V3_MEDIA_SETTLEMENT_SCOPE_INVALID");
+  }
+  const { data: quote, error: quoteError } = await admin.from("billing_quotes")
+    .select("billing_engine").eq("id", job.billing_quote_id).single();
+  if (quoteError || quote?.billing_engine !== "v3_provider_authoritative") {
+    throw quoteError ?? new Error("BILLING_V3_MEDIA_QUOTE_REQUIRED");
+  }
+  return settleApimodelsTask({
+    quoteId: job.billing_quote_id,
+    taskId: input.providerTaskId,
+    providerTaskId: input.providerTaskId,
+    source: "records_api",
+    usage: input.usage,
+    links: { generationJobId: input.jobId },
+    metadata: { billing_v3: true, ...input.metadata },
+  });
 }
 
 export async function failMediaGenerationBilling(input: Readonly<{

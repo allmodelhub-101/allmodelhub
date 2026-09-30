@@ -224,6 +224,7 @@ function statusError(status: PricingStatus): never {
 
 function validateStrategy(rule: ValidatedPricingRule) {
   const rates = rule.rates;
+  const hasFormula = Object.keys(rule.formula).length > 0;
   const hasDimensions = [rule.resolutionDimensions, rule.qualityDimensions, rule.modeDimensions, rule.inputTypeDimensions]
     .some((map) => Object.keys(map).length > 0);
   if (rates.perSecond && rates.perMinute) fail("RULE_INVALID", "A rule cannot price both per-second and per-minute time.");
@@ -232,10 +233,10 @@ function validateStrategy(rule: ValidatedPricingRule) {
   }
   if (rule.billingType === "character" && !rates.per1kCharacters) fail("RULE_INVALID", "Character pricing requires a per-1k-character rate.");
   if (rule.billingType === "flat" && !rates.flat) fail("RULE_INVALID", "Flat pricing requires a flat rate.");
-  if (rule.billingType === "image" && !rates.flat && !rates.perImage && !hasDimensions) fail("RULE_INVALID", "Image pricing requires an image, flat, or dimension rate.");
-  if (rule.billingType === "time" && !rates.perSecond && !rates.perMinute && !hasDimensions) fail("RULE_INVALID", "Time pricing requires a duration rate.");
+  if (rule.billingType === "image" && !rates.flat && !rates.perImage && !hasDimensions && !hasFormula) fail("RULE_INVALID", "Image pricing requires an image, flat, dimension, or formula rate.");
+  if (rule.billingType === "time" && !rates.perSecond && !rates.perMinute && !hasDimensions && !hasFormula) fail("RULE_INVALID", "Time pricing requires a duration or formula rate.");
   if (rule.billingType === "reference" && !rates.perReferenceImage) fail("RULE_INVALID", "Reference pricing requires a reference-image rate.");
-  if (rule.billingType === "formula" && Object.keys(rule.formula).length === 0) fail("RULE_INVALID", "Formula pricing requires a formula.");
+  if (rule.billingType === "formula" && !hasFormula) fail("RULE_INVALID", "Formula pricing requires a formula.");
 }
 
 function validateRow(row: PricingRegistryRow, at: Date): ValidatedPricingRule {
@@ -410,6 +411,21 @@ export const linearFormulaEvaluator: FormulaEvaluator = ({ formula, ...context }
   return { amount: amount.toFixed() as DecimalString, operation };
 };
 
+export const optionMatrixFormulaEvaluator: FormulaEvaluator = ({ formula, dimensions }) => {
+  if (!Array.isArray(formula.dimensionKeys) || formula.dimensionKeys.length < 1
+    || formula.dimensionKeys.some((key) => typeof key !== "string")) {
+    fail("RULE_INVALID", "Option-matrix formula dimensionKeys must be a non-empty string array.");
+  }
+  const values = objectValue(formula.values, "formula.values");
+  const key = (formula.dimensionKeys as string[]).map((dimensionKey) => {
+    const value = dimensions[dimensionKey as keyof PricingDimensions];
+    if (typeof value !== "string" || !value) fail("USAGE_REQUIRED", `Formula dimension '${dimensionKey}' is missing.`);
+    return value;
+  }).join("|");
+  if (!(key in values)) fail("DIMENSION_UNSUPPORTED", `Unsupported option matrix combination '${key}'.`);
+  return { amount: exactDecimal(values[key], `formula.values.${key}`), operation: "replace" };
+};
+
 export function calculateAuthoritativePrice(input: Readonly<{
   rule: ValidatedPricingRule;
   usage: NormalizedUsage;
@@ -459,7 +475,8 @@ export function calculateAuthoritativePrice(input: Readonly<{
   if (Object.keys(input.rule.formula).length > 0) {
     const kind = input.rule.formula.kind;
     if (typeof kind !== "string") fail("RULE_INVALID", "Pricing formula kind is required.");
-    const evaluator = input.formulaEvaluators?.[kind] ?? (kind === "linear" ? linearFormulaEvaluator : undefined);
+    const evaluator = input.formulaEvaluators?.[kind]
+      ?? (kind === "linear" ? linearFormulaEvaluator : kind === "option_matrix" ? optionMatrixFormulaEvaluator : undefined);
     if (!evaluator) fail("FORMULA_UNSUPPORTED", `Pricing formula '${kind}' is not registered.`);
     const result = evaluator({ usage: input.usage, dimensions, formula: input.rule.formula });
     const formulaAmount = new Decimal(exactDecimal(result.amount, "formula.result"));

@@ -7,15 +7,16 @@ import { cancelBillingQuoteReservation } from "./quote-reservation";
 import type { NormalizedUsage } from "./types";
 import { countSubmittedCharacters } from "./audio-usage-core";
 import { createProviderAuthorization, type ProviderAuthorization } from "./authorization";
-import { markProviderSettlementPending, recordProviderBillingAnomaly, settleApimodelsTask } from "./provider-authoritative-settlement";
+import { markProviderSettlementPending, recordProviderBillingAnomaly, recordProviderBillingObservation, settleApimodelsTask, settleProviderBillingRecord } from "./provider-authoritative-settlement";
 
 type BillingV3TtsAttempt = Readonly<{
   engine: "v3_provider_authoritative";
   authorization: ProviderAuthorization;
   billingClaimId: string;
   response: Response;
-  providerRequestId: string;
-  providerBillingRecordId: string;
+  providerRequestId?: string;
+  providerBillingRecordId?: string;
+  immediateSettlement?: Readonly<Record<string, unknown>>;
 }>;
 
 export type TtsBillingAttempt = BillingV3TtsAttempt;
@@ -57,14 +58,38 @@ export async function beginTtsBillingAttempt(input: Readonly<{
       const upstream = await providerTtsStreamExact(route, input);
       providerRequestId = upstream.providerRequestId;
       if (!upstream.response.ok || !upstream.response.body) throw new Error(`Provider returned HTTP ${upstream.response.status}`);
-      if (!upstream.providerRequestId) throw new Error("BILLING_V3_PROVIDER_REQUEST_ID_MISSING");
       providerStarted = true;
-      const pending = await markProviderSettlementPending({
-        quoteId: authorization.quoteId, providerRequestId: upstream.providerRequestId, source: "response_header",
-      });
+      let providerBillingRecordId: string | undefined;
+      let immediateSettlement: Record<string, unknown> | undefined;
+      if (upstream.providerReportedCost) {
+        providerBillingRecordId = await recordProviderBillingObservation({
+          quoteId: authorization.quoteId,
+          providerRequestId: upstream.providerRequestId,
+          record: {
+            taskId: upstream.providerRequestId ?? authorization.quoteId,
+            state: "completed", settled: true,
+            creditsUsd: upstream.providerReportedCost.amount, currency: "USD", usage,
+          },
+          source: "response_header",
+        });
+        immediateSettlement = await settleProviderBillingRecord({
+          providerBillingRecordId, usage,
+          metadata: { billing_v3: true, operation: "tts", exact_cost_header: true },
+        });
+      } else if (upstream.providerRequestId) {
+        const pending = await markProviderSettlementPending({
+          quoteId: authorization.quoteId, providerRequestId: upstream.providerRequestId, source: "response_header",
+        });
+        providerBillingRecordId = pending.ledgerId;
+      } else {
+        await recordProviderBillingAnomaly({ quoteId: authorization.quoteId,
+          anomalyType: "provider_success_without_billing_identifier",
+          details: { operation: "tts", hold_retained: true, response_ok: true,
+            request_id_header_present: false, cost_header_present: false } });
+      }
       return { engine: "v3_provider_authoritative", authorization, billingClaimId: claim.id,
         response: upstream.response, providerRequestId: upstream.providerRequestId,
-        providerBillingRecordId: pending.ledgerId } as const;
+        providerBillingRecordId, immediateSettlement } as const;
     } catch (error) {
       lastError = error;
       if (authorization && providerStarted) {
@@ -92,7 +117,7 @@ export async function beginTtsBillingAttempt(input: Readonly<{
 
 export async function cancelTtsBillingAttempt(attempt: TtsBillingAttempt, reason: string) {
   await attempt.response.body?.cancel().catch(() => undefined);
-  await markProviderSettlementPending({ quoteId: attempt.authorization.quoteId,
+  if (!attempt.immediateSettlement && attempt.providerRequestId) await markProviderSettlementPending({ quoteId: attempt.authorization.quoteId,
     providerRequestId: attempt.providerRequestId, source: "records_api" }).catch(() => undefined);
   await finalizeRequest(attempt.billingClaimId, "completed", { resourceId: attempt.authorization.quoteId,
     response: { billingStatus: "pending_reconciliation", reason } }).catch(() => undefined);
@@ -103,6 +128,23 @@ export async function settleTtsBillingAttempt(input: Readonly<{
   text: string;
 }>) {
   {
+    if (input.attempt.immediateSettlement) {
+      const result = input.attempt.immediateSettlement;
+      const status = String(result.status ?? "settled");
+      const chargeCredits = String(result.charge_credits ?? "0");
+      await finalizeRequest(input.attempt.billingClaimId, "completed", {
+        resourceId: String(result.receipt_id ?? input.attempt.authorization.quoteId),
+        response: { billingStatus: status, chargeCredits },
+      });
+      return { billingStatus: status, chargeCredits,
+        receiptId: result.receipt_id ? String(result.receipt_id) : undefined,
+        walletTransactionId: result.wallet_transaction_id ? String(result.wallet_transaction_id) : undefined } as const;
+    }
+    if (!input.attempt.providerRequestId) {
+      await finalizeRequest(input.attempt.billingClaimId, "completed", { resourceId: input.attempt.authorization.quoteId,
+        response: { billingStatus: "pending_reconciliation" } });
+      return { billingStatus: "pending_reconciliation", chargeCredits: "0" } as const;
+    }
     try {
       const result = await settleApimodelsTask({
         quoteId: input.attempt.authorization.quoteId,

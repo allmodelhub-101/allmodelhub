@@ -6,7 +6,7 @@ import { providerPollTask } from "@/lib/providers";
 import { logServerError } from "@/lib/public-error";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { completeMediaGenerationBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
+import { completeMediaGenerationBilling, completeProviderAuthoritativeMediaBilling, failMediaGenerationBilling } from "@/lib/billing/media-job-billing";
 import { mediaUsageFromRequest, normalizeMediaResult, providerFailureIsNonBillable, type MediaBillingInput } from "@/lib/billing/media-job-billing-core";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +53,8 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
   const { data: rawJob, error } = await admin.from("generation_jobs").select(jobFields).eq("id", parsedId.data).eq("user_id", user.id).single();
   if (error || !rawJob) return NextResponse.json({ error: "Generation job not found." }, { status: 404 });
   const job = rawJob as GenerationJob;
-  if (["completed", "failed", "cancelled", "expired", "settling"].includes(job.status) || !job.provider_task_id) {
+  if (["completed", "failed", "cancelled", "expired"].includes(job.status)
+    || (job.status === "settling" && job.modality === "video") || !job.provider_task_id) {
     return NextResponse.json({ job: await clientJob(job) });
   }
 
@@ -69,7 +70,9 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       }
       if (!resultUrls.length) return NextResponse.json({ job: await clientJob(job), warning: "Provider has not supplied a usable output yet." });
 
-      const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", result_json: summary, updated_at: new Date().toISOString() })
+      const providerAuthoritativeOutput = job.modality === "image" || job.modality === "audio";
+      const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", result_json: summary,
+        updated_at: new Date().toISOString() })
         .eq("id", job.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();
       if (!claimed) {
         const { data: latest } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).single();
@@ -77,18 +80,35 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       }
 
       const storedPaths = await persistGeneratedAssets(user.id, job.id, resultUrls);
+      if (providerAuthoritativeOutput) {
+        await admin.from("generation_jobs").update({
+          status: "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
+          completed_at: new Date().toISOString(), reconciliation_required: true, reconciliation_state: "due",
+          next_reconcile_at: new Date(Date.now() + 60_000).toISOString(), error_message: null, updated_at: new Date().toISOString(),
+        }).eq("id", job.id);
+      }
       try {
         if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
         const requestUsage = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: job.prompt ?? "" } as MediaBillingInput);
         const normalized = normalizeMediaResult(task, requestUsage);
-        const settlement = await completeMediaGenerationBilling({ jobId: job.id, normalized,
-          resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
-          metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" } });
-        await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${Number(settlement.result.charge_credits ?? 0).toFixed(2)} Credits charged.`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
+        const settlement = providerAuthoritativeOutput
+          ? await completeProviderAuthoritativeMediaBilling({ jobId: job.id, providerTaskId: job.provider_task_id!,
+            usage: normalized.usage, metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" } })
+          : await completeMediaGenerationBilling({ jobId: job.id, normalized,
+            resultJson: { ...summary, amhStoredPaths: storedPaths }, resultUrls,
+            metadata: { job_id: job.id, model_id: job.model_id, source: "job_poll" } });
+        const charge = providerAuthoritativeOutput
+          ? Number((settlement as Record<string, unknown>).charge_credits ?? 0)
+          : Number((settlement as Awaited<ReturnType<typeof completeMediaGenerationBilling>>).result.charge_credits ?? 0);
+        await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready.${charge > 0 ? ` ${charge.toFixed(2)} Credits charged.` : " Billing is finalizing."}`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
       } catch (settlementError) {
-        await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
+        await admin.from("generation_jobs").update({
+          error_message: providerAuthoritativeOutput ? null : "Wallet settlement pending reconciliation.",
+          reconciliation_required: true, reconciliation_state: "due", next_reconcile_at: new Date(Date.now() + 60_000).toISOString(), updated_at: new Date().toISOString(),
+        }).eq("id", job.id);
         logServerError("job-poll-settlement", settlementError, { jobId: job.id });
-        return NextResponse.json({ job: await clientJob({ ...job, status: "settling" }), warning: "Wallet settlement is pending." }, { status: 503 });
+        const { data: pendingJob } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).single();
+        return NextResponse.json({ job: await clientJob(pendingJob as GenerationJob), warning: "Billing is pending reconciliation." });
       }
       const { data: updated } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).single();
       return NextResponse.json({ job: await clientJob(updated as GenerationJob) });

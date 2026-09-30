@@ -117,6 +117,19 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
         return { jobId: job.id, outcome: "quarantined" } as const;
       }
       const storedPaths = task.state === "completed" ? await persistGeneratedAssets(job.user_id, job.id, urls) : [];
+      if (task.state === "completed" && (job.modality === "image" || job.modality === "audio")) {
+        await admin.from("generation_jobs").update({
+          status: "completed",
+          result_json: { provider_state: task.state, result_url_count: urls.length, amhStoredPaths: storedPaths,
+            reconciliation: "billing_pending" },
+          result_urls: urls,
+          completed_at: new Date().toISOString(),
+          reconciliation_required: true,
+          reconciliation_state: "due",
+          error_message: null,
+          updated_at: new Date().toISOString(),
+        }).eq("id", job.id);
+      }
       const settlement = await settleApimodelsTask({
         quoteId: job.billing_quote_id!, taskId: job.provider_task_id,
         providerTaskId: job.provider_task_id, source: "reconciliation",

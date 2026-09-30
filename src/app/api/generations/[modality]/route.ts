@@ -62,6 +62,10 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "Model is not available for this studio." }, { status: 400 });
   }
+  if (model.id === "kling-tts" && Array.from(input.prompt).length > 1000) {
+    await finalizeRequest(claim.id, "failed");
+    return NextResponse.json({ error: "Kling TTS supports up to 1,000 characters." }, { status: 400 });
+  }
   const admin = createAdminClient();
   if (input.projectId) {
     const { data: project } = await admin.from("projects").select("id").eq("id", input.projectId).eq("user_id", user.id).maybeSingle();
@@ -83,9 +87,10 @@ export async function POST(request: Request, context: { params: Promise<{ modali
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "This model workflow is not supported yet." }, { status: 400 });
   }
+  const effectiveQuality = input.quality ?? contract.defaultQuality;
   try {
     validateMediaContractRequest(contract, { referenceCount: referenceImages.length, resolution: input.resolution,
-      duration: input.duration, aspectRatio, nativeAudio: input.nativeAudio });
+      quality: effectiveQuality, duration: input.duration, aspectRatio, nativeAudio: input.nativeAudio });
   } catch {
     await finalizeRequest(claim.id, "failed");
     return NextResponse.json({ error: "One or more selected model options are unsupported." }, { status: 400 });
@@ -93,11 +98,13 @@ export async function POST(request: Request, context: { params: Promise<{ modali
   const providerAspectRatio = contract.aspectRatios?.length ? aspectRatio : undefined;
   const pricingMode = modality === "video" && contract.nativeAudio ? (input.nativeAudio ? "native_audio" : "silent") : mode;
   const usage = {
-    ...mediaUsageFromRequest({ ...input, aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : pricingMode, referenceCount: input.imageFileIds.length }),
+    ...mediaUsageFromRequest({ ...input, quality: effectiveQuality, imageCount: modality === "audio" ? 0 : input.imageCount,
+      aspectRatio: providerAspectRatio, mode: modality === "image" ? undefined : pricingMode, referenceCount: input.imageFileIds.length }),
     inputType: (referenceImages.length ? "image" : "text") as "image" | "text",
   };
-  const dimensions = { resolution: input.resolution, quality: input.quality, mode: pricingMode, inputType: referenceImages.length ? "image" : "text" };
-  const storedRequest = { ...input, aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
+  const dimensions = { resolution: input.resolution, quality: effectiveQuality, mode: pricingMode, inputType: referenceImages.length ? "image" : "text" };
+  const storedRequest = { ...input, imageCount: modality === "audio" ? 0 : input.imageCount,
+    aspectRatio: providerAspectRatio, mode, referenceCount: input.imageFileIds.length };
   const publicId = createPublicId("AMH-GEN");
   const { data: job, error: insertError } = await admin.from("generation_jobs").insert({
     public_id: publicId, user_id: user.id, project_id: input.projectId ?? null, modality, model_id: model.id,
@@ -143,7 +150,7 @@ export async function POST(request: Request, context: { params: Promise<{ modali
         const providerBody: Record<string, unknown> = {
           prompt: input.prompt,
           ...(input.inputDuration !== undefined ? { input_duration: input.inputDuration } : {}), ...(input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
-          ...(input.quality ? { quality: input.quality } : {}), ...(input.fps ? { fps: input.fps } : {}),
+          ...(effectiveQuality ? { quality: effectiveQuality } : {}), ...(input.fps ? { fps: input.fps } : {}),
           ...(input.imageCount !== 1 ? { n: input.imageCount } : {}),
           ...mediaProviderOptionPayload(contract, { duration: input.duration, resolution: input.resolution,
             aspectRatio: providerAspectRatio, nativeAudio: input.nativeAudio }),

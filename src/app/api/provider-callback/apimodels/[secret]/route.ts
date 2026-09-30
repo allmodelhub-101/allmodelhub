@@ -153,6 +153,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       return NextResponse.json({ ok: true });
     }
 
+    const providerAuthoritativeOutput = usesV3 && (existingJob.modality === "image" || existingJob.modality === "audio");
     const { data: job, error: claimError } = await admin.from("generation_jobs")
       .update({ status: "settling", result_json: summary, updated_at: new Date().toISOString() })
       .eq("id", existingJob.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();
@@ -163,6 +164,13 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     if (!job) return NextResponse.json({ ok: true });
 
     const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
+    if (providerAuthoritativeOutput) {
+      await admin.from("generation_jobs").update({
+        status: "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
+        completed_at: new Date().toISOString(), reconciliation_required: true, reconciliation_state: "due",
+        next_reconcile_at: new Date(Date.now() + 60_000).toISOString(), error_message: null,
+      }).eq("id", job.id);
+    }
     try {
       if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
       const fallback = mediaUsageFromRequest({ ...(job.request_json ?? {}), prompt: String(job.prompt ?? "") } as MediaBillingInput);
@@ -188,11 +196,11 @@ export async function POST(request: Request, context: { params: Promise<{ secret
             metadata: { source: "provider_callback_records_fallback", billing_v3: true } });
         }
         if (String(settlement.status) !== "settled") {
-          await admin.from("generation_jobs").update({ status: "processing",
+          await admin.from("generation_jobs").update({ status: providerAuthoritativeOutput ? "completed" : "processing",
             result_json: { ...summary, amhStoredPaths: storedPaths },
             reconciliation_required: true, reconciliation_state: "due",
             next_reconcile_at: new Date(Date.now() + 5 * 60_000).toISOString(),
-            error_message: "Provider billing record pending reconciliation." }).eq("id", job.id);
+            error_message: providerAuthoritativeOutput ? null : "Provider billing record pending reconciliation." }).eq("id", job.id);
           return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
         }
         await admin.from("generation_jobs").update({ result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls }).eq("id", job.id);
@@ -205,9 +213,13 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready. ${Number(settlement.result.charge_credits ?? 0).toFixed(2)} Credits charged.` });
       return NextResponse.json({ ok: true });
     } catch (error) {
-      await admin.from("generation_jobs").update({ error_message: "Wallet settlement pending reconciliation.", updated_at: new Date().toISOString() }).eq("id", job.id).neq("status", "completed");
+      await admin.from("generation_jobs").update({
+        error_message: providerAuthoritativeOutput ? null : "Wallet settlement pending reconciliation.",
+        reconciliation_required: true, reconciliation_state: "due", next_reconcile_at: new Date(Date.now() + 60_000).toISOString(),
+        updated_at: new Date().toISOString(),
+      }).eq("id", job.id);
       logServerError("provider-callback-settlement", error, { jobId: job.id });
-      return NextResponse.json({ error: "Settlement pending" }, { status: 503 });
+      return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
     }
   }
 
