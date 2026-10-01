@@ -100,7 +100,7 @@ export async function completeProviderAuthoritativeMediaBilling(input: Readonly<
     .select("id,billing_quote_id,modality")
     .eq("id", input.jobId).single();
   if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
-  if (job.modality !== "image" && job.modality !== "audio") {
+  if (job.modality !== "image" && job.modality !== "audio" && job.modality !== "video") {
     throw new Error("BILLING_V3_MEDIA_SETTLEMENT_SCOPE_INVALID");
   }
   const { data: quote, error: quoteError } = await admin.from("billing_quotes")

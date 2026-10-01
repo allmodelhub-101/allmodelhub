@@ -54,3 +54,65 @@ test("video migration has exact request-bounded maxima and current evidence", ()
   assert.match(sql, /480p.*perSecond.*0\.01.*768p.*perSecond.*0\.02/s);
   assert.match(sql, /APIMODELS \/records[\s\S]*sole final settlement authority/);
 });
+
+test("newly verified video contracts forward only their documented request fields", () => {
+  const grok = getMediaExecutionContract("grok-imagine-video-1-5");
+  const turbo = getMediaExecutionContract("minimax-h3-max-turbo");
+  assert.deepEqual(grok.resolutions, ["480p", "720p", "1080p"]);
+  assert.equal(grok.maxReferences, 7);
+  assert.deepEqual(turbo.resolutions, ["480p", "768p"]);
+  assert.equal(turbo.maxReferences, 1);
+  assert.deepEqual(referencePayload(turbo, ["https://example.test/first.jpg"]), {
+    first_frame_url: "https://example.test/first.jpg",
+  });
+  assert.throws(() => validateMediaContractRequest(turbo, {
+    referenceCount: 2, duration: 5, resolution: "768p", aspectRatio: "16:9",
+  }), /MEDIA_OPTION_UNSUPPORTED:references/);
+});
+
+test("current Seedance, Wan, and LTX contracts expose only documented safe subsets", () => {
+  const seedance = getMediaExecutionContract("seedance-2-5");
+  const ltx = getMediaExecutionContract("ltx-2-3");
+  const wan = getMediaExecutionContract("wan-3-0-video");
+  assert.equal(seedance.referenceField, "reference_image_urls");
+  assert.equal(seedance.maxReferences, 10);
+  assert.deepEqual(referencePayload(seedance, ["https://example.test/look.png"]), {
+    reference_image_urls: ["https://example.test/look.png"],
+  });
+  assert.throws(() => validateMediaContractRequest(ltx, {
+    referenceCount: 1, duration: 16, resolution: "1080p", aspectRatio: "16:9",
+  }), /MEDIA_OPTION_UNSUPPORTED:duration/);
+  assert.deepEqual(mediaProviderOptionPayload(wan, {
+    duration: 5, resolution: "720p", aspectRatio: "16:9",
+  }), { duration: 5, resolution: "720P", ratio: "16:9" });
+});
+
+test("verified Seedance, Wan, and LTX migration uses provider-record settlement and bounded maxima", () => {
+  const sql = readFileSync(new URL("../../supabase/migrations/20260930110000_video_verified_seedance_wan_ltx.sql", import.meta.url), "utf8");
+  assert.match(sql, /'seedance-2-5'.*8\.100::numeric/s);
+  assert.match(sql, /'seedance-2-0'.*7\.380::numeric/s);
+  assert.match(sql, /'wan-3-0-video'.*5\.400::numeric/s);
+  assert.match(sql, /'ltx-2-3'.*0\.675::numeric/s);
+  assert.match(sql, /apimodels_records_api/);
+  assert.match(sql, /prime_blocked/);
+});
+
+test("video output persists while exact provider-record billing reconciles", () => {
+  const jobs = readFileSync(new URL("../../src/app/api/jobs/[id]/route.ts", import.meta.url), "utf8");
+  const callback = readFileSync(new URL("../../src/app/api/provider-callback/apimodels/[secret]/route.ts", import.meta.url), "utf8");
+  const reconciliation = readFileSync(new URL("../../src/lib/billing/reconciliation.ts", import.meta.url), "utf8");
+  const billing = readFileSync(new URL("../../src/lib/billing/media-job-billing.ts", import.meta.url), "utf8");
+  assert.match(jobs, /job\.modality === "video"/);
+  assert.match(callback, /existingJob\.modality === "video"/);
+  assert.match(reconciliation, /job\.modality === "video"/);
+  assert.match(billing, /job\.modality !== "video"/);
+  assert.match(jobs, /completeProviderAuthoritativeMediaBilling/);
+});
+
+test("video preflight is authenticated, non-mutating, and does not expose provider cost", () => {
+  const preflight = readFileSync(new URL("../../src/app/api/generations/video/preflight/route.ts", import.meta.url), "utf8");
+  assert.match(preflight, /auth\.getUser/);
+  assert.match(preflight, /previewProviderAuthorization/);
+  assert.match(preflight, /maximumAuthorizationCredits/);
+  assert.doesNotMatch(preflight, /providerCreateTaskExact|createProviderAuthorization|providerCostUsd/);
+});

@@ -36,6 +36,13 @@ export type ProviderAuthorization = Readonly<{
   route: ResolvedBillingProviderRoute;
 }>;
 
+export type ProviderAuthorizationPreview = Readonly<{
+  authorizationCredits: string;
+  policyVersion: string;
+  expiresInSeconds: number;
+  route: ResolvedBillingProviderRoute;
+}>;
+
 export async function loadAuthorizationPolicy(route: ResolvedBillingProviderRoute, modality: string) {
   const provider = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
   if (provider !== "apimodels" && provider !== "apimodelsapp") {
@@ -131,6 +138,33 @@ async function calculateRequestAuthorization(input: Readonly<{
   // This is only a conservative wallet authorization. APIMODELS' settled
   // provider record remains the sole final-cost and capture authority.
   return { authorizationCredits: requestAuthorization, pricingVersion, pricingRuleId: priced?.snapshot.pricingRuleId ?? null } as const;
+}
+
+/**
+ * Calculates exactly the same request envelope used at submission, without
+ * creating a quote, hold, task, or provider request. It intentionally returns
+ * customer-facing authorization data only; supplier cost remains server-only.
+ */
+export async function previewProviderAuthorization(input: Readonly<{
+  route: ResolvedBillingProviderRoute;
+  modality: string;
+  usageEnvelope: NormalizedUsage;
+  dimensions?: PricingDimensions;
+}>): Promise<ProviderAuthorizationPreview> {
+  const policy = await loadAuthorizationPolicy(input.route, input.modality);
+  validateAuthorizationRequest(input.usageEnvelope, parseAuthorizationConstraints(policy.request_constraints));
+  const calculated = await calculateRequestAuthorization({
+    policy,
+    route: input.route,
+    usageEnvelope: input.usageEnvelope,
+    dimensions: input.dimensions,
+  });
+  return {
+    authorizationCredits: calculated.authorizationCredits,
+    policyVersion: policy.policy_version,
+    expiresInSeconds: 300,
+    route: input.route,
+  };
 }
 
 export async function createProviderAuthorization(input: Readonly<{
