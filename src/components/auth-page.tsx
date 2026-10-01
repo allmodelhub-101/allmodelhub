@@ -19,7 +19,7 @@ const story = {
   },
 } as const;
 
-export function AuthPage({ mode, nextPath }: { mode: EntryMode; nextPath: string }) {
+export function AuthPage({ mode, nextPath, authError }: { mode: EntryMode; nextPath: string; authError?: string }) {
   const content = story[mode];
 
   return <main className="auth-portal">
@@ -38,7 +38,7 @@ export function AuthPage({ mode, nextPath }: { mode: EntryMode; nextPath: string
         <div className="auth-model-orbit" aria-hidden="true"><span>GPT</span><span>Claude</span><span>Gemini</span><span>Flux</span><b>MS<small>Creative OS</small></b></div>
         <ul><li><i>✓</i>One secure account</li><li><i>✓</i>Transparent PKR credits</li><li><i>✓</i>Your work stays yours</li></ul>
       </aside>
-      <LoginForm nextPath={nextPath} initialMode={mode} />
+      <LoginForm nextPath={nextPath} initialMode={mode} authError={authError} />
     </section>
     <footer className="auth-page-foot"><span>© 2026 Models Suite</span><span><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></span></footer>
   </main>;

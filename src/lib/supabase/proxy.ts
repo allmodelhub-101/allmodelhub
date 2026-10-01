@@ -1,5 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { safeAuthenticatedPath } from "@/lib/security/request";
+
+function redirectWithCookies(destination: URL, response: NextResponse) {
+  const redirect = NextResponse.redirect(destination);
+  response.cookies.getAll().forEach((cookie) => redirect.cookies.set(cookie));
+  return redirect;
+}
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -25,16 +32,14 @@ export async function updateSession(request: NextRequest) {
   const protectedPrefixes = ["/chat", "/wallet", "/images", "/video", "/audio", "/projects", "/files", "/models", "/settings", "/admin", "/history", "/battle", "/usage", "/notifications", "/templates", "/support"];
   const protectedPath = protectedPrefixes.some((prefix) => path.startsWith(prefix));
   if (protectedPath && !user) {
-    const login = request.nextUrl.clone();
-    login.pathname = "/auth/login";
-    login.searchParams.set("next", path);
-    return NextResponse.redirect(login);
+    const login = new URL("/auth/login", request.url);
+    login.searchParams.set("next", `${path}${request.nextUrl.search}`);
+    return redirectWithCookies(login, response);
   }
 
-  if (user && path === "/auth/login") {
-    const next = request.nextUrl.searchParams.get("next") || "/chat";
-    const safeNext = next.startsWith("/") && !next.startsWith("//") && !next.includes("\\") ? next : "/chat";
-    return NextResponse.redirect(new URL(safeNext, request.url));
+  if (user && (path === "/auth/login" || path === "/auth/signup")) {
+    const next = safeAuthenticatedPath(request.nextUrl.searchParams.get("next"));
+    return redirectWithCookies(new URL(next, request.url), response);
   }
 
   return response;
