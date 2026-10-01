@@ -19,12 +19,13 @@ export async function POST(request: Request) {
     const { error } = await supabase.auth.signInWithPassword(body);
 
     if (error) {
-      const message = /email not confirmed/i.test(error.message)
-        ? "Please confirm your email before signing in."
-        : /invalid login credentials/i.test(error.message)
-          ? "Invalid email or password."
-          : "Unable to sign in right now.";
-      return NextResponse.json({ error: message }, { status: 401 });
+      if (/email not confirmed/i.test(error.message)) {
+        return NextResponse.json({ error: "Please confirm your email before signing in.", code: "EMAIL_NOT_CONFIRMED" }, { status: 401 });
+      }
+      if (/invalid login credentials/i.test(error.message)) {
+        return NextResponse.json({ error: "Check your email address and password.", code: "INVALID_CREDENTIALS" }, { status: 401 });
+      }
+      return NextResponse.json({ error: "Unable to sign in right now.", code: "SIGN_IN_UNAVAILABLE" }, { status: 401 });
     }
 
     return NextResponse.json({ ok: true });
