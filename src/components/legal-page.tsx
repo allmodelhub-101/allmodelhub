@@ -8,7 +8,6 @@ import {
   LockKey,
   ShieldCheck,
   Sparkle,
-  Warning,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import Image from "next/image";
@@ -35,7 +34,6 @@ const kindIcons = {
 const sectionIcons = [ShieldCheck, Sparkle, LockKey, HandHeart, FileText, CheckCircle, ClockCounterClockwise] as const;
 
 export function LegalPage({ document }: { document: LegalDocument }) {
-  const reviewed = process.env.LEGAL_REVIEWED === "true";
   const HeroIcon = kindIcons[document.kind];
 
   return (
@@ -91,11 +89,6 @@ export function LegalPage({ document }: { document: LegalDocument }) {
           </Link>;
         })}
       </nav>
-
-      {!reviewed && <aside className={styles.reviewNotice} aria-label="Policy review notice">
-        <Warning size={22} weight="fill" aria-hidden="true" />
-        <div><strong>Pre-launch review required</strong><p>This policy is a technical starter template and must be reviewed for the final business entity, supplier agreements, and applicable law before accepting paid customers.</p></div>
-      </aside>}
 
       <section className={styles.mobileContents}>
         <details>
