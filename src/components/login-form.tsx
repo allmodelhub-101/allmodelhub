@@ -35,6 +35,15 @@ function callbackErrorNotice(code?: string): Notice | null {
   if (code === "missing_code") {
     return { tone: "error", title: "That sign-in link is incomplete", detail: "Start the secure sign-in again. Your intended page has been preserved." };
   }
+  if (code === "verification_invalid") {
+    return { tone: "error", title: "That verification link is invalid or expired", detail: "Create a fresh verification email from the sign-up page, or sign in if you already confirmed your account." };
+  }
+  if (code === "verification_required") {
+    return { tone: "error", title: "Open your verification email first", detail: "The confirmation screen is available only after you use the secure link in your email." };
+  }
+  if (code === "provisioning_failed") {
+    return { tone: "error", title: "We could not prepare your workspace", detail: "Your email was verified, but account setup did not finish. Please sign in again to retry safely." };
+  }
   return { tone: "error", title: "We could not complete sign-in", detail: "The secure sign-in expired or was cancelled. Please try again." };
 }
 
