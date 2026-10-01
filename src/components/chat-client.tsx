@@ -104,8 +104,12 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     const field = textareaRef.current;
     if (!field) return;
     field.style.height = "auto";
-    field.style.height = `${Math.min(Math.max(field.scrollHeight, 44), 184)}px`;
-    field.style.overflowY = field.scrollHeight > 184 ? "auto" : "hidden";
+    const sizing = window.getComputedStyle(field);
+    const minimum = Number.parseFloat(sizing.minHeight) || 44;
+    const maximum = Number.parseFloat(sizing.maxHeight) || 184;
+    const height = Math.min(Math.max(field.scrollHeight, minimum), maximum);
+    field.style.height = `${height}px`;
+    field.style.overflowY = field.scrollHeight > maximum ? "auto" : "hidden";
   }, [input]);
 
   useEffect(() => {
