@@ -1,2 +1,9 @@
+import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
-export default function Page(){return <LegalPage title="Terms of Service"><h2>Using Models Suite</h2><p>Models Suite provides a unified interface for third-party and platform-operated AI services. You are responsible for the prompts, files and instructions you submit and for using generated outputs lawfully.</p><h2>Credits and billing</h2><p>One purchased Models Suite Credit represents PKR 1 of platform spending value. Purchased credits do not expire under the current product policy. Promotional credits may have separate eligibility, transfer and abuse-prevention rules. AI requests can consume different amounts depending on model, input, output and media settings.</p><h2>Expensive generations</h2><p>For higher-cost media tasks, the platform may reserve credits before submission and capture the applicable amount after processing. Unused reservations are released. Provider failures are handled according to the actual upstream billing outcome and the platform refund policy.</p><h2>Third-party models</h2><p>Availability, capabilities, latency and content rules can depend on upstream AI providers. Models Suite may add, remove, reroute or temporarily disable models to maintain reliability, compliance or sustainable pricing.</p><h2>Account security</h2><p>You must protect your account credentials and may not create accounts to abuse promotions, evade restrictions or interfere with the service.</p><h2>Changes</h2><p>We may update these terms when the product, supplier agreements or legal requirements change. Material updates should be communicated through the service where appropriate.</p></LegalPage>}
+import { LEGAL_DOCUMENTS } from "@/lib/legal-documents";
+
+export const metadata: Metadata = { title: "Terms of Service", description: LEGAL_DOCUMENTS.terms.description };
+
+export default function TermsPage() {
+  return <LegalPage document={LEGAL_DOCUMENTS.terms} />;
+}

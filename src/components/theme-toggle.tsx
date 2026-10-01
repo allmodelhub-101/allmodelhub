@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { Moon, Sun } from "@phosphor-icons/react";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("amh-theme");
-    const nextTheme = savedTheme === "light" ? "light" : "dark";
+    const nextTheme = savedTheme === "dark" ? "dark" : "light";
     // The browser preference is intentionally read after hydration to keep SSR markup deterministic.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(nextTheme);
