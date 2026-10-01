@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { ArrowRight, Check, Eye, EyeSlash, GoogleLogo, LockKey, ShieldCheck, WarningCircle } from "@phosphor-icons/react";
 import { createClient } from "@/lib/supabase/client";
-import { safeInternalPath } from "@/lib/security/request";
+import { safeAuthenticatedPath } from "@/lib/security/request";
 
 type Mode = "login" | "signup" | "recovery";
 type EntryMode = Exclude<Mode, "recovery">;
@@ -30,6 +30,14 @@ function accountServiceNotice(): Notice {
   };
 }
 
+function callbackErrorNotice(code?: string): Notice | null {
+  if (!code) return null;
+  if (code === "missing_code") {
+    return { tone: "error", title: "That sign-in link is incomplete", detail: "Start the secure sign-in again. Your intended page has been preserved." };
+  }
+  return { tone: "error", title: "We could not complete sign-in", detail: "The secure sign-in expired or was cancelled. Please try again." };
+}
+
 function providerErrorNotice(error: unknown, action: "google" | "signup" | "recovery"): Notice {
   const message = error instanceof Error ? error.message : "";
   if (/missing public supabase|configuration|not configured/i.test(message)) return accountServiceNotice();
@@ -48,13 +56,13 @@ function providerErrorNotice(error: unknown, action: "google" | "signup" | "reco
   return accountServiceNotice();
 }
 
-export function LoginForm({ nextPath = "/chat", initialMode = "login" }: { nextPath?: string; initialMode?: EntryMode }) {
-  const safeNextPath = safeInternalPath(nextPath);
+export function LoginForm({ nextPath = "/chat", initialMode = "login", authError }: { nextPath?: string; initialMode?: EntryMode; authError?: string }) {
+  const safeNextPath = safeAuthenticatedPath(nextPath);
   const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [notice, setNotice] = useState<Notice | null>(null);
+  const [notice, setNotice] = useState<Notice | null>(() => callbackErrorNotice(authError));
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [loading, setLoading] = useState(false);
   const callback = (next = safeNextPath) => `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
@@ -117,7 +125,11 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login" }: { nextP
         return;
       }
       if (isSignup) {
-        const { error } = await createClient().auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: callback() } });
+        const { data, error } = await createClient().auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: callback() } });
+        if (!error && data.session) {
+          window.location.assign(safeNextPath);
+          return;
+        }
         setNotice(error
           ? providerErrorNotice(error, "signup")
           : { tone: "success", title: "Check your email to finish creating your account", detail: "Open the secure verification link, then return here to sign in." });

@@ -1,6 +1,33 @@
 export function safeInternalPath(value: string | null | undefined, fallback = "/chat") {
   if (!value || !value.startsWith("/") || value.startsWith("//") || value.includes("\\") || /[\u0000-\u001f]/.test(value)) return fallback;
-  return value;
+  try {
+    const base = new URL("https://models-suite.invalid");
+    const resolved = new URL(value, base);
+    if (resolved.origin !== base.origin) return fallback;
+    return `${resolved.pathname}${resolved.search}${resolved.hash}`;
+  } catch {
+    return fallback;
+  }
+}
+
+export const DEFAULT_AUTH_DESTINATION = "/chat";
+
+const unsafeAuthenticatedDestinations = [
+  "/api",
+  "/_next",
+  "/auth/login",
+  "/auth/signup",
+  "/auth/callback",
+  "/auth/logout",
+];
+
+export function safeAuthenticatedPath(value: string | null | undefined) {
+  const path = safeInternalPath(value, DEFAULT_AUTH_DESTINATION);
+  const pathname = path.split(/[?#]/, 1)[0];
+  if (unsafeAuthenticatedDestinations.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+    return DEFAULT_AUTH_DESTINATION;
+  }
+  return path;
 }
 
 export function requestIp(request: Request) {
