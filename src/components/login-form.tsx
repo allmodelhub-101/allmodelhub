@@ -66,6 +66,9 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [loading, setLoading] = useState(false);
   const callback = (next = safeNextPath) => `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+  // OAuth redirect URLs are checked against Supabase's allow-list as complete URLs.
+  // Keep Google on the fixed, approved callback path; the server defaults it to /chat.
+  const googleCallback = () => `${window.location.origin}/auth/callback`;
   const isSignup = mode === "signup";
   const isRecovery = mode === "recovery";
 
@@ -102,7 +105,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
     setNotice(null);
     setFieldErrors({});
     try {
-      const { error } = await createClient().auth.signInWithOAuth({ provider: "google", options: { redirectTo: callback(), skipBrowserRedirect: false } });
+      const { error } = await createClient().auth.signInWithOAuth({ provider: "google", options: { redirectTo: googleCallback(), skipBrowserRedirect: false } });
       if (error) setNotice(providerErrorNotice(error, "google"));
     } catch (error) {
       setNotice(providerErrorNotice(error, "google"));
@@ -182,3 +185,4 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
     <p className="auth-legal"><ShieldCheck weight="fill" />Encrypted session · Protected by Supabase Auth</p>
   </section>;
 }
+
