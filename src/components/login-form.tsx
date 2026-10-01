@@ -127,6 +127,11 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
       if (isSignup) {
         const { data, error } = await createClient().auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: callback() } });
         if (!error && data.session) {
+          const provision = await fetch("/api/auth/provision", { method: "POST" });
+          if (!provision.ok) {
+            setNotice({ tone: "error", title: "Your account needs one more step", detail: "We could not finish setting up your workspace. Please try signing in again." });
+            return;
+          }
           window.location.assign(safeNextPath);
           return;
         }

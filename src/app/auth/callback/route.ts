@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { ensureProfile } from "@/lib/user-profile";
-import { grantWelcomeCredits } from "@/lib/wallet";
-import { looksDisposable } from "@/lib/disposable-email";
-import { getWelcomeCredits } from "@/lib/system-settings";
+import { provisionAuthenticatedUser } from "@/lib/auth-provision";
 import { safeAuthenticatedPath } from "@/lib/security/request";
 
 function loginErrorUrl(origin: string, code: string, next: string) {
@@ -23,12 +20,6 @@ export async function GET(request: Request) {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
   if (error) return NextResponse.redirect(loginErrorUrl(url.origin, "authentication_failed", next));
   const { data } = await supabase.auth.getUser();
-  if (data.user) {
-    await ensureProfile(data.user);
-    if (data.user.email_confirmed_at && !looksDisposable(data.user.email)) {
-      const welcomeCredits = await getWelcomeCredits();
-      if (welcomeCredits > 0) await grantWelcomeCredits(data.user.id, welcomeCredits).catch(() => undefined);
-    }
-  }
+  if (data.user) await provisionAuthenticatedUser(data.user);
   return NextResponse.redirect(new URL(next, url.origin));
 }
