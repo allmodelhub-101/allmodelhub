@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: "Use leading AI chat, image, video and audio models from one premium PKR-first workspace.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  verification: { google: "0lKNfQyh03-c0buhXWXSDz8zeSYO25qKzK_tlnbWkao" },
   icons: { icon: BRAND.logoPath, apple: BRAND.logoPath },
   openGraph: { title: `${BRAND.name} — ${BRAND.tagline}`, siteName: BRAND.name, images: [BRAND.logoPath] }
 };
