@@ -63,7 +63,7 @@ export function CinematicHome() {
             <h1 id="cin-hero-title">Every leading AI.<span>One PKR wallet.</span></h1>
             <p>Chat, reason, create images, generate videos and produce voice with leading AI models without separate subscriptions or confusing USD pricing.</p>
             <div className="cin-actions">
-              <Link className="btn btn-primary cin-primary" href="/auth/login">Start creating <span aria-hidden="true">↗</span></Link>
+              <Link className="btn btn-primary cin-primary" href="/auth/signup">Start creating <span aria-hidden="true">↗</span></Link>
               <a className="btn cin-secondary" href="#cinematic-story">Explore the experience</a>
             </div>
             <ul className="cin-proof" aria-label="Product highlights">
@@ -215,7 +215,7 @@ export function CinematicHome() {
 
       <section className="cin-final-cta" aria-labelledby="cin-final-title">
         <div className="cin-final-glow" aria-hidden="true" />
-        <div className="container"><span className="cin-overline"><i />One workspace. Every direction.</span><h2 id="cin-final-title">Start with one prompt.</h2><p>Use the model you want, or let Models Suite choose intelligently for you.</p><Link className="btn btn-primary cin-primary" href="/auth/login">Create your account <span aria-hidden="true">↗</span></Link></div>
+        <div className="container"><span className="cin-overline"><i />One workspace. Every direction.</span><h2 id="cin-final-title">Start with one prompt.</h2><p>Use the model you want, or let Models Suite choose intelligently for you.</p><Link className="btn btn-primary cin-primary" href="/auth/signup">Create your account <span aria-hidden="true">↗</span></Link></div>
       </section>
 
       <footer className="cin-footer"><div className="container"><div><strong>Models Suite</strong><span>Every Leading AI. One PKR Wallet.</span></div><nav aria-label="Legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/acceptable-use">Acceptable Use</a><a href="/refunds">Refunds</a></nav><small>© 2026 Models Suite</small></div></footer>

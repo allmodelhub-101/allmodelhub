@@ -51,7 +51,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
           <div className={styles.headerActions}>
             <ThemeToggle />
             <Link className={styles.loginLink} href="/auth/login">Login</Link>
-            <Link className={styles.startLink} href="/auth/login">Start Free</Link>
+            <Link className={styles.startLink} href="/auth/signup">Start Free</Link>
           </div>
         </div>
       </header>

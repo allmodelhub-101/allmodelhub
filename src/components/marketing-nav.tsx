@@ -38,7 +38,7 @@ export function MarketingNav() {
         <div className="nav-actions">
           <ThemeToggle />
           <Link className="btn btn-ghost" href="/auth/login">Login</Link>
-          <Link className="btn btn-primary" href="/auth/login">Start Free</Link>
+          <Link className="btn btn-primary" href="/auth/signup">Start Free</Link>
           <button className={`${styles.menuButton} ${open ? styles.open : ""}`} type="button" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} aria-controls="marketing-mobile-menu" onClick={() => setOpen((value) => !value)}><span /><span /></button>
         </div>
       </div>
@@ -46,7 +46,7 @@ export function MarketingNav() {
     <div className={`${styles.backdrop} ${open ? styles.visible : ""}`} aria-hidden="true" onClick={() => setOpen(false)} />
     <div className={`${styles.mobileMenu} ${open ? styles.visible : ""}`} id="marketing-mobile-menu" aria-hidden={!open}>
       <nav aria-label="Mobile navigation">{navLinks.map(([label, href], index) => <a href={href} key={href} onClick={() => setOpen(false)}><small>0{index + 1}</small><span>{label}</span><b aria-hidden="true">↗</b></a>)}</nav>
-      <div className={styles.mobileActions}><Link className="btn btn-ghost" href="/auth/login">Login</Link><Link className="btn btn-primary" href="/auth/login">Start Free</Link></div>
+      <div className={styles.mobileActions}><Link className="btn btn-ghost" href="/auth/login">Login</Link><Link className="btn btn-primary" href="/auth/signup">Start Free</Link></div>
     </div>
   </>;
 }
