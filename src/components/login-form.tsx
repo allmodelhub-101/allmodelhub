@@ -93,6 +93,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
   }, [initialMode]);
 
   function changeMode(nextMode: EntryMode) {
+    if (nextMode === mode) return;
     setPassword("");
     setNotice(null);
     setFieldErrors({});
@@ -134,6 +135,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
     setFieldErrors({});
     try {
       const { error } = await createClient().auth.signInWithOAuth({ provider: "google", options: { redirectTo: googleCallback(), skipBrowserRedirect: false } });
+      if (!error) window.sessionStorage.removeItem("models-suite-auth-email");
       if (error) setNotice(providerErrorNotice(error, "google"));
     } catch (error) {
       setNotice(providerErrorNotice(error, "google"));
@@ -163,6 +165,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
             setNotice({ tone: "error", title: "Your account needs one more step", detail: "We could not finish setting up your workspace. Please try signing in again." });
             return;
           }
+          window.sessionStorage.removeItem("models-suite-auth-email");
           window.location.assign(safeNextPath);
           return;
         }
@@ -185,6 +188,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
         }
         return;
       }
+      window.sessionStorage.removeItem("models-suite-auth-email");
       window.location.assign(safeNextPath);
     } catch {
       setNotice(accountServiceNotice());
@@ -200,11 +204,11 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
       : { eyebrow: "Sign in to Models Suite", title: "Welcome back", detail: "Continue where you left off." };
 
   return <section className="auth-form-panel" aria-labelledby="auth-title">
-    <div className="auth-mode-toggle" role="tablist" aria-label="Account access mode">
+    {!isRecovery && <div className="auth-mode-toggle" role="tablist" aria-label="Account access mode">
       <span className={`auth-mode-indicator ${isSignup ? "is-signup" : ""}`} aria-hidden="true" />
       <button type="button" role="tab" aria-selected={!isSignup} aria-controls="auth-form-content" onClick={() => changeMode("login")}>Sign in</button>
       <button type="button" role="tab" aria-selected={isSignup} aria-controls="auth-form-content" onClick={() => changeMode("signup")}>Create account</button>
-    </div>
+    </div>}
     <div id="auth-form-content" role="tabpanel">
       <header className="auth-form-head"><span aria-hidden="true"><LockKey weight="duotone" /></span><div><small>{header.eyebrow}</small><h1 id="auth-title">{header.title}</h1><p>{header.detail}</p></div></header>
       {!isRecovery && <><button className="auth-google" type="button" onClick={google} disabled={loading}><GoogleLogo weight="bold" /><span>{loading ? "Connecting to Google…" : "Continue with Google"}</span><ArrowRight aria-hidden="true" /></button><div className="auth-divider"><span />or continue with email<span /></div></>}
