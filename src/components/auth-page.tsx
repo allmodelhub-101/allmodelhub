@@ -6,22 +6,7 @@ import { BRAND } from "@/lib/brand";
 
 type EntryMode = "login" | "signup";
 
-const story = {
-  login: {
-    kicker: "Secure member access",
-    heading: <>Welcome back<br /><em>to your work.</em></>,
-    description: "Pick up conversations and creations across the leading text, image, video, and audio models in your private workspace.",
-  },
-  signup: {
-    kicker: "One prompt. Every leading model.",
-    heading: <>Your ideas,<br /><em>amplified.</em></>,
-    description: "Create one secure account for your text, image, video, and audio work in Models Suite.",
-  },
-} as const;
-
 export function AuthPage({ mode, nextPath, authError }: { mode: EntryMode; nextPath: string; authError?: string }) {
-  const content = story[mode];
-
   return <main className="auth-portal">
     <div className="auth-aurora one" />
     <div className="auth-aurora two" />
@@ -31,12 +16,16 @@ export function AuthPage({ mode, nextPath, authError }: { mode: EntryMode; nextP
       <div className="auth-nav-actions"><ThemeToggle /><Link href="/support">Need help?</Link></div>
     </nav>
     <section className="auth-stage">
-      <aside className={`auth-story auth-story-${mode}`}>
-        <span className="auth-kicker">{content.kicker}</span>
-        <h2>{content.heading}</h2>
-        <p>{content.description}</p>
-        <div className="auth-model-orbit" aria-hidden="true"><span>GPT</span><span>Claude</span><span>Gemini</span><span>Flux</span><b>MS<small>Creative OS</small></b></div>
-        <ul><li><i>✓</i>One secure account</li><li><i>✓</i>Transparent PKR credits</li><li><i>✓</i>Your work stays yours</li></ul>
+      <aside className="auth-story">
+        <span className="auth-kicker">One intelligent workspace</span>
+        <h2>Everything you create.<br /><em>One powerful place.</em></h2>
+        <p>Chat, images, video, audio and projects in one intelligent workspace.</p>
+        <div className="auth-model-orbit" aria-hidden="true">
+          <span className="auth-capability chat">Chat</span><span className="auth-capability image">Image</span><span className="auth-capability video">Video</span><span className="auth-capability audio">Audio</span>
+          <i className="auth-orbit auth-orbit-one" /><i className="auth-orbit auth-orbit-two" />
+          <b>MS<small>Creative OS</small></b>
+        </div>
+        <ul><li><i>✓</i>Private creative workspace</li><li><i>✓</i>Transparent PKR credits</li></ul>
       </aside>
       <LoginForm nextPath={nextPath} initialMode={mode} authError={authError} />
     </section>
