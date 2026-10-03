@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, CaretDown, Check, CheckCircle, Clock, Copy, CreditCard, FileArrowUp, Info, Receipt, ShieldCheck, Sparkle, UploadSimple, Wallet, X } from "@phosphor-icons/react";
+import { ArrowDownLeft, ArrowLeft, ArrowRight, ArrowUpRight, CaretDown, Check, CheckCircle, Clock, Copy, CreditCard, FileArrowUp, Info, Receipt, ShieldCheck, Sparkle, UploadSimple, Wallet, X } from "@phosphor-icons/react";
 import { calculateTopupBonus, isValidTopupAmount, TOPUP_BONUS_TIERS, TOPUP_MAX_PKR, TOPUP_MIN_PKR } from "@/lib/topup-bonus";
 
 type Method = { id: string; label: string; accountTitle: string; accountNumber: string; iban?: string; instructions: string };
@@ -17,6 +17,10 @@ const methodMeta: Record<string, { caption: string; logo: string }> = {
 };
 const money = (value: number) => Math.max(0, Number.isFinite(value) ? value : 0).toLocaleString("en-PK", { maximumFractionDigits: 2 });
 const configuredMethod = (item: Method) => Boolean(item.accountTitle && item.accountNumber && !/configure in vercel|not configured/i.test(`${item.accountTitle} ${item.accountNumber} ${item.iban || ""}`));
+const transactionLabel = (type: string) => ({ generation_capture: "AI generation", promo_credit: "Welcome credits", payment_approved: "Payment approved", manual_payment_approved: "Payment approved", wallet_adjustment: "Wallet adjustment" }[type] || type.replace(/[_-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()));
+const transactionDate = (value: string) => new Intl.DateTimeFormat("en-PK", { timeZone: "Asia/Karachi", day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" }).format(new Date(value));
+const transactionAmount = (value: number) => `${value >= 0 ? "+" : "−"}${Math.abs(value).toFixed(4)}`;
+const shortReference = (value: string) => value.length > 18 ? `${value.slice(0, 8)}…${value.slice(-6)}` : value;
 
 export function WalletClient({ initialWallet, initialTransactions }: { initialWallet: WalletData; initialTransactions: Transaction[] }) {
   const [wallet, setWallet] = useState(initialWallet);
@@ -168,10 +172,10 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
 
   const hasValidAmount = amountText !== "" && !amountError && isValidTopupAmount(amount) && amount >= minimum;
   const balanceCards = [
-    { label: "Available", value: wallet.available, detail: "Ready to use after temporary reservations", icon: CreditCard, primary: true },
-    { label: "Purchased", value: wallet.purchased, detail: "Never expires", icon: CheckCircle },
-    { label: "Promotional", value: wallet.promo, detail: "Tracked separately", icon: Receipt },
-    { label: "Temporarily reserved", value: wallet.reserved, detail: "Not spent; released or captured after settlement", icon: Clock }
+    { label: "Available", value: wallet.available, detail: "Available to use now", icon: CreditCard, primary: true },
+    { label: "Purchased", value: wallet.purchased, detail: "Purchased credits never expire", icon: CheckCircle },
+    { label: "Promotional", value: wallet.promo, detail: "Bonus credits, tracked separately", icon: Receipt },
+    { label: "Temporarily reserved", value: wallet.reserved, detail: "Held for work in progress", icon: Clock }
   ];
 
   return <div className="wallet-workspace">
@@ -214,8 +218,8 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
         {status && <div className="wallet-status" role="alert" aria-live="polite">{status}</div>}
       </form>}
     </section>
-    <section className="wallet-protection-strip"><div><ShieldCheck weight="fill" /><span><b>Credits never expire</b><small>Your purchased balance stays yours.</small></span></div><div><Wallet weight="fill" /><span><b>Protected spending</b><small>Reservations prevent a negative balance.</small></span></div><div><Receipt weight="fill" /><span><b>Clear ledger</b><small>Every movement is recorded below.</small></span></div></section>
-    <section className="wallet-ledger"><div className="wallet-ledger-heading"><span><Receipt weight="fill" /><span><span className="kicker">Receipts</span><h2 className="page-title">Recent transactions</h2></span></span><small>Every movement is recorded</small></div><div className="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance after</th><th>Reference</th></tr></thead><tbody>{transactions.length ? transactions.map((transaction) => <tr key={transaction.id}><td>{new Date(transaction.created_at).toLocaleString()}</td><td>{transaction.type}</td><td style={{ color: Number(transaction.amount) >= 0 ? "var(--success)" : "var(--text)" }}>{Number(transaction.amount) >= 0 ? "+" : ""}{Number(transaction.amount).toFixed(4)}</td><td>{transaction.balance_after == null ? "—" : Number(transaction.balance_after).toFixed(4)}</td><td>{transaction.reference_id || "—"}</td></tr>) : <tr><td colSpan={5} className="muted">No transactions yet.</td></tr>}</tbody></table></div></section>
+    <section className="wallet-info-strip" aria-label="Wallet information"><div><CheckCircle weight="fill" /><span><b>Purchased credits don&apos;t expire</b><small>Your bought balance remains available.</small></span></div><div><Clock weight="fill" /><span><b>Manual review</b><small>Credits are added after payment approval.</small></span></div><div><Receipt weight="fill" /><span><b>Activity history</b><small>Review your recent transactions below.</small></span></div></section>
+     <section className="wallet-ledger"><div className="wallet-ledger-heading"><span><Receipt weight="fill" /><span><span className="kicker">Activity</span><h2 className="page-title">Recent transactions</h2></span></span><small>Latest wallet activity</small></div><div className="table-wrap wallet-transaction-table"><table><thead><tr><th>Date</th><th>Activity</th><th>Amount</th><th>Balance after</th><th>Reference</th></tr></thead><tbody>{transactions.length ? transactions.map((transaction) => { const amount = Number(transaction.amount); return <tr key={transaction.id}><td>{transactionDate(transaction.created_at)}</td><td><span className={`wallet-transaction-kind ${amount >= 0 ? "is-credit" : "is-debit"}`}>{amount >= 0 ? <ArrowDownLeft weight="bold" /> : <ArrowUpRight weight="bold" />}{transactionLabel(transaction.type)}</span></td><td><span className={`wallet-transaction-amount ${amount >= 0 ? "is-credit" : "is-debit"}`}><i aria-hidden="true">{amount >= 0 ? "+" : "−"}</i>{transactionAmount(amount).slice(1)}</span></td><td>{transaction.balance_after == null ? "—" : Number(transaction.balance_after).toFixed(4)}</td><td>{transaction.reference_id ? <button type="button" className="wallet-reference" title={transaction.reference_id} aria-label={`Copy reference ${transaction.reference_id}`} onClick={() => void copyValue(transaction.reference_id!, `reference-${transaction.id}`)}>{copied === `reference-${transaction.id}` ? "Copied" : shortReference(transaction.reference_id)}</button> : "—"}</td></tr>; }) : <tr><td colSpan={5} className="muted">No recent wallet activity yet.</td></tr>}</tbody></table></div></section>
   </div>;
 }
 
