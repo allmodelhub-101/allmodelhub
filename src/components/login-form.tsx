@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Check, Eye, EyeSlash, GoogleLogo, LockKey, ShieldCheck, WarningCircle } from "@phosphor-icons/react";
 import { createClient } from "@/lib/supabase/client";
 import { safeAuthenticatedPath } from "@/lib/security/request";
@@ -66,6 +66,7 @@ function providerErrorNotice(error: unknown, action: "google" | "signup" | "reco
 }
 
 export function LoginForm({ nextPath = "/chat", initialMode = "login", authError }: { nextPath?: string; initialMode?: EntryMode; authError?: string }) {
+  const router = useRouter();
   const safeNextPath = safeAuthenticatedPath(nextPath);
   const [mode, setMode] = useState<Mode>(initialMode);
   const [email, setEmail] = useState("");
@@ -80,6 +81,25 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
   const googleCallback = () => `${window.location.origin}/auth/callback`;
   const isSignup = mode === "signup";
   const isRecovery = mode === "recovery";
+
+  useEffect(() => {
+    const savedEmail = window.sessionStorage.getItem("models-suite-auth-email");
+    if (savedEmail) setEmail(savedEmail);
+  }, []);
+
+  useEffect(() => {
+    setMode(initialMode);
+    setPassword("");
+  }, [initialMode]);
+
+  function changeMode(nextMode: EntryMode) {
+    if (nextMode === mode) return;
+    setPassword("");
+    setNotice(null);
+    setFieldErrors({});
+    setMode(nextMode);
+    router.push(`/auth/${nextMode === "login" ? "login" : "signup"}?next=${encodeURIComponent(safeNextPath)}`);
+  }
 
   function clearField(field: FieldName) {
     setFieldErrors((current) => {
@@ -115,6 +135,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
     setFieldErrors({});
     try {
       const { error } = await createClient().auth.signInWithOAuth({ provider: "google", options: { redirectTo: googleCallback(), skipBrowserRedirect: false } });
+      if (!error) window.sessionStorage.removeItem("models-suite-auth-email");
       if (error) setNotice(providerErrorNotice(error, "google"));
     } catch (error) {
       setNotice(providerErrorNotice(error, "google"));
@@ -144,6 +165,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
             setNotice({ tone: "error", title: "Your account needs one more step", detail: "We could not finish setting up your workspace. Please try signing in again." });
             return;
           }
+          window.sessionStorage.removeItem("models-suite-auth-email");
           window.location.assign(safeNextPath);
           return;
         }
@@ -166,6 +188,7 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
         }
         return;
       }
+      window.sessionStorage.removeItem("models-suite-auth-email");
       window.location.assign(safeNextPath);
     } catch {
       setNotice(accountServiceNotice());
@@ -175,23 +198,31 @@ export function LoginForm({ nextPath = "/chat", initialMode = "login", authError
   }
 
   const header = isRecovery
-    ? { eyebrow: "Account recovery", title: "Reset your password.", detail: "We’ll email you a secure recovery link." }
+    ? { eyebrow: "Account recovery", title: "Reset your password", detail: "We’ll email you a secure recovery link." }
     : isSignup
-      ? { eyebrow: "Create your Models Suite account", title: "Create your workspace.", detail: "Start with email or Google, then verify your account securely." }
-      : { eyebrow: "Sign in to Models Suite", title: "Welcome back.", detail: "Continue to your AI creation workspace." };
+      ? { eyebrow: "Create your Models Suite account", title: "Create your account", detail: "Start creating with Models Suite." }
+      : { eyebrow: "Sign in to Models Suite", title: "Welcome back", detail: "Continue where you left off." };
 
   return <section className="auth-form-panel" aria-labelledby="auth-title">
-    <header className="auth-form-head"><span aria-hidden="true"><LockKey weight="duotone" /></span><div><small>{header.eyebrow}</small><h1 id="auth-title">{header.title}</h1><p>{header.detail}</p></div></header>
-    {!isRecovery && <><button className="auth-google" type="button" onClick={google} disabled={loading}><GoogleLogo weight="bold" /><span>{loading ? "Connecting to Google…" : isSignup ? "Create account with Google" : "Continue with Google"}</span><ArrowRight aria-hidden="true" /></button><div className="auth-divider"><span />or {isSignup ? "create with" : "continue with"} email<span /></div></>}
+    {!isRecovery && <div className="auth-mode-toggle" role="tablist" aria-label="Account access mode">
+      <span className={`auth-mode-indicator ${isSignup ? "is-signup" : ""}`} aria-hidden="true" />
+      <button type="button" role="tab" aria-selected={!isSignup} aria-controls="auth-form-content" onClick={() => changeMode("login")}>Sign in</button>
+      <button type="button" role="tab" aria-selected={isSignup} aria-controls="auth-form-content" onClick={() => changeMode("signup")}>Create account</button>
+    </div>}
+    <div id="auth-form-content" role="tabpanel">
+      <header className="auth-form-head"><span aria-hidden="true"><LockKey weight="duotone" /></span><div><small>{header.eyebrow}</small><h1 id="auth-title">{header.title}</h1><p>{header.detail}</p></div></header>
+      {!isRecovery && <><button className="auth-google" type="button" onClick={google} disabled={loading}><GoogleLogo weight="bold" /><span>{loading ? "Connecting to Google…" : "Continue with Google"}</span><ArrowRight aria-hidden="true" /></button><div className="auth-divider"><span />or continue with email<span /></div></>}
     <form className="auth-form" onSubmit={submit} noValidate>
-      <label className={fieldErrors.email ? "has-error" : ""}><span>Email address</span><input type="email" autoComplete="email" value={email} onChange={(event) => { setEmail(event.target.value); clearField("email"); }} placeholder="you@example.com" aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? "email-error" : "email-help"} /><small className="auth-field-help" id="email-help">We’ll only use this to access your Models Suite account.</small>{fieldErrors.email && <small className="auth-field-error" id="email-error"><WarningCircle weight="fill" />{fieldErrors.email}</small>}</label>
-      {!isRecovery && <label className={fieldErrors.password ? "has-error" : ""}><span>Password</span><div className="auth-password"><input type={showPassword ? "text" : "password"} autoComplete={isSignup ? "new-password" : "current-password"} value={password} onChange={(event) => { setPassword(event.target.value); clearField("password"); }} placeholder={isSignup ? "Create a strong password" : "Enter your password"} aria-invalid={Boolean(fieldErrors.password)} aria-describedby={fieldErrors.password ? "password-error" : isSignup ? "password-help" : undefined} /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Hide password" : "Show password"}>{showPassword ? <EyeSlash /> : <Eye />}</button></div>{isSignup && <small className="auth-field-help" id="password-help">Use 8+ characters with uppercase, lowercase, a number, and a symbol.</small>}{fieldErrors.password && <small className="auth-field-error" id="password-error"><WarningCircle weight="fill" />{fieldErrors.password}</small>}</label>}
+      <label className={fieldErrors.email ? "has-error" : ""}><span>Email address</span><input type="email" autoComplete="email" value={email} onChange={(event) => { setEmail(event.target.value); window.sessionStorage.setItem("models-suite-auth-email", event.target.value); clearField("email"); }} placeholder="you@example.com" aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? "email-error" : "email-help"} /><small className="auth-field-help" id="email-help">We’ll only use this to access your Models Suite account.</small>{fieldErrors.email && <small className="auth-field-error" id="email-error"><WarningCircle weight="fill" />{fieldErrors.email}</small>}</label>
+      {!isRecovery && <label className={fieldErrors.password ? "has-error" : ""}><span>{isSignup ? "New password" : "Password"}</span><div className="auth-password"><input type={showPassword ? "text" : "password"} autoComplete={isSignup ? "new-password" : "current-password"} value={password} onChange={(event) => { setPassword(event.target.value); clearField("password"); }} placeholder={isSignup ? "Create a strong password" : "Enter your password"} aria-invalid={Boolean(fieldErrors.password)} aria-describedby={fieldErrors.password ? "password-error" : isSignup ? "password-help password-policy" : undefined} /><button type="button" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Hide password" : "Show password"}>{showPassword ? <EyeSlash /> : <Eye />}</button></div>{isSignup && <small className="auth-field-help" id="password-help">Use 8+ characters with uppercase, lowercase, a number, and a symbol.</small>}{isSignup && password && <small className={getPasswordIssue(password) ? "auth-password-policy" : "auth-password-policy is-valid"} id="password-policy" aria-live="polite">{getPasswordIssue(password) || "Password meets the account requirements."}</small>}{fieldErrors.password && <small className="auth-field-error" id="password-error"><WarningCircle weight="fill" />{fieldErrors.password}</small>}</label>}
       {mode === "login" && <button className="auth-forgot" type="button" onClick={() => { setMode("recovery"); setNotice(null); setFieldErrors({}); }}>Forgot password?</button>}
-      <button className="auth-submit" disabled={loading}>{loading ? <i className="auth-spinner" /> : <>{isSignup ? "Create account" : isRecovery ? "Email me a recovery link" : "Sign in to workspace"}<ArrowRight weight="bold" /></>}</button>
+      <button className="auth-submit" disabled={loading}>{loading ? <i className="auth-spinner" /> : <>{isSignup ? "Create my account" : isRecovery ? "Email me a recovery link" : "Sign in to workspace"}<ArrowRight weight="bold" /></>}</button>
+      {isSignup && <p className="auth-signup-note"><ShieldCheck weight="fill" />Verify your email to activate your account.</p>}
     </form>
     {notice && <div className={`auth-message ${notice.tone}`} role={notice.tone === "error" ? "alert" : "status"} aria-live={notice.tone === "error" ? "assertive" : "polite"}>{notice.tone === "success" ? <Check weight="bold" /> : <WarningCircle weight="fill" />}<div><strong>{notice.title}</strong><p>{notice.detail}</p></div></div>}
-    <footer className="auth-switch">{isRecovery ? <>Remembered it? <button type="button" onClick={() => { setMode("login"); setNotice(null); setFieldErrors({}); }}>Back to sign in</button></> : isSignup ? <>Already have an account? <Link href={`/auth/login?next=${encodeURIComponent(safeNextPath)}`}>Sign in</Link></> : <>New to Models Suite? <Link href={`/auth/signup?next=${encodeURIComponent(safeNextPath)}`}>Create an account</Link></>}</footer>
+    <footer className="auth-switch">{isRecovery ? <>Remembered it? <button type="button" onClick={() => { setMode("login"); setNotice(null); setFieldErrors({}); }}>Back to sign in</button></> : isSignup ? <>Already have an account? <button type="button" onClick={() => changeMode("login")}>Sign in</button></> : <>New to Models Suite? <button type="button" onClick={() => changeMode("signup")}>Create an account</button></>}</footer>
     <p className="auth-legal"><ShieldCheck weight="fill" />Encrypted session · Protected by Supabase Auth</p>
+    </div>
   </section>;
 }
 
