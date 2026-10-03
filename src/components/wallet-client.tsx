@@ -89,8 +89,14 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
   function chooseProof(file: File | null) {
     if (!file) return;
     const allowed = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
-    if (!allowed.includes(file.type)) return setStatus("Use a JPG, PNG, WebP, or PDF receipt.");
-    if (file.size > 5 * 1024 * 1024) return setStatus("Receipt must be 5 MB or smaller.");
+    if (!allowed.includes(file.type)) {
+      removeProof();
+      return setStatus("Use a JPG, PNG, WebP, or PDF receipt.");
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      removeProof();
+      return setStatus("Receipt must be 5 MB or smaller.");
+    }
     setProof(file);
     setStatus("");
   }
