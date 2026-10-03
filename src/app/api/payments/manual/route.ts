@@ -40,7 +40,7 @@ export async function POST(request: Request) {
   const note = String(form.get("note") || "").trim().slice(0, 500);
   const proof = form.get("proof");
 
-  if (!['easypaisa','meezan'].includes(method)) return NextResponse.json({ error: "Invalid payment method." }, { status: 400 });
+  if (!getManualPaymentMethods().some((item) => item.id === method)) return NextResponse.json({ error: "This payment method is currently unavailable." }, { status: 400 });
   const minimum = Math.max(TOPUP_MIN_PKR, await getMinimumTopupPkr());
   if (!Number.isInteger(amount) || amount < minimum) return NextResponse.json({ error: `Minimum top-up is PKR ${minimum.toLocaleString()}.` }, { status: 400 });
   if (amount > TOPUP_MAX_PKR) return NextResponse.json({ error: `Maximum top-up is PKR ${TOPUP_MAX_PKR.toLocaleString()}.` }, { status: 400 });
