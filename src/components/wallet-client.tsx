@@ -25,7 +25,7 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
   const [minimum, setMinimum] = useState(TOPUP_MIN_PKR);
   const [methodsState, setMethodsState] = useState<"loading" | "ready" | "error">("loading");
   const [method, setMethod] = useState("");
-  const [amountText, setAmountText] = useState("1000");
+  const [amountText, setAmountText] = useState("");
   const [reference, setReference] = useState("");
   const [proof, setProof] = useState<File | null>(null);
   const [status, setStatus] = useState("");
@@ -47,9 +47,9 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
       const nextMinimum = Math.max(TOPUP_MIN_PKR, Number.isInteger(data.minimum) ? data.minimum : TOPUP_MIN_PKR);
       const nextMethods = Array.isArray(data.methods) ? data.methods.filter(configuredMethod) : [];
       setMinimum(nextMinimum);
-      setAmountText((current) => Number(current) >= nextMinimum ? current : String(nextMinimum));
+      setAmountText((current) => current && Number(current) < nextMinimum ? "" : current);
       setMethods(nextMethods);
-      setMethod((current) => nextMethods.some((item: Method) => item.id === current) ? current : nextMethods[0]?.id || "");
+      setMethod((current) => nextMethods.some((item: Method) => item.id === current) ? current : "");
       setMethodsState("ready");
       if (!nextMethods.length) setStatus("No payment method is available right now. Please try again later.");
     } catch (error) {
@@ -60,7 +60,10 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
     }
   }
 
-  useEffect(() => { void loadMethods(); }, []);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void loadMethods(), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const amount = Number(amountText);
   const selected = methods.find((item) => item.id === method);
@@ -78,7 +81,10 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
     setDirection(next >= step ? "forward" : "back");
     setStatus("");
     setStep(next);
-    window.setTimeout(() => panelRef.current?.focus(), 40);
+    window.setTimeout(() => {
+      panelRef.current?.focus();
+      panelRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    }, 40);
   }
 
   function updateAmount(value: string) {
@@ -153,11 +159,14 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
   function reset() {
     setSubmitted(null);
     setStep(1);
+    setAmountText("");
+    setMethod("");
     setReference("");
     removeProof();
     setStatus("");
   }
 
+  const hasValidAmount = amountText !== "" && !amountError && isValidTopupAmount(amount) && amount >= minimum;
   const balanceCards = [
     { label: "Available", value: wallet.available, detail: "Ready to use after temporary reservations", icon: CreditCard, primary: true },
     { label: "Purchased", value: wallet.purchased, detail: "Never expires", icon: CheckCircle },
@@ -175,22 +184,21 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
           {step === 1 && <section className="wallet-step-layout">
             <div className="wallet-step-main">
               <StepHeading number="01" title="Choose your amount" detail={`Top up from PKR ${money(minimum)} to ${money(TOPUP_MAX_PKR)}.`} />
-              <label className="label">Amount in PKR<span className={`wallet-amount-field ${amountError ? "has-error" : ""}`}><span>PKR</span><input inputMode="numeric" min={minimum} max={TOPUP_MAX_PKR} value={amountText} onChange={(event) => updateAmount(event.target.value)} aria-invalid={Boolean(amountError)} aria-describedby="amount-help" /><small>{bonus.percent}% bonus</small></span></label>
+              <label className="label">Amount in PKR<span className={`wallet-amount-field ${amountError ? "has-error" : ""}`}><span>PKR</span><input inputMode="numeric" min={minimum} max={TOPUP_MAX_PKR} value={amountText} placeholder={`Min. ${money(minimum)}`} onChange={(event) => updateAmount(event.target.value)} aria-invalid={Boolean(amountError)} aria-describedby="amount-help" /><small>{hasValidAmount ? `${bonus.percent}% bonus` : "Choose amount"}</small></span></label>
               {amountError && <p id="amount-help" className="wallet-field-error" role="alert">{amountError}</p>}
               <div className="wallet-amount-chips" aria-label="Suggested top-up amounts">{suggestedAmounts.map((value) => <button type="button" className={amount === value ? "active" : ""} onClick={() => updateAmount(String(value))} disabled={value < minimum} key={value}>PKR {money(value)}</button>)}</div>
               <BonusDisclosure amount={amount} />
               <div className="wallet-payment-methods"><h3>Select payment method</h3>{methodsState === "loading" && <div className="wallet-account-loading">Loading secure payment methods…</div>}{methodsState === "error" && <button type="button" className="wallet-retry" onClick={() => void loadMethods()}>Retry loading payment methods</button>}{methodsState === "ready" && <div className="wallet-method-grid" role="radiogroup" aria-label="Payment method">{methods.map((item) => <button type="button" role="radio" aria-checked={method === item.id} className={`wallet-method ${method === item.id ? "active" : ""}`} onClick={() => { setMethod(item.id); setStatus(""); }} key={item.id}><PaymentLogo method={item.id} /><span><strong>{item.label}</strong><small>{methodMeta[item.id]?.caption || "Manual payment"}</small></span>{method === item.id && <Check weight="bold" />}</button>)}</div>}</div>
             </div>
-            <aside className="wallet-step-side"><ValueSummary amount={amount} bonus={bonus.bonusCredits} percent={bonus.percent} total={bonus.totalCredits} method={selected?.label} /><p className="wallet-summary-note"><Info weight="fill" />Your payment is reviewed manually before credits are added.</p><button type="button" className="btn btn-primary wallet-submit" disabled={!canContinue} onClick={() => moveTo(2)}>View payment details <ArrowRight weight="bold" /></button></aside>
+            <aside className="wallet-step-side"><ValueSummary amount={hasValidAmount ? amount : null} bonus={hasValidAmount ? bonus.bonusCredits : null} percent={hasValidAmount ? bonus.percent : null} total={hasValidAmount ? bonus.totalCredits : null} method={selected?.label} /><p className="wallet-summary-note"><Info weight="fill" />{!hasValidAmount ? "Choose an amount, then select a payment method to continue." : !selected ? "Select an available payment method to continue." : "Your payment is reviewed manually before credits are added."}</p><button type="button" className="btn btn-primary wallet-submit" disabled={!canContinue} onClick={() => moveTo(2)}>View payment details <ArrowRight weight="bold" /></button></aside>
           </section>}
           {step === 2 && <section className="wallet-step-layout">
             <div className="wallet-step-main">
               <StepHeading number="02" title="Make your payment" detail="Transfer the exact amount to the selected recipient." />
               <div className="wallet-pay-focus"><small>Send exactly</small><strong>PKR {money(amount)}</strong><p>Use these details only for this selected amount and method.</p></div>
               {selected ? <><div className="wallet-transfer-brand"><PaymentLogo method={method} /><div><small>Pay with</small><strong>{selected.label}</strong></div></div><div className="wallet-account-details"><CopyRow label="Account title" value={selected.accountTitle} id="title" copied={copied} copyValue={copyValue} /><CopyRow label={selected.iban ? "Account number" : "Mobile account"} value={selected.accountNumber} id="account" copied={copied} copyValue={copyValue} />{selected.iban && <CopyRow label="IBAN" value={selected.iban} id="iban" copied={copied} copyValue={copyValue} />}</div></> : <div className="wallet-account-loading">Payment details are unavailable. Return and choose an available method.</div>}
-              <ol className="wallet-payment-instructions"><li>Transfer the exact amount shown above.</li><li>Save your transaction or reference ID.</li><li>Keep your payment receipt for the next step.</li></ol>
             </div>
-            <aside className="wallet-step-side"><CompactSummary amount={amount} bonus={bonus.bonusCredits} total={bonus.totalCredits} method={selected?.label || "—"} /><p className="wallet-summary-note"><ShieldCheck weight="fill" />Changing your amount or method means using the updated recipient details.</p><div className="wallet-actions"><button type="button" className="btn btn-ghost" onClick={() => moveTo(1)}><ArrowLeft />Edit</button><button type="button" className="btn btn-primary" disabled={!selected} onClick={() => moveTo(3)}>I’ve made the transfer <ArrowRight /></button></div></aside>
+            <aside className="wallet-step-side"><CompactSummary amount={amount} bonus={bonus.bonusCredits} total={bonus.totalCredits} method={selected?.label || "—"} /><p className="wallet-summary-note"><ShieldCheck weight="fill" />Changing your amount or method means using the updated recipient details.</p><div className="wallet-actions"><button type="button" className="btn btn-ghost" onClick={() => moveTo(1)}><ArrowLeft />Edit</button><button type="button" className="btn btn-primary" disabled={!selected} onClick={() => moveTo(3)}>I’ve made the transfer <ArrowRight /></button></div><ol className="wallet-payment-instructions"><li>Transfer the exact amount.</li><li>Save your transaction/reference ID.</li><li>Keep your receipt.</li></ol></aside>
           </section>}
           {step === 3 && <section className="wallet-step-layout">
             <div className="wallet-step-main">
@@ -214,7 +222,7 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
 function Progress({ step, moveTo }: { step: 1 | 2 | 3; moveTo: (step: 1 | 2 | 3) => void }) { return <div className="wallet-steps" aria-label={`Payment step ${step} of 3`}>{["Choose Amount", "Make Payment", "Submit Proof"].map((label, index) => { const number = (index + 1) as 1 | 2 | 3; return <button type="button" key={label} className={number === step ? "is-current" : number < step ? "is-complete" : ""} onClick={() => number < step && moveTo(number)} disabled={number > step}><b>{number < step ? <Check weight="bold" /> : String(number).padStart(2, "0")}</b><i>{label}</i></button>; })}</div>; }
 function PaymentLogo({ method }: { method: string }) { const meta = methodMeta[method] || methodMeta.easypaisa; return <span className="wallet-method-logo"><Image src={meta.logo} alt={`${method === "meezan" ? "Meezan Bank" : "Easypaisa"} logo`} width={50} height={50} sizes="50px" /></span>; }
 function StepHeading({ number, title, detail }: { number: string; title: string; detail: string }) { return <div className="wallet-form-title"><span>{number}</span><div><h3>{title}</h3><p>{detail}</p></div></div>; }
-function ValueSummary({ amount, bonus, percent, total, method }: { amount: number; bonus: number; percent: number; total: number; method?: string }) { return <div className="wallet-value-summary"><span><small>You pay</small><b>PKR {money(amount)}</b></span><span className="bonus"><small>Bonus credits</small><b>+{money(bonus)}{percent ? ` · ${percent}%` : ""}</b></span><span className="total"><small>You’ll receive after approval</small><strong key={total}>{money(total)} Credits</strong></span><span className="wallet-summary-method"><small>Payment method</small><b>{method || "Choose a method"}</b></span></div>; }
+function ValueSummary({ amount, bonus, percent, total, method }: { amount: number | null; bonus: number | null; percent: number | null; total: number | null; method?: string }) { return <div className="wallet-value-summary"><span><small>You pay</small><b>{amount === null ? "Choose amount" : `PKR ${money(amount)}`}</b></span><span className="bonus"><small>Bonus credits</small><b>{bonus === null ? "—" : `+${money(bonus)}${percent ? ` · ${percent}%` : ""}`}</b></span><span className="total"><small>You’ll receive after approval</small><strong key={total ?? "empty"}>{total === null ? "Choose an amount" : `${money(total)} Credits`}</strong></span><span className="wallet-summary-method"><small>Payment method</small><b>{method || "Choose a method"}</b></span></div>; }
 function CompactSummary({ amount, bonus, total, method }: { amount: number; bonus: number; total: number; method: string }) { return <div className="wallet-compact-summary"><span><small>Payment</small><b>PKR {money(amount)}</b></span><span><small>Bonus</small><b className="bonus">+{money(bonus)}</b></span><span><small>Total after approval</small><b>{money(total)} Credits</b></span><span><small>Via</small><b>{method}</b></span></div>; }
 function BonusDisclosure({ amount }: { amount: number }) { const bonus = calculateTopupBonus(amount); return <details className="wallet-bonus-disclosure"><summary><span><Sparkle weight="fill" />{bonus.percent ? `${bonus.percent}% bonus applied · +${money(bonus.bonusCredits)} credits` : "Bonus tiers"}</span><CaretDown weight="bold" /></summary><div>{TOPUP_BONUS_TIERS.map((tier) => <span className={amount >= tier.minimum ? "is-active" : ""} key={tier.minimum}>PKR {money(tier.minimum)}{tier.minimum === 10000 ? "+" : ""}<b>+{tier.percent}%</b></span>)}</div></details>; }
 function CopyRow({ label, value, id, copied, copyValue }: { label: string; value: string; id: string; copied: string; copyValue: (value: string, key: string) => void }) { return <div className={`wallet-copy-row ${copied === id ? "is-copied" : ""}`}><span><small>{label}</small><strong>{value}</strong></span><button type="button" onClick={() => void copyValue(value, id)}>{copied === id ? <Check weight="bold" /> : <Copy weight="bold" />}{copied === id ? "Copied" : "Copy"}</button></div>; }
