@@ -83,7 +83,7 @@ export function WalletClient({ initialWallet, initialTransactions }: { initialWa
     setStep(next);
     window.setTimeout(() => {
       panelRef.current?.focus();
-      panelRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+      panelRef.current?.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }, 40);
   }
 
