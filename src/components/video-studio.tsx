@@ -57,6 +57,51 @@ type Job = {
   duration?: number;
   aspect_ratio?: string;
 };
+export type VideoStudioFixtureState =
+  | "idle"
+  | "queued"
+  | "submitted"
+  | "processing"
+  | "settling"
+  | "completed"
+  | "failed"
+  | "cancelled"
+  | "expired";
+const fixtureModels: Model[] = [
+  {
+    id: "fixture-minimax-h3-lite",
+    name: "MiniMax H3 Lite",
+    providerFamily: "MiniMax",
+    tier: "budget",
+    modality: "video",
+    description: "Representative development fixture model.",
+    capabilities: ["text-to-video", "image-to-video"],
+    available: true,
+    uiSchema: {
+      inputModes: ["text", "image"],
+      durationOptions: [5, 10],
+      aspectRatios: ["16:9", "9:16"],
+      resolutionOptions: ["720p"],
+      maxReferences: 1,
+    },
+  },
+];
+const fixtureJob = (state: Exclude<VideoStudioFixtureState, "idle">): Job => ({
+  id: "development-fixture-job",
+  status: state,
+  model_id: "fixture-minimax-h3-lite",
+  duration: 5,
+  aspect_ratio: "16:9",
+  ...(state === "completed"
+    ? {
+        result_urls: ["/video-studio/demo/previews/cinematic-monochrome.mp4"],
+        charged_credits: 12.5,
+      }
+    : {}),
+  ...( ["failed", "cancelled", "expired"].includes(state)
+    ? { error_message: "Development fixture: no generation was submitted." }
+    : {}),
+});
 const unavailable = (reason?: string | null) =>
   ({
     provider_route_unavailable: "Provider route is not available.",
@@ -95,9 +140,16 @@ const jobCopy = (status?: string) =>
             "Creating your video.",
             "The provider is working. Progress is not reported for this job.",
           ];
-export function VideoStudio() {
-  const [models, setModels] = useState<Model[]>([]),
-    [modelId, setModelId] = useState(""),
+export function VideoStudio({
+  fixtureState,
+  fixtureTheme,
+}: {
+  fixtureState?: VideoStudioFixtureState;
+  fixtureTheme?: "light" | "dark";
+} = {}) {
+  const fixture = Boolean(fixtureState),
+    [models, setModels] = useState<Model[]>(fixture ? fixtureModels : []),
+    [modelId, setModelId] = useState(fixture ? fixtureModels[0].id : ""),
     [prompt, setPrompt] = useState(""),
     [duration, setDuration] = useState(5),
     [aspect, setAspect] = useState("16:9"),
@@ -114,7 +166,9 @@ export function VideoStudio() {
     [uploading, setUploading] = useState(false),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
-    [job, setJob] = useState<Job | null>(null),
+    [job, setJob] = useState<Job | null>(
+      fixtureState && fixtureState !== "idle" ? fixtureJob(fixtureState) : null,
+    ),
     [copied, setCopied] = useState(false),
     [active, setActive] = useState(0),
     [demoId, setDemoId] = useState<string | null>(null),
@@ -127,9 +181,20 @@ export function VideoStudio() {
     [demoError, setDemoError] = useState(false);
   const uploadRef = useRef<HTMLInputElement>(null),
     pollToken = useRef(0),
+    submissionInFlight = useRef(false),
     videoRef = useRef<HTMLVideoElement>(null),
     stageRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (!fixtureTheme) return;
+    const previousTheme = document.documentElement.dataset.theme;
+    document.documentElement.dataset.theme = fixtureTheme;
+    return () => {
+      if (previousTheme) document.documentElement.dataset.theme = previousTheme;
+      else delete document.documentElement.dataset.theme;
+    };
+  }, [fixtureTheme]);
+  useEffect(() => {
+    if (fixture) return;
     const c = new AbortController();
     fetch("/api/models", { signal: c.signal })
       .then((r) => r.json())
@@ -152,7 +217,7 @@ export function VideoStudio() {
           setError("Video models are unavailable right now."),
       );
     return () => c.abort();
-  }, []);
+  }, [fixture]);
   useEffect(() => {
     const sync = () =>
       setProjectId(localStorage.getItem("amh-active-project") || "");
@@ -230,7 +295,7 @@ export function VideoStudio() {
     }
     v.muted = muted;
     void v.play().catch(() => setPlaying(false));
-  }, [demo?.id, job, motionAllowed, visible, muted]);
+  }, [demo, job, motionAllowed, visible, muted]);
   useEffect(() => {
     const f = () =>
       document.visibilityState === "hidden" && videoRef.current?.pause();
@@ -243,9 +308,16 @@ export function VideoStudio() {
     setNotice(message);
   };
   const useDirection = (i: number) => {
+    const nextDirection = videoStudioDirections[i],
+      clips = clipsForCategory(nextDirection.category),
+      nextClip = clips.find((clip) => clip.id !== demoId) || clips[0];
     setActive(i);
-    setPrompt(videoStudioDirections[i].prompt);
-    invalidate(`${videoStudioDirections[i].category} direction added.`);
+    setPrompt(nextDirection.prompt);
+    setDemoError(false);
+    setProgress(0);
+    setDemoId(nextClip?.id || null);
+    if (nextClip) localStorage.setItem("amh-video-demo", nextClip.id);
+    invalidate(`${nextDirection.category} direction added.`);
   };
   const preview = (clip: VideoStudioClip) => {
     if (job) return;
@@ -331,6 +403,7 @@ export function VideoStudio() {
       );
   }
   useEffect(() => {
+    if (fixture) return;
     let live = true;
     fetch("/api/jobs?active=true&limit=12")
       .then((r) => (r.ok ? r.json() : null))
@@ -346,9 +419,10 @@ export function VideoStudio() {
       live = false;
       pollToken.current += 1;
     };
-  }, []);
+  }, [fixture]);
   async function submit(e: FormEvent) {
     e.preventDefault();
+    if (submissionInFlight.current) return;
     if (!model || model.available === false)
       return setError(unavailable(model?.availabilityReason));
     if (!prompt.trim())
@@ -357,6 +431,11 @@ export function VideoStudio() {
       return setError("Add a starting image before using Image to Video.");
     if (!confirmed)
       return setError("Confirm the authorization before generating.");
+    if (fixture) {
+      setJob(fixtureJob("queued"));
+      return;
+    }
+    submissionInFlight.current = true;
     setSubmitting(true);
     setError("");
     try {
@@ -384,6 +463,7 @@ export function VideoStudio() {
     } catch (x) {
       setError(x instanceof Error ? x.message : "Generation request failed.");
     } finally {
+      submissionInFlight.current = false;
       setSubmitting(false);
     }
   }
@@ -714,6 +794,7 @@ export function VideoStudio() {
                     onLoadedMetadata={(e) =>
                       setPlayerDuration(e.currentTarget.duration)
                     }
+                    onLoadedData={() => setDemoError(false)}
                     onTimeUpdate={(e) =>
                       setProgress(e.currentTarget.currentTime)
                     }
@@ -809,6 +890,7 @@ export function VideoStudio() {
                     <img
                       src={clip?.poster || direction.poster}
                       alt={category}
+                      decoding="async"
                     />
                     <b>{category}</b>
                   </button>
@@ -820,7 +902,11 @@ export function VideoStudio() {
                   onClick={() => useDirection(3)}
                   aria-label="Use Nature direction"
                 >
-                  <img src={videoStudioDirections[3].poster} alt="Nature" />
+                  <img
+                    src={videoStudioDirections[3].poster}
+                    alt="Nature"
+                    decoding="async"
+                  />
                   <b>Nature</b>
                 </button>
                 <button
@@ -836,6 +922,7 @@ export function VideoStudio() {
                       videoStudioDirections[4].poster
                     }
                     alt="Sci-Fi"
+                    decoding="async"
                   />
                   <b>Sci-Fi</b>
                 </button>
@@ -955,9 +1042,15 @@ export function VideoStudio() {
                   <article
                     key={x.category}
                     className={i === active ? styles.activeCard : ""}
+                    onMouseEnter={() => clip && preview(clip)}
                   >
                     <span>
-                      <img src={clip?.poster || x.poster} alt="" />
+                      <img
+                        src={clip?.poster || x.poster}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
                       {clip && (
                         <button
                           type="button"

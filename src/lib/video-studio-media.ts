@@ -40,6 +40,7 @@ export const videoStudioClips: VideoStudioClip[] = [
   demo("product-luxury-car", "Product", "Luxury sports car exterior close-up", 6, false),
   demo("product-motorcycle", "Product", "Motorcycle close-up in street", 6, true),
   demo("portrait-indoor", "Portrait", "Interior portrait scene", 6, true),
+  demo("portrait-editorial", "Portrait", "Editorial portrait sequence", 6, true),
   demo("portrait-selfie", "Portrait", "Fashion selfie portrait", 6, false),
   demo("scifi-astronaut", "Sci-Fi", "Astronaut in a city", 6, true),
   demo("scifi-underground", "Sci-Fi", "Futuristic underground scene", 6, true),
