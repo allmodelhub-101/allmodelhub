@@ -29,8 +29,11 @@
   gap: 18px;
 }
 .heroCopy {
-  padding: 18px 12px 0;
+  padding: 2px 4px 0;
 }
+.studioHeading { display:flex; align-items:center; gap:12px; }
+.studioMark { display:grid; place-items:center; width:42px; height:42px; border:1px solid #64d8ff; border-radius:13px; background:linear-gradient(135deg,#10b8ed,#715eff); color:#fff; box-shadow:0 10px 24px #2576d633; }
+.studioMark svg { font-size:22px; }
 .eyebrow {
   display: block;
   color: #079bd2;
@@ -40,11 +43,10 @@
   text-transform: uppercase;
 }
 .heroCopy h1 {
-  max-width: 620px;
-  margin: 8px 0 12px;
-  font-size: clamp(38px, 4.2vw, 64px);
-  line-height: 0.98;
-  letter-spacing: -0.068em;
+  margin: 3px 0 0;
+  font-size: clamp(25px, 2.3vw, 36px);
+  line-height: 1;
+  letter-spacing: -0.045em;
 }
 .heroCopy em {
   font-style: normal;
@@ -61,12 +63,16 @@
   vertical-align: top;
 }
 .heroCopy > p {
-  max-width: 600px;
-  margin: 0;
+  max-width: 620px;
+  margin: 12px 0 0 54px;
   color: #46627f;
   font-size: 15px;
   line-height: 1.55;
 }
+.workspaceTabs { display:flex; gap:5px; margin:16px 0 0 54px; }
+.workspaceTabs button { min-width:90px; min-height:34px; padding:7px 16px; border:1px solid var(--line); border-radius:10px; background:transparent; color:var(--muted); font:800 12px inherit; cursor:pointer; transition:background .18s ease,color .18s ease,transform .18s ease; }
+.workspaceTabs button:hover { transform:translateY(-1px); }
+.workspaceTabs .tabSelected { border-color:#55cbff; background:linear-gradient(100deg,#13aeeb,#5864ff); color:#fff; box-shadow:0 8px 20px #366ce044; }
 .benefits {
   display: flex;
   flex-wrap: wrap;
@@ -381,7 +387,7 @@
 }
 .showcase {
   position: relative;
-  min-height: clamp(365px, 36vw, 555px);
+  min-height: clamp(345px, 34vw, 520px);
   padding: 18px;
   background:
     radial-gradient(circle at 80% 16%, #c7adff59, transparent 28%),
@@ -389,6 +395,10 @@
   overflow: hidden;
   isolation: isolate;
 }
+.recentStrip { min-width:0; padding:16px; border:1px solid var(--line); border-radius:20px; background:var(--panel); box-shadow:0 18px 44px #2371a51a; }
+.recentEmpty { display:flex; align-items:center; gap:10px; min-height:58px; padding:0 14px; border:1px dashed color-mix(in srgb,var(--line) 70%,#41cfff); border-radius:13px; color:var(--muted); font-size:12px; }
+.recentEmpty svg { color:#16a9e7; font-size:20px; }
+.exploreBack { padding:8px 11px; border:1px solid var(--line); border-radius:9px; background:transparent; color:#1684bf; font:800 11px inherit; cursor:pointer; }
 .showcase::before { content:""; position:absolute; z-index:-1; inset:-28%; pointer-events:none; background:radial-gradient(circle at 40% 50%,#27c9ff3b,transparent 25%),radial-gradient(circle at 82% 14%,#bc58ff45,transparent 23%); filter:blur(16px); }
 .mainPoster {
   position: relative;
@@ -581,6 +591,8 @@
 :global(html:not([data-theme="light"])) .inspiration {
   background: linear-gradient(145deg, #0a203ae8, #07162ae8);
 }
+:global(html:not([data-theme="light"])) .recentStrip { background:linear-gradient(145deg,#0a203ae8,#07162ae8); }
+:global(html:not([data-theme="light"])) .exploreBack { background:#0d2a49; border-color:#3e739b; color:#bdeeff; }
 :global(html:not([data-theme="light"])) .modelTrigger,
 :global(html:not([data-theme="light"])) .modelPicker,
 :global(html:not([data-theme="light"])) .modelList button,
@@ -688,6 +700,7 @@
   object-fit: contain;
   background: radial-gradient(circle at center, #244a86, #06142b 72%);
 }
+.mainPoster > img { display:block; width:100%; height:100%; object-fit:cover; background:linear-gradient(135deg,#dff5ff,#c7d5ff); }
 .playerControls {
   position: absolute;
   z-index: 3;
@@ -760,6 +773,9 @@
   .page { padding:12px 10px 72px; }
   .heroCopy { padding-inline:2px; }
   .heroCopy h1 { font-size:clamp(36px,11vw,48px); }
+  .studioHeading { align-items:flex-start; }
+  .heroCopy > p,.workspaceTabs { margin-left:0; }
+  .heroCopy h1 { font-size:clamp(25px,8vw,34px); }
   .benefits span:nth-child(3) { display:none; }
   .showcase { min-height:310px; padding:10px; }
   .inspiration { padding:12px; }
