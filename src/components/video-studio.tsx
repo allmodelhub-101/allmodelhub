@@ -263,7 +263,8 @@ export function VideoStudio({
     [modalMuted, setModalMuted] = useState(true),
     [modalPlaying, setModalPlaying] = useState(false),
     [modalProgress, setModalProgress] = useState(0),
-    [modalDuration, setModalDuration] = useState(0);
+    [modalDuration, setModalDuration] = useState(0),
+    [workspaceTab, setWorkspaceTab] = useState<"create" | "explore">("create");
   const uploadRef = useRef<HTMLInputElement>(null),
     pollToken = useRef(0),
     submissionInFlight = useRef(false),
@@ -669,31 +670,19 @@ export function VideoStudio({
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
           <header className={styles.heroCopy}>
-            <span className={styles.eyebrow}>AI Video Studio</span>
-            <h1>
-              Turn your imagination into <em>cinematic video</em>
-              <i>✦</i>
-            </h1>
-            <p>
-              Create from text or images with live model availability and
-              authorization before any generation request.
-            </p>
-            <div className={styles.benefits}>
-              <span>
-                <Play weight="fill" />
-                Direction-ready<small>Use a starting point or write your own</small>
-              </span>
-              <span>
-                <Sparkle weight="fill" />
-                Live model controls<small>Settings reflect the selected model</small>
-              </span>
-              <span>
-                <Sparkle weight="fill" />
-                Secure authorization<small>Review before any request is sent</small>
-              </span>
+            <div className={styles.studioHeading}>
+              <span className={styles.studioMark}><Sparkle weight="fill" /></span>
+              <div><span className={styles.eyebrow}>Video Studio</span><h1>Create cinematic video</h1></div>
             </div>
+            <p>
+              Turn an idea into a video with live models, supported controls, and secure authorization.
+            </p>
+            <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
+              <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("create")}>Create</button>
+              <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("explore")}>Explore</button>
+            </nav>
           </header>
-          <form className={styles.inspector} onSubmit={submit}>
+          {workspaceTab === "create" && <form className={styles.inspector} onSubmit={submit}>
             <div className={styles.modeToggle}>
               <button
                 type="button"
@@ -943,13 +932,19 @@ export function VideoStudio({
             </button>
             {error && <p className={styles.error}>{error}</p>}
             {notice && <p className={styles.notice}>{notice}</p>}
-          </form>
+          </form>}
+          {workspaceTab === "explore" && <section className={styles.inspiration} aria-label="Explore video templates">
+            <div className={styles.inspirationHeader}><div><h2>Explore directions</h2><p>Browse the available visual directions and bring one into Create.</p></div><button type="button" className={styles.exploreBack} onClick={() => setWorkspaceTab("create")}>Back to Create</button></div>
+            <div className={styles.inspirationGrid}>{galleryVideoClips.map((clip) => <GalleryVideoCard key={clip.id} clip={clip} motionAllowed={motionAllowed} modalOpen={Boolean(openClip)} onOpen={openViewer} />)}</div>
+          </section>}
         </section>
         <section className={styles.rightColumn} aria-live="polite">
           {!job && (
             <div className={styles.showcase} ref={stageRef}>
               <div className={styles.mainPoster}>
-                {demo ? (
+                {workspaceTab === "create" ? (
+                  <img src={demo?.poster || direction.poster} alt="Cinematic video workspace preview" />
+                ) : demo ? (
                   <video
                     ref={videoRef}
                     key={demo.id}
@@ -974,7 +969,7 @@ export function VideoStudio({
                   <img src={direction.poster} alt={direction.category} />
                 )}
                 <div className={styles.posterShade} />
-                {demo && (
+                {workspaceTab === "explore" && demo && (
                   <div className={styles.playerControls}>
                     <button
                       type="button"
@@ -1129,26 +1124,10 @@ export function VideoStudio({
               </div>
             </div>
           )}
-          <section className={styles.inspiration} aria-label="Get inspired video gallery">
-            <div className={styles.inspirationHeader}>
-              <div>
-                <h2>Get inspired</h2>
-                <p>Six silent, full-frame motion studies. Open any clip for its template and viewer.</p>
-              </div>
-              <Link href="/templates">View all templates →</Link>
-            </div>
-            <div className={styles.inspirationGrid}>
-              {galleryVideoClips.map((clip) => (
-                <GalleryVideoCard
-                  key={clip.id}
-                  clip={clip}
-                  motionAllowed={motionAllowed}
-                  modalOpen={Boolean(openClip)}
-                  onOpen={openViewer}
-                />
-              ))}
-            </div>
-          </section>
+          {workspaceTab === "create" && <section className={styles.recentStrip} aria-label="Recent creations">
+            <div className={styles.inspirationHeader}><div><h2>Recent creations</h2><p>Your authenticated video history will appear here.</p></div><Link href="/history">View all →</Link></div>
+            <div className={styles.recentEmpty}><Sparkle weight="fill" /><span>Generate a video to see it in your workspace.</span></div>
+          </section>}
         </section>
       </div>
       {openClip && (
