@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks, react-hooks/set-state-in-effect */
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowClockwise,
   CaretDown,
@@ -20,6 +20,8 @@ import {
 import { PremiumSelect } from "@/components/premium-select";
 import {
   clipsForCategory,
+  directionForCategory,
+  galleryVideoClips,
   videoStudioClips,
   videoStudioDirections,
   type VideoStudioClip,
@@ -140,6 +142,83 @@ const jobCopy = (status?: string) =>
             "Creating your video.",
             "The provider is working. Progress is not reported for this job.",
           ];
+
+const formatDuration = (value: number) => {
+  const seconds = Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+};
+
+function GalleryVideoCard({
+  clip,
+  motionAllowed,
+  modalOpen,
+  onOpen,
+}: {
+  clip: VideoStudioClip;
+  motionAllowed: boolean;
+  modalOpen: boolean;
+  onOpen: (clip: VideoStudioClip) => void;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.35 },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (!motionAllowed || modalOpen || !visible || document.visibilityState === "hidden") {
+      video.pause();
+      return;
+    }
+    video.muted = true;
+    void video.play().catch(() => undefined);
+  }, [modalOpen, motionAllowed, visible]);
+
+  return (
+    <article className={styles.galleryCard}>
+      <button
+        type="button"
+        className={styles.galleryFrame}
+        onClick={() => onOpen(clip)}
+        aria-label={`Open ${clip.title} full video viewer`}
+      >
+        {motionAllowed && !failed ? (
+          <video
+            ref={ref}
+            src={clip.gridSrc}
+            poster={clip.poster}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onError={() => setFailed(true)}
+          />
+        ) : <img src={clip.poster} alt="" loading="lazy" decoding="async" />}
+        <span className={styles.galleryScrim} />
+        <span className={styles.galleryMeta}>
+          <b>{clip.category}</b>
+          <small>{clip.title}</small>
+        </span>
+        <span className={styles.expandHint} aria-hidden="true">
+          <CornersOut weight="bold" /> Expand
+        </span>
+      </button>
+      <h3>{clip.title}</h3>
+      <p>{clip.description}</p>
+    </article>
+  );
+}
 export function VideoStudio({
   fixtureState,
   fixtureTheme,
@@ -160,6 +239,7 @@ export function VideoStudio({
     [projectId, setProjectId] = useState(""),
     [picker, setPicker] = useState(false),
     [query, setQuery] = useState(""),
+    [highlightedModel, setHighlightedModel] = useState(0),
     [advanced, setAdvanced] = useState(false),
     [confirmed, setConfirmed] = useState(false),
     [submitting, setSubmitting] = useState(false),
@@ -178,12 +258,22 @@ export function VideoStudio({
     [playerDuration, setPlayerDuration] = useState(0),
     [visible, setVisible] = useState(true),
     [motionAllowed, setMotionAllowed] = useState(false),
-    [demoError, setDemoError] = useState(false);
+    [demoError, setDemoError] = useState(false),
+    [openClip, setOpenClip] = useState<VideoStudioClip | null>(null),
+    [modalMuted, setModalMuted] = useState(true),
+    [modalPlaying, setModalPlaying] = useState(false),
+    [modalProgress, setModalProgress] = useState(0),
+    [modalDuration, setModalDuration] = useState(0);
   const uploadRef = useRef<HTMLInputElement>(null),
     pollToken = useRef(0),
     submissionInFlight = useRef(false),
     videoRef = useRef<HTMLVideoElement>(null),
-    stageRef = useRef<HTMLDivElement>(null);
+    stageRef = useRef<HTMLDivElement>(null),
+    pickerRef = useRef<HTMLDivElement>(null),
+    modalRef = useRef<HTMLDivElement>(null),
+    modalVideoRef = useRef<HTMLVideoElement>(null),
+    creationRef = useRef<HTMLElement>(null),
+    lastFocused = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (!fixtureTheme) return;
     const previousTheme = document.documentElement.dataset.theme;
@@ -193,6 +283,46 @@ export function VideoStudio({
       else delete document.documentElement.dataset.theme;
     };
   }, [fixtureTheme]);
+  useEffect(() => {
+    if (!picker) return;
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!pickerRef.current?.contains(event.target as Node)) setPicker(false);
+    };
+    document.addEventListener("mousedown", closeOnOutside);
+    return () => document.removeEventListener("mousedown", closeOnOutside);
+  }, [picker]);
+  useEffect(() => {
+    if (!openClip) return;
+    lastFocused.current = document.activeElement as HTMLElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenClip(null);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    window.setTimeout(() => modalRef.current?.focus(), 0);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      lastFocused.current?.focus();
+    };
+  }, [openClip]);
   useEffect(() => {
     if (fixture) return;
     const c = new AbortController();
@@ -233,17 +363,9 @@ export function VideoStudio({
       !matchMedia("(prefers-reduced-motion: reduce)").matches &&
         !connection.connection?.saveData,
     );
-    const last = localStorage.getItem("amh-video-demo"),
-      choices = videoStudioClips.filter((x) => x.id !== last),
-      next = (choices.length ? choices : videoStudioClips)[
-        Math.floor(
-          Math.random() *
-            (choices.length ? choices.length : videoStudioClips.length),
-        )
-      ];
+    const next = videoStudioClips.find((clip) => clip.orientation === "landscape") || videoStudioClips[0];
     if (next) {
       setDemoId(next.id);
-      localStorage.setItem("amh-video-demo", next.id);
     }
   }, []);
   useEffect(() => {
@@ -280,6 +402,9 @@ export function VideoStudio({
         ),
       [models, query],
     );
+  useEffect(() => {
+    setHighlightedModel((current) => Math.min(current, Math.max(0, visibleModels.length - 1)));
+  }, [visibleModels.length]);
   useEffect(() => {
     const v = videoRef.current;
     if (
@@ -319,15 +444,27 @@ export function VideoStudio({
     if (nextClip) localStorage.setItem("amh-video-demo", nextClip.id);
     invalidate(`${nextDirection.category} direction added.`);
   };
-  const preview = (clip: VideoStudioClip) => {
-    if (job) return;
-    setDemoError(false);
-    setMuted(true);
-    setDemoId(clip.id);
-    setActive(
-      videoStudioDirections.findIndex((x) => x.category === clip.category),
-    );
-    localStorage.setItem("amh-video-demo", clip.id);
+  const openViewer = (clip: VideoStudioClip) => {
+    setModalMuted(true);
+    setModalPlaying(false);
+    setModalProgress(0);
+    setModalDuration(0);
+    setOpenClip(clip);
+  };
+  const useTemplate = (clip: VideoStudioClip) => {
+    const next = directionForCategory(clip.category);
+    if (!next) return;
+    if (
+      prompt.trim() &&
+      prompt.trim() !== next.prompt &&
+      !window.confirm("Replace your current unsaved prompt with this template?")
+    )
+      return;
+    setPrompt(next.prompt);
+    setActive(Math.max(0, videoStudioDirections.indexOf(next)));
+    setOpenClip(null);
+    invalidate(`${next.category} template added. Review it before generating.`);
+    window.setTimeout(() => creationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
   };
   const chooseModel = (id: string) => {
     const next = models.find((x) => x.id === id);
@@ -502,11 +639,35 @@ export function VideoStudio({
       void (document.fullscreenElement
         ? document.exitFullscreen?.()
         : e.requestFullscreen?.());
+    },
+    handlePickerKeyDown = (event: ReactKeyboardEvent) => {
+      if (!picker && ["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+        event.preventDefault();
+        setPicker(true);
+        return;
+      }
+      if (!picker) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setPicker(false);
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setHighlightedModel((index) => Math.min(index + 1, Math.max(0, visibleModels.length - 1)));
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setHighlightedModel((index) => Math.max(index - 1, 0));
+      } else if (event.key === "Enter") {
+        const choice = visibleModels[highlightedModel];
+        if (choice && choice.available !== false) {
+          event.preventDefault();
+          chooseModel(choice.id);
+        }
+      }
     };
   return (
     <main className={styles.page}>
       <div className={styles.layout}>
-        <section className={styles.leftColumn}>
+        <section className={styles.leftColumn} ref={creationRef}>
           <header className={styles.heroCopy}>
             <span className={styles.eyebrow}>AI Video Studio</span>
             <h1>
@@ -514,21 +675,21 @@ export function VideoStudio({
               <i>✦</i>
             </h1>
             <p>
-              Create stunning videos from text or images using state-of-the-art
-              AI models. Professional quality, limitless possibilities.
+              Create from text or images with live model availability and
+              authorization before any generation request.
             </p>
             <div className={styles.benefits}>
               <span>
                 <Play weight="fill" />
-                Cinematic quality<small>Studio-grade visuals</small>
+                Direction-ready<small>Use a starting point or write your own</small>
               </span>
               <span>
                 <Sparkle weight="fill" />
-                Lightning fast<small>From idea to video</small>
+                Live model controls<small>Settings reflect the selected model</small>
               </span>
               <span>
                 <Sparkle weight="fill" />
-                Endless styles<small>Realistic, cinematic, anime + more</small>
+                Secure authorization<small>Review before any request is sent</small>
               </span>
             </div>
           </header>
@@ -555,12 +716,16 @@ export function VideoStudio({
                 Image to Video
               </button>
             </div>
-            <div className={styles.field}>
+            <div className={styles.field} ref={pickerRef}>
               <label>Model</label>
               <button
                 type="button"
                 className={styles.modelTrigger}
                 onClick={() => setPicker((v) => !v)}
+                onKeyDown={handlePickerKeyDown}
+                aria-haspopup="listbox"
+                aria-expanded={picker}
+                aria-controls="video-model-options"
               >
                 <span>
                   <b>{model?.name || "Choose a model"}</b>
@@ -583,13 +748,18 @@ export function VideoStudio({
                       placeholder="Search live video models"
                     />
                   </div>
-                  <div className={styles.modelList}>
-                    {visibleModels.map((x) => (
+                  <div className={styles.modelList} id="video-model-options" role="listbox" aria-label="Available video models" onKeyDown={handlePickerKeyDown}>
+                    {visibleModels.length === 0 && <p className={styles.noModels}>No video models match this search.</p>}
+                    {visibleModels.map((x, index) => (
                       <button
                         key={x.id}
                         type="button"
                         disabled={x.available === false}
                         onClick={() => chooseModel(x.id)}
+                        onMouseEnter={() => setHighlightedModel(index)}
+                        role="option"
+                        aria-selected={modelId === x.id}
+                        className={highlightedModel === index ? styles.modelHighlighted : ""}
                       >
                         <span>
                           <b>{x.name}</b>
@@ -783,7 +953,7 @@ export function VideoStudio({
                   <video
                     ref={videoRef}
                     key={demo.id}
-                    src={demo.src}
+                    src={demo.gridSrc}
                     poster={demo.poster}
                     muted={muted}
                     loop
@@ -821,7 +991,7 @@ export function VideoStudio({
                       type="range"
                       aria-label="Preview progress"
                       min="0"
-                      max={playerDuration || demo.durationSeconds}
+                      max={playerDuration || demo.sourceDurationSeconds || 1}
                       step=".1"
                       value={progress}
                       onChange={(e) => {
@@ -830,17 +1000,7 @@ export function VideoStudio({
                         setProgress(Number(e.target.value));
                       }}
                     />
-                    <span>
-                      {Math.floor(progress)}:
-                      {String(
-                        Math.max(
-                          0,
-                          Math.floor(
-                            (playerDuration || demo.durationSeconds) - progress,
-                          ),
-                        ),
-                      ).padStart(2, "0")}
-                    </span>
+                    <span>{formatDuration(progress)} / {formatDuration(playerDuration || demo.sourceDurationSeconds || 0)}</span>
                     {demo.hasAudio && (
                       <button
                         type="button"
@@ -872,60 +1032,6 @@ export function VideoStudio({
                       : "Static direction poster"}
                   </span>
                 </div>
-              </div>
-              {[
-                ["portrait", "Portrait"],
-                ["cinematic", "Cinematic"],
-              ].map(([className, category]) => {
-                const clip = clipsForCategory(
-                  category as VideoStudioClip["category"],
-                )[0];
-                return (
-                  <button
-                    type="button"
-                    key={category}
-                    className={`${styles.floatCard} ${styles[className]}`}
-                    onClick={() => clip && preview(clip)}
-                  >
-                    <img
-                      src={clip?.poster || direction.poster}
-                      alt={category}
-                      decoding="async"
-                    />
-                    <b>{category}</b>
-                  </button>
-                );
-              })}
-              <div className={styles.sideCards}>
-                <button
-                  type="button"
-                  onClick={() => useDirection(3)}
-                  aria-label="Use Nature direction"
-                >
-                  <img
-                    src={videoStudioDirections[3].poster}
-                    alt="Nature"
-                    decoding="async"
-                  />
-                  <b>Nature</b>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const clip = clipsForCategory("Sci-Fi")[0];
-                    if (clip) preview(clip);
-                  }}
-                >
-                  <img
-                    src={
-                      clipsForCategory("Sci-Fi")[0]?.poster ||
-                      videoStudioDirections[4].poster
-                    }
-                    alt="Sci-Fi"
-                    decoding="async"
-                  />
-                  <b>Sci-Fi</b>
-                </button>
               </div>
             </div>
           )}
@@ -1023,64 +1129,80 @@ export function VideoStudio({
               </div>
             </div>
           )}
-          <section className={styles.inspiration}>
+          <section className={styles.inspiration} aria-label="Get inspired video gallery">
             <div className={styles.inspirationHeader}>
               <div>
                 <h2>Get inspired</h2>
-                <p>
-                  Explore cinematic demo previews and use a direction to start
-                  creating your own.
-                </p>
+                <p>Six silent, full-frame motion studies. Open any clip for its template and viewer.</p>
               </div>
               <Link href="/templates">View all templates →</Link>
             </div>
             <div className={styles.inspirationGrid}>
-              {videoStudioDirections.map((x, i) => {
-                const clips = clipsForCategory(x.category),
-                  clip = clips.find((c) => c.id === demoId) || clips[0];
-                return (
-                  <article
-                    key={x.category}
-                    className={i === active ? styles.activeCard : ""}
-                    onMouseEnter={() => clip && preview(clip)}
-                  >
-                    <span>
-                      <img
-                        src={clip?.poster || x.poster}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      {clip && (
-                        <button
-                          type="button"
-                          onClick={() => preview(clip)}
-                          aria-label={`Preview ${x.category}`}
-                        >
-                          <Play weight="fill" />
-                        </button>
-                      )}
-                      <b>{x.category}</b>
-                    </span>
-                    <strong>{x.title}</strong>
-                    <small>{x.description}</small>
-                    <div>
-                      <button type="button" onClick={() => useDirection(i)}>
-                        Use direction
-                      </button>
-                      {clip && (
-                        <button type="button" onClick={() => preview(clip)}>
-                          Preview
-                        </button>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
+              {galleryVideoClips.map((clip) => (
+                <GalleryVideoCard
+                  key={clip.id}
+                  clip={clip}
+                  motionAllowed={motionAllowed}
+                  modalOpen={Boolean(openClip)}
+                  onOpen={openViewer}
+                />
+              ))}
             </div>
           </section>
         </section>
       </div>
+      {openClip && (
+        <div
+          className={styles.viewerBackdrop}
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setOpenClip(null);
+          }}
+        >
+          <section
+            className={styles.viewer}
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="video-viewer-title"
+            tabIndex={-1}
+          >
+            <button type="button" className={styles.viewerClose} onClick={() => setOpenClip(null)} aria-label="Close video viewer"><X weight="bold" /></button>
+            <div className={styles.viewerStage}>
+              <video
+                ref={modalVideoRef}
+                src={openClip.fullSrc}
+                poster={openClip.poster}
+                muted={modalMuted}
+                playsInline
+                preload="metadata"
+                onPlay={() => setModalPlaying(true)}
+                onPause={() => setModalPlaying(false)}
+                onLoadedMetadata={(event) => setModalDuration(event.currentTarget.duration)}
+                onTimeUpdate={(event) => setModalProgress(event.currentTarget.currentTime)}
+              />
+              {!openClip.fullSrc && <div className={styles.viewerUnavailable}>The verified full-length source for this demo has not been supplied yet. Its poster remains available.</div>}
+            </div>
+            <div className={styles.viewerInfo}>
+              <div><span>{openClip.category}</span><h2 id="video-viewer-title">{openClip.title}</h2><p>{openClip.description}</p></div>
+              <div className={styles.viewerControls}>
+                <button type="button" disabled={!openClip.fullSrc} onClick={() => {
+                  const video = modalVideoRef.current; if (!video) return;
+                  if (video.paused) void video.play().catch(() => undefined); else video.pause();
+                }}>{modalPlaying ? <Pause weight="fill" /> : <Play weight="fill" />}{modalPlaying ? "Pause" : "Play"}</button>
+                <input type="range" aria-label="Video position" disabled={!openClip.fullSrc} min="0" max={modalDuration || 1} step="0.1" value={modalProgress} onChange={(event) => { const next = Number(event.target.value); if (modalVideoRef.current) modalVideoRef.current.currentTime = next; setModalProgress(next); }} />
+                <span>{formatDuration(modalProgress)} / {formatDuration(modalDuration)}</span>
+                <button type="button" disabled={!openClip.fullSrc || !openClip.hasAudio} onClick={() => { const video = modalVideoRef.current; if (!video) return; video.muted = !video.muted; setModalMuted(video.muted); }} aria-label={modalMuted ? "Enable audio" : "Mute audio"}>{modalMuted ? <SpeakerSlash /> : <SpeakerHigh />}</button>
+                <button type="button" disabled={!openClip.fullSrc} onClick={() => void modalVideoRef.current?.requestFullscreen?.()} aria-label="Fullscreen video"><CornersOut /></button>
+              </div>
+              <div className={styles.viewerActions}>
+                {openClip.fullSrc ? <a href={openClip.fullSrc} download><DownloadSimple />Download demo</a> : <span>Full demo download pending verified source delivery.</span>}
+                <button type="button" onClick={() => useTemplate(openClip)}>Use template</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
     </main>
   );
 }

@@ -1,4 +1,11 @@
-export type VideoStudioCategory = "Cinematic" | "Product" | "Portrait" | "Nature" | "Sci-Fi" | "Social / Vlog";
+export type VideoStudioCategory =
+  | "Cinematic"
+  | "Product"
+  | "Portrait"
+  | "Nature"
+  | "Sci-Fi"
+  | "Social / Vlog"
+  | "Creative / Character";
 
 export type VideoStudioDirection = {
   category: VideoStudioCategory;
@@ -8,43 +15,50 @@ export type VideoStudioDirection = {
   description: string;
 };
 
+export type VideoOrientation = "landscape" | "portrait" | "square";
+
+/** `gridSrc` keeps gallery playback separate from the larger modal asset. */
 export type VideoStudioClip = {
   id: string;
   category: Exclude<VideoStudioCategory, "Nature">;
+  title: string;
   description: string;
-  src: string;
+  gridSrc: string;
+  fullSrc?: string;
   poster: string;
-  durationSeconds: number;
+  orientation: VideoOrientation;
   hasAudio: boolean;
+  sourceDurationSeconds?: number;
 };
 
 export const videoStudioDirections: VideoStudioDirection[] = [
-  { category: "Cinematic", prompt: "Cinematic mountain lake at sunrise, slow camera push-in, soft atmospheric light, detailed natural movement.", poster: "/video-studio/cinematic-poster.png", title: "Epic scenes", description: "and breathtaking worlds" },
-  { category: "Product", prompt: "Premium product reveal, sculpted studio light, slow orbiting camera, precise material detail.", poster: "/video-studio/product-poster.png", title: "Showcase", description: "your products" },
-  { category: "Portrait", prompt: "Expressive portrait with subtle natural movement, shallow depth of field, gentle handheld camera motion.", poster: "/video-studio/portrait-poster.png", title: "Characters", description: "and emotional stories" },
-  { category: "Nature", prompt: "Waterfall in a lush forest after rain, drifting mist, cinematic wide shot and gentle camera glide.", poster: "/video-studio/nature-poster.png", title: "Beautiful", description: "natural worlds" },
-  { category: "Sci-Fi", prompt: "Futuristic city at blue hour, reflections on wet streets, aerial camera motion, elegant cinematic atmosphere.", poster: "/video-studio/scifi-poster.png", title: "Futuristic", description: "and imaginative" },
-  { category: "Social / Vlog", prompt: "A warm travel vlog moment in a lively market, natural handheld movement, candid detail and daylight.", poster: "/video-studio/social-poster.png", title: "Everyday", description: "moments to life" }
+  { category: "Cinematic", prompt: "Cinematic wide scene with layered atmosphere, measured camera motion, and detailed natural light.", poster: "/video-studio/cinematic-poster.png", title: "Epic scenes", description: "and breathtaking worlds" },
+  { category: "Product", prompt: "Premium product reveal, sculpted studio light, slow orbiting camera, and precise material detail.", poster: "/video-studio/product-poster.png", title: "Product stories", description: "with considered detail" },
+  { category: "Portrait", prompt: "Expressive portrait with subtle natural movement, shallow depth of field, and a gentle handheld camera.", poster: "/video-studio/portrait-poster.png", title: "Human stories", description: "with emotional focus" },
+  { category: "Nature", prompt: "Waterfall in a lush forest after rain, drifting mist, a cinematic wide shot, and gentle camera glide.", poster: "/video-studio/nature-poster.png", title: "Nature direction", description: "static until authentic footage arrives" },
+  { category: "Sci-Fi", prompt: "Futuristic city at blue hour, reflections on wet streets, elegant camera motion, and a cinematic atmosphere.", poster: "/video-studio/scifi-poster.png", title: "Future worlds", description: "with cinematic scale" },
+  { category: "Social / Vlog", prompt: "A warm travel-vlog moment in a lively market, natural handheld movement, candid detail, and daylight.", poster: "/video-studio/social-poster.png", title: "Everyday moments", description: "with a human point of view" },
+  { category: "Creative / Character", prompt: "Character-led editorial scene with expressive styling, textured light, and subtle cinematic movement.", poster: "/video-studio/portrait-poster.png", title: "Creative characters", description: "with an editorial edge" }
 ];
 
-const demo = (id: string, category: VideoStudioClip["category"], description: string, durationSeconds: number, hasAudio: boolean): VideoStudioClip => ({
-  id, category, description, durationSeconds, hasAudio,
-  src: `/video-studio/demo/previews/${id}.mp4`,
+const grid = (id: string, category: VideoStudioClip["category"], title: string, description: string, orientation: VideoOrientation, hasAudio: boolean): VideoStudioClip => ({
+  id, category, title, description, orientation, hasAudio,
+  gridSrc: `/video-studio/demo/previews/${id}.mp4`,
   poster: `/video-studio/demo/posters/${id}.jpg`
 });
 
-// User-supplied, compressed Phase 2 preview assets. Nature deliberately has no clip.
+// Current committed assets are deliberately gallery-quality previews only. When
+// FULL-LENGTH-v2 arrives, populate fullSrc/sourceDurationSeconds from its
+// verified manifest instead of treating these teasers as full originals.
 export const videoStudioClips: VideoStudioClip[] = [
-  demo("cinematic-monochrome", "Cinematic", "Dystopian monochrome crowd", 7, true),
-  demo("product-car-night", "Product", "Cinematic sports car in a parking studio", 6, true),
-  demo("product-luxury-car", "Product", "Luxury sports car exterior close-up", 6, false),
-  demo("product-motorcycle", "Product", "Motorcycle close-up in street", 6, true),
-  demo("portrait-indoor", "Portrait", "Interior portrait scene", 6, true),
-  demo("portrait-editorial", "Portrait", "Editorial portrait sequence", 6, true),
-  demo("portrait-selfie", "Portrait", "Fashion selfie portrait", 6, false),
-  demo("scifi-astronaut", "Sci-Fi", "Astronaut in a city", 6, true),
-  demo("scifi-underground", "Sci-Fi", "Futuristic underground scene", 6, true),
-  demo("portrait-street-style", "Social / Vlog", "Urban fashion scene", 6, true)
+  grid("cinematic-monochrome", "Cinematic", "Monochrome tension", "A stark, dramatic crowd sequence.", "landscape", true),
+  grid("product-car-night", "Product", "Night drive", "Sculpted automotive light after dark.", "portrait", true),
+  grid("portrait-indoor", "Portrait", "Interior portrait", "Quiet character detail and natural motion.", "portrait", true),
+  grid("scifi-astronaut", "Sci-Fi", "City astronaut", "A futuristic character on an urban stage.", "portrait", true),
+  grid("portrait-street-style", "Social / Vlog", "Street style", "An immediate, candid urban moment.", "portrait", true),
+  grid("portrait-editorial", "Creative / Character", "Editorial character", "A composed, character-led fashion tableau.", "portrait", true)
 ];
 
+export const galleryVideoClips = videoStudioClips;
 export const clipsForCategory = (category: VideoStudioCategory) => videoStudioClips.filter((clip) => clip.category === category);
+export const directionForCategory = (category: VideoStudioCategory) => videoStudioDirections.find((direction) => direction.category === category);
