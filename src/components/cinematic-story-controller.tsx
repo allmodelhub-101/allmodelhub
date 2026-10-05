@@ -30,6 +30,7 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
     let pointerY = "";
     let lastPointerX = "";
     let lastPointerY = "";
+    let scrollIdleTimer: number | undefined;
 
     const measureStory = () => {
       storyDistance = Math.max(story.offsetHeight - window.innerHeight, 1);
@@ -57,6 +58,16 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(update);
     };
 
+    const handleScroll = () => {
+      site?.setAttribute("data-cinematic-scrolling", "true");
+      if (scrollIdleTimer) window.clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = window.setTimeout(() => {
+        site?.removeAttribute("data-cinematic-scrolling");
+        scrollIdleTimer = undefined;
+      }, 120);
+      requestUpdate();
+    };
+
     measureStory();
     update();
     site?.setAttribute("data-cinematic-ready", "true");
@@ -76,7 +87,7 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
           }
         });
       },
-      { rootMargin: "0px 0px -12%", threshold: 0.08 },
+      { rootMargin: "45% 0px 45%", threshold: 0 },
     );
     cinematicSections.forEach((section) => revealObserver.observe(section));
 
@@ -107,18 +118,20 @@ export function CinematicStoryController({ sceneCount }: { sceneCount: number })
       requestUpdate();
     };
 
-    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     window.addEventListener("pointermove", updatePointer, { passive: true });
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("pointermove", updatePointer);
       revealObserver.disconnect();
       storyResizeObserver.disconnect();
       site?.removeAttribute("data-cinematic-ready");
+      site?.removeAttribute("data-cinematic-scrolling");
       if (scrollFrame) window.cancelAnimationFrame(scrollFrame);
       if (pointerFrame) window.cancelAnimationFrame(pointerFrame);
+      if (scrollIdleTimer) window.clearTimeout(scrollIdleTimer);
     };
   }, [sceneCount]);
 
