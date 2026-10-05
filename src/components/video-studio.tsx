@@ -186,7 +186,7 @@ function GalleryVideoCard({
   }, [modalOpen, motionAllowed, visible]);
 
   return (
-    <article className={styles.galleryCard}>
+    <article className={`${styles.galleryCard} ${clip.orientation === "portrait" ? styles.galleryPortrait : styles.galleryLandscape}`}>
       <button
         type="button"
         className={styles.galleryFrame}
@@ -205,17 +205,11 @@ function GalleryVideoCard({
             onError={() => setFailed(true)}
           />
         ) : <img src={clip.poster} alt="" loading="lazy" decoding="async" />}
-        <span className={styles.galleryScrim} />
-        <span className={styles.galleryMeta}>
-          <b>{clip.category}</b>
-          <small>{clip.title}</small>
-        </span>
         <span className={styles.expandHint} aria-hidden="true">
           <CornersOut weight="bold" /> Expand
         </span>
       </button>
-      <h3>{clip.title}</h3>
-      <p>{clip.description}</p>
+      <span className={styles.galleryLabel}>{clip.category}</span>
     </article>
   );
 }
@@ -463,6 +457,7 @@ export function VideoStudio({
       return;
     setPrompt(next.prompt);
     setActive(Math.max(0, videoStudioDirections.indexOf(next)));
+    setWorkspaceTab("create");
     setOpenClip(null);
     invalidate(`${next.category} template added. Review it before generating.`);
     window.setTimeout(() => creationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
@@ -666,21 +661,20 @@ export function VideoStudio({
       }
     };
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
+      <header className={styles.studioToolbar}>
+        <div className={styles.studioToolbarTitle}><Sparkle weight="fill" /><b>Video Studio</b></div>
+        <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
+          <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("create")}>Create</button>
+          <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("explore")}>Explore</button>
+          <Link href="/history">Generations</Link>
+        </nav>
+      </header>
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
           <header className={styles.heroCopy}>
-            <div className={styles.studioHeading}>
-              <span className={styles.studioMark}><Sparkle weight="fill" /></span>
-              <div><span className={styles.eyebrow}>Video Studio</span><h1>Create cinematic video</h1></div>
-            </div>
-            <p>
-              Turn an idea into a video with live models, supported controls, and secure authorization.
-            </p>
-            <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
-              <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("create")}>Create</button>
-              <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("explore")}>Explore</button>
-            </nav>
+            <h1>Create video</h1>
+            <p>Choose a model, describe the scene, then generate.</p>
           </header>
           {workspaceTab === "create" && <form className={styles.inspector} onSubmit={submit}>
             <div className={styles.modeToggle}>
@@ -705,8 +699,23 @@ export function VideoStudio({
                 Image to Video
               </button>
             </div>
+            <div className={styles.modelRail} role="list" aria-label="Available video models">
+              {models.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  role="listitem"
+                  disabled={item.available === false}
+                  className={modelId === item.id ? styles.modelRailSelected : ""}
+                  onClick={() => chooseModel(item.id)}
+                >
+                  <b>{item.name}</b>
+                  <small>{item.providerFamily || "Video model"} · {item.tier}</small>
+                </button>
+              ))}
+            </div>
             <div className={styles.field} ref={pickerRef}>
-              <label>Model</label>
+              <label>Model details</label>
               <button
                 type="button"
                 className={styles.modelTrigger}
@@ -862,6 +871,19 @@ export function VideoStudio({
                   options={aspects.map((v) => ({ value: v, label: v }))}
                 />
               </label>
+              {resolutions.length > 0 && (
+                <label>
+                  Resolution
+                  <PremiumSelect
+                    value={effectiveResolution}
+                    onChange={(v) => {
+                      setResolution(v);
+                      invalidate();
+                    }}
+                    options={resolutions.map((v) => ({ value: v, label: v }))}
+                  />
+                </label>
+              )}
             </div>
             <details
               className={styles.advanced}
@@ -872,16 +894,6 @@ export function VideoStudio({
                 Advanced settings <span>{advanced ? "Hide" : "Customize"}</span>
               </summary>
               <div>
-                {resolutions.length > 0 && (
-                  <label>
-                    Resolution
-                    <PremiumSelect
-                      value={effectiveResolution}
-                      onChange={setResolution}
-                      options={resolutions.map((v) => ({ value: v, label: v }))}
-                    />
-                  </label>
-                )}
                 {schema.nativeAudio && (
                   <label>
                     <input
@@ -894,22 +906,13 @@ export function VideoStudio({
                 )}
               </div>
             </details>
-            <div className={styles.billing}>
-              <span>
-                <small>Usage-based billing</small>
-                <b>Authorized securely at submission</b>
-                <em>Final credits settle from actual provider usage.</em>
-              </span>
-              {projectId && <small>Project connected</small>}
-            </div>
             <label className={styles.confirm}>
               <input
                 type="checkbox"
                 checked={confirmed}
                 onChange={(e) => setConfirmed(e.target.checked)}
               />
-              I authorize this paid generation. The final usage is settled
-              securely.
+              I authorize this generation. Final billing is shown only after the video is completed.
             </label>
             <button
               className={styles.generate}
@@ -943,7 +946,11 @@ export function VideoStudio({
             <div className={styles.showcase} ref={stageRef}>
               <div className={styles.mainPoster}>
                 {workspaceTab === "create" ? (
-                  <img src={demo?.poster || direction.poster} alt="Cinematic video workspace preview" />
+                  <div className={styles.readyStage}>
+                    <span><Sparkle weight="fill" /></span>
+                    <h2>Your next creation starts here.</h2>
+                    <p>Choose a model, describe your idea, and generate when you are ready.</p>
+                  </div>
                 ) : demo ? (
                   <video
                     ref={videoRef}
@@ -968,7 +975,7 @@ export function VideoStudio({
                 ) : (
                   <img src={direction.poster} alt={direction.category} />
                 )}
-                <div className={styles.posterShade} />
+                {workspaceTab === "explore" && <div className={styles.posterShade} />}
                 {workspaceTab === "explore" && demo && (
                   <div className={styles.playerControls}>
                     <button
@@ -1019,14 +1026,14 @@ export function VideoStudio({
                     Preview unavailable. The poster remains available.
                   </p>
                 )}
-                <div className={styles.posterCaption}>
+                {workspaceTab === "explore" && <div className={styles.posterCaption}>
                   <b>{demo?.description || direction.category}</b>
                   <span>
                     {demo
                       ? "Demo preview · muted by default"
                       : "Static direction poster"}
                   </span>
-                </div>
+                </div>}
               </div>
             </div>
           )}
@@ -1148,22 +1155,36 @@ export function VideoStudio({
           >
             <button type="button" className={styles.viewerClose} onClick={() => setOpenClip(null)} aria-label="Close video viewer"><X weight="bold" /></button>
             <div className={styles.viewerStage}>
-              <video
-                ref={modalVideoRef}
-                src={openClip.fullSrc}
-                poster={openClip.poster}
-                muted={modalMuted}
-                playsInline
-                preload="metadata"
-                onPlay={() => setModalPlaying(true)}
-                onPause={() => setModalPlaying(false)}
-                onLoadedMetadata={(event) => setModalDuration(event.currentTarget.duration)}
-                onTimeUpdate={(event) => setModalProgress(event.currentTarget.currentTime)}
-              />
-              {!openClip.fullSrc && <div className={styles.viewerUnavailable}>The verified full-length source for this demo has not been supplied yet. Its poster remains available.</div>}
+              {openClip.fullSrc ? (
+                <video
+                  ref={modalVideoRef}
+                  src={openClip.fullSrc}
+                  poster={openClip.poster}
+                  muted={modalMuted}
+                  playsInline
+                  preload="metadata"
+                  onPlay={() => setModalPlaying(true)}
+                  onPause={() => setModalPlaying(false)}
+                  onLoadedMetadata={(event) => setModalDuration(event.currentTarget.duration)}
+                  onTimeUpdate={(event) => setModalProgress(event.currentTarget.currentTime)}
+                />
+              ) : (
+                <img src={openClip.poster} alt={`${openClip.title} poster`} />
+              )}
+              {!openClip.fullSrc && <div className={styles.viewerUnavailable}>Full-length preview unavailable. This verified poster is kept as the visual reference.</div>}
             </div>
             <div className={styles.viewerInfo}>
               <div><span>{openClip.category}</span><h2 id="video-viewer-title">{openClip.title}</h2><p>{openClip.description}</p></div>
+              <div className={styles.viewerTemplate}>
+                <span>Template prompt</span>
+                <p>{directionForCategory(openClip.category)?.prompt || "Choose a model in Create to use this direction."}</p>
+                <dl>
+                  <div><dt>Model</dt><dd>{model?.name || "Choose in Create"}</dd></div>
+                  <div><dt>Duration</dt><dd>{effectiveDuration}s</dd></div>
+                  <div><dt>Aspect ratio</dt><dd>{effectiveAspect}</dd></div>
+                  {effectiveResolution && <div><dt>Resolution</dt><dd>{effectiveResolution}</dd></div>}
+                </dl>
+              </div>
               <div className={styles.viewerControls}>
                 <button type="button" disabled={!openClip.fullSrc} onClick={() => {
                   const video = modalVideoRef.current; if (!video) return;
