@@ -93,7 +93,7 @@
 .auth-nav-actions .theme-toggle::after { position: absolute; inset: 1px; border-radius: inherit; background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, .22) 50%, transparent 80%); transform: translateX(-140%); transition: transform .55s ease; pointer-events: none; content: ""; }
 .auth-nav-actions .theme-toggle:hover { transform: translateY(-2px); border-color: rgba(47, 164, 208, .38); box-shadow: 0 12px 28px rgba(30, 100, 137, .14), inset 0 1px rgba(255, 255, 255, .9); }
 .auth-nav-actions .theme-toggle:hover::after { transform: translateX(140%); }
-.auth-nav-actions .theme-toggle:focus-visible { outline: 3px solid rgba(82, 216, 244, .3); outline-offset: 3px; }
+.auth-nav-actions .theme-toggle:focus-visible { outline: 3px solid #087ca5; outline-offset: 3px; }
 
 .auth-page-foot { border-top: 1px solid var(--auth-line); font-size: 12px; }
 .auth-page-foot>span:last-child { display: flex; gap: 18px; }
@@ -305,6 +305,7 @@ html[data-theme="dark"] .auth-google { color: var(--auth-ink); }
 html[data-theme="dark"] .auth-nav-actions>a { color: #bfd3e5; }
 html[data-theme="dark"] .auth-nav-actions .theme-toggle { border-color: rgba(132, 216, 255, .24); background: linear-gradient(145deg, rgba(31, 58, 87, .92), rgba(14, 29, 50, .96)); color: #e7f7ff; box-shadow: 0 12px 28px rgba(0, 0, 0, .28), inset 0 1px rgba(173, 233, 255, .2), 0 0 0 1px rgba(86, 210, 247, .04); }
 html[data-theme="dark"] .auth-nav-actions .theme-toggle:hover { border-color: rgba(104, 225, 255, .62); background: linear-gradient(145deg, rgba(39, 78, 111, .98), rgba(24, 39, 69, .98)); box-shadow: 0 16px 34px rgba(0, 0, 0, .36), 0 0 24px rgba(70, 203, 247, .14), inset 0 1px rgba(201, 245, 255, .28); }
+html[data-theme="dark"] .auth-nav-actions .theme-toggle:focus-visible { outline-color: #82d8ff; }
 html[data-theme="dark"] .auth-story>p,
 html[data-theme="dark"] .auth-story ul,
 html[data-theme="dark"] .auth-form-head p,
@@ -412,5 +413,9 @@ html[data-theme="dark"] .auth-portal input:-webkit-autofill { -webkit-text-fill-
   .auth-mode-indicator,
   .auth-google,
   .auth-submit,
-  .auth-form input { transition: none; }
+  .auth-form input,
+  .auth-nav-actions .theme-toggle,
+  .auth-nav-actions .theme-toggle::after { transition: none; }
+  .auth-nav-actions .theme-toggle:hover { transform: none; }
+  .auth-nav-actions .theme-toggle:hover::after { transform: none; }
 }
