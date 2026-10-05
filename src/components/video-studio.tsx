@@ -19,7 +19,6 @@ import {
 } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
 import {
-  clipsForCategory,
   directionForCategory,
   galleryVideoClips,
   videoStudioClips,
@@ -427,18 +426,6 @@ export function VideoStudio({
     setError("");
     setNotice(message);
   };
-  const useDirection = (i: number) => {
-    const nextDirection = videoStudioDirections[i],
-      clips = clipsForCategory(nextDirection.category),
-      nextClip = clips.find((clip) => clip.id !== demoId) || clips[0];
-    setActive(i);
-    setPrompt(nextDirection.prompt);
-    setDemoError(false);
-    setProgress(0);
-    setDemoId(nextClip?.id || null);
-    if (nextClip) localStorage.setItem("amh-video-demo", nextClip.id);
-    invalidate(`${nextDirection.category} direction added.`);
-  };
   const openViewer = (clip: VideoStudioClip) => {
     setModalMuted(true);
     setModalPlaying(false);
@@ -663,18 +650,22 @@ export function VideoStudio({
   return (
     <main className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
       <header className={styles.studioToolbar}>
-        <div className={styles.studioToolbarTitle}><Sparkle weight="fill" /><b>Video Studio</b></div>
+        <div className={styles.studioToolbarTitle}>
+          <span className={styles.studioMark}><Sparkle weight="fill" /></span>
+          <span><small>AI CREATION WORKSPACE</small><b>Video Studio</b></span>
+        </div>
         <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
-          <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("create")}>Create</button>
-          <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} onClick={() => setWorkspaceTab("explore")}>Explore</button>
+          <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} aria-current={workspaceTab === "create" ? "page" : undefined} onClick={() => setWorkspaceTab("create")}>Create</button>
+          <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} aria-current={workspaceTab === "explore" ? "page" : undefined} onClick={() => setWorkspaceTab("explore")}>Explore</button>
           <Link href="/history">Generations</Link>
         </nav>
       </header>
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
           <header className={styles.heroCopy}>
-            <h1>Create video</h1>
-            <p>Choose a model, describe the scene, then generate.</p>
+            <span>CREATE</span>
+            <h1>Bring your next idea to life.</h1>
+            <p>Choose a capable model, set the essentials, then direct the scene in your own words.</p>
           </header>
           {workspaceTab === "create" && <form className={styles.inspector} onSubmit={submit}>
             <div className={styles.modeToggle}>
@@ -715,7 +706,7 @@ export function VideoStudio({
               ))}
             </div>
             <div className={styles.field} ref={pickerRef}>
-              <label>Model details</label>
+              <div className={styles.fieldHeading}><label>Choose a video model</label><span>Live availability</span></div>
               <button
                 type="button"
                 className={styles.modelTrigger}
@@ -775,15 +766,16 @@ export function VideoStudio({
                   </div>
                 </div>
               )}
-              <small>
-                {model?.available === false
-                  ? unavailable(model.availabilityReason)
-                  : model?.description ||
-                    "Live availability and supported settings are loaded securely."}
-              </small>
+              <details className={styles.modelDetails}>
+                <summary>More model details <span>⌄</span></summary>
+                <div>
+                  <p>{model?.available === false ? unavailable(model.availabilityReason) : model?.description || "Live availability and supported settings are loaded securely."}</p>
+                  {model?.capabilities?.length ? <ul>{model.capabilities.map((capability) => <li key={capability}>{capability}</li>)}</ul> : null}
+                </div>
+              </details>
             </div>
             <div className={styles.field}>
-              <label>Prompt</label>
+              <div className={styles.fieldHeading}><label>Prompt</label><span>Describe the scene, motion, camera and visual style</span></div>
               <textarea
                 value={prompt}
                 onChange={(e) => {
@@ -794,17 +786,6 @@ export function VideoStudio({
                 maxLength={20000}
               />
               <small>{prompt.length.toLocaleString()} / 20,000</small>
-            </div>
-            <div className={styles.promptChips}>
-              {videoStudioDirections.map((x, i) => (
-                <button
-                  type="button"
-                  key={x.category}
-                  onClick={() => useDirection(i)}
-                >
-                  {x.category.replace("Social / ", "")}
-                </button>
-              ))}
             </div>
             {mode === "image" && (
               <div className={styles.referenceBox}>
@@ -948,8 +929,9 @@ export function VideoStudio({
                 {workspaceTab === "create" ? (
                   <div className={styles.readyStage}>
                     <span><Sparkle weight="fill" /></span>
+                    <small>YOUR VIDEO, YOUR DIRECTION</small>
                     <h2>Your next creation starts here.</h2>
-                    <p>Choose a model, describe your idea, and generate when you are ready.</p>
+                    <p>Pick a model, write the direction, then generate when it feels right.</p>
                   </div>
                 ) : demo ? (
                   <video
