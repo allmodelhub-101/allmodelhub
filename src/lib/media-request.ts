@@ -69,8 +69,12 @@ export async function prepareMediaRequest(userId: string, input: GenerationInput
     : modality === "video" ? undefined : input.mode ?? input.audioMode;
   const imageCount = modality === "image" ? input.imageCount ?? 1 : undefined;
   const inputType = input.videoFileIds.length ? "video" : input.imageFileIds.length ? "image" : input.audioFileIds.length ? "audio" : "text";
+  // Seedance 2.5's documented reference-video authorization estimate applies
+  // to source plus output seconds. The 2.0 family uses its published output
+  // duration tiers; neither value is used for final provider settlement.
   const billableSeconds = contract.workflow === "upscale" ? inputDuration
-    : input.modelId === "wan-3-0-video" || input.modelId.startsWith("seedance-") ? (input.duration ?? 0) + inputDuration : input.duration;
+    : input.modelId === "wan-3-0-video" || (input.modelId === "seedance-2-5" && input.videoFileIds.length)
+      ? (input.duration ?? 0) + inputDuration : input.duration;
   const usage = { ...mediaUsageFromRequest({ ...input, modality, quality, imageCount, aspectRatio,
     mode: modality === "image" ? undefined : pricingMode, nativeAudio, referenceCount: input.imageFileIds.length,
     ...(inputDuration ? { inputDuration } : {}) }),
@@ -94,4 +98,3 @@ export async function prepareMediaRequest(userId: string, input: GenerationInput
   if (contract.modelId === "minimax-h3-max-turbo" && input.imageFileIds.length) delete providerBody.aspect_ratio;
   return { contract, quality, imageCount, usage, dimensions, storedRequest, providerBody };
 }
-

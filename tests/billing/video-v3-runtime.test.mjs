@@ -84,8 +84,34 @@ test("new adapters enforce positional frames, reference limits and upscale-only 
   assert.throws(() => validateMediaContractRequest(wan, { referenceCount: 0, duration: 20, inputDuration: 15, videoReferenceCount: 1, resolution: "720p" }));
   const flash = getMediaExecutionContract("flashvsr");
   assert.throws(() => validateMediaContractRequest(flash, { referenceCount: 0, resolution: "4K" }));
-  assert.doesNotThrow(() => validateMediaContractRequest(flash, { referenceCount: 0, resolution: "4K", videoReferenceCount: 1, inputDuration: 12.5 }));
+  assert.doesNotThrow(() => validateMediaContractRequest(flash, { referenceCount: 0, resolution: "4K", videoReferenceCount: 1, inputDuration: 120 }));
+  assert.throws(() => validateMediaContractRequest(flash, { referenceCount: 0, resolution: "4K", videoReferenceCount: 1, inputDuration: 120.001 }));
   assert.deepEqual(mediaProviderOptionPayload(flash, { resolution: "4K" }), { resolution: "4k" });
+});
+
+test("Seedance contracts enforce documented generation subsets and native-audio payloads", () => {
+  for (const id of ["seedance-2-0", "seedance-2-0-fast", "seedance-2-0-mini"]) {
+    const contract = getMediaExecutionContract(id);
+    assert.doesNotThrow(() => validateMediaContractRequest(contract, { referenceCount: 9, videoReferenceCount: 3,
+      audioReferenceCount: 3, inputDuration: 15, audioDuration: 15, duration: 4, resolution: "480p", nativeAudio: true }), id);
+    assert.throws(() => validateMediaContractRequest(contract, { referenceCount: 0, audioReferenceCount: 1,
+      audioDuration: 2, duration: 4, resolution: "480p" }), /audio_requires_visual/, id);
+    assert.throws(() => validateMediaContractRequest(contract, { referenceCount: 10, duration: 4, resolution: "480p" }), id);
+    assert.throws(() => validateMediaContractRequest(contract, { referenceCount: 1, videoReferenceCount: 1,
+      inputDuration: 15.01, duration: 4, resolution: "480p" }), id);
+    assert.deepEqual(mediaProviderOptionPayload(contract, { duration: 4, resolution: "480p", nativeAudio: true }),
+      { task_type: "generate", duration: 4, resolution: "480p", generate_audio: true }, id);
+  }
+  const twoFive = getMediaExecutionContract("seedance-2-5");
+  assert.doesNotThrow(() => validateMediaContractRequest(twoFive, { referenceCount: 0, audioReferenceCount: 10,
+    audioDuration: 30, duration: 30, resolution: "720p", nativeAudio: true }));
+  assert.throws(() => validateMediaContractRequest(twoFive, { referenceCount: 0, audioReferenceCount: 11,
+    audioDuration: 30, duration: 30, resolution: "720p" }));
+  assert.throws(() => validateMediaContractRequest(twoFive, { referenceCount: 0, videoReferenceCount: 10,
+    inputDuration: 30.01, duration: 30, resolution: "720p" }));
+  assert.throws(() => validateMediaContractRequest(twoFive, { referenceCount: 0, duration: 3, resolution: "480p" }));
+  assert.deepEqual(mediaProviderOptionPayload(twoFive, { duration: 30, resolution: "720p", nativeAudio: true }),
+    { task_type: "generate", duration: 30, resolution: "720p", generate_audio: true });
 });
 
 test("formula authorization requires exact verified rates, not approximate seconds prices", () => {
@@ -117,4 +143,3 @@ test("video callback, polling and reconciliation only enter V3 records authority
   assert.doesNotMatch(source("src/app/api/generations/[modality]/route.ts"), /const estimated = 0/);
   assert.doesNotMatch(source("src/components/video-studio.tsx"), /x.id !== "flashvsr"/);
 });
-

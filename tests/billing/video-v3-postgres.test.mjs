@@ -10,6 +10,7 @@ const migration = (name) => readFileSync(new URL("../../supabase/migrations/" + 
 const v2 = migration("20260926115825_create_billing_v2_schema.sql");
 const v3 = migration("20260928182225_add_billing_v3_provider_authoritative.sql");
 const repair = migration("20261005203530_video_v3_native_authorization.sql");
+const seedanceRepair = migration("20261006063135_video_v3_seedance_shortfall_flash_limits.sql");
 function table(sql, name) {
   const start = sql.indexOf("create table public." + name + " (");
   let statement = sql.slice(start, sql.indexOf("\n);", start) + 3);
@@ -84,17 +85,34 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     await db.exec(migration("20260929202000_media_video_contract_repair.sql"));
     await db.exec(fn(v3, "billing_v3_settle_provider_record"));
     await db.exec(repair);
+    await db.exec(seedanceRepair);
     await db.exec(migration("0061_storage_quotas.sql"));
     await db.exec(migration("20261006052727_video_private_media_uploads.sql"));
     await db.exec(fn(v3, "billing_v3_release_authoritative_failure"));
     await db.exec(fn(v3, "billing_protect_quote_snapshot"));
     await db.exec("create trigger billing_quotes_protect_snapshot before update on public.billing_quotes for each row execute function public.billing_protect_quote_snapshot()");
     const policies = (await db.query("select * from public.billing_v3_authorization_registry")).rows;
-    assert.equal(policies.length, 11);
+    assert.equal(policies.length, 15);
     for (const policy of policies) {
       const model = models.find((model) => model.id === policy.model_id);
       assert.equal(evaluateModelReadiness({ model: { ...model, markup: 2, uiSchema: mediaContractUiSchema(getMediaExecutionContract(model.id)) },
         active: true, routes: [policy], policies: [policy], configurationReady: true }).ready, true, model.id);
+    }
+    for (const [id, resolution, seconds, expected] of [
+      ["seedance-2-0", "1080p", "15", "7.38"],
+      ["seedance-2-0-fast", "720p", "15", "2.295"],
+      ["seedance-2-0-mini", "720p", "15", "1.425"],
+      ["seedance-2-5", "720p", "60", "9.72"],
+    ]) {
+      const policy = policies.find((row) => row.model_id === id);
+      const definition = policy.metadata.media_authorization_pricing;
+      const { priceMediaAuthorization } = await import("../../src/lib/billing/media-authorization-pricing.ts");
+      const price = priceMediaAuthorization({ metadata: policy.metadata, providerKey: "apimodels", modelId: id,
+        upstreamModel: policy.upstream_model, pricingVersion: definition.pricing_version, markup: "1", internalUsdPkrRate: "1",
+        usage: { seconds }, dimensions: { resolution, inputType: id === "seedance-2-5" ? "video" : "text" } });
+      assert.equal(price.providerCostUsd, expected, id);
+      assert.match(String(policy.metadata.authorization_estimate), /authorization ceiling/);
+      assert.equal(policy.metadata.final_cost_authority, "apimodels_records_api");
     }
     const user = randomUUID();
     await db.query("insert into auth.users values ($1)", [user]);
@@ -153,10 +171,13 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     assert.equal((await db.query("select public.billing_v3_settle_provider_record($1) result",[shortfall])).rows[0].result.status,"authorization_shortfall");
     assert.equal((await db.query("select count(*)::int n from public.wallet_transactions")).rows[0].n,1);
     assert.equal(Number((await db.query("select purchased_balance from public.wallets")).rows[0].purchased_balance),9944);
+    assert.equal(Number((await db.query("select promo_balance from public.wallets")).rows[0].promo_balance),0);
+    assert.equal(Number((await db.query("select reserved_balance from public.wallets")).rows[0].reserved_balance),0);
+    assert.equal((await db.query("select status from public.wallet_holds where id=$1", [third.result.wallet_hold_id])).rows[0].status,"released");
+    assert.equal((await db.query("select status from public.billing_quotes where id=$1", [third.result.quote_id])).rows[0].status,"cancelled");
     assert.equal((await db.query("select count(*)::int n from public.billing_receipts")).rows[0].n,2);
     assert.equal((await db.query("select count(*)::int n from public.billing_anomalies")).rows[0].n,1);
     assert.equal((await db.query("select has_table_privilege('anon','public.provider_input_assets','select') allowed")).rows[0].allowed,false);
     assert.equal((await db.query("select has_function_privilege('anon','public.billing_v3_settle_provider_record(uuid,jsonb,uuid,uuid,jsonb)','execute') allowed")).rows[0].allowed,false);
   } finally { await db.close(); }
 });
-

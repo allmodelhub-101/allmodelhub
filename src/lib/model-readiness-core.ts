@@ -57,11 +57,16 @@ export function evaluateModelReadiness(input: {
         for (const resolution of contract.resolutions ?? [undefined]) {
           for (const audio of contract.nativeAudio ?? [undefined]) {
             for (const inputType of contract.inputModes) {
+            // A reference-video request has a larger authorization envelope
+            // than its output duration. Upscale already uses its source limit
+            // as `seconds`, so it must not be counted twice.
+            const authorizationSeconds = inputType === "video" && contract.modelId === "seedance-2-5"
+              ? seconds + (contract.maxReferenceVideoSeconds ?? 0) : seconds;
             const result = priceMediaAuthorization({
               metadata: p.metadata, providerKey: p.provider_key, modelId: model.id, upstreamModel: p.upstream_model,
               pricingVersion: String(p.metadata.derived_from_verified_pricing_version),
               markup: String(model.markup), internalUsdPkrRate: "1",
-              usage: { seconds: String(seconds) as DecimalString },
+              usage: { seconds: String(authorizationSeconds) as DecimalString },
               dimensions: { resolution, inputType,
                 ...(contract.providerNativeAudio === "kling_sound" ? { mode: audio ? "native_audio" : "silent" } : {}) },
             });
@@ -88,4 +93,3 @@ export function evaluateModelReadiness(input: {
     : !state.configurationReady ? "runtime_configuration_unavailable" : null;
   return { ...state, ready: !reason, reason };
 }
-

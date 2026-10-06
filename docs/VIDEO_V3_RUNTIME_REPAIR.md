@@ -38,20 +38,20 @@ Supabase RLS and service-only table/function grants are explicit; the view uses 
 | ltx-2-3 | Ready | Text 5–15s/image 5–20s | Verified time/resolution snapshot |
 | grok-imagine-video-1-5 | Ready | Text/image; intrinsic audio | Verified time/resolution snapshot |
 | minimax-h3-max-turbo | Ready | Text/first-frame/first+last-frame | Verified time/resolution snapshot |
-| seedance-2-0 | Not ready | Text/image/video/audio contracts implemented | Token strategy; exact rates/ceiling unavailable |
-| seedance-2-0-fast | Not ready | Same; no audio-only references | Token strategy; exact rates/ceiling unavailable |
-| seedance-2-0-mini | Not ready | Same; no audio-only references | Token strategy; exact rates/ceiling unavailable |
-| seedance-2-5 | Not ready | Generate with normalized multimodal refs; no edit/extend UI | Token strategy; exact rates/ceiling unavailable |
+| seedance-2-0 | Ready | Text/image/video/audio generation; no audio-only reference | Published authorization ceiling; final Records API settlement |
+| seedance-2-0-fast | Ready | Same; no audio-only references | Published authorization ceiling; final Records API settlement |
+| seedance-2-0-mini | Ready | Same; no audio-only references | Published authorization ceiling; final Records API settlement |
+| seedance-2-5 | Ready | Standard multimodal generation; no edit/extend UI | Conservative authorization envelope; final Records API settlement |
 | wan-3-0-video | Ready | Standard generation, image/video/audio refs | Rate × output seconds; video refs add input seconds |
-| flashvsr | Ready | MP4 Upscale only | Rate × server-inspected source duration/resolution |
+| flashvsr | Ready | MP4 Upscale only; source duration ≤120s | Rate × server-inspected source duration/resolution |
 
 All ready models settle final cost from APIMODELS records using quote-frozen FX/markup. Unsupported smart-duration, prime Wan, document/web inputs, Seedance edit/extend, and public arbitrary source URLs are not advertised or accepted.
 
-## Genuine Seedance blocker
+## Seedance authorization and settlement
 
-[Seedance 2.0 Official](https://apimodels.app/docs/seedance-2-0-official) labels displayed per-second rates approximate and bills actual generation tokens. [Seedance 2.5](https://apimodels.app/docs/seedance-2-5) documents the token formula and different reference-video token pricing, but not exact USD/token rates or an enforceable maximum token envelope. Authorization cannot safely use those rounded display rates. The generic calculator supports exact base/reference-video token rates, resolution dimensions, FPS, token divisor and input+output duration; production policies remain absent until this evidence is supplied and verified. No permanent model-ID block list exists in runtime.
+The forward repair adds executable, versioned authorization policies for all four Seedance routes. Their published derived per-second values are explicitly stored as conservative authorization estimates/ceilings, not final provider prices. Seedance 2.5 reference-video authorization uses source plus output seconds with the documented lower reference-video rate. Every final Video V3 customer charge still derives exclusively from the APIMODELS Records API USD cost and the quote-frozen FX/markup snapshot.
 
-Obtain exact APIMODELS rates per million tokens, reference-video rates, output dimension/FPS rules for every ratio/resolution, token rounding, and a contractual maximum charge. Then add versioned V3 policy metadata, defensible ceilings and tests in a new forward migration. Do not enable models by setting `available=true`.
+An authorization shortfall now records one critical anomaly, disables the policy, releases the active hold and reservation, and cancels the quote without capturing a customer charge. Replayed settlement calls return the same terminal outcome while retaining the provider record for reconciliation.
 
 ## Verification
 
@@ -70,7 +70,7 @@ Obtain exact APIMODELS rates per million tokens, reference-video rates, output d
 3. In that isolated project, apply the two new migration files in timestamp order via Supabase migration tooling. Inspect `supabase db push --help`; run the dry-run against the explicit preview database URL first. Apply only after confirming the target and migration history. Run database security advisors and verify private buckets, service-only RPC grants, and RLS.
 4. Scope Vercel Preview env to that preview project: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `APIMODELS_API_KEY`, `APIMODELS_BASE_URL`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `CALLBACK_SECRET`, `CRON_SECRET`, `PROVIDER_ASSET_HOST_ALLOWLIST`, and `NEXT_PUBLIC_APP_URL`. Set the last value to a stable HTTPS preview hostname. Configure Supabase Auth redirect URLs for that hostname. Keep provider, callback, and Redis secrets server-only.
 5. Deploy a Preview of `fix/video-v3-runtime` after review. APIMODELS must reach callback/capability endpoints without Vercel deployment-protection login; use an approved isolated preview domain/access configuration, not public production credentials. Verify that a provider follows the signed Storage redirect and Range requests work on an uploaded MP4 larger than 4.5 MB.
-6. Run `pnpm install --frozen-lockfile`, `pnpm test:billing`, `pnpm test:security`, `pnpm check:security`, `pnpm typecheck`, and `pnpm build`. Confirm `/api/models` returns 15 active video entries with 11 ready/4 explained unavailable, and admin `GET /api/admin/models/<id>` readiness agrees. Seedance must remain unavailable.
+6. Run `pnpm install --frozen-lockfile`, `pnpm test:billing`, `pnpm test:security`, `pnpm check:security`, `pnpm typecheck`, and `pnpm build`. Confirm `/api/models` returns 15 active video entries with 15 ready entries, and admin `GET /api/admin/models/<id>` readiness agrees.
 7. Use a dedicated preview test wallet and an explicitly approved provider-spend budget. Smoke-test each ready model, Turbo ordered frames, Wan video-reference duration billing, and FlashVSR upload → estimate → hold → provider task → output → receipt. Compare final APIMODELS USD record × frozen FX × frozen markup (rounded to frozen wallet quantum) to exactly one wallet transaction and receipt; check unused hold release.
 8. Replay callbacks and poll concurrently from multiple clients; invoke authenticated `GET /api/internal/billing/reconcile` with the preview `CRON_SECRET`. Test failed zero-cost record release, delayed records, output persistence retry, pricing changes requiring renewed confirmation, and source-file deletion after task submission. In isolated SQL tests, force a shortfall and confirm no additional debit/no capped charge. Confirm changing FX/markup affects new quotes but not an existing quote. The existing cron remains daily; review a faster approved schedule separately if desired.
 9. Only after these gates pass, back up production, apply the reviewed forward migrations, review the normal merge, and deploy through the project's approved production workflow. Do not roll back by deleting financial rows; use a reviewed forward repair or disable the affected route/policy if needed.
@@ -84,4 +84,3 @@ Readiness/contracts: `model-store.ts`, `model-readiness-core.ts`, `media-executi
 Studio/references: `video-studio.tsx`, `media-request.ts`, `media-metadata.ts`, `studio-media-upload.ts`, `provider-input-assets.ts`, `media-storage-cleanup.ts`, files API, private media upload API, preflight API and provider capability API.
 
 Tests/tooling: three new video V3 test files, four updated historical/runtime billing test files, pinned PGlite test dependency/lockfile, TypeScript import-extension support, and this handoff document. Generated Next/TypeScript build artifacts are not part of the repair commit.
-

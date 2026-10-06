@@ -93,7 +93,10 @@ const contracts: readonly MediaExecutionContract[] = [
     durationRange: { min: 4, max: id === "seedance-2-5" ? 30 : 15, integer: true }, resolutions: id === "seedance-2-0" ? ["480p", "720p", "1080p"] : ["480p", "720p"],
     aspectRatios: ["adaptive", "16:9", "4:3", "1:1", "3:4", "9:16", "21:9"], nativeAudio: [false, true], providerNativeAudio: "generate_audio", providerOptions: { task_type: "generate" },
   })),
-  video("flashvsr", { workflow: "upscale", inputModes: ["video"], videoReferenceField: "video_url", maxReferences: 0, maxVideoReferences: 1, maxReferenceVideoSeconds: 600, minReferenceSeconds: 0, resolutions: ["720p", "1080p", "2K", "4K"], resolutionMapping: { "2K": "2k", "4K": "4k" }, providerDuration: "omit", providerNativeAudio: "omit" }),
+  // APIMODELS prices this workflow from the inspected source duration. The
+  // service accepts a larger file than the product upload boundary, but never
+  // a source longer than two minutes.
+  video("flashvsr", { workflow: "upscale", inputModes: ["video"], videoReferenceField: "video_url", maxReferences: 0, maxVideoReferences: 1, maxReferenceVideoSeconds: 120, minReferenceSeconds: 0, resolutions: ["720p", "1080p", "2K", "4K"], resolutionMapping: { "2K": "2k", "4K": "4k" }, providerDuration: "omit", providerNativeAudio: "omit" }),
 ];
 
 const byModel = new Map(contracts.map((contract) => [contract.modelId, contract]));
@@ -200,4 +203,3 @@ export function mediaProviderOptionPayload(contract: MediaExecutionContract, inp
   }
   return payload;
 }
-
