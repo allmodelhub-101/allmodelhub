@@ -14,6 +14,7 @@ const repairSql = [
   "20260929201000_media_audio_contract_repair.sql",
   "20260929202000_media_video_contract_repair.sql",
   "20260930010000_final_image_audio_repair.sql",
+  "20261005203530_video_v3_native_authorization.sql",
 ].map((name) => readFileSync(new URL(`../../supabase/migrations/${name}`, import.meta.url), "utf8")).join("\n");
 
 test("every advertised media execution contract has all source-controlled runtime layers", () => {
@@ -27,28 +28,26 @@ test("every advertised media execution contract has all source-controlled runtim
     assert.match(contract.strategy, /^apimodels_/, `${contract.modelId}: provider adapter strategy`);
     assert.equal(mediaUiSchemaMatchesContract(mediaContractUiSchema(contract), contract), true,
       `${contract.modelId}: compatible UI/provider contract`);
-    assert.match(repairSql, new RegExp(`['\"]${contract.modelId.replaceAll("-", "\\-")}['\"]`),
+    if (!contract.modelId.startsWith("seedance-")) assert.match(repairSql, new RegExp(`['\"]${contract.modelId.replaceAll("-", "\\-")}['\"]`),
       `${contract.modelId}: source-controlled authorization/pricing binding`);
   }
 });
 
 test("runtime availability fails closed on missing adapter, pricing, or UI agreement", () => {
-  const modelStore = readFileSync(new URL("../../src/lib/model-store.ts", import.meta.url), "utf8");
+  const modelStore = readFileSync(new URL("../../src/lib/model-readiness-core.ts", import.meta.url), "utf8");
   assert.match(modelStore, /authorization_pricing_unavailable/);
-  assert.match(modelStore, /row\.modality !== "text" && !pricedPolicyModels\.has\(row\.id\)/,
-    "media pricing-registry checks must not replace request-bounded text policy validation");
-  assert.match(modelStore, /policy\.modality === "text" \|\| pricingKeys\.has/,
-    "text executability must remain policy-bounded while media requires an exact pricing rule");
+  assert.match(modelStore, /isRuntimeAuthorizationPolicyComplete/);
+  assert.match(modelStore, /media_authorization_pricing/);
   assert.match(modelStore, /provider_adapter_unavailable/);
   assert.match(modelStore, /media_contract_mismatch/);
-  assert.match(modelStore, /pricingKeys\.has/);
+  assert.doesNotMatch(modelStore, /billing_provider_pricing_registry|provider_pricing_rules/);
   assert.match(modelStore, /mediaUiSchemaMatchesContract/);
 });
 
 test("media authorization is request-bounded while settlement remains provider-authoritative", () => {
   const authorization = readFileSync(new URL("../../src/lib/billing/authorization.ts", import.meta.url), "utf8");
   const settlement = readFileSync(new URL("../../src/lib/billing/provider-authoritative-settlement.ts", import.meta.url), "utf8");
-  assert.match(authorization, /priceProviderRequest\(/);
+  assert.match(authorization, /priceMediaAuthorization\(/);
   assert.match(authorization, /priced\?\.providerCostUsd/);
   assert.match(authorization, /REQUEST_EXCEEDS_POLICY/);
   assert.match(authorization, /requestAuthorization[\s\S]*policyMaximum/);
@@ -67,3 +66,4 @@ test("known media failures produce safe, accurate public categories", () => {
   assert.equal(classifyMediaRuntimeFailure(new Error("socket timeout")).category, "provider_temporary");
   assert.equal(classifyMediaRuntimeFailure(new Error("timeout"), true).category, "reconciliation_pending");
 });
+

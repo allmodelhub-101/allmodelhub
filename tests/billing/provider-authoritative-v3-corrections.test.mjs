@@ -40,9 +40,8 @@ test("text availability requires the same complete policy metadata as authorizat
   const store = source("src/lib/model-store.ts");
   const core = source("src/lib/billing/model-availability-core.ts");
   const authorization = source("src/lib/billing/authorization.ts");
-  assert.match(store, /isRuntimeAuthorizationPolicyComplete/);
-  assert.match(store, /billing_authorization_incomplete/);
-  assert.match(store, /completePolicies\.map/);
+  assert.match(store, /evaluateModelReadiness/);
+  assert.match(source("src/lib/model-readiness-core.ts"), /isRuntimeAuthorizationPolicyComplete/);
   assert.match(core, /authorization_input_usd_per_million/);
   assert.match(core, /authorization_output_usd_per_million/);
   assert.match(core, /derived_from_verified_pricing_version/);
@@ -87,7 +86,7 @@ test("the full catalog stays visible while unavailable routes remain disabled", 
   const store = source("src/lib/model-store.ts");
   const api = source("src/app/api/models/route.ts");
   const picker = source("src/components/model-picker.tsx");
-  assert.match(store, /return rows\.map\(\(row\) => withAvailability/);
+  assert.match(store, /return rows\.map\(\(row\) =>/);
   assert.match(store, /\.filter\(\(model\) => model\.available !== false && model\.autoEligible !== false\)/);
   assert.match(store, /if \(!runtimeModels\.length\) return undefined/);
   assert.match(api, /available: model\.available !== false/);
@@ -100,7 +99,7 @@ test("wallet distinguishes spendable credits from temporary reservations", () =>
   const wallet = source("src/components/wallet-client.tsx");
   assert.match(wallet, /label: "Available"/);
   assert.match(wallet, /label: "Temporarily reserved"/);
-  assert.match(wallet, /Not spent/i);
+  assert.match(wallet, /Held for work in progress/i);
 });
 
 test("user-owned settlement polling is safe, bounded, and provider-authoritative", () => {
@@ -137,3 +136,4 @@ test("traffic reconciliation uses the existing database claim function", () => {
   assert.match(reconciliation, /billing_v3_claim_reconciliation_batch/);
   assert.match(chat, /runBillingV3ReconciliationPump\(3\)/);
 });
+

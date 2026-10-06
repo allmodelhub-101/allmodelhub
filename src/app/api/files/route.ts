@@ -5,6 +5,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
 import { extractText } from "@/lib/file-extract";
 import { logServerError } from "@/lib/public-error";
 import { getStorageQuota } from "@/lib/storage-quota";
+import { inspectMediaBytes } from "@/lib/media-metadata";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -73,10 +74,16 @@ export async function POST(request: Request) {
   const releaseReservation = async () => { await admin.rpc("release_file_upload_reservation", { p_reservation_id: reservationId, p_user_id: user.id }); };
 
   const extension = file.name.match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase();
-  const allowedExtensions = new Set(["pdf", "docx", "txt", "md", "csv", "xlsx", "xls", "json", "xml", "png", "jpg", "jpeg", "webp", "gif", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
+  const allowedExtensions = new Set(["mp4", "mp3", "wav", "pdf", "docx", "txt", "md", "csv", "xlsx", "xls", "json", "xml", "png", "jpg", "jpeg", "webp", "gif", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
   if (!extension || !allowedExtensions.has(extension)) { await releaseReservation(); return NextResponse.json({ error: "Unsupported file type." }, { status: 400 }); }
 
   const bytes = new Uint8Array(await file.arrayBuffer());
+  const mediaType = extension === "mp4" ? "video/mp4" : extension === "wav" ? "audio/wav" : extension === "mp3" ? "audio/mpeg" : undefined;
+  let mediaMetadata;
+  if (mediaType) {
+    try { mediaMetadata = inspectMediaBytes(bytes, mediaType); }
+    catch { await releaseReservation(); return NextResponse.json({ error: "Upload a valid MP4, WAV, or MP3 with a readable duration." }, { status: 400 }); }
+  }
   const textExtensions = new Set(["txt", "md", "csv", "json", "xml", "js", "jsx", "ts", "tsx", "py", "php", "css", "html"]);
   const signature = new TextDecoder().decode(bytes.slice(0, 16));
   const startsWith = (...values: number[][]) => values.some((value) => value.every((byte, index) => bytes[index] === byte));
@@ -90,7 +97,7 @@ export async function POST(request: Request) {
     : extension === "docx" || extension === "xlsx" ? zipContainer
     : extension === "xls" ? oleContainer
     : textExtensions.has(extension) ? !bytes.slice(0, 4096).some((byte) => byte === 0)
-    : false;
+    : Boolean(mediaMetadata);
   if (!validBinary || (textExtensions.has(extension) && !String(file.type).startsWith("text/") && file.type !== "application/json" && file.type !== "application/xml")) { await releaseReservation(); return NextResponse.json({ error: "File contents do not match the selected type." }, { status: 400 }); }
 
   if (projectId) {
@@ -101,7 +108,7 @@ export async function POST(request: Request) {
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-140);
   const path = `${user.id}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${safeName}`;
   const { error: uploadError } = await admin.storage.from("user-files").upload(path, bytes, {
-    contentType: file.type || "application/octet-stream",
+    contentType: mediaType || file.type || "application/octet-stream",
     upsert: false
   });
   if (uploadError) { await releaseReservation(); logServerError("file-upload", uploadError, { userId: user.id }); return NextResponse.json({ error: "Could not upload file." }, { status: 500 }); }
@@ -112,7 +119,8 @@ export async function POST(request: Request) {
     project_id: projectId,
     storage_path: path,
     name: safeName,
-    mime_type: file.type || "application/octet-stream",
+    mime_type: mediaType || file.type || "application/octet-stream",
+    ...(mediaMetadata ? { media_metadata: mediaMetadata } : {}),
     size_bytes: file.size,
     extracted_text: extraction.text,
     extraction_status: extraction.status
@@ -129,4 +137,5 @@ export async function POST(request: Request) {
   const updatedQuota = await getStorageQuota(admin, user.id).catch(() => null);
   return NextResponse.json({ file: record, quota: updatedQuota }, { status: 201 });
 }
+
 

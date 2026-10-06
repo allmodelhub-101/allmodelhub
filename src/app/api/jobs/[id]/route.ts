@@ -53,8 +53,20 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
   const { data: rawJob, error } = await admin.from("generation_jobs").select(jobFields).eq("id", parsedId.data).eq("user_id", user.id).single();
   if (error || !rawJob) return NextResponse.json({ error: "Generation job not found." }, { status: 404 });
   const job = rawJob as GenerationJob;
+  if (job.status === "settling" && job.modality === "video" && job.provider_task_id && job.result_urls?.length) {
+    try {
+      const settlement = await completeProviderAuthoritativeMediaBilling({ jobId: job.id, providerTaskId: job.provider_task_id });
+      if ((settlement as Record<string, unknown>).status === "settled") {
+        const { data: completed, error: updateError } = await admin.from("generation_jobs").update({ status: "completed",
+          reconciliation_required: false, reconciliation_state: "resolved", next_reconcile_at: null,
+          completed_at: new Date().toISOString() }).eq("id", job.id).select(jobFields).single();
+        if (updateError) throw updateError;
+        return NextResponse.json({ job: await clientJob(completed as GenerationJob) });
+      }
+    } catch (error) { logServerError("job-poll-v3-record-retry", error, { jobId: job.id }); }
+  }
   if (["completed", "failed", "cancelled", "expired"].includes(job.status)
-    || (job.status === "settling" && job.modality === "video") || !job.provider_task_id) {
+    || job.status === "settling" || !job.provider_task_id) {
     return NextResponse.json({ job: await clientJob(job) });
   }
 
@@ -70,7 +82,11 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       }
       if (!resultUrls.length) return NextResponse.json({ job: await clientJob(job), warning: "Provider has not supplied a usable output yet." });
 
-      const providerAuthoritativeOutput = job.modality === "image" || job.modality === "audio";
+      const { data: quote, error: quoteError } = job.billing_quote_id
+        ? await admin.from("billing_quotes").select("billing_engine").eq("id", job.billing_quote_id).single()
+        : { data: null, error: null };
+      if (quoteError) throw quoteError;
+      const providerAuthoritativeOutput = quote?.billing_engine === "v3_provider_authoritative";
       const { data: claimed } = await admin.from("generation_jobs").update({ status: "settling", result_json: summary,
         updated_at: new Date().toISOString() })
         .eq("id", job.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();
@@ -81,11 +97,12 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
 
       const storedPaths = await persistGeneratedAssets(user.id, job.id, resultUrls);
       if (providerAuthoritativeOutput) {
-        await admin.from("generation_jobs").update({
-          status: "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
+        const { error: outputError } = await admin.from("generation_jobs").update({
+          status: job.modality === "video" ? "settling" : "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
           completed_at: new Date().toISOString(), reconciliation_required: true, reconciliation_state: "due",
           next_reconcile_at: new Date(Date.now() + 60_000).toISOString(), error_message: null, updated_at: new Date().toISOString(),
         }).eq("id", job.id);
+        if (outputError) throw outputError;
       }
       try {
         if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
@@ -100,7 +117,13 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
         const charge = providerAuthoritativeOutput
           ? Number((settlement as Record<string, unknown>).charge_credits ?? 0)
           : Number((settlement as Awaited<ReturnType<typeof completeMediaGenerationBilling>>).result.charge_credits ?? 0);
-        await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready.${charge > 0 ? ` ${charge.toFixed(2)} Credits charged.` : " Billing is finalizing."}`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
+        if (providerAuthoritativeOutput && (settlement as Record<string, unknown>).status === "settled") {
+          await admin.from("generation_jobs").update({ status: "completed", reconciliation_required: false,
+            reconciliation_state: "resolved", next_reconcile_at: null }).eq("id", job.id);
+        }
+        if (job.modality !== "video" || !providerAuthoritativeOutput || (settlement as Record<string, unknown>).status === "settled") {
+          await notifyUser(user.id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready.${charge > 0 ? ` ${charge.toFixed(2)} Credits charged.` : " Billing is finalizing."}`, href: `/${job.modality === "image" ? "images" : job.modality === "video" ? "video" : "audio"}` });
+        }
       } catch (settlementError) {
         await admin.from("generation_jobs").update({
           error_message: providerAuthoritativeOutput ? null : "Wallet settlement pending reconciliation.",
@@ -118,7 +141,7 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
       if (!job.billing_quote_id || !providerFailureIsNonBillable(String(job.provider_key || ""))) throw new Error("BILLING_MEDIA_FAILURE_REQUIRES_RECONCILIATION");
       await failMediaGenerationBilling({ jobId: job.id, providerState: "failed", errorMessage: task.failMsg || "Generation failed", rawUsage: (task.raw && typeof task.raw === "object" ? task.raw : {}) as Record<string, unknown>, metadata: { source: "job_poll" } });
       const { data: updated } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).single();
-      await notifyUser(user.id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });
+      if (updated?.status === "failed") await notifyUser(user.id, { type: "generation", title: `${job.modality} generation failed`, body: `${job.public_id} failed. Eligible reserved Credits were released.` });
       return NextResponse.json({ job: await clientJob(updated as GenerationJob) });
     }
 
@@ -133,3 +156,4 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
     return NextResponse.json({ job: await clientJob(job), warning: "Could not refresh provider status." });
   }
 }
+

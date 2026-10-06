@@ -34,7 +34,8 @@ const newlyVerified = [
   "gemini-omni-1-1-flash", "grok-video-3", "minimax-h3", "veo-3-1-fast-fhd",
 ];
 
-const blocked = [
+// Historical migration decisions, not current runtime availability.
+const historicallyBlocked = [
   "claude-fable-5-1", "claude-haiku-4-5", "claude-opus-5", "claude-sonnet-4-6", "claude-sonnet-5",
   "deepseek-v4-flash", "deepseek-v4-pro", "gemini-3-8-flash", "gemini-3-pro-preview", "glm-5-3",
   "gpt-5-6-luna", "gpt-5-6-sol", "gpt-5-6-terra", "gpt-6-astra", "grok-4-6",
@@ -46,12 +47,12 @@ const blocked = [
   "seedance-2-5", "wan-3-0-video",
 ];
 
-test("all 57 active provider routes have an explicit pricing decision", () => {
-  const active = [...previouslyVerified, ...newlyVerified, ...blocked];
+test("historical September migration recorded all 57 pricing decisions", () => {
+  const active = [...previouslyVerified, ...newlyVerified, ...historicallyBlocked];
   assert.equal(active.length, 57);
   assert.equal(new Set(active).size, 57);
   for (const model of newlyVerified) assert.match(migration, new RegExp(`'${model.replaceAll("-", "\\-")}'`));
-  for (const model of blocked) {
+  for (const model of historicallyBlocked) {
     assert.match(migration, new RegExp(`'${model.replaceAll("-", "\\-")}'`));
     assert.match(migration, new RegExp(`\\('${model.replaceAll("-", "\\-")}',\\s*'[^']+',\\s*'[^']+'\\)`));
   }
@@ -65,7 +66,7 @@ test("unverified routes are explicit fail-closed registry state", () => {
   assert.match(migration, /v_covered_routes <> v_active_routes/);
 });
 
-test("unverified routes are removed from executable customer routing", () => {
+test("historical V2 migration removed unverified routes before V3 replacement", () => {
   assert.match(executionGateMigration, /update public\.provider_models/);
   assert.match(executionGateMigration, /billing_v2_status', 'temporarily_unavailable'/);
   assert.match(executionGateMigration, /update public\.models/);
@@ -95,3 +96,4 @@ test("async media settlement reloads authoritative quote numerics as exact strin
   assert.match(exactMediaQuoteMigration, /revoke all on table public\.billing_media_settlement_quotes/);
   assert.match(mediaSettlement, /from\("billing_media_settlement_quotes"\)/);
 });
+

@@ -25,6 +25,9 @@ export async function completeMediaGenerationBilling(input: Readonly<{
   const admin = createAdminClient();
   const { data: job, error: jobError } = await admin.from("generation_jobs").select("id,billing_quote_id,provider_task_id").eq("id", input.jobId).single();
   if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
+  const { data: engine, error: engineError } = await admin.from("billing_quotes").select("billing_engine").eq("id", job.billing_quote_id).single();
+  if (engineError) throw engineError;
+  if (engine?.billing_engine === "v3_provider_authoritative") throw new Error("BILLING_V3_LEGACY_SETTLEMENT_FORBIDDEN");
   const { data: quote, error: quoteError } = await admin.from("billing_media_settlement_quotes")
     .select("id,user_id,provider_key,model_id,upstream_model,pricing_version,internal_usd_pkr_rate,reservation_credits,created_at,input_dimensions,pricing_snapshot")
     .eq("id", job.billing_quote_id).single();
@@ -100,7 +103,7 @@ export async function completeProviderAuthoritativeMediaBilling(input: Readonly<
     .select("id,billing_quote_id,modality")
     .eq("id", input.jobId).single();
   if (jobError || !job?.billing_quote_id) throw jobError ?? new Error("BILLING_MEDIA_JOB_QUOTE_MISSING");
-  if (job.modality !== "image" && job.modality !== "audio") {
+  if (job.modality !== "image" && job.modality !== "audio" && job.modality !== "video") {
     throw new Error("BILLING_V3_MEDIA_SETTLEMENT_SCOPE_INVALID");
   }
   const { data: quote, error: quoteError } = await admin.from("billing_quotes")
@@ -127,6 +130,23 @@ export async function failMediaGenerationBilling(input: Readonly<{
   metadata?: Readonly<Record<string, unknown>>;
 }>) {
   const admin = createAdminClient();
+  const { data: job, error: jobError } = await admin.from("generation_jobs").select("billing_quote_id,provider_task_id").eq("id", input.jobId).single();
+  if (jobError) throw jobError;
+  const { data: quote, error: quoteError } = await admin.from("billing_quotes").select("billing_engine").eq("id", job.billing_quote_id).single();
+  if (quoteError) throw quoteError;
+  if (quote?.billing_engine === "v3_provider_authoritative") {
+    if (!job.provider_task_id) throw new Error("BILLING_V3_PROVIDER_ID_REQUIRED");
+    const result = await settleApimodelsTask({ quoteId: job.billing_quote_id, taskId: job.provider_task_id,
+      providerTaskId: job.provider_task_id, links: { generationJobId: input.jobId },
+      metadata: { ...input.metadata, provider_failure_message: input.errorMessage.slice(0, 1000) } }) as Record<string, string>;
+    if (result.status === "settled") {
+      const { error } = await admin.from("generation_jobs").update({ status: input.providerState,
+        error_message: input.errorMessage.slice(0, 1000), reconciliation_required: false, reconciliation_state: "resolved",
+        next_reconcile_at: null }).eq("id", input.jobId);
+      if (error) throw error;
+    }
+    return result;
+  }
   const { data, error } = await admin.rpc("billing_fail_media_quote", {
     p_job_id: input.jobId,
     p_provider_state: input.providerState,
@@ -138,3 +158,4 @@ export async function failMediaGenerationBilling(input: Readonly<{
   await recordMediaFailureShadowBestEffort(input.jobId);
   return data as Record<string, string>;
 }
+

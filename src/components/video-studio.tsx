@@ -18,6 +18,8 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
+import { getMediaExecutionContract, mediaContractUiSchema } from "@/lib/media-execution-contract";
+import { uploadStudioMedia } from "@/lib/studio-media-upload";
 import {
   directionForCategory,
   galleryVideoClips,
@@ -33,6 +35,12 @@ type Schema = {
   resolutionOptions?: string[];
   maxReferences?: number;
   nativeAudio?: boolean;
+  workflow?: "generate" | "upscale";
+  promptLimit?: number;
+  maxVideoReferences?: number;
+  maxAudioReferences?: number;
+  maxReferencesByResolution?: Record<string, number>;
+  durationByInput?: Record<string, number>;
 };
 type Model = {
   id: string;
@@ -86,6 +94,13 @@ const fixtureModels: Model[] = [
       maxReferences: 1,
     },
   },
+  ...["flashvsr", "wan-3-0-video"].map((id): Model => ({
+    id, name: id === "flashvsr" ? "FlashVSR" : "Wan 3.0 Video",
+    providerFamily: "Development fixture", tier: "balanced", modality: "video",
+    description: "Local workflow fixture; no provider submission or wallet mutation.",
+    capabilities: [], available: true,
+    uiSchema: mediaContractUiSchema(getMediaExecutionContract(id)!) as Schema,
+  })),
 ];
 const fixtureJob = (state: Exclude<VideoStudioFixtureState, "idle">): Job => ({
   id: "development-fixture-job",
@@ -109,6 +124,11 @@ const unavailable = (reason?: string | null) =>
     billing_authorization_pending:
       "Billing authorization is still being configured.",
     billing_authorization_incomplete: "Billing authorization is incomplete.",
+    authorization_pricing_unavailable: "Verified authorization pricing is not available yet.",
+    provider_adapter_unavailable: "This provider workflow is not supported yet.",
+    media_contract_mismatch: "This model's supported options are being updated.",
+    settlement_unavailable: "Final billing is not available for this provider.",
+    runtime_configuration_unavailable: "This model is temporarily unavailable.",
   })[reason || ""] || "This model is currently unavailable.";
 const terminal = (job?: Job | null) =>
   Boolean(
@@ -229,6 +249,11 @@ export function VideoStudio({
     [nativeAudio, setNativeAudio] = useState(false),
     [mode, setMode] = useState<"text" | "image">("text"),
     [refs, setRefs] = useState<Ref[]>([]),
+    [videoRefs, setVideoRefs] = useState<Ref[]>([]),
+    [audioRefs, setAudioRefs] = useState<Ref[]>([]),
+    [quote, setQuote] = useState<{ estimatedCredits: string; authorizationCredits: string; requestKey: string } | null>(null),
+    [quoteError, setQuoteError] = useState(""),
+    [quoteRevision, setQuoteRevision] = useState(0),
     [projectId, setProjectId] = useState(""),
     [picker, setPicker] = useState(false),
     [query, setQuery] = useState(""),
@@ -259,6 +284,7 @@ export function VideoStudio({
     [modalDuration, setModalDuration] = useState(0),
     [workspaceTab, setWorkspaceTab] = useState<"create" | "explore">("create");
   const uploadRef = useRef<HTMLInputElement>(null),
+    submissionRequest = useRef<{ key: string; id: string } | null>(null),
     pollToken = useRef(0),
     submissionInFlight = useRef(false),
     videoRef = useRef<HTMLVideoElement>(null),
@@ -324,7 +350,7 @@ export function VideoStudio({
       .then((r) => r.json())
       .then((d) => {
         const list = (d.models || []).filter(
-          (x: Model) => x.modality === "video" && x.id !== "flashvsr",
+          (x: Model) => x.modality === "video",
         );
         setModels(list);
         setModelId((v) =>
@@ -372,11 +398,12 @@ export function VideoStudio({
   }, []);
   const model = models.find((x) => x.id === modelId),
     schema = model?.uiSchema || {},
+    upscale = schema.workflow === "upscale",
     supportsImage =
       (schema.inputModes || ["text"]).includes("image") ||
       model?.capabilities.includes("image-to-video") === true,
-    maxRefs = Math.max(0, schema.maxReferences ?? (supportsImage ? 1 : 0)),
-    durations = schema.durationOptions?.length ? schema.durationOptions : [5],
+    maxRefs = Math.max(0, schema.maxReferencesByResolution?.[resolution] ?? schema.maxReferences ?? (supportsImage ? 1 : 0)),
+    durations = (schema.durationOptions?.length ? schema.durationOptions : [5]).filter((v) => v <= (schema.durationByInput?.[mode] ?? Infinity)),
     aspects = schema.aspectRatios?.length ? schema.aspectRatios : ["16:9"],
     resolutions = schema.resolutionOptions || [],
     effectiveDuration = durations.includes(duration) ? duration : durations[0],
@@ -399,6 +426,38 @@ export function VideoStudio({
   useEffect(() => {
     setHighlightedModel((current) => Math.min(current, Math.max(0, visibleModels.length - 1)));
   }, [visibleModels.length]);
+  const requestPayload = JSON.stringify({
+    modelId, projectId: projectId || undefined,
+    prompt: upscale ? "Upscale video" : prompt.trim(),
+    duration: upscale ? undefined : effectiveDuration,
+    resolution: effectiveResolution || undefined,
+    aspectRatio: upscale || !schema.aspectRatios?.length || (modelId === "minimax-h3-max-turbo" && mode === "image") ? undefined : effectiveAspect,
+    imageFileIds: mode === "image" && !upscale ? refs.map((x) => x.id) : [],
+    videoFileIds: videoRefs.map((x) => x.id),
+    audioFileIds: audioRefs.map((x) => x.id),
+    ...(schema.nativeAudio ? { nativeAudio } : {}),
+  });
+  useEffect(() => {
+    setQuote(null);
+    setQuoteError("");
+    setConfirmed(false);
+    if (fixture || !modelId || (!upscale && !prompt.trim()) || (upscale && videoRefs.length !== 1)) return;
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => {
+      void fetch("/api/generations/preflight", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...JSON.parse(requestPayload), requestId: crypto.randomUUID() }),
+        signal: controller.signal,
+      }).then(async (response) => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Estimate unavailable.");
+        if (!controller.signal.aborted) setQuote({ ...data, requestKey: requestPayload });
+      }).catch((error: unknown) => {
+        if (!controller.signal.aborted) setQuoteError(error instanceof Error ? error.message : "Estimate unavailable.");
+      });
+    }, 600);
+    return () => { controller.abort(); window.clearTimeout(timer); };
+  }, [requestPayload, fixture, modelId, prompt, upscale, videoRefs.length, quoteRevision]);
   useEffect(() => {
     const v = videoRef.current;
     if (
@@ -456,26 +515,26 @@ export function VideoStudio({
     setDuration(next.uiSchema?.durationOptions?.[0] || 5);
     setAspect(next.uiSchema?.aspectRatios?.[0] || "16:9");
     setResolution(next.uiSchema?.resolutionOptions?.[0] || "");
+    setRefs([]);
+    setVideoRefs([]);
+    setAudioRefs([]);
+    setNativeAudio(false);
     if (!(next.uiSchema?.inputModes || ["text"]).includes("image"))
       setMode("text");
     setPicker(false);
     invalidate("Model settings were updated to match its supported workflow.");
   };
-  async function upload(file: File) {
-    if (!file.type.startsWith("image/") || !supportsImage || !maxRefs) {
+  async function upload(file: File, kind: "image" | "video" | "audio" = "image") {
+    if (kind === "image" && (!file.type.startsWith("image/") || !supportsImage || !maxRefs)) {
       setError("This model does not support image-to-video.");
       return;
     }
     setUploading(true);
     try {
-      const form = new FormData();
-      form.set("file", file);
-      if (projectId) form.set("projectId", projectId);
-      const r = await fetch("/api/files", { method: "POST", body: form }),
-        d = await r.json().catch(() => ({}));
-      if (!r.ok || !d.file?.id)
-        throw new Error(d.error || "Reference upload failed.");
-      setRefs((v) =>
+      const d = await uploadStudioMedia(file, projectId || undefined, kind);
+      const setter = kind === "video" ? setVideoRefs : kind === "audio" ? setAudioRefs : setRefs;
+      const limit = kind === "video" ? schema.maxVideoReferences || 1 : kind === "audio" ? schema.maxAudioReferences || 1 : maxRefs;
+      setter((v) =>
         [
           ...v,
           {
@@ -483,9 +542,9 @@ export function VideoStudio({
             name: d.file.name || file.name,
             previewUrl: URL.createObjectURL(file),
           },
-        ].slice(0, maxRefs),
+        ].slice(0, limit),
       );
-      setMode("image");
+      if (kind === "image") setMode("image");
       invalidate();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Reference upload failed.");
@@ -545,17 +604,19 @@ export function VideoStudio({
     if (submissionInFlight.current) return;
     if (!model || model.available === false)
       return setError(unavailable(model?.availabilityReason));
-    if (!prompt.trim())
+    if (!upscale && !prompt.trim())
       return setError("Describe the video you want to create.");
-    if (mode === "image" && !refs.length)
+    if (!upscale && mode === "image" && !refs.length)
       return setError("Add a starting image before using Image to Video.");
     if (!confirmed)
       return setError("Confirm the authorization before generating.");
+    if (!fixture && (!quote || quote.requestKey !== requestPayload)) return setError("Wait for a current authorization estimate.");
     if (fixture) {
       setJob(fixtureJob("queued"));
       return;
     }
     submissionInFlight.current = true;
+    if (submissionRequest.current?.key !== requestPayload) submissionRequest.current = { key: requestPayload, id: crypto.randomUUID() };
     setSubmitting(true);
     setError("");
     try {
@@ -563,21 +624,23 @@ export function VideoStudio({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            requestId: crypto.randomUUID(),
-            projectId: projectId || undefined,
-            modelId: model.id,
-            prompt: prompt.trim(),
-            duration: effectiveDuration,
-            resolution: effectiveResolution || undefined,
-            aspectRatio: effectiveAspect,
-            imageFileIds: mode === "image" ? refs.map((x) => x.id) : [],
-            ...(schema.nativeAudio ? { nativeAudio } : {}),
+            ...JSON.parse(requestPayload),
+            requestId: submissionRequest.current.id,
             confirmedCost: true,
+            confirmedAuthorizationCredits: quote?.authorizationCredits,
           }),
         }),
         d = await r.json().catch(() => ({}));
-      if (!r.ok || !d.job)
+      if (r.status === 409 && d.existing?.resource_id) {
+        const existing = await fetch(`/api/jobs/${d.existing.resource_id}`, { cache: "no-store" });
+        const data = await existing.json();
+        if (existing.ok && data.job) { setJob(data.job); if (!terminal(data.job)) void poll(data.job.id); return; }
+      }
+      if (!r.ok || !d.job) {
+        if (r.status >= 400 && !d.existing) submissionRequest.current = null;
+        if (r.status === 409 && !d.existing) { setConfirmed(false); setQuote(null); setQuoteRevision((value) => value + 1); }
         throw new Error(d.error || "Generation request failed.");
+      }
       setJob(d.job);
       void poll(d.job.id);
     } catch (x) {
@@ -590,6 +653,7 @@ export function VideoStudio({
   const reset = () => {
       pollToken.current += 1;
       setJob(null);
+      submissionRequest.current = null;
       setConfirmed(false);
       setError("");
       setNotice("Ready to create another video.");
@@ -678,12 +742,12 @@ export function VideoStudio({
                 }}
               >
                 <Sparkle weight="fill" />
-                Text to Video
+                {upscale ? "Video Upscale" : "Text to Video"}
               </button>
               <button
                 type="button"
                 className={mode === "image" ? styles.selected : ""}
-                disabled={!supportsImage}
+                disabled={!supportsImage || upscale}
                 onClick={() => supportsImage && setMode("image")}
               >
                 <FileImage />
@@ -774,7 +838,7 @@ export function VideoStudio({
                 </div>
               </details>
             </div>
-            <div className={styles.field}>
+            {!upscale && <div className={styles.field}>
               <div className={styles.fieldHeading}><label>Prompt</label><span>Describe the scene, motion, camera and visual style</span></div>
               <textarea
                 value={prompt}
@@ -783,13 +847,13 @@ export function VideoStudio({
                   invalidate();
                 }}
                 placeholder="Describe your video scene…"
-                maxLength={20000}
+                maxLength={schema.promptLimit || 20000}
               />
-              <small>{prompt.length.toLocaleString()} / 20,000</small>
-            </div>
-            {mode === "image" && (
+              <small>{prompt.length.toLocaleString()} / {(schema.promptLimit || 20000).toLocaleString()}</small>
+            </div>}
+            {mode === "image" && !upscale && (
               <div className={styles.referenceBox}>
-                <b>Starting frame</b>
+                <b>{modelId === "minimax-h3-max-turbo" ? "First frame, then optional last frame" : "Image references"}</b>
                 <input
                   ref={uploadRef}
                   type="file"
@@ -808,7 +872,7 @@ export function VideoStudio({
                   onClick={() => uploadRef.current?.click()}
                 >
                   <FileImage />
-                  {uploading ? "Uploading…" : "Add starting image"}
+                  {uploading ? "Uploading…" : "Add reference image"}
                 </button>
                 {refs.map((x) => (
                   <div className={styles.reference} key={x.id}>
@@ -826,8 +890,29 @@ export function VideoStudio({
                 ))}
               </div>
             )}
+            {(["video", "audio"] as const).map((kind) => {
+              const limit = kind === "video" ? schema.maxVideoReferences : schema.maxAudioReferences;
+              if (!limit) return null;
+              const items = kind === "video" ? videoRefs : audioRefs;
+              const setter = kind === "video" ? setVideoRefs : setAudioRefs;
+              return <div className={styles.referenceBox} key={kind}>
+                <b>{upscale ? "Source video (MP4)" : `Reference ${kind}`}</b>
+                <input type="file" accept={kind === "video" ? "video/mp4" : "audio/mpeg,audio/wav"}
+                  disabled={uploading || items.length >= limit}
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0];
+                    if (file) void upload(file, kind);
+                    event.currentTarget.value = "";
+                  }} />
+                {items.map((item) => <div className={styles.reference} key={item.id}>
+                  <b>{item.name}</b><button type="button" aria-label={`Remove ${item.name}`}
+                    onClick={() => setter((current) => current.filter((entry) => entry.id !== item.id))}><X /></button>
+                </div>)}
+                <small>Duration is inspected on the server before authorization.</small>
+              </div>;
+            })}
             <div className={styles.settings}>
-              <label>
+              {!upscale && <label>
                 Duration
                 <PremiumSelect
                   value={String(effectiveDuration)}
@@ -840,8 +925,8 @@ export function VideoStudio({
                     label: `${v} seconds`,
                   }))}
                 />
-              </label>
-              <label>
+              </label>}
+              {!upscale && schema.aspectRatios?.length && !(modelId === "minimax-h3-max-turbo" && mode === "image") && <label>
                 Aspect ratio
                 <PremiumSelect
                   value={effectiveAspect}
@@ -851,7 +936,7 @@ export function VideoStudio({
                   }}
                   options={aspects.map((v) => ({ value: v, label: v }))}
                 />
-              </label>
+              </label>}
               {resolutions.length > 0 && (
                 <label>
                   Resolution
@@ -887,6 +972,13 @@ export function VideoStudio({
                 )}
               </div>
             </details>
+            <div className={styles.notice} aria-live="polite">
+              {quote ? <>
+                <div>Estimated: {quote.estimatedCredits} Credits</div>
+                <div>Temporary maximum authorization: {quote.authorizationCredits} Credits</div>
+                <small>Final charge is based on actual completed provider cost; unused authorization is released.</small>
+              </> : quoteError || (fixture ? "Development fixture — no wallet authorization." : "Select valid inputs to calculate your authorization.")}
+            </div>
             <label className={styles.confirm}>
               <input
                 type="checkbox"
@@ -902,7 +994,8 @@ export function VideoStudio({
                 generating ||
                 !model ||
                 model.available === false ||
-                !prompt.trim() ||
+                (!upscale && !prompt.trim()) ||
+                (!fixture && (!quote || quote.requestKey !== requestPayload)) ||
                 !confirmed
               }
             >
@@ -911,7 +1004,7 @@ export function VideoStudio({
                 ? "Submitting…"
                 : generating
                   ? "Generation in progress"
-                  : "Generate Video"}{" "}
+                  : upscale ? "Upscale Video" : "Generate Video"}{" "}
               <span>→</span>
             </button>
             {error && <p className={styles.error}>{error}</p>}
@@ -1188,3 +1281,4 @@ export function VideoStudio({
     </main>
   );
 }
+

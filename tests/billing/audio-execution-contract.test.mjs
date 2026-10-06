@@ -28,7 +28,7 @@ test("successful direct audio is not failed by post-stream settlement work", () 
 
 test("audio usage omits visual fields instead of sending zero-valued dimensions", () => {
   const core = readFileSync(new URL("../../src/lib/billing/media-job-billing-core.ts", import.meta.url), "utf8");
-  const route = readFileSync(new URL("../../src/app/api/generations/[modality]/route.ts", import.meta.url), "utf8");
+  const route = readFileSync(new URL("../../src/lib/media-request.ts", import.meta.url), "utf8");
   assert.match(core, /isImage \? \{ images:/);
   assert.match(route, /const imageCount = modality === "image" \? input\.imageCount \?\? 1 : undefined/);
   assert.doesNotMatch(route, /imageCount: modality === "audio" \? 0/);
@@ -46,4 +46,5 @@ test("Kling async payload uses Kling voice fields and never Eleven streaming", (
   assert.match(route, /voice_id: input\.voiceId[\s\S]*voice_language: input\.languageCode[\s\S]*voice_speed/);
   assert.match(providers, /route\.modelId\.startsWith\("eleven-tts-"\)/);
 });
+
 
