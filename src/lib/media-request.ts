@@ -3,7 +3,7 @@ import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { signedFileUrl } from "@/lib/file-extract";
 import { providerInputUrl } from "@/lib/provider-input-assets";
-import { inspectMediaBytes } from "@/lib/media-metadata";
+import { inspectMediaBytes, validateSeedanceReferenceVideoMetadata } from "@/lib/media-metadata";
 import { getMediaExecutionContract, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
 import { mediaUsageFromRequest } from "@/lib/billing/media-job-billing-core";
 import type { DecimalString } from "@/lib/billing/money";
@@ -53,6 +53,7 @@ export async function prepareMediaRequest(userId: string, input: GenerationInput
         const metadata = inspectMediaBytes(bytes, file.mime_type as "video/mp4" | "audio/wav" | "audio/mpeg");
         if (metadata.duration < (contract.minReferenceSeconds ?? 0)
           || metadata.duration > (kind === "video" ? contract.maxReferenceVideoSeconds ?? 0 : contract.maxReferenceAudioSeconds ?? 0)) throw new Error("MEDIA_OPTION_UNSUPPORTED:reference_duration");
+        if (kind === "video" && input.modelId.startsWith("seedance-")) validateSeedanceReferenceVideoMetadata(metadata);
         if (kind === "video") inputDuration += metadata.duration;
         else audioDuration += metadata.duration;
       }
@@ -98,3 +99,4 @@ export async function prepareMediaRequest(userId: string, input: GenerationInput
   if (contract.modelId === "minimax-h3-max-turbo" && input.imageFileIds.length) delete providerBody.aspect_ratio;
   return { contract, quality, imageCount, usage, dimensions, storedRequest, providerBody };
 }
+

@@ -152,3 +152,60 @@ test("actual submission retry never resubmits an accepted task after ledger writ
   assert.equal(submissions, 1); assert.equal(holds, 1); assert.equal(f.job.provider_task_id, "accepted-task");
 });
 
+function configureGenerationSubmission(f, routes, submit) {
+  const input = { requestId: "00000000-0000-4000-8000-000000000003", modelId: "ltx-2-3", prompt: "test",
+    duration: 5, resolution: "480p", confirmedCost: true, confirmedAuthorizationCredits: "112" };
+  let holds = 0, cancellations = 0, submissions = 0, anomalies = 0;
+  const claims = new Map();
+  Object.assign(f.dependencies, {
+    "@/lib/billing/quote-reservation": { cancelBillingQuoteReservation: async () => { cancellations++; } },
+    "@/lib/billing/provider-route": { resolveBillingProviderRoutes: async () => routes },
+    "@/lib/media-request": { generationInputSchema: { safeParse: () => ({ success: true, data: input }) },
+      prepareMediaRequest: async () => ({ usage: { seconds: "5" }, dimensions: {}, storedRequest: input, providerBody: { prompt: "test", duration: 5, resolution: "480p" } }) },
+    "@/lib/feature-flags": { isFeatureEnabled: async () => true },
+    "@/lib/idempotency": { claimRequest: async (_user, scope, id) => {
+      const key = scope + id; if (claims.has(key)) return { claimed: false, existing: claims.get(key) };
+      const claim = { id: key }; claims.set(key, claim); return { claimed: true, ...claim };
+    }, finalizeRequest: async () => {} },
+    "@/lib/model-store": { getRuntimeModel: async () => ({ id: "ltx-2-3", modality: "video", capabilities: [] }) },
+    "@/lib/security/ids": { createPublicId: () => "TEST" },
+    "@/lib/spending": { assertSpendingAllowed: async () => {} },
+    "@/lib/billing/authorization": { createProviderAuthorization: async () => { holds++; return { quoteId: "quote", walletHoldId: "hold", authorizationCredits: "112", estimatedCredits: "112" }; } },
+    "@/lib/media-execution-contract": { getMediaExecutionContract: () => ({}) },
+    "@/lib/media-runtime-error": { classifyMediaRuntimeFailure: () => ({ message: "Reconciliation pending", status: 202, category: "provider_pending" }) },
+  });
+  f.dependencies["@/lib/providers"].providerCreateTaskExact = async (route) => { submissions++; return submit(route, submissions); };
+  Object.assign(f.dependencies["@/lib/billing/provider-authoritative-settlement"], {
+    markProviderSettlementPending: async () => {}, recordProviderBillingAnomaly: async () => { anomalies++; }
+  });
+  return { input, bump() { submissions++; return submissions; }, get holds() { return holds; }, get cancellations() { return cancellations; }, get submissions() { return submissions; }, get anomalies() { return anomalies; } };
+}
+
+test("definitive HTTP 429 releases its hold and retries a later route", async () => {
+  const f = fixture();
+  const state = configureGenerationSubmission(f, [{ routeId: "first", providerKey: "apimodels" }, { routeId: "second", providerKey: "apimodels" }], (_route, count) => {
+    if (count === 1) return { error: { name: "ProviderRequestError", kind: "definitive_rejection" } };
+    return { task: { taskId: "accepted-after-429", state: "processing" } };
+  });
+  // The mock provider throws the structured error so the route exercises its
+  // definitive-rejection branch without treating it as an ambiguous timeout.
+  f.dependencies["@/lib/providers"].providerCreateTaskExact = async (_route, _modality, _body) => {
+    const count = state.bump();
+    if (count === 1) throw { name: "ProviderRequestError", kind: "definitive_rejection" };
+    return { task: { taskId: "accepted-after-429", state: "processing" } };
+  };
+  const generation = load("src/app/api/generations/[modality]/route.ts", f.dependencies);
+  const result = await generation.POST(new Request("https://test/generation", { method: "POST", body: JSON.stringify(state.input) }), { params: Promise.resolve({ modality: "video" }) });
+  assert.equal(result.status, 202); assert.equal(state.cancellations, 1); assert.equal(state.submissions, 2);
+  assert.equal(f.job.provider_task_id, "accepted-after-429");
+});
+
+test("ambiguous provider timeout retains the hold and does not retry submission", async () => {
+  const f = fixture();
+  const state = configureGenerationSubmission(f, [{ routeId: "first", providerKey: "apimodels" }, { routeId: "second", providerKey: "apimodels" }], () => { throw new Error("network timeout"); });
+  const generation = load("src/app/api/generations/[modality]/route.ts", f.dependencies);
+  const result = await generation.POST(new Request("https://test/generation", { method: "POST", body: JSON.stringify(state.input) }), { params: Promise.resolve({ modality: "video" }) });
+  assert.equal(result.status, 202); assert.equal(state.cancellations, 0); assert.equal(state.submissions, 1);
+  assert.equal(f.job.status, "processing"); assert.equal(state.anomalies, 1);
+});
+

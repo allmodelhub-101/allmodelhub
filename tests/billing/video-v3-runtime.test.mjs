@@ -5,7 +5,7 @@ import { ALL_MODELS } from "../../src/lib/models.ts";
 import { evaluateModelReadiness } from "../../src/lib/model-readiness-core.ts";
 import { priceMediaAuthorization, videoTokenFormulaEvaluator } from "../../src/lib/billing/media-authorization-pricing.ts";
 import { getMediaExecutionContract, mediaContractUiSchema, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "../../src/lib/media-execution-contract.ts";
-import { inspectMediaBytes } from "../../src/lib/media-metadata.ts";
+import { inspectMediaBytes, validateSeedanceReferenceVideoMetadata } from "../../src/lib/media-metadata.ts";
 const source = (path) => readFileSync(new URL("../../" + path, import.meta.url), "utf8");
 const migration = source("supabase/migrations/20261005203530_video_v3_native_authorization.sql");
 const definitions = [...migration.matchAll(/\('([^']+)', '([^']+)', ([\d.]+)::numeric, '([^']+)'::jsonb, '([^']+)'::jsonb\)/g)]
@@ -134,6 +134,22 @@ test("uploaded MP4 duration is parsed from server bytes and corrupt input fails 
   assert.throws(() => inspectMediaBytes(corrupt, "video/mp4"));
 });
 
+test("Seedance reference MP4 metadata enforces provider media limits", () => {
+  const atom = (name, body) => { const buffer = Buffer.alloc(body.length + 8); buffer.writeUInt32BE(buffer.length); buffer.write(name, 4); body.copy(buffer, 8); return buffer; };
+  const tkhd = Buffer.alloc(76); tkhd.writeUInt32BE(1920 << 16, 68); tkhd.writeUInt32BE(1080 << 16, 72);
+  const hdlr = Buffer.alloc(20); hdlr.write("vide", 8);
+  const mdhd = Buffer.alloc(24); mdhd.writeUInt32BE(30, 12); mdhd.writeUInt32BE(150, 16);
+  const stts = Buffer.alloc(16); stts.writeUInt32BE(1, 4); stts.writeUInt32BE(150, 8); stts.writeUInt32BE(1, 12);
+  const trak = atom("trak", Buffer.concat([atom("tkhd", tkhd), atom("mdia", Buffer.concat([atom("hdlr", hdlr), atom("mdhd", mdhd), atom("minf", atom("stbl", atom("stts", stts))) ]))]));
+  const file = Buffer.concat([atom("ftyp", Buffer.alloc(8)), atom("moov", trak)]);
+  const metadata = inspectMediaBytes(file, "video/mp4");
+  assert.equal(metadata.fps, 30);
+  assert.doesNotThrow(() => validateSeedanceReferenceVideoMetadata({ ...metadata, width: 1920, height: 1080 }));
+  assert.throws(() => validateSeedanceReferenceVideoMetadata({ ...metadata, fps: 120 }), /reference_video_specs/);
+  assert.throws(() => validateSeedanceReferenceVideoMetadata({ ...metadata, width: 200, height: 1080 }), /reference_video_specs/);
+  assert.throws(() => validateSeedanceReferenceVideoMetadata({ ...metadata, width: 6000, height: 1000 }), /reference_video_specs/);
+});
+
 test("video callback, polling and reconciliation only enter V3 records authority", () => {
   const callback = source("src/app/api/provider-callback/apimodels/[secret]/route.ts");
   assert.match(callback, /callbackCost && job.modality !== "video"/);
@@ -143,3 +159,4 @@ test("video callback, polling and reconciliation only enter V3 records authority
   assert.doesNotMatch(source("src/app/api/generations/[modality]/route.ts"), /const estimated = 0/);
   assert.doesNotMatch(source("src/components/video-studio.tsx"), /x.id !== "flashvsr"/);
 });
+

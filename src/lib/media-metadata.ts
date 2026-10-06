@@ -1,14 +1,25 @@
-export type MediaMetadata = { duration: number; width?: number; height?: number };
+export type MediaMetadata = { duration: number; width?: number; height?: number; fps?: number };
+
+export function validateSeedanceReferenceVideoMetadata(metadata: MediaMetadata) {
+  if (!metadata.width || !metadata.height || !metadata.fps
+    || metadata.width < 300 || metadata.width > 6000 || metadata.height < 300 || metadata.height > 6000
+    || metadata.width / metadata.height < 0.4 || metadata.width / metadata.height > 2.5
+    || metadata.width * metadata.height < 407696 || metadata.width * metadata.height > 8295044
+    || metadata.fps < 24 || metadata.fps > 60) {
+    throw new Error("MEDIA_OPTION_UNSUPPORTED:reference_video_specs");
+  }
+}
 
 // Read source duration from the uploaded bytes, never a browser-provided value.
 export function inspectMediaBytes(bytes: Uint8Array, type: "video/mp4" | "audio/wav" | "audio/mpeg"): MediaMetadata {
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const text = (start: number, count: number) => new TextDecoder().decode(bytes.subarray(start, start + count));
   let duration = 0;
-  let width: number | undefined, height: number | undefined;
+  let width: number | undefined, height: number | undefined, fps: number | undefined;
   if (type === "video/mp4") {
     if (bytes.length < 16 || text(4, 4) !== "ftyp") throw new Error("MEDIA_FILE_INVALID");
-    const scan = (start: number, end: number, depth: number) => {
+    type TrackContext = { kind: "unknown" | "video" | "other"; timescale?: number };
+    const scan = (start: number, end: number, depth: number, context?: TrackContext) => {
       if (depth > 8) throw new Error("MEDIA_FILE_INVALID");
       for (let offset = start; offset + 8 <= end;) {
         let size = view.getUint32(offset);
@@ -17,7 +28,8 @@ export function inspectMediaBytes(bytes: Uint8Array, type: "video/mp4" | "audio/
         if (size === 0) size = end - offset;
         if (!Number.isSafeInteger(size) || size < header || offset + size > end) throw new Error("MEDIA_FILE_INVALID");
         const kind = text(offset + 4, 4), body = offset + header;
-        if (["moov", "trak", "mdia"].includes(kind)) scan(body, offset + size, depth + 1);
+        const childContext = kind === "trak" ? { kind: "unknown" as const } : context;
+        if (["moov", "trak", "mdia", "minf", "stbl"].includes(kind)) scan(body, offset + size, depth + 1, childContext);
         if (kind === "mvhd" || kind === "mdhd") {
           const v1 = bytes[body] === 1, timescaleOffset = body + (v1 ? 20 : 12);
           if (timescaleOffset + (v1 ? 12 : 8) > offset + size) throw new Error("MEDIA_FILE_INVALID");
@@ -25,10 +37,26 @@ export function inspectMediaBytes(bytes: Uint8Array, type: "video/mp4" | "audio/
           const ticks = v1 ? Number(view.getBigUint64(timescaleOffset + 4)) : view.getUint32(timescaleOffset + 4);
           if (!scale || !Number.isSafeInteger(ticks)) throw new Error("MEDIA_FILE_INVALID");
           duration = Math.max(duration, ticks / scale);
+          if (kind === "mdhd" && context) context.timescale = scale;
+        }
+        if (kind === "hdlr" && context && body + 12 <= offset + size) {
+          const handler = text(body + 8, 4);
+          context.kind = handler === "vide" ? "video" : "other";
         }
         if (kind === "tkhd" && size >= 84) {
           const w = view.getUint32(offset + size - 8) / 65536, h = view.getUint32(offset + size - 4) / 65536;
           if (w && h) { width = w; height = h; }
+        }
+        if (kind === "stts" && context?.kind === "video" && context.timescale && body + 8 <= offset + size) {
+          const entryCount = view.getUint32(body + 4);
+          let samples = 0, ticks = 0, cursor = body + 8;
+          for (let index = 0; index < entryCount; index++) {
+            if (cursor + 8 > offset + size) throw new Error("MEDIA_FILE_INVALID");
+            const count = view.getUint32(cursor), delta = view.getUint32(cursor + 4);
+            samples += count; ticks += count * delta; cursor += 8;
+          }
+          const candidate = samples * context.timescale / ticks;
+          if (Number.isFinite(candidate) && candidate > 0) fps = candidate;
         }
         offset += size;
       }
@@ -70,6 +98,6 @@ export function inspectMediaBytes(bytes: Uint8Array, type: "video/mp4" | "audio/
     if (!frames) throw new Error("MEDIA_FILE_INVALID");
   }
   if (!Number.isFinite(duration) || duration <= 0 || duration > 3600) throw new Error("MEDIA_DURATION_UNAVAILABLE");
-  return { duration, ...(width && height ? { width, height } : {}) };
+  return { duration, ...(width && height ? { width, height } : {}), ...(fps ? { fps } : {}) };
 }
 

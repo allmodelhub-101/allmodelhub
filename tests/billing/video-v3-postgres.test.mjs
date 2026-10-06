@@ -11,6 +11,7 @@ const v2 = migration("20260926115825_create_billing_v2_schema.sql");
 const v3 = migration("20260928182225_add_billing_v3_provider_authoritative.sql");
 const repair = migration("20261005203530_video_v3_native_authorization.sql");
 const seedanceRepair = migration("20261006063135_video_v3_seedance_shortfall_flash_limits.sql");
+const shortfallJobRepair = migration("20261006072011_video_v3_shortfall_job_terminal_state.sql");
 function table(sql, name) {
   const start = sql.indexOf("create table public." + name + " (");
   let statement = sql.slice(start, sql.indexOf("\n);", start) + 3);
@@ -40,7 +41,7 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
       create table public.wallet_holds(id uuid primary key default gen_random_uuid(),user_id uuid,amount numeric,status text,idempotency_key text unique,finalized_at timestamptz);
       create table public.wallet_transactions(id uuid primary key default gen_random_uuid(),user_id uuid,type text,bucket text,amount numeric,reference_id text,idempotency_key text unique,balance_before numeric,balance_after numeric,metadata jsonb);
       create table public.messages(id uuid primary key,user_id uuid,credits_charged numeric,supplier_cost_usd numeric,internal_cost_pkr numeric,metadata jsonb);
-      create table public.generation_jobs(id uuid primary key,user_id uuid,modality text,result_urls jsonb,status public.job_status,charged_credits numeric,completed_at timestamptz,updated_at timestamptz,error_message text);
+      create table public.generation_jobs(id uuid primary key,user_id uuid,modality text,result_urls jsonb,status public.job_status,charged_credits numeric,completed_at timestamptz,updated_at timestamptz,error_message text,reconciliation_required boolean default false,reconciliation_state text default 'none',next_reconcile_at timestamptz,result_json jsonb default '{}');
       create table public.projects(id uuid primary key,user_id uuid);
       create table public.user_files(id uuid primary key default gen_random_uuid(),user_id uuid,project_id uuid,storage_path text unique,name text,mime_type text,size_bytes bigint,extracted_text text,extraction_status text default 'stored',created_at timestamptz default now());
       create schema storage; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
@@ -86,6 +87,7 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     await db.exec(fn(v3, "billing_v3_settle_provider_record"));
     await db.exec(repair);
     await db.exec(seedanceRepair);
+    await db.exec(shortfallJobRepair);
     await db.exec(migration("0061_storage_quotas.sql"));
     await db.exec(migration("20261006052727_video_private_media_uploads.sql"));
     await db.exec(fn(v3, "billing_v3_release_authoritative_failure"));
@@ -148,10 +150,10 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     assert.equal((await first.call()).fx, "280.000000000000000000");
     const second = await reserve(300, 3);
     assert.equal(Number(second.result.authorization_credits), 180);
-    async function record(quote, state, cost) {
+    async function record(quote, state, cost, generationJobId = null) {
       const id = randomUUID();
-      await db.query("insert into public.provider_billing_records(id,provider_key,quote_id,user_id,model_id,provider_task_id,state,settled,credits_usd,currency,source) values ($1::uuid,'apimodels',$2,$3,$4,$1::text,$5,true,$6,'USD','records_api')",
-        [id,quote.quote_id,user,policy.model_id,state,cost]);
+      await db.query("insert into public.provider_billing_records(id,provider_key,quote_id,user_id,model_id,generation_job_id,provider_task_id,state,settled,credits_usd,currency,source) values ($1::uuid,'apimodels',$2,$3,$4,$5::uuid,$1::text,$6,true,$7,'USD','records_api')",
+        [id,quote.quote_id,user,policy.model_id,generationJobId,state,cost]);
       return id;
     }
     const recordId = await record(first.result,"completed","0.1");
@@ -164,8 +166,10 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     await db.query("select public.billing_v3_release_authoritative_failure($1)",[failure]);
     await db.query("select public.billing_v3_release_authoritative_failure($1)",[failure]);
     assert.equal(Number((await db.query("select reserved_balance from public.wallets")).rows[0].reserved_balance),0);
+    const shortfallJob = randomUUID();
+    await db.query("insert into public.generation_jobs(id,user_id,modality,status,result_urls) values ($1,$2,'video','settling','[]')", [shortfallJob,user]);
     const third = await reserve(300,3);
-    const shortfall = await record(third.result,"completed","0.3");
+    const shortfall = await record(third.result,"completed","0.3",shortfallJob);
     const result = (await db.query("select public.billing_v3_settle_provider_record($1) result",[shortfall])).rows[0].result;
     assert.equal(result.status,"authorization_shortfall");
     assert.equal((await db.query("select public.billing_v3_settle_provider_record($1) result",[shortfall])).rows[0].result.status,"authorization_shortfall");
@@ -175,9 +179,12 @@ test("forward migration and real V3 RPCs preserve exact wallet/receipt invariant
     assert.equal(Number((await db.query("select reserved_balance from public.wallets")).rows[0].reserved_balance),0);
     assert.equal((await db.query("select status from public.wallet_holds where id=$1", [third.result.wallet_hold_id])).rows[0].status,"released");
     assert.equal((await db.query("select status from public.billing_quotes where id=$1", [third.result.quote_id])).rows[0].status,"cancelled");
+    const linkedJob = (await db.query("select status,reconciliation_required,reconciliation_state from public.generation_jobs where id=$1",[shortfallJob])).rows[0];
+    assert.equal(linkedJob.status,"failed"); assert.equal(linkedJob.reconciliation_required,false); assert.equal(linkedJob.reconciliation_state,"resolved");
     assert.equal((await db.query("select count(*)::int n from public.billing_receipts")).rows[0].n,2);
     assert.equal((await db.query("select count(*)::int n from public.billing_anomalies")).rows[0].n,1);
     assert.equal((await db.query("select has_table_privilege('anon','public.provider_input_assets','select') allowed")).rows[0].allowed,false);
     assert.equal((await db.query("select has_function_privilege('anon','public.billing_v3_settle_provider_record(uuid,jsonb,uuid,uuid,jsonb)','execute') allowed")).rows[0].allowed,false);
   } finally { await db.close(); }
 });
+

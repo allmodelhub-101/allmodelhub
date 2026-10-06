@@ -140,8 +140,9 @@ export async function POST(request: Request, context: { params: Promise<{ modali
         return NextResponse.json({ job: { ...job, status, estimated_credits: estimated,
           reserved_credits: Number(authorizationCredits) }, requiresConfirmation }, { status: 202 });
       } catch (error) {
-        if (error instanceof Error && error.name === "ProviderRequestError"
-          && "kind" in error && ["authentication", "model_unavailable", "configuration"].includes(String(error.kind))) {
+        const providerError = error && typeof error === "object" ? error as { name?: unknown; kind?: unknown } : undefined;
+        if (providerError?.name === "ProviderRequestError"
+          && ["authentication", "model_unavailable", "configuration", "definitive_rejection"].includes(String(providerError.kind))) {
           providerStarted = false;
           providerSubmissionPending = false;
         }
