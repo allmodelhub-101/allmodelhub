@@ -30,6 +30,7 @@
     "zod": "^4.1.5"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.3.14",
     "@types/node": "^22.15.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
@@ -42,3 +43,4 @@
   },
   "packageManager": "pnpm@10.34.3"
 }
+

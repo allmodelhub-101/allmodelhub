@@ -1,6 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { runBillingReconciliation } from "@/lib/billing/reconciliation";
 import { logServerError } from "@/lib/public-error";
+import { cleanupTemporaryMedia } from "@/lib/media-storage-cleanup";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,9 +20,11 @@ export async function GET(request: Request) {
   if (!authorized(request)) return Response.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const result = await runBillingReconciliation(20);
+    await cleanupTemporaryMedia().catch((error) => logServerError("temporary-media-cleanup", error));
     return Response.json({ ok: true, ...result });
   } catch (error) {
     logServerError("billing-reconciliation-cron", error);
     return Response.json({ ok: false, error: "Reconciliation run failed" }, { status: 500 });
   }
 }
+

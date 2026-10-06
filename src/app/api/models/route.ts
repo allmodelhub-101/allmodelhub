@@ -22,11 +22,12 @@ export async function GET() {
       retail: {
         inputPerMillionCredits: model.inputUsdPerMillion ? creditsFromUsd(model.inputUsdPerMillion, model.markup, fxRate) : undefined,
         outputPerMillionCredits: model.outputUsdPerMillion ? creditsFromUsd(model.outputUsdPerMillion, model.markup, fxRate) : undefined,
-        flatCredits: model.flatUsd ? creditsFromUsd(model.flatUsd, model.markup, fxRate) : undefined,
-        perSecondCredits: model.perSecondUsd ? creditsFromUsd(model.perSecondUsd, model.markup, fxRate) : undefined,
+        flatCredits: model.modality !== "video" && model.flatUsd ? creditsFromUsd(model.flatUsd, model.markup, fxRate) : undefined,
+        perSecondCredits: model.modality !== "video" && model.perSecondUsd ? creditsFromUsd(model.perSecondUsd, model.markup, fxRate) : undefined,
         per1kCharsCredits: model.per1kCharsUsd ? creditsFromUsd(model.per1kCharsUsd, model.markup, fxRate) : undefined
       }
     }))
   });
 }
+
 

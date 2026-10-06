@@ -8,6 +8,12 @@ export type ModelUiSchema = {
   audioModes?: Array<"music" | "sfx">;
   maxReferences?: number;
   nativeAudio?: boolean;
+  promptLimit?: number;
+  workflow?: "generate" | "upscale";
+  maxVideoReferences?: number;
+  maxAudioReferences?: number;
+  maxReferencesByResolution?: Readonly<Record<string, number>>;
+  durationByInput?: Readonly<{ text: number; image: number }>;
 };
 
 export type CatalogModel = {
@@ -31,7 +37,7 @@ export type CatalogModel = {
   available?: boolean;
   availabilityReason?: "billing_authorization_pending" | "billing_authorization_incomplete"
     | "authorization_pricing_unavailable" | "provider_adapter_unavailable" | "media_contract_mismatch"
-    | "provider_route_unavailable" | null;
+    | "provider_route_unavailable" | "model_inactive" | "settlement_unavailable" | "runtime_configuration_unavailable" | null;
 };
 
 export const TEXT_MODELS: CatalogModel[] = [
@@ -271,4 +277,5 @@ export function chooseTextModel(input: { tier?: ModelTier | "auto"; prompt: stri
   if (input.prompt.length < 550) return getModel("gpt-5-6-luna")!;
   return getModel("gpt-5-6-terra")!;
 }
+
 

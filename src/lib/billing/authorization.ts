@@ -7,7 +7,7 @@ import { roundWalletAmountUp } from "./quote-reservation-core";
 import type { NormalizedUsage } from "./types";
 import type { ResolvedBillingProviderRoute } from "./provider-route-core";
 import { calculateTextAuthorizationProviderCost, parseAuthorizationConstraints, validateAuthorizationRequest } from "./authorization-core";
-import { priceProviderRequest } from "./pricing-registry";
+import { priceMediaAuthorization } from "./media-authorization-pricing";
 
 type PolicyRow = Readonly<{
   id: string;
@@ -29,6 +29,7 @@ export type ProviderAuthorization = Readonly<{
   walletHoldId: string;
   expiresAt: string;
   authorizationCredits: string;
+  estimatedCredits: string;
   policyId: string;
   policyVersion: string;
   internalUsdPkrRate: string;
@@ -74,7 +75,7 @@ async function loadAuthorizationQuantum() {
   const admin = createAdminClient();
   const { data, error } = await admin.from("system_settings")
     .select("value")
-    .eq("key", "billing_v2_wallet_reservation_quantum_credits")
+    .eq("key", "billing_wallet_reservation_quantum_credits")
     .maybeSingle();
   const value = data?.value;
   if (error || (typeof value !== "string" && typeof value !== "number")) {
@@ -104,13 +105,14 @@ async function calculateRequestAuthorization(input: Readonly<{
   if (!decimal(policyMaximum).gt(0) || decimal(policyMaximum).lt(safePolicyCharge)) {
     throw new Error("BILLING_V3_AUTHORIZATION_POLICY_UNDERFUNDED");
   }
-  const priced = input.policy.modality === "text" ? null : await priceProviderRequest({
-    selector: {
+  const priced = input.policy.modality === "text" ? null : priceMediaAuthorization({
+      metadata: input.policy.metadata,
       providerKey: input.route.providerKey,
       modelId: input.route.modelId,
       upstreamModel: input.route.upstreamModel,
       pricingVersion,
-    },
+      markup: input.policy.model_markup,
+      internalUsdPkrRate: input.policy.internal_usd_pkr_rate,
     usage: input.usageEnvelope,
     dimensions: input.dimensions,
   });
@@ -130,7 +132,19 @@ async function calculateRequestAuthorization(input: Readonly<{
   }
   // This is only a conservative wallet authorization. APIMODELS' settled
   // provider record remains the sole final-cost and capture authority.
-  return { authorizationCredits: requestAuthorization, pricingVersion, pricingRuleId: priced?.snapshot.pricingRuleId ?? null } as const;
+  return { authorizationCredits: requestAuthorization,
+    estimatedCredits: decimalString(decimal(requestProviderCost).mul(input.policy.internal_usd_pkr_rate).mul(input.policy.model_markup)),
+    providerCostUsd: requestProviderCost,
+    pricingVersion, pricingRuleId: priced?.snapshot.pricingRuleId ?? null } as const;
+}
+
+export async function preflightProviderAuthorization(input: Readonly<{
+  route: ResolvedBillingProviderRoute; modality: string;
+  usageEnvelope: NormalizedUsage; dimensions?: PricingDimensions;
+}>) {
+  const policy = await loadAuthorizationPolicy(input.route, input.modality);
+  validateAuthorizationRequest(input.usageEnvelope, parseAuthorizationConstraints(policy.request_constraints));
+  return { policy, ...await calculateRequestAuthorization({ ...input, policy }) };
 }
 
 export async function createProviderAuthorization(input: Readonly<{
@@ -164,11 +178,14 @@ export async function createProviderAuthorization(input: Readonly<{
     p_input_dimensions: { usageEnvelope: input.usageEnvelope, options: input.options ?? {} },
     p_hold_idempotency_key: createIdempotencyKey("billing-v3-authorization", input.userId, input.requestIdempotencyId),
     p_hold_metadata: {
+      ...input.metadata,
       billing_v3: true,
       provider_route_id: input.route.routeId,
       authorization_pricing_rule_id: requestAuthorization.pricingRuleId,
       authorization_pricing_version: requestAuthorization.pricingVersion,
-      ...input.metadata,
+      authorization_provider_cost_usd: requestAuthorization.providerCostUsd,
+      authorization_fx: policy.internal_usd_pkr_rate,
+      authorization_markup: policy.model_markup,
     },
   });
   if (error || !data) throw error ?? new Error("BILLING_V3_AUTHORIZATION_FAILED");
@@ -178,10 +195,12 @@ export async function createProviderAuthorization(input: Readonly<{
     walletHoldId: String(result.wallet_hold_id),
     expiresAt: String(result.expires_at),
     authorizationCredits: String(result.authorization_credits),
+    estimatedCredits: String(result.estimated_credits ?? requestAuthorization.estimatedCredits),
     policyId: policy.id,
     policyVersion: policy.policy_version,
-    internalUsdPkrRate: policy.internal_usd_pkr_rate,
-    markup: policy.model_markup,
+    internalUsdPkrRate: String(result.fx ?? policy.internal_usd_pkr_rate),
+    markup: String(result.markup ?? policy.model_markup),
     route: input.route,
   } satisfies ProviderAuthorization;
 }
+

@@ -133,9 +133,10 @@ export async function POST(request: Request, context: { params: Promise<{ secret
     return NextResponse.json({ error: "Job lookup failed" }, { status: 500 });
   }
   if (!existingJob || mediaCallbackDecision(existingJob.status, state) === "duplicate") return NextResponse.json({ ok: true });
-  const { data: quote } = existingJob.billing_quote_id
+  const { data: quote, error: quoteError } = existingJob.billing_quote_id
     ? await admin.from("billing_quotes").select("billing_engine").eq("id", existingJob.billing_quote_id).maybeSingle()
-    : { data: null };
+    : { data: null, error: null };
+  if (quoteError || !quote) return NextResponse.json({ error: "Billing lookup pending" }, { status: 503 });
   const usesV3 = quote?.billing_engine === "v3_provider_authoritative";
 
   if (!(["completed", "failed", "cancelled", "expired"] as string[]).includes(state)) {
@@ -153,7 +154,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       return NextResponse.json({ ok: true });
     }
 
-    const providerAuthoritativeOutput = usesV3 && (existingJob.modality === "image" || existingJob.modality === "audio");
+    const providerAuthoritativeOutput = usesV3;
     const { data: job, error: claimError } = await admin.from("generation_jobs")
       .update({ status: "settling", result_json: summary, updated_at: new Date().toISOString() })
       .eq("id", existingJob.id).in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();
@@ -165,11 +166,12 @@ export async function POST(request: Request, context: { params: Promise<{ secret
 
     const storedPaths = await persistGeneratedAssets(job.user_id, job.id, resultUrls);
     if (providerAuthoritativeOutput) {
-      await admin.from("generation_jobs").update({
-        status: "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
+      const { error: outputError } = await admin.from("generation_jobs").update({
+        status: job.modality === "video" ? "settling" : "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
         completed_at: new Date().toISOString(), reconciliation_required: true, reconciliation_state: "due",
         next_reconcile_at: new Date(Date.now() + 60_000).toISOString(), error_message: null,
       }).eq("id", job.id);
+      if (outputError) return NextResponse.json({ error: "Output persistence pending" }, { status: 503 });
     }
     try {
       if (!job.billing_quote_id) throw new Error("BILLING_MEDIA_QUOTE_MISSING");
@@ -177,7 +179,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
       const normalized = normalizeMediaResult({ raw: payload, resultUrls }, fallback);
       if (usesV3) {
         let settlement: Record<string, unknown>;
-        if (callbackCost) {
+        if (callbackCost && job.modality !== "video") {
           const record: ApimodelsBillingRecord = {
             taskId: parsed.data.taskId, state: "completed", settled: true,
             creditsUsd: callbackCost.amount, currency: "USD", usage: normalized.rawUsage,
@@ -196,14 +198,15 @@ export async function POST(request: Request, context: { params: Promise<{ secret
             metadata: { source: "provider_callback_records_fallback", billing_v3: true } });
         }
         if (String(settlement.status) !== "settled") {
-          await admin.from("generation_jobs").update({ status: providerAuthoritativeOutput ? "completed" : "processing",
+          await admin.from("generation_jobs").update({ status: job.modality === "video" ? "settling" : providerAuthoritativeOutput ? "completed" : "processing",
             result_json: { ...summary, amhStoredPaths: storedPaths },
             reconciliation_required: true, reconciliation_state: "due",
             next_reconcile_at: new Date(Date.now() + 5 * 60_000).toISOString(),
             error_message: providerAuthoritativeOutput ? null : "Provider billing record pending reconciliation." }).eq("id", job.id);
           return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
         }
-        await admin.from("generation_jobs").update({ result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls }).eq("id", job.id);
+        await admin.from("generation_jobs").update({ status: "completed", result_json: { ...summary, amhStoredPaths: storedPaths }, result_urls: resultUrls,
+          reconciliation_required: false, reconciliation_state: "resolved", next_reconcile_at: null }).eq("id", job.id);
         await notifyUser(job.user_id, { type: "generation", title: `${job.modality} generation completed`, body: `${job.public_id} is ready.` });
         return NextResponse.json({ ok: true });
       }
@@ -226,7 +229,7 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   if (usesV3 && existingJob.billing_quote_id) {
     try {
       let settlement: Record<string, unknown>;
-      if (callbackCost?.amount === "0") {
+      if (callbackCost?.amount === "0" && existingJob.modality !== "video") {
         const record: ApimodelsBillingRecord = {
           taskId: parsed.data.taskId,
           state: state === "cancelled" || state === "expired" ? "cancelled" : "failed",
@@ -248,6 +251,13 @@ export async function POST(request: Request, context: { params: Promise<{ secret
         await notifyUser(existingJob.user_id, { type: "generation", title: `${existingJob.modality} generation failed`, body: `${existingJob.public_id} failed. Reserved Credits were released.` });
         return NextResponse.json({ ok: true });
       }
+      if (String(settlement.status) === "settled") {
+        const { error } = await admin.from("generation_jobs").update({ status: state,
+          error_message: parsed.data.failMsg || "Provider failed after billable work.",
+          reconciliation_required: false, reconciliation_state: "resolved", next_reconcile_at: null }).eq("id", existingJob.id);
+        if (error) throw error;
+        return NextResponse.json({ ok: true });
+      }
       return NextResponse.json({ ok: true, billingStatus: "pending_reconciliation" }, { status: 202 });
     } catch (error) {
       logServerError("provider-callback-v3-failure", error, { jobId: existingJob.id });
@@ -263,3 +273,4 @@ export async function POST(request: Request, context: { params: Promise<{ secret
   await notifyUser(existingJob.user_id, { type: "generation", title: `${existingJob.modality} generation failed`, body: `${existingJob.public_id} failed. Eligible reserved Credits were released.` });
   return NextResponse.json({ ok: true });
 }
+

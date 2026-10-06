@@ -50,6 +50,12 @@ export async function runBillingV3ReconciliationPump(limit = 3) {
       continue;
     }
     try {
+      if (record.generation_job_id) {
+        const { error: recoveryError } = await admin.from("generation_jobs")
+          .update({ provider_task_id: taskId }).eq("id", record.generation_job_id)
+          .eq("billing_quote_id", record.quote_id).is("provider_task_id", null);
+        if (recoveryError) throw recoveryError;
+      }
       const settlement = await settleApimodelsTask({
         quoteId: record.quote_id,
         taskId,
@@ -102,9 +108,10 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
       .update({ last_provider_check_at: new Date().toISOString() }).eq("id", job.id);
     if (checkError) throw checkError;
     const urls = task.state === "completed" ? await trustedUrls(task.resultUrls ?? []) : [];
-    const { data: quote } = job.billing_quote_id
+    const { data: quote, error: quoteError } = job.billing_quote_id
       ? await admin.from("billing_quotes").select("billing_engine").eq("id", job.billing_quote_id).maybeSingle()
-      : { data: null };
+      : { data: null, error: null };
+    if (quoteError) throw quoteError;
     if (quote?.billing_engine === "v3_provider_authoritative") {
       if (task.state === "pending" || task.state === "processing") {
         const next = nextReconcileAt(new Date(), Math.min(job.reconcile_attempts, 3));
@@ -117,9 +124,9 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
         return { jobId: job.id, outcome: "quarantined" } as const;
       }
       const storedPaths = task.state === "completed" ? await persistGeneratedAssets(job.user_id, job.id, urls) : [];
-      if (task.state === "completed" && (job.modality === "image" || job.modality === "audio")) {
-        await admin.from("generation_jobs").update({
-          status: "completed",
+      if (task.state === "completed") {
+        const { error: outputError } = await admin.from("generation_jobs").update({
+          status: job.modality === "video" ? "settling" : "completed",
           result_json: { provider_state: task.state, result_url_count: urls.length, amhStoredPaths: storedPaths,
             reconciliation: "billing_pending" },
           result_urls: urls,
@@ -129,6 +136,7 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
           error_message: null,
           updated_at: new Date().toISOString(),
         }).eq("id", job.id);
+        if (outputError) throw outputError;
       }
       const settlement = await settleApimodelsTask({
         quoteId: job.billing_quote_id!, taskId: job.provider_task_id,
@@ -137,8 +145,15 @@ export async function reconcileGenerationJob(job: ReconciliationJob) {
         metadata: { source: "scheduled_generation_reconciliation", billing_v3: true },
       });
       const status = String((settlement as Record<string, unknown>).status ?? "pending_reconciliation");
+      if (status === "settled" && task.state !== "completed") {
+        const { error } = await admin.from("generation_jobs").update({ status: "failed",
+          error_message: task.failMsg || "Provider failed after billable work.",
+          reconciliation_required: false, reconciliation_state: "resolved", next_reconcile_at: null }).eq("id", job.id);
+        if (error) throw error;
+        return { jobId: job.id, outcome: "settled" } as const;
+      }
       if (status === "settled") {
-        await admin.from("generation_jobs").update({ result_json: { provider_state: task.state,
+        await admin.from("generation_jobs").update({ status: "completed", result_json: { provider_state: task.state,
           result_url_count: urls.length, amhStoredPaths: storedPaths, reconciliation: "confirmed_success" },
           result_urls: urls, reconciliation_required: false, reconciliation_state: "resolved",
           next_reconcile_at: null }).eq("id", job.id);
@@ -230,3 +245,4 @@ export async function runBillingReconciliation(limit = 20) {
     : { claimed: 0, results: [] };
   return { claimed: jobs.length, results, providerAuthoritative, invariants } as const;
 }
+

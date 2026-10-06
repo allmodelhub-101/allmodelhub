@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ModelBrand } from "@/components/model-brand";
+import type { CatalogModel } from "@/lib/models";
 
 export type PickerModel = {
   id: string;
@@ -13,9 +14,7 @@ export type PickerModel = {
   capabilities?: string[];
   autoEligible?: boolean;
   available?: boolean;
-  availabilityReason?: "billing_authorization_pending" | "billing_authorization_incomplete"
-    | "authorization_pricing_unavailable" | "provider_adapter_unavailable" | "media_contract_mismatch"
-    | "provider_route_unavailable" | null;
+  availabilityReason?: CatalogModel["availabilityReason"];
   uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; maxReferences?: number };
   retail?: { inputPerMillionCredits?: number; outputPerMillionCredits?: number; flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
@@ -133,4 +132,5 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
     </section>
   </div>, document.body);
 }
+
 

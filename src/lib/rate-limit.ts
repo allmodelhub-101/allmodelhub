@@ -2,7 +2,7 @@ import "server-only";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
-export type RateLimitPolicy = "auth" | "chat" | "prompt" | "image" | "video" | "audio" | "tts" | "files" | "payments" | "support" | "callback" | "admin" | "standard";
+export type RateLimitPolicy = "auth" | "chat" | "prompt" | "image" | "video" | "preflight" | "audio" | "tts" | "files" | "payments" | "support" | "callback" | "admin" | "standard";
 
 const policies: Record<RateLimitPolicy, { limit: number; window: `${number} ${"s" | "m" | "h"}`; fallbackWindowMs: number }> = {
   auth: { limit: 5, window: "10 m", fallbackWindowMs: 10 * 60_000 },
@@ -10,6 +10,7 @@ const policies: Record<RateLimitPolicy, { limit: number; window: `${number} ${"s
   prompt: { limit: 10, window: "1 m", fallbackWindowMs: 60_000 },
   image: { limit: 6, window: "1 m", fallbackWindowMs: 60_000 },
   video: { limit: 3, window: "5 m", fallbackWindowMs: 5 * 60_000 },
+  preflight: { limit: 30, window: "1 m", fallbackWindowMs: 60_000 },
   audio: { limit: 6, window: "1 m", fallbackWindowMs: 60_000 },
   tts: { limit: 10, window: "1 m", fallbackWindowMs: 60_000 },
   files: { limit: 6, window: "5 m", fallbackWindowMs: 5 * 60_000 },
@@ -83,3 +84,4 @@ function fallbackLimit(identifier: string, policy: RateLimitPolicy) {
     reset: window.reset
   };
 }
+

@@ -3,6 +3,12 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logServerError } from "@/lib/public-error";
+import { getModelReadiness } from "@/lib/model-store";
+
+export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
+  return NextResponse.json({ readiness: await getModelReadiness((await context.params).id) });
+}
 
 const schema = z.object({
   active: z.boolean().optional(), featured: z.boolean().optional(), autoEligible: z.boolean().optional(),
@@ -31,3 +37,4 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   await admin.from("audit_logs").insert({ actor_user_id: user.id, action: "model.updated", entity_type: "model", entity_id: id, metadata: patch });
   return NextResponse.json({ model });
 }
+
