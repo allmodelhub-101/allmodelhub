@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, CaretDown, ChartBar, ChatCircle, DotsThree, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
+import { ArrowUp, CaretDown, ChartBar, ChatCircle, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -33,6 +33,7 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const voiceCommittedRef = useRef("");
   const voiceStartDraftRef = useRef("");
   const loadedConversationRef = useRef("");
+  const conversationQueryRef = useRef(qs.get("conversation") || "");
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>(initialModels);
@@ -85,6 +86,27 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const [processingSeconds, setProcessingSeconds] = useState(0);
   const [activeModelName, setActiveModelName] = useState("");
   const draftKey = `amh-chat-draft:${conversationId || "new"}`;
+
+  useEffect(() => {
+    const nextConversation = qs.get("conversation") || "";
+    if (conversationQueryRef.current === nextConversation) return;
+    conversationQueryRef.current = nextConversation;
+    // Streaming records its new conversation before updating the URL.
+    // Keep that live response intact; only navigation should reset the chat.
+    if (nextConversation && loadedConversationRef.current === nextConversation) return;
+    const timer = window.setTimeout(() => {
+      abortRef.current?.abort();
+      loadedConversationRef.current = "";
+      setConversationId(nextConversation);
+      setMessages([]);
+      setAttachmentIds([]);
+      setPastedContext("");
+      setError("");
+      setInput(qs.get("template") || "");
+      textareaRef.current?.focus();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [qs]);
 
   useEffect(() => {
     if (qs.get("template") || privateMode) return;
@@ -338,10 +360,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); }
     if (event.key === "Escape" && busy) abortRef.current?.abort();
   }
-  function newChat() {
-    setMessages([]); setConversationId(""); loadedConversationRef.current = ""; setAttachmentIds([]); setPastedContext(""); setError("");
-    window.history.replaceState(null, "", "/chat"); window.setTimeout(() => textareaRef.current?.focus(), 0);
-  }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
   function editPrompt(index: number) {
     setInput(messages[index].content); setMessages(messages.slice(0, index)); setConversationId("");
@@ -355,11 +373,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   async function copyMessage(content: string, key: string) {
     await navigator.clipboard.writeText(content); setCopiedKey(key); window.setTimeout(() => setCopiedKey(""), 1400);
   }
-  function exportChat() {
-    const content = messages.map((message) => `## ${message.role === "user" ? "You" : "Models Suite"}\n\n${message.content}\n`).join("\n");
-    const blob = new Blob([content], { type: "text/markdown" }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a");
-    anchor.href = url; anchor.download = "models-suite-chat.md"; anchor.click(); URL.revokeObjectURL(url);
-  }
 
   function focusComposer(nextPrompt?: string) {
     if (nextPrompt) setInput(nextPrompt);
@@ -368,13 +381,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
 
   return <div className={`chat-page premium-chat-page ${messages.length > 0 ? "has-messages" : "is-welcome"} ${pickerOpen ? "picker-open" : ""} ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
     {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
-    {messages.length > 0 && <header className="chat-toolbar premium-toolbar">
-      <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
-      <div className="chat-toolbar-actions">
-        {conversationId && <button className="toolbar-new-chat" type="button" onClick={newChat} title="Start a fresh conversation"><Plus size={15} weight="bold" aria-hidden="true" /><span>New chat</span></button>}
-        <details className="chat-more"><summary aria-label="Open conversation actions" title="Conversation actions"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>Actions</span><small>Export &amp; manage</small></summary><div className="chat-more-menu premium-menu"><Link href="/battle">Compare models</Link><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
-      </div>
-    </header>}
 
     <div className="chat-layout-body" onScroll={(event) => { const element = event.currentTarget; setShowScrollButton(element.scrollHeight - element.scrollTop - element.clientHeight > 220); }}>
       <div className="chat-messages premium-messages">
@@ -425,14 +431,14 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
             <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
               <ModelBrand modelName={exact?.name || "Auto"} provider={exact?.providerFamily} compact /><span className="model-selector-copy"><small>Choose AI model</small><strong>{exact?.name || "Auto (best match)"}</strong></span><CaretDown size={13} weight="bold" aria-hidden="true" />
             </button>
-          <details className="composer-settings"><summary title="Open generation controls"><SlidersHorizontal size={15} aria-hidden="true" /><span>Controls</span><small>Project, mode &amp; privacy</small></summary><div className="composer-settings-panel">
+          <details className="composer-settings"><summary title="Project, routing and privacy settings" aria-label="Chat controls: project, routing and privacy"><SlidersHorizontal size={16} aria-hidden="true" /><span>Controls</span></summary><div className="composer-settings-panel">
             <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
             <label><span>Routing tier</span><PremiumSelect aria-label="Routing tier" value={mode} onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }} options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))} /></label>
             {supportsReasoning && <div className="setting-toggle-row"><span><strong>Reasoning</strong><small>Use a larger response budget</small></span><button type="button" role="switch" aria-checked={deepThink} className={deepThink ? "active" : ""} onClick={() => setDeepThink((value) => !value)}>{deepThink ? "On" : "Off"}</button></div>}
             {exact && <div className="model-control-summary"><span>Model inputs</span><strong>{exact.uiSchema?.inputModes?.join(" · ") || "text"}</strong></div>}
             {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
           </div></details>
-          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()}><MagicWand size={15} aria-hidden="true" />{enhancing ? "Improving…" : "Improve prompt"}</button>}
+          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()} title={enhancing ? "Improving prompt" : "Improve prompt"} aria-label={enhancing ? "Improving prompt" : "Improve prompt"}><MagicWand size={16} aria-hidden="true" /><span>{enhancing ? "Improving…" : "Improve prompt"}</span></button>}
         </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><Stop size={14} weight="fill" /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message"><ArrowUp size={17} weight="bold" /></button>}</div></div>
       </form>
       <p className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
@@ -441,4 +447,3 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
   </div>;
 }
-
