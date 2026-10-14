@@ -28,10 +28,21 @@ test("model browsing and full-frame playback preserve generation protections", (
   const css = readFileSync(new URL("../../src/components/video-studio-v2.module.css", import.meta.url), "utf8");
   assert(studio.includes("src={demo.fullSrc || demo.gridSrc}"));
   assert(studio.includes("!confirmed") && studio.includes("quote.requestKey !== requestPayload"));
-  assert(rail.includes("window.clearInterval(timer)") && rail.includes("document.hidden"));
+  assert(rail.includes("window.cancelAnimationFrame(frame)") && rail.includes("document.hidden"));
+  assert(rail.includes("% width") && rail.includes("requestAnimationFrame"));
+  assert(rail.includes('tabIndex={copy === 0 ? 0 : -1}') && rail.includes('aria-hidden={copy === 0 ? undefined : true}'));
   assert(rail.includes("onFocusCapture") && rail.includes("onMouseEnter") && rail.includes("motionAllowed"));
   assert(!rail.includes("slice(0, 3)"));
   assert(css.includes("object-fit:contain") && css.includes("prefers-reduced-motion:reduce"));
+});
+
+test("compact navigation and completed outputs expose clear, honest actions", () => {
+  const studio = readFileSync(new URL("../../src/components/video-studio.tsx", import.meta.url), "utf8");
+  assert(!studio.includes('className={styles.studioIntro}'));
+  assert(studio.includes('History ↗') && studio.includes('Your scene is ready.'));
+  assert(studio.includes('Open video') && studio.includes('Download') && studio.includes('Create another'));
+  assert(studio.includes('if (!navigator.clipboard?.writeText) throw new Error'));
+  assert(studio.includes('Could not copy the link.'));
 });
 
 test("verified provider marks exist locally and FlashVSR remains honestly labeled", () => {

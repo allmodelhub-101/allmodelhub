@@ -13,29 +13,43 @@ export function VideoModelBrand({ name, provider = "" }: { name: string; provide
 
 export function VideoModelRail({ models, selected, onSelect, motionAllowed }: { models: RailModel[]; selected: string; onSelect: (id: string) => void; motionAllowed: boolean }) {
   const rail = useRef<HTMLDivElement>(null);
+  const group = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
   const [interacting, setInteracting] = useState(false);
   useEffect(() => {
     if (!motionAllowed || paused || interacting) return;
-    const timer = window.setInterval(() => {
+    let frame = 0;
+    let previous = 0;
+    let position = rail.current?.scrollLeft || 0;
+    const animate = (time: number) => {
       const el = rail.current;
-      if (!el || document.hidden || el.scrollWidth <= el.clientWidth) return;
-      const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 3;
-      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + 230, behavior: "smooth" });
-    }, 4000);
-    return () => window.clearInterval(timer);
+      const width = group.current?.offsetWidth || 0;
+      if (el && width && !document.hidden && previous) {
+        position = (position + Math.min(time - previous, 50) * 0.028) % width;
+        el.scrollLeft = position;
+      }
+      previous = time;
+      frame = window.requestAnimationFrame(animate);
+    };
+    frame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(frame);
   }, [motionAllowed, paused, interacting]);
   const move = (direction: number) => {
     setPaused(true);
     rail.current?.scrollBy({ left: direction * 460, behavior: motionAllowed ? "smooth" : "auto" });
   };
+  const available = models.filter(model => model.available !== false);
   return <section className={styles.modelShowcase} aria-label="Video model collection">
-    <div className={styles.railHeading}><span><b>Choose your creative engine</b><small>Find your fit. Every model, one studio.</small></span><div>
+    <div className={styles.railHeading}><span><b>Video models</b></span><div>
       {motionAllowed && <button type="button" aria-label={paused ? "Resume model scrolling" : "Pause model scrolling"} aria-pressed={paused} onClick={() => { setPaused(!paused); if (!paused && rail.current) rail.current.scrollTo({ left: rail.current.scrollLeft, behavior: "instant" }); }}>{paused ? "▶" : "Ⅱ"}</button>}
       <button type="button" aria-label="Previous video models" onClick={() => move(-1)}>←</button><button type="button" aria-label="Next video models" onClick={() => move(1)}>→</button>
     </div></div>
     <div ref={rail} className={styles.modelRail} aria-label="Available video models" onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onTouchStart={() => setPaused(true)} onFocusCapture={() => setInteracting(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setInteracting(false); }}>
-      {models.filter(model => model.available !== false).map(model => <button key={model.id} type="button" aria-pressed={selected === model.id} className={selected === model.id ? styles.modelRailSelected : ""} onClick={() => onSelect(model.id)}><VideoModelBrand name={model.name} provider={model.providerFamily} /><span><b>{model.name}</b><small>{model.providerFamily || "Video model"} · {model.tier}</small></span>{selected === model.id && <i aria-hidden="true">✓</i>}</button>)}
+      <div className={styles.modelTrack}>
+        {[0, ...(motionAllowed ? [1, 2] : [])].map(copy => <div key={copy} ref={copy === 0 ? group : undefined} className={styles.modelGroup} aria-hidden={copy === 0 ? undefined : true}>
+          {available.map(model => <button key={model.id} type="button" tabIndex={copy === 0 ? 0 : -1} aria-pressed={selected === model.id} className={selected === model.id ? styles.modelRailSelected : ""} onClick={() => onSelect(model.id)}><VideoModelBrand name={model.name} provider={model.providerFamily} /><span><b>{model.name}</b><small>{model.providerFamily || "Video model"}</small></span>{selected === model.id && <i aria-hidden="true">✓</i>}</button>)}
+        </div>)}
+      </div>
     </div>
   </section>;
 }

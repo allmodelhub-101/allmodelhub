@@ -720,18 +720,14 @@ export function VideoStudio({
       <header className={styles.studioToolbar}>
         <div className={styles.studioToolbarTitle}>
           <span className={styles.studioMark}><Sparkle weight="fill" /></span>
-          <span><small>MODELS SUITE · CREATIVE STUDIO</small><b>Video Studio</b></span>
+          <span><h1>Video Studio</h1><small>Your imagination. In motion.</small></span>
         </div>
         <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
           <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} aria-current={workspaceTab === "create" ? "page" : undefined} onClick={() => setWorkspaceTab("create")}>Create</button>
           <button type="button" className={workspaceTab === "explore" ? styles.tabSelected : ""} aria-current={workspaceTab === "explore" ? "page" : undefined} onClick={() => setWorkspaceTab("explore")}>Explore</button>
-          <Link href="/history">Generations</Link>
+          <Link href="/history" title="Open your saved generation history">History ↗</Link>
         </nav>
       </header>
-      {workspaceTab === "create" && <section className={styles.studioIntro} aria-label="Video creation workspace">
-        <div><span className={styles.introEyebrow}><i aria-hidden="true" />FROM A SPARK TO A SCENE</span><h1>Your imagination.<br /><em>In motion.</em></h1><p>Direct the scene. Shape the atmosphere. Turn your next idea into a moving story.</p></div>
-        <div className={styles.introSteps} aria-label="Creation steps"><span><b>01</b>Choose your model</span><span><b>02</b>Direct the scene</span><span><b>03</b>Create your film</span></div>
-      </section>}
       {workspaceTab === "create" && <VideoModelRail models={models} selected={modelId} onSelect={chooseModel} motionAllowed={motionAllowed} />}
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
@@ -1143,6 +1139,7 @@ export function VideoStudio({
             )}
           {job?.status === "completed" && (
             <div className={styles.result}>
+              <div className={styles.resultHeading}><span><small>COMPLETED</small><h2>Your scene is ready.</h2></span><Sparkle aria-hidden="true" /></div>
               {resultUrl ? (
                 <video
                   controls
@@ -1160,7 +1157,7 @@ export function VideoStudio({
                 <span>
                   <b>Generation details</b>
                   <small>
-                    {job.model_id}
+                    {models.find(item => item.id === job.model_id)?.name || job.model_id}
                     {job.duration && job.aspect_ratio
                       ? ` · ${job.duration}s · ${job.aspect_ratio}`
                       : ""}
@@ -1182,15 +1179,22 @@ export function VideoStudio({
                     <button
                       type="button"
                       onClick={async () => {
-                        await navigator.clipboard?.writeText(resultUrl);
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 1800);
+                        try {
+                          if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+                          await navigator.clipboard.writeText(resultUrl);
+                          setCopied(true);
+                          setTimeout(() => setCopied(false), 1800);
+                        } catch {
+                          setCopied(false);
+                          setNotice("Could not copy the link. Open the video and copy its address instead.");
+                        }
                       }}
                     >
                       <LinkSimple />
                       {copied ? "Link copied" : "Copy link"}
                     </button>
                   )}
+                  {resultUrl && <a href={resultUrl} target="_blank" rel="noopener noreferrer"><CornersOut />Open video</a>}
                   <Link href="/history">History</Link>
                   <button type="button" onClick={reset}>
                     <ArrowClockwise />

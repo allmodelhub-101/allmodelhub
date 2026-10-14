@@ -41,7 +41,10 @@ image requests during model browsing. Sources inspected on 2026-10-14:
   official DeepMind mark, shared by Veo and Gemini.
 - FlashVSR: clearly labeled `VSR` monogram; no unverified vendor mark is invented.
 
-Model collection auto-scrolls only when motion is allowed, pauses on hover/focus,
-has explicit pause/resume and previous/next controls, and supports manual touch
-scrolling. Selecting a model still uses the existing contract/settings reset and
+Model collection continuously loops at 28 pixels/second only when motion is
+allowed, pauses on hover/focus, has explicit pause/resume and previous/next
+controls, and supports manual touch scrolling. Repeat copies are hidden from
+assistive technology and removed from keyboard tab order; reduced-motion mode
+renders only the original list. Animation frames are cancelled on cleanup.
+Selecting a model still uses the existing contract/settings reset and
 quote invalidation. No authorization or settlement logic is changed.
