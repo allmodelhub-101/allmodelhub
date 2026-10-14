@@ -2368,3 +2368,52 @@ html[data-theme="light"] .cin-site .marketing-nav .nav-actions .btn-primary { bo
 
 /* Conversation content fills the space previously occupied by its toolbar. */
 .premium-chat-page.has-messages { grid-template-rows:minmax(0,1fr) auto!important; }
+
+/* Chat composer: consistent controls and a compact conversation footprint. */
+.premium-chat-page:is(.is-welcome,.has-messages) .composer-settings summary {
+  display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;height:36px;
+  padding:0 11px;border:1px solid var(--line);border-radius:11px;background:var(--panel-2);
+  color:var(--text);font-family:inherit;font-weight:600;font-size:12px;line-height:1.2;white-space:nowrap;list-style:none;cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
+}
+.premium-chat-page:is(.is-welcome,.has-messages) .composer-settings summary::-webkit-details-marker { display:none; }
+.premium-chat-page:is(.is-welcome,.has-messages) .composer-settings summary:hover,
+.premium-chat-page:is(.is-welcome,.has-messages) .composer-settings[open] summary {
+  border-color:color-mix(in srgb,var(--accent) 40%,var(--line));
+  background:color-mix(in srgb,var(--accent) 9%,var(--panel));color:var(--accent);
+}
+.premium-chat-page:is(.is-welcome,.has-messages) :is(.composer-settings summary,.composer-model-button,.composer-icon-button,.quiet-tool):focus-visible {
+  outline:2px solid var(--accent);outline-offset:3px;
+}
+.premium-chat-page.has-messages .composer-wrap { padding:10px clamp(12px,2vw,28px) 8px; }
+.premium-chat-page.has-messages .premium-composer {
+  width:min(900px,100%);padding:8px 12px;border-radius:20px;
+  background:var(--panel-solid);border:1px solid var(--line);box-shadow:0 8px 28px rgba(35,76,134,.08);
+}
+.premium-chat-page.has-messages .composer textarea {
+  min-height:34px;max-height:144px;padding:5px 4px 7px;margin:0;font-size:16px;line-height:22px;
+}
+.premium-chat-page.has-messages .composer-footer { min-height:36px;gap:8px; }
+.premium-chat-page:is(.is-welcome,.has-messages) .composer-tools {
+  flex:1;max-width:none;flex-wrap:wrap;gap:6px;overflow:visible;min-width:0;
+}
+.premium-chat-page.has-messages :is(.composer-icon-button,.composer-send) { width:36px;height:36px;min-height:36px;flex:none; }
+.premium-chat-page.has-messages .composer-model-button {
+  min-width:0;width:auto;max-width:230px;height:36px;padding:0 9px;
+  border:1px solid var(--line);background:var(--panel-2);color:var(--text);border-radius:11px;
+}
+.premium-chat-page.has-messages .model-selector-copy small { display:none; }
+.premium-chat-page.has-messages .model-selector-copy strong { max-width:160px;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.premium-chat-page:is(.is-welcome,.has-messages) .quiet-tool { display:flex;align-items:center;gap:6px;height:36px;padding:0 9px;border-radius:11px;color:var(--muted); }
+.premium-chat-page:is(.is-welcome,.has-messages) .quiet-tool:not(:disabled):hover { background:var(--panel-2);color:var(--text); }
+.premium-chat-page.has-messages .composer-hint { margin:5px 0 0;font-size:10px;line-height:14px; }
+@media(max-width:680px) {
+  .premium-chat-page.has-messages .composer-wrap { padding:7px 8px max(74px,calc(env(safe-area-inset-bottom) + 69px)); }
+  .premium-chat-page.has-messages .premium-composer { padding:7px 9px;border-radius:17px; }
+  .premium-chat-page:is(.is-welcome,.has-messages) .composer-settings summary { width:36px;padding:0; }
+  .premium-chat-page:is(.is-welcome,.has-messages) .composer-settings summary>span { display:none; }
+  .premium-chat-page:is(.is-welcome,.has-messages) .quiet-tool { width:36px;padding:0;justify-content:center; }
+  .premium-chat-page:is(.is-welcome,.has-messages) .quiet-tool>span { display:none; }
+  .premium-chat-page.has-messages .composer-model-button { max-width:160px; }
+  .premium-chat-page.has-messages .model-selector-copy strong { max-width:95px; }
+}
