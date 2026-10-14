@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, CaretDown, ChartBar, ChatCircle, DotsThree, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
+import { ArrowUp, CaretDown, ChartBar, ChatCircle, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -338,10 +338,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); }
     if (event.key === "Escape" && busy) abortRef.current?.abort();
   }
-  function newChat() {
-    setMessages([]); setConversationId(""); loadedConversationRef.current = ""; setAttachmentIds([]); setPastedContext(""); setError("");
-    window.history.replaceState(null, "", "/chat"); window.setTimeout(() => textareaRef.current?.focus(), 0);
-  }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
   function editPrompt(index: number) {
     setInput(messages[index].content); setMessages(messages.slice(0, index)); setConversationId("");
@@ -355,11 +351,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   async function copyMessage(content: string, key: string) {
     await navigator.clipboard.writeText(content); setCopiedKey(key); window.setTimeout(() => setCopiedKey(""), 1400);
   }
-  function exportChat() {
-    const content = messages.map((message) => `## ${message.role === "user" ? "You" : "Models Suite"}\n\n${message.content}\n`).join("\n");
-    const blob = new Blob([content], { type: "text/markdown" }); const url = URL.createObjectURL(blob); const anchor = document.createElement("a");
-    anchor.href = url; anchor.download = "models-suite-chat.md"; anchor.click(); URL.revokeObjectURL(url);
-  }
 
   function focusComposer(nextPrompt?: string) {
     if (nextPrompt) setInput(nextPrompt);
@@ -368,13 +359,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
 
   return <div className={`chat-page premium-chat-page ${messages.length > 0 ? "has-messages" : "is-welcome"} ${pickerOpen ? "picker-open" : ""} ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
     {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
-    {messages.length > 0 && <header className="chat-toolbar premium-toolbar">
-      <div className="workspace-identity"><span className="eyebrow">AI Creation Workspace</span><strong>{conversationId ? "Current conversation" : "New conversation"}</strong></div>
-      <div className="chat-toolbar-actions">
-        {conversationId && <button className="toolbar-new-chat" type="button" onClick={newChat} title="Start a fresh conversation"><Plus size={15} weight="bold" aria-hidden="true" /><span>New chat</span></button>}
-        <details className="chat-more"><summary aria-label="Open conversation actions" title="Conversation actions"><DotsThree size={19} weight="bold" aria-hidden="true" /><span>Actions</span><small>Export &amp; manage</small></summary><div className="chat-more-menu premium-menu"><Link href="/battle">Compare models</Link><button type="button" onClick={exportChat} disabled={messages.length === 0}>Export conversation</button><button type="button" onClick={newChat}>Start new conversation</button></div></details>
-      </div>
-    </header>}
 
     <div className="chat-layout-body" onScroll={(event) => { const element = event.currentTarget; setShowScrollButton(element.scrollHeight - element.scrollTop - element.clientHeight > 220); }}>
       <div className="chat-messages premium-messages">

@@ -2365,3 +2365,6 @@ html[data-theme="light"] .cin-site .marketing-nav .nav-actions .btn-primary { bo
   .cin-site .marketing-nav::after,.cin-site .marketing-nav .nav-actions .btn-primary::after { animation:none; }
   .cin-site .marketing-nav .nav-links a,.cin-site .marketing-nav .nav-actions .btn-primary,.cin-site .marketing-nav .nav-actions .btn-ghost { transition:none; }
 }
+
+/* Conversation content fills the space previously occupied by its toolbar. */
+.premium-chat-page.has-messages { grid-template-rows:minmax(0,1fr) auto!important; }
