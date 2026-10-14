@@ -716,7 +716,7 @@ export function VideoStudio({
       <header className={styles.studioToolbar}>
         <div className={styles.studioToolbarTitle}>
           <span className={styles.studioMark}><Sparkle weight="fill" /></span>
-          <span><small>AI CREATION WORKSPACE</small><b>Video Studio</b></span>
+          <span><small>MODELS SUITE · CREATIVE STUDIO</small><b>Video Studio</b></span>
         </div>
         <nav className={styles.workspaceTabs} aria-label="Video Studio workspace">
           <button type="button" className={workspaceTab === "create" ? styles.tabSelected : ""} aria-current={workspaceTab === "create" ? "page" : undefined} onClick={() => setWorkspaceTab("create")}>Create</button>
@@ -724,14 +724,14 @@ export function VideoStudio({
           <Link href="/history">Generations</Link>
         </nav>
       </header>
+      {workspaceTab === "create" && <section className={styles.studioIntro} aria-label="Video creation workspace">
+        <div><span className={styles.introEyebrow}><i aria-hidden="true" />FROM A SPARK TO A SCENE</span><h1>Your imagination.<br /><em>In motion.</em></h1><p>Direct the scene. Shape the atmosphere. Turn your next idea into a moving story.</p></div>
+        <div className={styles.introSteps} aria-label="Creation steps"><span><b>01</b>Choose your model</span><span><b>02</b>Direct the scene</span><span><b>03</b>Create your film</span></div>
+      </section>}
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
-          <header className={styles.heroCopy}>
-            <span>CREATE</span>
-            <h1>Bring your next idea to life.</h1>
-            <p>Choose a capable model, set the essentials, then direct the scene in your own words.</p>
-          </header>
           {workspaceTab === "create" && <form className={styles.inspector} onSubmit={submit}>
+            <div className={styles.panelHeading}><span><b>Director’s desk</b><small>Your scene starts with a clear direction.</small></span><Sparkle aria-hidden="true" /></div>
             <div className={styles.modeToggle}>
               <button
                 type="button"
@@ -755,7 +755,7 @@ export function VideoStudio({
               </button>
             </div>
             <div className={styles.modelRail} role="list" aria-label="Available video models">
-              {models.map((item) => (
+              {models.filter((item) => item.available !== false).slice(0, 3).map((item) => (
                 <button
                   key={item.id}
                   type="button"
@@ -779,6 +779,7 @@ export function VideoStudio({
                 aria-haspopup="listbox"
                 aria-expanded={picker}
                 aria-controls="video-model-options"
+                aria-label="Choose a video model"
               >
                 <span>
                   <b>{model?.name || "Choose a model"}</b>
@@ -839,14 +840,16 @@ export function VideoStudio({
               </details>
             </div>
             {!upscale && <div className={styles.field}>
-              <div className={styles.fieldHeading}><label>Prompt</label><span>Describe the scene, motion, camera and visual style</span></div>
+              <div className={styles.fieldHeading}><label htmlFor="video-scene-prompt">Scene direction</label><span>Subject · motion · camera · light</span></div>
               <textarea
+                id="video-scene-prompt"
+                aria-label="Scene direction"
                 value={prompt}
                 onChange={(e) => {
                   setPrompt(e.target.value);
                   invalidate();
                 }}
-                placeholder="Describe your video scene…"
+                placeholder="A slow camera glide through a rain-lit city. Neon reflections shimmer as a figure steps into the light…"
                 maxLength={schema.promptLimit || 20000}
               />
               <small>{prompt.length.toLocaleString()} / {(schema.promptLimit || 20000).toLocaleString()}</small>
@@ -915,6 +918,7 @@ export function VideoStudio({
               {!upscale && <label>
                 Duration
                 <PremiumSelect
+                  aria-label="Video duration"
                   value={String(effectiveDuration)}
                   onChange={(v) => {
                     setDuration(Number(v));
@@ -929,6 +933,7 @@ export function VideoStudio({
               {!upscale && schema.aspectRatios?.length && !(modelId === "minimax-h3-max-turbo" && mode === "image") && <label>
                 Aspect ratio
                 <PremiumSelect
+                  aria-label="Video aspect ratio"
                   value={effectiveAspect}
                   onChange={(v) => {
                     setAspect(v);
@@ -941,6 +946,7 @@ export function VideoStudio({
                 <label>
                   Resolution
                   <PremiumSelect
+                    aria-label="Video resolution"
                     value={effectiveResolution}
                     onChange={(v) => {
                       setResolution(v);
@@ -951,7 +957,7 @@ export function VideoStudio({
                 </label>
               )}
             </div>
-            <details
+            {schema.nativeAudio && <details
               className={styles.advanced}
               open={advanced}
               onToggle={(e) => setAdvanced(e.currentTarget.open)}
@@ -971,7 +977,7 @@ export function VideoStudio({
                   </label>
                 )}
               </div>
-            </details>
+            </details>}
             <div className={styles.notice} aria-live="polite">
               {quote ? <>
                 <div>Estimated: {quote.estimatedCredits} Credits</div>
@@ -1019,14 +1025,7 @@ export function VideoStudio({
           {!job && (
             <div className={styles.showcase} ref={stageRef}>
               <div className={styles.mainPoster}>
-                {workspaceTab === "create" ? (
-                  <div className={styles.readyStage}>
-                    <span><Sparkle weight="fill" /></span>
-                    <small>YOUR VIDEO, YOUR DIRECTION</small>
-                    <h2>Your next creation starts here.</h2>
-                    <p>Pick a model, write the direction, then generate when it feels right.</p>
-                  </div>
-                ) : demo ? (
+                {demo ? (
                   <video
                     ref={videoRef}
                     key={demo.id}
@@ -1050,8 +1049,9 @@ export function VideoStudio({
                 ) : (
                   <img src={direction.poster} alt={direction.category} />
                 )}
-                {workspaceTab === "explore" && <div className={styles.posterShade} />}
-                {workspaceTab === "explore" && demo && (
+                <div className={styles.posterShade} />
+                {workspaceTab === "create" && <div className={styles.sceneHeading}><span><i aria-hidden="true" />STUDIO PREVIEW · INSPIRATION</span><h2>A little direction.<br />A whole new world.</h2><p>Sample footage — your generated video will appear here.</p></div>}
+                {demo && (
                   <div className={styles.playerControls}>
                     <button
                       type="button"
@@ -1206,10 +1206,8 @@ export function VideoStudio({
               </div>
             </div>
           )}
-          {workspaceTab === "create" && <section className={styles.recentStrip} aria-label="Recent creations">
-            <div className={styles.inspirationHeader}><div><h2>Recent creations</h2><p>Your authenticated video history will appear here.</p></div><Link href="/history">View all →</Link></div>
-            <div className={styles.recentEmpty}><Sparkle weight="fill" /><span>Generate a video to see it in your workspace.</span></div>
-          </section>}
+          {workspaceTab === "create" && !job && <section className={styles.directionDeck} aria-label="Video prompt inspiration"><div className={styles.deckHeading}><span><b>Find your opening scene</b><small>A starting point, made yours.</small></span><button type="button" onClick={() => setWorkspaceTab("explore")}>Explore all →</button></div><div className={styles.directionCards}>{[videoStudioClips[0], videoStudioClips[1], videoStudioClips[3]].filter(Boolean).map((clip) => <button type="button" key={clip.id} onClick={() => useTemplate(clip)} aria-label={`Use ${clip.category} direction`}><img src={clip.poster} alt="" loading="lazy" /><span><small>{clip.category}</small><b>{clip.title}</b><em>Use direction ↗</em></span></button>)}</div></section>}
+          {workspaceTab === "create" && <section className={styles.recentStrip} aria-label="Your video library"><div className={styles.inspirationHeader}><div><h2>Your stories, collected.</h2><p>Open your saved generations, downloads, and completed charges.</p></div><Link href="/history">Open library →</Link></div></section>}
         </section>
       </div>
       {openClip && (
@@ -1281,4 +1279,3 @@ export function VideoStudio({
     </main>
   );
 }
-
