@@ -41,22 +41,33 @@ export const videoStudioDirections: VideoStudioDirection[] = [
   { category: "Creative / Character", prompt: "Character-led editorial scene with expressive styling, textured light, and subtle cinematic movement.", poster: "/video-studio/portrait-poster.png", title: "Creative characters", description: "with an editorial edge" }
 ];
 
-const grid = (id: string, category: VideoStudioClip["category"], title: string, description: string, orientation: VideoOrientation, hasAudio: boolean): VideoStudioClip => ({
-  id, category, title, description, orientation, hasAudio,
+const grid = (number: number, category: VideoStudioClip["category"], title: string, description: string, orientation: VideoOrientation, hasAudio: boolean, sourceDurationSeconds: number): VideoStudioClip => {
+  const id = `studio-${String(number).padStart(2, "0")}`;
+  return { id, category, title, description, orientation, hasAudio, sourceDurationSeconds,
   gridSrc: `/video-studio/demo/previews/${id}.mp4`,
-  poster: `/video-studio/demo/posters/${id}.jpg`
-});
+  fullSrc: `/video-studio/demo/full/${id}.mp4`,
+  poster: `/video-studio/demo/posters/${id}.jpg` };
+};
 
-// Current committed assets are deliberately gallery-quality previews only. When
-// FULL-LENGTH-v2 arrives, populate fullSrc/sourceDurationSeconds from its
-// verified manifest instead of treating these teasers as full originals.
+// Full-duration web encodes of the user's 16 supplied originals. Gallery files
+// are smaller encodes, not shortened teasers. See docs/VIDEO_STUDIO_MEDIA.md.
 export const videoStudioClips: VideoStudioClip[] = [
-  grid("cinematic-monochrome", "Cinematic", "Monochrome tension", "A stark, dramatic crowd sequence.", "landscape", true),
-  grid("product-car-night", "Product", "Night drive", "Sculpted automotive light after dark.", "portrait", true),
-  grid("portrait-indoor", "Portrait", "Interior portrait", "Quiet character detail and natural motion.", "portrait", true),
-  grid("scifi-astronaut", "Sci-Fi", "City astronaut", "A futuristic character on an urban stage.", "portrait", true),
-  grid("portrait-street-style", "Social / Vlog", "Street style", "An immediate, candid urban moment.", "portrait", true),
-  grid("portrait-editorial", "Creative / Character", "Editorial character", "A composed, character-led fashion tableau.", "portrait", true)
+  grid(1, "Cinematic", "Monochrome tension", "A stark, dramatic crowd sequence.", "landscape", true, 27.04),
+  grid(2, "Product", "Night drive", "Sculpted automotive light after dark.", "portrait", true, 9.71),
+  grid(3, "Portrait", "Interior portrait", "Quiet character detail and natural motion.", "portrait", false, 8.04),
+  grid(4, "Cinematic", "Dark procession", "A theatrical scene with striking contrast.", "portrait", true, 30.04),
+  grid(5, "Social / Vlog", "Everyday stories", "A candid indoor moment.", "portrait", true, 7.04),
+  grid(6, "Product", "Automotive detail", "A close view of sculpted surfaces.", "portrait", false, 20.04),
+  grid(7, "Cinematic", "A wider perspective", "An aerial view with a sense of scale.", "portrait", true, 22.04),
+  grid(8, "Portrait", "Character in focus", "Expressive character-led storytelling.", "portrait", true, 30.04),
+  grid(9, "Portrait", "Profile study", "A composed portrait in motion.", "portrait", true, 18.04),
+  grid(10, "Creative / Character", "Glass worlds", "A miniature world with an imaginative twist.", "portrait", true, 11.72),
+  grid(11, "Product", "After-hours ride", "A motorcycle beneath cinematic night light.", "portrait", true, 18.04),
+  grid(12, "Social / Vlog", "Street style", "An immediate, candid urban moment.", "portrait", true, 30.04),
+  grid(13, "Sci-Fi", "City astronaut", "A futuristic character on an urban stage.", "portrait", true, 10.04),
+  grid(14, "Creative / Character", "Unexpected duet", "A playful character-led musical scene.", "square", true, 29.04),
+  grid(15, "Creative / Character", "Urban surprise", "An unexpected character in a towering city.", "portrait", true, 21.04),
+  grid(16, "Social / Vlog", "A little curiosity", "A playful everyday moment.", "portrait", true, 15.04)
 ];
 
 export const galleryVideoClips = videoStudioClips;

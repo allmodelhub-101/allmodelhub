@@ -18,6 +18,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
+import { VideoModelBrand, VideoModelRail } from "@/components/video-model-rail";
 import { getMediaExecutionContract, mediaContractUiSchema } from "@/lib/media-execution-contract";
 import { uploadStudioMedia } from "@/lib/studio-media-upload";
 import {
@@ -502,11 +503,14 @@ export function VideoStudio({
     )
       return;
     setPrompt(next.prompt);
+    setDemoId(clip.id);
+    setProgress(0);
+    setPlayerDuration(0);
     setActive(Math.max(0, videoStudioDirections.indexOf(next)));
     setWorkspaceTab("create");
     setOpenClip(null);
     invalidate(`${next.category} template added. Review it before generating.`);
-    window.setTimeout(() => creationRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+    window.setTimeout(() => creationRef.current?.scrollIntoView({ behavior: motionAllowed ? "smooth" : "auto", block: "start" }), 0);
   };
   const chooseModel = (id: string) => {
     const next = models.find((x) => x.id === id);
@@ -728,6 +732,7 @@ export function VideoStudio({
         <div><span className={styles.introEyebrow}><i aria-hidden="true" />FROM A SPARK TO A SCENE</span><h1>Your imagination.<br /><em>In motion.</em></h1><p>Direct the scene. Shape the atmosphere. Turn your next idea into a moving story.</p></div>
         <div className={styles.introSteps} aria-label="Creation steps"><span><b>01</b>Choose your model</span><span><b>02</b>Direct the scene</span><span><b>03</b>Create your film</span></div>
       </section>}
+      {workspaceTab === "create" && <VideoModelRail models={models} selected={modelId} onSelect={chooseModel} motionAllowed={motionAllowed} />}
       <div className={styles.layout}>
         <section className={styles.leftColumn} ref={creationRef}>
           {workspaceTab === "create" && <form className={styles.inspector} onSubmit={submit}>
@@ -754,21 +759,6 @@ export function VideoStudio({
                 Image to Video
               </button>
             </div>
-            <div className={styles.modelRail} role="list" aria-label="Available video models">
-              {models.filter((item) => item.available !== false).slice(0, 3).map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="listitem"
-                  disabled={item.available === false}
-                  className={modelId === item.id ? styles.modelRailSelected : ""}
-                  onClick={() => chooseModel(item.id)}
-                >
-                  <b>{item.name}</b>
-                  <small>{item.providerFamily || "Video model"} · {item.tier}</small>
-                </button>
-              ))}
-            </div>
             <div className={styles.field} ref={pickerRef}>
               <div className={styles.fieldHeading}><label>Choose a video model</label><span>Live availability</span></div>
               <button
@@ -781,6 +771,7 @@ export function VideoStudio({
                 aria-controls="video-model-options"
                 aria-label={`Choose a video model: ${model?.name || "No model selected"}`}
               >
+                {model && <VideoModelBrand name={model.name} provider={model.providerFamily} />}
                 <span>
                   <b>{model?.name || "Choose a model"}</b>
                   <small>
@@ -815,6 +806,7 @@ export function VideoStudio({
                         aria-selected={modelId === x.id}
                         className={highlightedModel === index ? styles.modelHighlighted : ""}
                       >
+                        <VideoModelBrand name={x.name} provider={x.providerFamily} />
                         <span>
                           <b>{x.name}</b>
                           <small>
@@ -1029,7 +1021,7 @@ export function VideoStudio({
                   <video
                     ref={videoRef}
                     key={demo.id}
-                    src={demo.gridSrc}
+                    src={demo.fullSrc || demo.gridSrc}
                     poster={demo.poster}
                     muted={muted}
                     loop
@@ -1050,7 +1042,7 @@ export function VideoStudio({
                   <img src={direction.poster} alt={direction.category} />
                 )}
                 <div className={styles.posterShade} />
-                {workspaceTab === "create" && <div className={styles.sceneHeading}><span><i aria-hidden="true" />STUDIO PREVIEW · INSPIRATION</span><h2>A little direction.<br />A whole new world.</h2><p>Sample footage — your generated video will appear here.</p></div>}
+                {workspaceTab === "create" && <div className={styles.sceneHeading}><span><i aria-hidden="true" />STUDIO SAMPLE · FULL LENGTH</span></div>}
                 {demo && (
                   <div className={styles.playerControls}>
                     <button
@@ -1110,6 +1102,8 @@ export function VideoStudio({
                   </span>
                 </div>}
               </div>
+              {demo && <div className={styles.previewMeta}><span><b>{demo.title}</b><small>Studio sample · {demo.orientation} · {formatDuration(demo.sourceDurationSeconds || 0)}</small></span><button type="button" onClick={() => openViewer(demo)}>Open player ↗</button></div>}
+              <div className={styles.clipRail} aria-label="Choose a studio sample">{videoStudioClips.map(clip => <button type="button" key={clip.id} aria-label={`Preview ${clip.title}`} aria-pressed={demo?.id === clip.id} onClick={() => { setDemoId(clip.id); setProgress(0); setPlayerDuration(0); }}><img src={clip.poster} alt="" loading="lazy" /><span>{formatDuration(clip.sourceDurationSeconds || 0)}</span></button>)}</div>
             </div>
           )}
           {generating && (
@@ -1206,7 +1200,7 @@ export function VideoStudio({
               </div>
             </div>
           )}
-          {workspaceTab === "create" && !job && <section className={styles.directionDeck} aria-label="Video prompt inspiration"><div className={styles.deckHeading}><span><b>Find your opening scene</b><small>A starting point, made yours.</small></span><button type="button" onClick={() => setWorkspaceTab("explore")}>Explore all →</button></div><div className={styles.directionCards}>{[videoStudioClips[0], videoStudioClips[1], videoStudioClips[3]].filter(Boolean).map((clip) => <button type="button" key={clip.id} onClick={() => useTemplate(clip)} aria-label={`Use ${clip.category} direction`}><img src={clip.poster} alt="" loading="lazy" /><span><small>{clip.category}</small><b>{clip.title}</b><em>Use direction ↗</em></span></button>)}</div></section>}
+          {workspaceTab === "create" && !job && <section className={styles.directionDeck} aria-label="Video prompt inspiration"><div className={styles.deckHeading}><span><b>Find your opening scene</b><small>A starting point, made yours.</small></span><button type="button" onClick={() => setWorkspaceTab("explore")}>Explore all →</button></div><div className={styles.directionCards}>{[videoStudioClips[0], videoStudioClips[1], videoStudioClips[12]].filter(Boolean).map((clip) => <button type="button" key={clip.id} onClick={() => useTemplate(clip)} aria-label={`Use ${clip.category} direction`}><img src={clip.poster} alt="" loading="lazy" /><span><small>{clip.category}</small><b>{clip.title}</b><em>Use direction ↗</em></span></button>)}</div></section>}
           {workspaceTab === "create" && <section className={styles.recentStrip} aria-label="Your video library"><div className={styles.inspirationHeader}><div><h2>Your stories, collected.</h2><p>Open your saved generations, downloads, and completed charges.</p></div><Link href="/history">Open library →</Link></div></section>}
         </section>
       </div>
