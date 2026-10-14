@@ -33,6 +33,7 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const voiceCommittedRef = useRef("");
   const voiceStartDraftRef = useRef("");
   const loadedConversationRef = useRef("");
+  const conversationQueryRef = useRef(qs.get("conversation") || "");
   const [mode, setMode] = useState<Mode>("auto");
   const [modelId, setModelId] = useState(qs.get("model") || "");
   const [models, setModels] = useState<Model[]>(initialModels);
@@ -85,6 +86,27 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const [processingSeconds, setProcessingSeconds] = useState(0);
   const [activeModelName, setActiveModelName] = useState("");
   const draftKey = `amh-chat-draft:${conversationId || "new"}`;
+
+  useEffect(() => {
+    const nextConversation = qs.get("conversation") || "";
+    if (conversationQueryRef.current === nextConversation) return;
+    conversationQueryRef.current = nextConversation;
+    // Streaming records its new conversation before updating the URL.
+    // Keep that live response intact; only navigation should reset the chat.
+    if (nextConversation && loadedConversationRef.current === nextConversation) return;
+    const timer = window.setTimeout(() => {
+      abortRef.current?.abort();
+      loadedConversationRef.current = "";
+      setConversationId(nextConversation);
+      setMessages([]);
+      setAttachmentIds([]);
+      setPastedContext("");
+      setError("");
+      setInput(qs.get("template") || "");
+      textareaRef.current?.focus();
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [qs]);
 
   useEffect(() => {
     if (qs.get("template") || privateMode) return;
@@ -425,4 +447,3 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
   </div>;
 }
-
