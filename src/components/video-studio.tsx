@@ -779,7 +779,7 @@ export function VideoStudio({
                 aria-haspopup="listbox"
                 aria-expanded={picker}
                 aria-controls="video-model-options"
-                aria-label="Choose a video model"
+                aria-label={`Choose a video model: ${model?.name || "No model selected"}`}
               >
                 <span>
                   <b>{model?.name || "Choose a model"}</b>
@@ -918,7 +918,7 @@ export function VideoStudio({
               {!upscale && <label>
                 Duration
                 <PremiumSelect
-                  aria-label="Video duration"
+                  aria-label={`Video duration: ${effectiveDuration} seconds`}
                   value={String(effectiveDuration)}
                   onChange={(v) => {
                     setDuration(Number(v));
@@ -933,7 +933,7 @@ export function VideoStudio({
               {!upscale && schema.aspectRatios?.length && !(modelId === "minimax-h3-max-turbo" && mode === "image") && <label>
                 Aspect ratio
                 <PremiumSelect
-                  aria-label="Video aspect ratio"
+                  aria-label={`Video aspect ratio: ${effectiveAspect}`}
                   value={effectiveAspect}
                   onChange={(v) => {
                     setAspect(v);
@@ -946,7 +946,7 @@ export function VideoStudio({
                 <label>
                   Resolution
                   <PremiumSelect
-                    aria-label="Video resolution"
+                    aria-label={`Video resolution: ${effectiveResolution}`}
                     value={effectiveResolution}
                     onChange={(v) => {
                       setResolution(v);
@@ -1021,7 +1021,7 @@ export function VideoStudio({
             <div className={styles.inspirationGrid}>{galleryVideoClips.map((clip) => <GalleryVideoCard key={clip.id} clip={clip} motionAllowed={motionAllowed} modalOpen={Boolean(openClip)} onOpen={openViewer} />)}</div>
           </section>}
         </section>
-        <section className={styles.rightColumn} aria-live="polite">
+        <section className={styles.rightColumn} aria-label="Video preview and results">
           {!job && (
             <div className={styles.showcase} ref={stageRef}>
               <div className={styles.mainPoster}>
@@ -1113,7 +1113,7 @@ export function VideoStudio({
             </div>
           )}
           {generating && (
-            <div className={styles.jobState}>
+            <div className={styles.jobState} role="status" aria-live="polite" aria-atomic="true">
               <Sparkle weight="fill" />
               <span className={styles.jobStatus}>{jobLabel}</span>
               <h2>{jobTitle}</h2>
