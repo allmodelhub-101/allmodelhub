@@ -58,13 +58,14 @@ function priceLabel(model: PickerModel) {
   return `${Number(input ?? output).toFixed(1)} credits per 1M`;
 }
 
-export function ModelPicker({ models, value, onChange, open, onOpenChange, modality = "text" }: {
+export function ModelPicker({ models, value, onChange, open, onOpenChange, modality = "text", showPrices = true }: {
   models: PickerModel[];
   value: string;
   onChange: (value: string) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   modality?: "text" | "image" | "video";
+  showPrices?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("recommended");
@@ -116,7 +117,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
         <kbd>Esc</kbd>
       </label>
       <div className="model-filter-row" role="tablist" aria-label="Model categories">
-        {filters.map((item) => <button key={item.id} type="button" role="tab" aria-selected={filter === item.id} className={filter === item.id ? "active" : ""} onClick={() => setFilter(item.id)}>{item.label}</button>)}
+        {filters.filter((item) => showPrices || item.id !== "cheapest").map((item) => <button key={item.id} type="button" role="tab" aria-selected={filter === item.id} className={filter === item.id ? "active" : ""} onClick={() => setFilter(item.id)}>{item.label}</button>)}
       </div>
       <div className="model-picker-list">
         {modality === "text" && !query && filter === "recommended" && <button type="button" className={`model-picker-option auto-option ${value ? "" : "selected"}`} onClick={() => { onChange(""); onOpenChange(false); }}>
@@ -125,12 +126,11 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
         {visibleModels.map((model) => { const unavailable = model.available === false; return <button type="button" key={model.id} disabled={unavailable} aria-disabled={unavailable} className={`model-picker-option ${value === model.id ? "selected" : ""} ${unavailable ? "unavailable" : ""}`} onClick={() => { if (unavailable) return; onChange(model.id); onOpenChange(false); }}>
           <ModelBrand modelName={model.name} provider={model.providerFamily} />
           <span className="model-option-copy"><strong>{model.name}</strong><small>{model.description || `${model.providerFamily || "AI"} ${model.tier} model`}</small><span className="capability-list">{(model.capabilities || []).slice(0, 4).map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</span></span>
-          <span className="model-option-side"><span className="availability"><i />{unavailable ? "Billing setup pending" : "Available"}</span><small>{unavailable ? "Not executable yet" : priceLabel(model)}</small><b>{unavailable ? "Unavailable" : value === model.id ? "Selected" : "Select"}</b></span>
+          <span className="model-option-side"><span className="availability"><i />{unavailable ? "Billing setup pending" : "Available"}</span>{(unavailable || showPrices) && <small>{unavailable ? "Not executable yet" : priceLabel(model)}</small>}<b>{unavailable ? "Unavailable" : value === model.id ? "Selected" : "Select"}</b></span>
         </button>})}
         {visibleModels.length === 0 && <div className="model-picker-empty"><strong>No matching models</strong><span>Try another capability or search term.</span></div>}
       </div>
     </section>
   </div>, document.body);
 }
-
 

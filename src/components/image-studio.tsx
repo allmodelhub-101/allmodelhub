@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowsClockwise, Cube, DownloadSimple, Lightbulb, PaperPlaneTilt, Plus, ShareNetwork, SlidersHorizontal, UserCircle, X } from "@phosphor-icons/react";
 import { ModelBrand } from "@/components/model-brand";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
+import "./image-studio.css";
 
 type ImageModel = PickerModel & { modality: string; description?: string; capabilities?: string[];
   uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; resolutionOptions?: string[]; maxReferences?: number } };
@@ -22,6 +23,7 @@ type ImageJob = {
 };
 
 const fallbackAspectRatios = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+const emptyOptions: string[] = [];
 const directionStarters = [
   { label: "Product", prompt: "Clean commercial product photography, precise materials, sculpted studio light, editorial art direction" },
   { label: "Portrait", prompt: "Expressive editorial portrait, natural skin texture, cinematic lighting, quiet confidence" },
@@ -47,6 +49,9 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   const promptInputRef = useRef<HTMLTextAreaElement | null>(null);
   const pollTokenRef = useRef(0);
   const referenceUrlsRef = useRef<string[]>([]);
+  const uploadBatchRef = useRef(false);
+  const settingsRef = useRef<HTMLDivElement | null>(null);
+  const settingsButtonRef = useRef<HTMLButtonElement | null>(null);
   const [models, setModels] = useState<ImageModel[]>([]);
   const [modelId, setModelId] = useState("");
   const [prompt, setPrompt] = useState(qs.get("prompt") || "");
@@ -63,12 +68,11 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const [copied, setCopied] = useState("");
   const [dragActive, setDragActive] = useState(false);
-  const [availableCredits, setAvailableCredits] = useState<number | null>(null);
   const [resultReferenceId, setResultReferenceId] = useState("");
 
   useEffect(() => {
-    Promise.all([fetch("/api/models").then((response) => response.json()), fetch("/api/wallet").then((response) => response.json())])
-      .then(([modelData, walletData]) => {
+    fetch("/api/models").then((response) => response.json())
+      .then((modelData) => {
         const list = (modelData.models || []).filter((model: ImageModel) => model.modality === "image");
         setModels(list);
         const requested = qs.get("model");
@@ -77,7 +81,6 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         const executable = list.filter((model: ImageModel) => model.available !== false);
         const chosen = requested && executable.some((model: ImageModel) => model.id === requested && (!incomingReference||acceptsReference(model))) ? requested : incomingReference?executable.find(acceptsReference)?.id:executable[0]?.id;
         if (chosen) setModelId(chosen);
-        if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available));
       }).catch(() => setError("Could not load the Image workspace."));
   }, [qs]);
 
@@ -87,8 +90,8 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   }, []);
 
   const model = useMemo(() => models.find((item) => item.id === modelId), [modelId, models]);
-  const aspectRatios = model ? model.uiSchema?.aspectRatios ?? [] : fallbackAspectRatios;
-  const resolutions = model?.uiSchema?.resolutionOptions ?? [];
+  const aspectRatios = model ? model.uiSchema?.aspectRatios ?? emptyOptions : fallbackAspectRatios;
+  const resolutions = model?.uiSchema?.resolutionOptions ?? emptyOptions;
   const effectiveResolution = resolutions.includes(resolution) ? resolution : resolutions[0] || "";
   const maxReferences = Math.max(0, model?.uiSchema?.maxReferences ?? (model?.capabilities?.includes("multi-reference") ? 10 : model?.capabilities?.includes("editing") ? 1 : 0));
   const estimate = Number(model?.retail?.flatCredits || 0);
@@ -112,14 +115,14 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
 
   useEffect(() => {
     const timer=window.setTimeout(()=>{if (!aspectRatios.includes(aspect)) setAspect(aspectRatios[0] || "1:1");
-      setReferences((current) => {current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));return current.slice(0, maxReferences);});},0);
+      setReferences((current) => {if (current.length <= maxReferences) return current; current.slice(maxReferences).forEach((item) => URL.revokeObjectURL(item.previewUrl));return current.slice(0, maxReferences);});},0);
     return()=>window.clearTimeout(timer);
   }, [aspect,aspectRatios,maxReferences,modelId]);
 
   async function uploadReference(file: File) {
     setUploading(true); setError("");
     try {
-      if (!file.type.startsWith("image/")) throw new Error("Reference files must be PNG, JPEG, or WebP images.");
+      if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) throw new Error("Reference files must be PNG, JPEG, or WebP images.");
       if (!supportsEditing || maxReferences < 1) throw new Error(`${model?.name || "This model"} does not support reference-image editing.`);
       if (file.size > 50 * 1024 * 1024) throw new Error("Reference images must be smaller than 50 MB.");
       const form = new FormData(); form.set("file", file);
@@ -141,6 +144,36 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     } finally { setUploading(false); }
   }
 
+  async function addReferences(files: File[]) {
+    if (!files.length || uploadBatchRef.current || submitting || generating) return;
+    if (!supportsEditing) { setError("Choose a model that supports reference images before adding an image."); return; }
+    const remaining = maxReferences - references.length;
+    if (remaining < 1) { setError(`This model supports ${maxReferences} reference image${maxReferences === 1 ? "" : "s"}. Remove one before adding another.`); return; }
+    uploadBatchRef.current = true;
+    setUploading(true);
+    try {
+      for (const file of files.slice(0, remaining)) {
+        const id = await uploadReference(file);
+        if (!id) break;
+      }
+      if (files.length > remaining) setError(`Only ${remaining} more reference image${remaining === 1 ? "" : "s"} can be added to this model.`);
+    } finally { uploadBatchRef.current = false; setUploading(false); }
+  }
+
+  function pasteReference(event: React.ClipboardEvent<HTMLDivElement>) {
+    const files = Array.from(event.clipboardData.items)
+      .filter((item) => item.kind === "file" && item.type.startsWith("image/"))
+      .map((item) => item.getAsFile()).filter((file): file is File => Boolean(file));
+    if (!files.length) return;
+    event.preventDefault();
+    void addReferences(files);
+  }
+
+  function openSettings() {
+    setInspectorOpen(true);
+    window.setTimeout(() => { settingsRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); settingsRef.current?.focus({ preventScroll: true }); }, 0);
+  }
+
   async function poll(id: string) {
     const token = ++pollTokenRef.current;
     for (let attempt = 0; attempt < 120 && token === pollTokenRef.current; attempt += 1) {
@@ -151,7 +184,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
       if (!data.job) continue;
       setJob(data.job);
       if (["completed", "failed", "cancelled", "expired"].includes(data.job.status)) {
-        if (data.job.status === "completed") void fetch("/api/wallet").then((walletResponse) => walletResponse.json()).then((walletData) => { if (walletData.wallet) setAvailableCredits(Number(walletData.wallet.available)); });
+        if (data.job.status === "completed") window.dispatchEvent(new Event("amh-wallet-refresh"));
         return;
       }
     }
@@ -159,9 +192,9 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    if (!modelId || !prompt.trim() || generating) return;
+    if (!modelId || !prompt.trim() || generating || submitting || uploading || uploadBatchRef.current) return;
     if (references.length && !supportsEditing) { setError(`${model?.name || "This model"} does not support reference-image editing.`); return; }
-    if (expensive && !confirmed) { setError("Confirm the estimated maximum cost before generating."); return; }
+    if (expensive && !confirmed) { setError("Authorize generation in Image settings before continuing."); openSettings(); return; }
     setSubmitting(true); setError(""); setJob(null); setResultReferenceId("");
     try {
       const response = await fetch("/api/generations/image", {
@@ -222,11 +255,12 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
   }, [prompt]);
 
-  return <div className={`image-workspace ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); const file = event.dataTransfer.files[0]; if (file) void uploadReference(file); }}>
-    {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>The selected model will switch into editing mode.</span></div>}
+  return <div className={`image-workspace image-studio-refined ${dragActive ? "is-dragging" : ""}`} onPaste={pasteReference} onDragEnter={(event) => { if (!event.dataTransfer.types.includes("Files")) return; event.preventDefault(); setDragActive(true); }} onDragOver={(event) => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { if (!event.dataTransfer.files.length) return; event.preventDefault(); setDragActive(false); void addReferences(Array.from(event.dataTransfer.files)); }}>
+    <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" multiple={supportsMultipleReferences} hidden onChange={(event) => { void addReferences(Array.from(event.target.files || [])); event.currentTarget.value = ""; }} />
+    {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>PNG, JPEG or WebP · Your selected model must support references.</span></div>}
     <main className="image-canvas-shell">
       <section className={`image-canvas-stage aspect-${aspect.replace(":", "-")}`} aria-live="polite">
-        {!job && <div className="image-stage-identity"><span>Image Studio</span><strong><i />4K Premium · {references.length ? "Edit mode" : "Create mode"}</strong></div>}
+        {!job && <div className="image-stage-identity"><span>Image Studio</span><strong><i />{references.length ? "Edit an image" : "Create something original"}</strong></div>}
         {!job && <div className="image-empty-state image-studio-hero"><div className="hero-art hero-art-left"><InspirationImage index={0} alt="Perfume product inspiration" /><em>From idea<br/>to stunning images</em></div><div className="hero-art hero-art-right"><InspirationImage index={4} alt="Mountain landscape inspiration" /><InspirationImage index={2} alt="Interior inspiration" /><em>Turn your ideas<br/>into amazing visuals</em></div><div className="hero-copy"><h1>Create an <span>image</span></h1><p>Describe your idea, customize the look, then create with the world’s<br className="desktop-only"/> most advanced AI models.</p><div className="image-creation-path" aria-label="How image creation works"><span><b>1</b>Describe</span><i/><span><b>2</b>Customize</span><i/><span><b>3</b>Create</span></div><div className="direction-starters" aria-label="Prompt ideas">{directionStarters.map((starter,index) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}>{index===0?<Cube/>:index===1?<UserCircle/>:<Lightbulb/>}<span><strong>{starter.label}</strong><small>Use direction</small></span></button>)}</div></div></div>}
         {generating && <div className="image-generating-state" role="status"><div className="image-generation-frame"><span /><span /><span /></div><span className="empty-kicker">{status.step}</span><h2>{status.title}</h2><p>{job?.public_id || "Your image will appear here when it is ready."}</p><small>No fake percentage—this updates from the provider.</small></div>}
         {job?.status === "failed" && <div className="image-failed-state"><span className="empty-kicker">Generation stopped</span><h2>That image was not created</h2><p>{job.error_message || "The provider returned a failure. Eligible reserved credits were released."}</p><button type="button" onClick={resetResult}>Try again</button></div>}
@@ -234,21 +268,43 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         {job?.status === "completed" && !resultUrl && <div className="image-failed-state"><h2>Generation completed</h2><p>The provider did not return a displayable image. You can find this job in Library.</p><Link href="/history">Open Library</Link></div>}
       </section>
 
-      {inspectorOpen && <button className="image-settings-scrim" type="button" aria-label="Close image controls" onClick={() => setInspectorOpen(false)} />}
-      <aside className={`image-inspector ${inspectorOpen ? "is-open" : ""}`} aria-label="Image controls" aria-hidden={!inspectorOpen}>
-        <div className="image-inspector-head"><div><span className="eyebrow">Inspector</span><strong>Generation controls</strong></div><button type="button" onClick={() => setInspectorOpen(false)} aria-label="Close controls"><X aria-hidden="true" />Close</button></div>
-        <div className="inspector-section"><span className="inspector-label">Model</span><button className="inspector-model" type="button" onClick={() => setPickerOpen(true)}><ModelBrand compact modelName={model?.name || "Auto"} provider={model?.providerFamily || ""} /><span><strong>{model?.name || "Loading models"}</strong><small>{model?.providerFamily || "Image model"} · {model?.tier || ""}</small></span><b>Change</b></button>{model?.description && <p className="inspector-help">{model.description}</p>}<div className="capability-list">{model?.capabilities?.map((capability) => <em key={capability}>{capability.replaceAll("-", " ")}</em>)}</div></div>
-        <div className="inspector-section"><span className="inspector-label">Mode</span><div className="mode-readout"><strong>{references.length ? "Edit image" : "Create image"}</strong><small>{references.length ? "Your reference supplies the visual starting point." : "Text prompt to a new image."}</small></div></div>
-        <div className="inspector-section"><span className="inspector-label">Reference images</span><input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void uploadReference(file); event.currentTarget.value = ""; }} />{supportsEditing ? <button type="button" className="reference-upload" disabled={uploading || references.length >= maxReferences} onClick={() => fileInputRef.current?.click()}><strong><Plus aria-hidden="true" />{uploading ? "Uploading…" : references.length ? "Add another reference" : "Add a reference image"}</strong><small>PNG, JPEG or WebP · {supportsMultipleReferences ? `up to ${maxReferences}` : "one image"}</small></button> : <div className="mode-readout"><strong>Text creation only</strong><small>{model?.name || "This model"} does not accept a reference image.</small></div>}{references.length > 0 && <div className="reference-list">{references.map((reference) => <div className="reference-item" key={reference.id}><Image src={reference.previewUrl} alt="" width={80} height={80} unoptimized /><span><strong>{reference.name}</strong><small>{Math.max(1, Math.round(reference.size / 1024)).toLocaleString()} KB</small></span><button type="button" onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}><X aria-hidden="true" /></button></div>)}</div>}</div>
-        <div className="inspector-section">{aspectRatios.length > 0 && <><span className="inspector-label">Aspect ratio</span><div className="aspect-grid">{aspectRatios.map((ratio) => <button type="button" key={ratio} className={aspect === ratio ? "active" : ""} onClick={() => setAspect(ratio)}>{ratio}</button>)}</div></>}{resolutions.length > 0 && <><span className="inspector-label">Resolution</span><div className="aspect-grid">{resolutions.map((value) => <button type="button" key={value} className={effectiveResolution === value ? "active" : ""} onClick={() => { setResolution(value); setConfirmed(false); }}>{value}</button>)}</div></>}<div className="output-count"><span>Outputs</span><strong>1 image</strong><small>Current provider capability</small></div></div>
-        <div className="inspector-cost"><span>Estimated cost</span><strong>{estimate ? `~${estimate.toFixed(2)} credits` : "Calculating…"}</strong><small>Actual charge is shown after completion.</small>{availableCredits != null && <small>{availableCredits.toFixed(2)} credits available</small>}</div>
-        {expensive && <label className="image-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /><span>I authorize the displayed estimated usage.</span></label>}
-      </aside>
     </main>
 
-    <div className="image-prompt-dock"><form onSubmit={submit}><label className="image-prompt-label" htmlFor="image-creation-prompt"><b>Describe your image</b><span>Be specific about subject, style, lighting, and composition</span></label><textarea ref={promptInputRef} id="image-creation-prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={1} placeholder={references.length ? "What should change in this image?" : "A cinematic product photo with soft studio lighting…"} aria-label="Image prompt" /><div className="image-prompt-footer"><div className="image-compose-tools">{supportsEditing && <button type="button" className="compose-tool" onClick={() => fileInputRef.current?.click()}><Plus aria-hidden="true" /><span><small>Reference</small>{references.length ? `${references.length} ready` : "Add image"}</span></button>}<button type="button" className="compose-tool model-tool" onClick={() => setPickerOpen(true)}><span><small>AI model</small>{model?.name || "Choose model"}</span></button><button type="button" className="compose-tool canvas-tool" onClick={() => setInspectorOpen(true)}><SlidersHorizontal aria-hidden="true" /><span><small>Canvas</small>{aspect}</span></button><button type="button" className="compose-tool settings-tool" onClick={() => setInspectorOpen(true)}><span><small>Settings</small>More</span></button></div><button className="image-generate-button" disabled={submitting || generating || !modelId || !prompt.trim() || Boolean(references.length && !supportsEditing) || (expensive && !confirmed)}><PaperPlaneTilt aria-hidden="true" weight="fill" /><span>{submitting ? "Submitting…" : generating ? status.step : references.length ? "Edit image" : "Create image"}</span></button></div></form>{error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}</div>
+    <div className="image-prompt-dock">
+      <form onSubmit={submit}>
+        <label className="image-prompt-label" htmlFor="image-creation-prompt"><b>Describe your image</b><span>Subject, style, lighting, composition — make it yours.</span></label>
+        <textarea ref={promptInputRef} id="image-creation-prompt" value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} placeholder={references.length ? "What would you like to change in your reference?" : "Describe the image you imagine…"} aria-label="Image prompt" />
+        {references.length > 0 && <div className="image-reference-strip" aria-label="Attached reference images">{references.map((reference) => <div className="image-reference-chip" key={reference.id}><Image src={reference.previewUrl} alt={reference.name} width={48} height={48} unoptimized /><span>{reference.name}</span><button type="button" disabled={uploading || submitting || generating} onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}><X size={14} aria-hidden="true" /></button></div>)}</div>}
+        <div className="image-prompt-footer">
+          <div className="image-compose-tools">
+            <button type="button" className="compose-tool model-tool" disabled={uploading || submitting || generating} onClick={() => setPickerOpen(true)}><ModelBrand compact modelName={model?.name || "Auto"} provider={model?.providerFamily || ""} /><span><small>Model</small>{model?.name || "Choose model"}</span></button>
+            <button type="button" className="compose-tool reference-tool" disabled={uploading || submitting || generating || !supportsEditing || references.length >= maxReferences} title={supportsEditing ? "Upload or paste a reference image" : "Select a reference-capable model in Image settings"} onClick={() => fileInputRef.current?.click()}><Plus size={18} aria-hidden="true" /><span>{uploading ? "Uploading…" : "Add reference"}</span></button>
+            <button ref={settingsButtonRef} type="button" className={`compose-tool settings-tool ${inspectorOpen ? "active" : ""}`} aria-expanded={inspectorOpen} aria-controls="image-settings-panel" onClick={() => inspectorOpen ? setInspectorOpen(false) : openSettings()}><SlidersHorizontal size={18} aria-hidden="true" /><span>Image settings<small>{aspectRatios.length ? aspect : "Automatic canvas"}{effectiveResolution ? ` · ${effectiveResolution}` : ""}</small></span></button>
+          </div>
+          <button className="image-generate-button" disabled={submitting || generating || uploading || !modelId || model?.available === false || !prompt.trim() || Boolean(references.length && !supportsEditing) || (expensive && !confirmed)}><PaperPlaneTilt aria-hidden="true" weight="fill" /><span>{submitting ? "Submitting…" : generating ? status.step : references.length ? "Edit image" : "Create image"}</span></button>
+        </div>
+        {expensive && <label className="image-authorization"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /><span>I authorize this generation using my credits. The final charge is recorded after completion.</span></label>}
+        {inspectorOpen && <div ref={settingsRef} id="image-settings-panel" className="image-settings-panel" tabIndex={-1} onKeyDown={(event) => { if (event.key === "Escape") { event.stopPropagation(); setInspectorOpen(false); settingsButtonRef.current?.focus(); } }}>
+          <div className="image-settings-heading"><div><h2>Image settings</h2><p>Choose your canvas and add a visual starting point.</p></div><button type="button" className="image-settings-close" onClick={() => { setInspectorOpen(false); settingsButtonRef.current?.focus(); }} aria-label="Close image settings"><X size={18} aria-hidden="true" /></button></div>
+          <div className="image-settings-grid">
+            <fieldset className="image-setting-group" disabled={submitting || generating || uploading}><legend>Canvas</legend><p>Choose the shape that fits your idea.</p>
+              {aspectRatios.length > 0 ? <div className="image-ratio-options">{aspectRatios.map((ratio) => <button type="button" key={ratio} aria-pressed={aspect === ratio} className={aspect === ratio ? "selected" : ""} onClick={() => { setAspect(ratio); setConfirmed(false); }}><span className="image-ratio-preview" aria-hidden="true" style={{ aspectRatio: ratio.replace(":", " / ") }} /><strong>{ratio}</strong><small>{ratio === "1:1" ? "Square" : Number(ratio.split(":")[0]) > Number(ratio.split(":")[1]) ? "Landscape" : "Portrait"}</small></button>)}</div> : <div className="image-setting-note">This model chooses the canvas automatically.</div>}
+              {resolutions.length > 0 && <><label className="image-setting-label" htmlFor="image-resolution">Resolution</label><select id="image-resolution" value={effectiveResolution} onChange={(event) => { setResolution(event.target.value); setConfirmed(false); }}>{resolutions.map((value) => <option key={value} value={value}>{value}</option>)}</select></>}
+            </fieldset>
+            <fieldset className="image-setting-group" disabled={submitting || generating || uploading}><legend>Reference images <span>Optional</span></legend>
+              <p>{supportsEditing ? "Guide the composition, style, or details with your own image." : "This model creates images from text. Choose an editing model to use references."}</p>
+              {supportsEditing ? <button type="button" className="image-reference-dropzone" disabled={references.length >= maxReferences} onClick={() => fileInputRef.current?.click()}><Plus size={24} aria-hidden="true" /><strong>{uploading ? "Uploading your image…" : "Choose an image"}</strong><span>Or paste with Ctrl / ⌘ + V, or drag it onto this page</span><small>PNG, JPEG, WebP · up to 50 MB · {references.length}/{maxReferences} attached</small></button> : <button type="button" className="image-model-change" onClick={() => setPickerOpen(true)}>Choose another model</button>}
+              {supportsEditing && <p className="image-reference-help">Adding a reference switches this generation to editing. Remove all references to create from text.</p>}
+            </fieldset>
+          </div>
+          <div className="image-settings-summary"><span>{references.length ? "Editing from your references" : "Creating from your prompt"} · 1 image</span><button type="button" onClick={() => { setInspectorOpen(false); promptInputRef.current?.focus(); }}>Done</button></div>
+        </div>}
+        <p className="image-composer-help">{supportsEditing ? "Tip: paste an image here to use it as a reference." : "Select a model with editing support to add a reference."}</p>
+      </form>
+      {error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}
+    </div>
     {!job && <section className="image-inspiration" aria-labelledby="image-inspiration-title"><div><h2 id="image-inspiration-title">Get inspired</h2><p>Explore what’s possible with AI-generated images.</p></div><Link href="/history">View more <span aria-hidden="true">→</span></Link><div className="inspiration-grid">{inspirationTiles.map((alt,index)=><InspirationImage key={alt} index={index} alt={alt}/>)}</div></section>}
-    <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); setResolution(""); setConfirmed(false); }} open={pickerOpen} onOpenChange={setPickerOpen} modality="image" />
+    <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); setResolution(""); setConfirmed(false); }} open={pickerOpen} onOpenChange={setPickerOpen} modality="image" showPrices={false} />
   </div>;
 }
 
