@@ -8,6 +8,7 @@ import { ArrowsClockwise, CaretDown, Cube, DownloadSimple, Lightbulb, PaperPlane
 import { ModelBrand } from "@/components/model-brand";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
 import "./image-studio.css";
+import { clipboardImageFiles } from "@/lib/image-clipboard";
 
 type ImageModel = PickerModel & { modality: string; description?: string; capabilities?: string[];
   uiSchema?: { inputModes?: string[]; aspectRatios?: string[]; resolutionOptions?: string[]; maxReferences?: number } };
@@ -162,17 +163,34 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   }
 
   function pasteReference(event: React.ClipboardEvent<HTMLDivElement>) {
-    const files = Array.from(event.clipboardData.items)
-      .filter((item) => item.kind === "file" && item.type.startsWith("image/"))
-      .map((item) => item.getAsFile()).filter((file): file is File => Boolean(file));
+    const files = clipboardImageFiles(event.clipboardData);
     if (!files.length) return;
     event.preventDefault();
     void addReferences(files);
   }
 
+  async function pasteFromClipboard() {
+    if (uploadBatchRef.current || uploading || submitting || generating) return;
+    try {
+      if (!navigator.clipboard?.read) throw new Error("Use Ctrl / ⌘ + V in the prompt box, or Add reference to choose an image.");
+      const items = await navigator.clipboard.read();
+      const files: File[] = [];
+      for (const item of items) {
+        const type = item.types.find(type => ["image/png", "image/jpeg", "image/webp"].includes(type));
+        if (!type) continue;
+        const blob = await item.getType(type);
+        files.push(new File([blob], `pasted-image-${files.length + 1}.${type === "image/jpeg" ? "jpg" : type.split("/")[1]}`, { type }));
+      }
+      if (!files.length) throw new Error("No supported image found in your clipboard. Copy an image, then paste again.");
+      await addReferences(files);
+    } catch (caught) {
+      setError(caught instanceof Error && caught.name !== "NotAllowedError" ? caught.message : "Clipboard access was blocked. Use Ctrl / ⌘ + V in the prompt box, or Add reference.");
+    }
+  }
+
   function openSettings() {
     setInspectorOpen(true);
-    window.setTimeout(() => { settingsRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }); settingsRef.current?.focus({ preventScroll: true }); }, 0);
+    window.setTimeout(() => { settingsRef.current?.scrollIntoView({ behavior: motionPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" }); settingsRef.current?.focus({ preventScroll: true }); }, 0);
   }
 
   async function poll(id: string) {
@@ -300,7 +318,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
           </div>
           <div className="image-settings-summary"><span>{references.length ? "Editing from your references" : "Creating from your prompt"} · 1 image</span><button type="button" onClick={() => { setInspectorOpen(false); promptInputRef.current?.focus(); }}>Done</button></div>
         </div>}
-        <p className="image-composer-help">{supportsEditing ? "Tip: paste an image here to use it as a reference." : "Select a model with editing support to add a reference."}</p>
+        <div className="image-composer-utility"><p className="image-composer-help">{supportsEditing ? "Paste an image with Ctrl / ⌘ + V, or drag it here." : "Select a model with editing support to add a reference."}</p>{supportsEditing && <button type="button" className="image-paste-button" disabled={uploading || submitting || generating || references.length >= maxReferences} onClick={() => void pasteFromClipboard()}>Paste image</button>}<span className="image-prompt-count">{prompt.length.toLocaleString()} characters</span></div>
       </form>
       {error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}
     </div>

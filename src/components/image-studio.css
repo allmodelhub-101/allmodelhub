@@ -102,6 +102,7 @@
 .image-workspace.image-studio-refined .image-drop-overlay { position:fixed;inset:90px 20px 90px;z-index:80;pointer-events:none; }
 
 /* Atelier finish: defined surfaces, coordinated controls, quiet physical motion. */
+
 body .image-workspace.image-studio-refined { --image-surface:#101b2c;--image-soft:#0b1524;--image-line:#293b53;--image-ink:#edf3ff;--image-muted:#a2b1c8;--image-accent:#a3adff;--image-tint:#202b46;--image-shadow:0 20px 55px #0003;background:radial-gradient(ellipse at 10% 5%,#17334666,transparent 45%),radial-gradient(ellipse at 90% 25%,#26244366,transparent 45%),#090f19;color:var(--image-ink); }
 html[data-theme="light"] body .image-workspace.image-studio-refined { --image-surface:#fff;--image-soft:#f7f8fc;--image-line:#dce2ef;--image-ink:#17243b;--image-muted:#5b6b83;--image-accent:#5360d9;--image-tint:#eef0ff;--image-shadow:0 20px 55px #334d7912;background:radial-gradient(ellipse at 9% 5%,#eaf5ff,transparent 42%),radial-gradient(ellipse at 93% 18%,#eeedff,transparent 43%),#f8faff; }
 body .image-workspace.image-studio-refined .image-canvas-stage { padding-top:48px;padding-bottom:22px; }
@@ -179,3 +180,19 @@ body .image-workspace.image-studio-refined.is-motion-paused *,body .image-worksp
   .image-workspace.image-studio-refined .inspiration-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .image-workspace.image-studio-refined .image-settings-heading h2 { font-size:17px; }
 }
+
+/* Final composer details: readable marks, quieter focus and explicit paste. */
+body .image-workspace.image-studio-refined .image-prompt-dock form:focus-within { box-shadow:var(--image-shadow); }
+body .image-workspace.image-studio-refined .image-prompt-dock textarea { min-height:90px;border-radius:13px;padding:14px 16px; }
+body .image-workspace.image-studio-refined .image-prompt-dock textarea:focus { outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--image-accent) 9%,transparent); }
+body .image-workspace.image-studio-refined .compose-tool { min-height:48px; }
+body .image-workspace.image-studio-refined .compose-tool .model-brand { display:grid!important;place-items:center;flex:0 0 34px;width:34px;height:34px;overflow:hidden; }
+body .image-workspace.image-studio-refined .compose-tool .model-brand>img,body .image-workspace.image-studio-refined .compose-tool .model-brand>svg { display:block;width:26px;height:26px;max-width:26px;max-height:26px;object-fit:contain; }
+body .image-workspace.image-studio-refined .compose-tool .model-brand-flux { background:#fff;border:1px solid #dce2e9;box-shadow:none; }
+body .image-workspace.image-studio-refined .compose-tool .model-brand-flux>img { width:26px;height:22px; }
+body .image-workspace.image-studio-refined .image-composer-utility { display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px; }
+body .image-workspace.image-studio-refined .image-composer-utility .image-composer-help { margin:0;font-size:11px; }
+.image-studio-refined .image-paste-button { padding:5px 9px;border:1px solid var(--image-line);border-radius:7px;background:var(--image-soft);color:var(--image-accent);font:inherit;font-size:11px;font-weight:600;cursor:pointer; }
+.image-studio-refined .image-paste-button:hover:not(:disabled) { border-color:var(--image-accent);background:var(--image-tint); }
+.image-studio-refined .image-prompt-count { margin-left:auto;color:var(--image-muted);font-size:10px;font-variant-numeric:tabular-nums; }
+@media(max-width:700px) { .image-studio-refined .image-prompt-count { display:none; }.image-studio-refined .image-composer-utility .image-composer-help { flex:1;min-width:180px; } }
