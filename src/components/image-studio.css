@@ -1,4 +1,10 @@
 /* Scoped Image Studio layout; one page scroll, with settings in the composer. */
+.premium-workstation-shell .app-content:has(.image-studio-refined) {
+  min-height:0;overflow-y:auto!important;overflow-x:hidden!important;
+}
+.premium-workstation-shell .app-content:has(.image-studio-refined) .image-workspace.image-studio-refined {
+  display:block;height:auto;min-height:100%;grid-template-rows:none;overflow:visible!important;
+}
 .image-workspace.image-studio-refined {
   height:auto;min-height:100%;padding:20px clamp(14px,2.5vw,36px) 32px;
   color:var(--text);background:radial-gradient(ellipse at 50% 0,color-mix(in srgb,var(--accent) 7%,var(--bg)),var(--bg) 65%);
