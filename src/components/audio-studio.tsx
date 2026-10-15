@@ -4,29 +4,24 @@ import { useState } from "react";
 import { AudioGenerationClient } from "@/components/audio-generation-client";
 import { TtsClient } from "@/components/tts-client";
 import styles from "@/components/audio-studio.module.css";
+import Link from "next/link";
+import { Microphone, MusicNote, SpeakerHigh, Waveform } from "@phosphor-icons/react";
 
 type AudioMode = "speech" | "music" | "sfx";
 
-const copy = {
-  speech: { title: <>Give your words a <span>voice</span>.</>, body: "Create realistic speech, music, and sound effects with advanced AI models." },
-  music: { title: <>Give your story a <span>soundtrack</span>.</>, body: "Create original music from a focused written direction." },
-  sfx: { title: <>Create a sound from <span>words</span>.</>, body: "Generate clear, purpose-built sound effects for the moment you have in mind." }
-} as const;
-
 export function AudioStudio() {
   const [mode, setMode] = useState<AudioMode>("speech");
-  const current = copy[mode];
+  const [paused, setPaused] = useState(false);
+  const modes = ["speech", "music", "sfx"] as const;
 
-  return <div className={styles.page}>
+  return <div className={styles.page} data-mode={mode} data-motion-paused={paused}>
     <div className={styles.hero}>
-      <div className={styles.heroCopy}><div className={styles.kicker}>Audio Studio</div><h1>{current.title}</h1><p>{current.body}</p></div>
-      <div className={styles.heroWave} aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /><i /></div>
+      <div className={styles.heroCopy}><span className={styles.studioMark}><Waveform aria-hidden="true" /></span><div><h1>Audio Studio</h1><p>Create sound. Set the mood.</p></div></div>
+      <div className={styles.headerActions}><button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Resume motion" : "Pause motion"}</button><Link href="/history">History ↗</Link></div>
     </div>
-    <div className={styles.modeTabs} role="tablist" aria-label="Audio creation mode">
-      <button type="button" role="tab" aria-selected={mode === "speech"} className={mode === "speech" ? styles.active : ""} onClick={() => setMode("speech")}>Speech</button>
-      <button type="button" role="tab" aria-selected={mode === "music"} className={mode === "music" ? styles.active : ""} onClick={() => setMode("music")}>Music</button>
-      <button type="button" role="tab" aria-selected={mode === "sfx"} className={mode === "sfx" ? styles.active : ""} onClick={() => setMode("sfx")}>Sound effects</button>
+    <div className={styles.modeTabs} role="tablist" aria-label="Audio creation mode" onKeyDown={event => { const index=modes.indexOf(mode); const next=event.key === "ArrowRight" ? (index+1)%3 : event.key === "ArrowLeft" ? (index+2)%3 : event.key === "Home" ? 0 : event.key === "End" ? 2 : -1; if(next<0)return;event.preventDefault();setMode(modes[next]);event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus(); }}>
+      {modes.map((item,index)=><button key={item} id={`audio-tab-${item}`} type="button" role="tab" tabIndex={mode===item?0:-1} aria-controls="audio-mode-panel" aria-selected={mode===item} className={mode===item?styles.active:""} onClick={()=>setMode(item)}>{index===0?<Microphone aria-hidden="true"/>:index===1?<MusicNote aria-hidden="true"/>:<SpeakerHigh aria-hidden="true"/>}<span><b>{item==="speech"?"Speech":item==="music"?"Music":"Sound effects"}</b><small>{item==="speech"?"Words into voice":item==="music"?"Find your soundtrack":"Design the moment"}</small></span></button>)}
     </div>
-    <div className={styles.content}>{mode === "speech" ? <TtsClient /> : <AudioGenerationClient key={mode} mode={mode} />}</div>
+    <div className={styles.content} id="audio-mode-panel" role="tabpanel" aria-labelledby={`audio-tab-${mode}`}>{mode === "speech" ? <TtsClient /> : <AudioGenerationClient key={mode} mode={mode} />}</div>
   </div>;
 }

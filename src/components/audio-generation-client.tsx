@@ -1,11 +1,11 @@
 "use client";
-
 import { modelAvailabilityMessage } from "@/lib/model-availability-message";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { ArrowClockwise, CheckCircle, DownloadSimple, MusicNote, SpeakerHigh, Sparkle, Waveform } from "@phosphor-icons/react";
+import { ArrowClockwise, DownloadSimple, MusicNote, SpeakerHigh, Sparkle, Waveform } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
 import styles from "@/components/audio-studio.module.css";
+import { AudioStage } from "@/components/audio-stage";
 
 type AudioMode = "music" | "sfx";
 type AudioModel = {
@@ -125,7 +125,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
 
   async function submit(event: FormEvent) {
     event.preventDefault();
-    if (!modelId || !prompt.trim()) return;
+    if (busy || activeJob || !modelId || !prompt.trim()) return;
     setBusy(true);
     setError("");
     setJob(null);
@@ -156,42 +156,38 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}>
         <span className={styles.headIcon}>{mode === "music" ? <MusicNote weight="fill" /> : <SpeakerHigh weight="fill" />}</span>
-        <div><h2>{details.label}</h2><p>{mode === "music" ? "Turn a written direction into original music." : "Create precise, ready-to-use sound from a written moment."}</p></div>
-        <i>{mode === "music" ? "02" : "03"}</i>
+        <div><h2>{mode === "music" ? "Compose your next track" : "Shape your sound"}</h2><p>{mode === "music" ? "Mood, instruments, rhythm. Make it yours." : "Describe a moment. Give it texture."}</p></div>
       </div>
 
       <label className={styles.field}>
         <span>{details.modelLabel}</span>
         <PremiumSelect className={styles.select} value={modelId} onChange={setModelId} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}${item.available === false ? ` · ${modelAvailabilityMessage(item.availabilityReason)}` : ""}`, disabled: item.available === false }))} aria-label={details.modelLabel} />
-        {model?.description && <small>{model.description}</small>}
       </label>
 
       <label className={styles.field}>
         <span>{details.promptLabel}</span>
-        <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} required maxLength={20_000} placeholder={details.placeholder} />
-        <small>{details.helper}</small>
+        <textarea aria-label={details.promptLabel} value={prompt} onChange={(event) => setPrompt(event.target.value)} required maxLength={20_000} placeholder={mode === "music" ? "A warm lo-fi track. Soft piano, brushed drums, a late-night mood…" : "Rain on a window. Close droplets, a quiet room, a soft distant rumble…"} />
       </label>
 
       <div className={styles.starterGroup}>
-        <span>Start with a direction</span>
+        <span>Try a direction</span>
         <div>{starters[mode].map((starter) => <button key={starter.label} type="button" onClick={() => setPrompt(starter.prompt)}>{starter.label}</button>)}</div>
       </div>
 
-      <div className={styles.costRow}>
+      {prompt.trim() && <div className={styles.costRow}>
         <span className={styles.costIcon}><Waveform /></span>
         <span><small>Estimated cost</small><b>{estimate > 0 ? `~ ${estimate.toFixed(2)}` : "0.00"} credits</b></span>
         {projectId && <em>Project connected</em>}
-      </div>
-      <button className={styles.generate} disabled={busy || !modelId || !prompt.trim()}><Sparkle weight="fill" />{busy ? "Submitting…" : details.label}</button>
+      </div>}
+      <button className={styles.generate} disabled={busy || activeJob || !modelId || !prompt.trim()}><Sparkle weight="fill" />{busy ? "Submitting…" : activeJob ? "Generation in progress" : details.label}<span aria-hidden="true">→</span></button>
       {error && <p className={styles.error} role="alert">{error}</p>}
     </form>
 
     <section className={styles.preview} aria-label={`${mode === "music" ? "Music" : "Sound effects"} preview`}>
       <div className={styles.previewHead}><span><i className={activeJob ? styles.live : ""} />{activeJob ? "Generating" : resultUrl ? details.resultName : "Audio preview"}</span><small>{model?.name || "Choose a model"}</small></div>
-      <p>{activeJob ? "Your request is processing. You can safely keep working while it completes." : resultUrl ? "Listen, download, or create another variation." : "Your generated audio will appear here when it is ready."}</p>
-      <div className={`${styles.waveArea} ${activeJob ? styles.isBusy : ""}`}><div className={styles.waveBars}>{Array.from({ length: 38 }, (_, index) => <i key={index} />)}</div>{activeJob && <span>Creating your audio…</span>}</div>
-      {resultUrl ? <div className={styles.resultPlayer}><audio controls src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>{job?.charged_credits != null ? `Ready · Charged ${Number(job.charged_credits).toFixed(2)} credits` : "Ready · Billing pending"}</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Your credits are handled automatically. Try again with the same direction."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : <div className={styles.emptyPreview}><span>{mode === "music" ? <MusicNote weight="fill" /> : <SpeakerHigh weight="fill" />}</span><h2>{details.emptyTitle}</h2><p>{details.emptyBody}</p><small>MODEL → DIRECTION → GENERATE</small></div>}
-      <div className={styles.qualityStrip}><span className={styles.qualityIcon}><CheckCircle weight="fill" /></span><div><b>Built for your workflow.</b><p>{mode === "music" ? "Use a concise direction for a stronger musical result." : "Describe the sound and setting clearly for a more useful effect."}</p></div></div>
+      {activeJob && <p role="status">Creating your audio. Follow this job in History if you leave the studio.</p>}
+      <AudioStage mode={mode} busy={activeJob}/>
+      {resultUrl ? <div className={styles.resultPlayer}><audio controls src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>{job?.charged_credits != null ? `Charged ${Number(job.charged_credits).toFixed(2)} credits` : "Final charge pending"}</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Check this job in History for its current status."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : !activeJob && <div className={styles.emptyPreview}><h2>{details.emptyTitle}</h2><p>{mode === "music" ? "Your finished track will play here." : "Your finished sound will play here."}</p></div>}
     </section>
   </div>;
 }
