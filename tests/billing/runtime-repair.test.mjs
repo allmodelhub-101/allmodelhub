@@ -47,7 +47,7 @@ test("real media preparation binds MiniMax text, voice, and billed characters wi
 test("all 57 audited routes preserve readiness and only the two repaired MiniMax routes become ready", () => {
   const snapshot = JSON.parse(readFileSync(new URL("../fixtures/runtime-readiness-2026-10-15.json", import.meta.url), "utf8"));
   assert.equal(snapshot.models.length, 57);
-  const before = {}, after = {};
+  const before = {}, after = {}, disabled = [];
   for (const row of snapshot.models) {
     const catalog = ALL_MODELS.find((model) => model.id === row.id);
     assert.ok(catalog, row.id);
@@ -55,6 +55,7 @@ test("all 57 audited routes preserve readiness and only the two repaired MiniMax
       routes: snapshot.routes, policies: snapshot.policies, configurationReady: true });
     before[row.modality] = (before[row.modality] || 0) + Number(row.available);
     after[row.modality] = (after[row.modality] || 0) + Number(result.ready);
+    if (!result.ready) disabled.push(row.id);
     if (row.id.startsWith("minimax-speech-2-8-")) assert.equal(result.ready, true, row.id);
     else {
       assert.equal(result.ready, row.available, row.id);
@@ -63,6 +64,7 @@ test("all 57 audited routes preserve readiness and only the two repaired MiniMax
   }
   assert.deepEqual(before, { text: 18, image: 12, video: 15, audio: 6 });
   assert.deepEqual(after, { text: 18, image: 12, video: 15, audio: 8 });
+  assert.deepEqual(disabled.sort(), ["eleven-dialogue", "eleven-dubbing", "eleven-isolator", "grok-imagine-image-2"]);
 });
 
 test("MiniMax uses its own async speech contract and rejects foreign voices/options", () => {

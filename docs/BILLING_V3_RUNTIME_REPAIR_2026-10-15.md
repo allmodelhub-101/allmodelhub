@@ -24,8 +24,12 @@ All 15 current video routes pass readiness and existing video lifecycle regressi
    window focus, retaining a still-executable selection. Real availability reasons replace generic billing labels.
 3. Text/TTS marked provider submission started only after awaiting the transport. An exception during
    submission could release its hold and try another provider despite an unknown billable outcome.
-   Mark submission started before network I/O. Retain holds and block fallback on ambiguous timeouts/5xx;
-   allow release on typed definitive rejection. Existing media timeout protections remain intact.
+   The first PR revision marked submission too early (P1 review). The correction observes the actual transport
+   boundary: finish adapter selection, credentials, serialization and Request construction first, then mark
+   immediately before fetch. Retain holds and block fallback on ambiguous timeouts/5xx; release on local
+   preflight failure or typed definitive rejection. Replay cannot skip an ambiguous claim and reach another
+   paid route. A failed release stops fallback rather than accumulating a second unresolved hold.
+   Existing media timeout protections remain intact.
 4. Exact records parsing used a regex that truncated scientific notation and could select a nested
    unrelated `credits` field. Preserve JSON numeric lexemes before parsing, select the actual record envelope,
    and normalize using Decimal. Preserve numeric provider timestamps as ISO timestamps.
@@ -110,6 +114,29 @@ were reproduced in tests; they are not asserted as the cause of every historical
   `src/components/login-form.tsx` (saved-email restore and mode reset). They are outside this billing repair.
   Existing unrelated warnings are retained. Changed-file lint is run separately.
 
+Preview isolation instructions: [BILLING_V3_PREVIEW_ISOLATION.md](./BILLING_V3_PREVIEW_ISOLATION.md).
+The current Preview must not be used for generation or financial mutation tests because its public bundle
+references production Supabase. No real-provider success is claimed.
+
 Production prerequisites: owner review/approval and explicit deployment authorization; approved small budget
 for real MiniMax/provider smoke tests; recover provider evidence for historical anomalies and decide safe
 shortfall treatment. No automatic production cutover is authorized by this task.
+
+## P1 correction verification
+
+- Billing/security suite: 158 tests passed, zero failed/skipped.
+- The explicit local PostgreSQL-compatible PGlite financial integration rerun passed. It executes real
+  V3 SQL/RPCs and ledger constraints; managed Supabase integration and overlap-exclusion validation remain
+  blocked by Preview isolation. No live database test is claimed.
+- Transport regressions now load real billing, exact adapters, request construction and submission code.
+  Missing credentials, unsupported adapters/providers and invalid request URLs release without network
+  submission or missing-identifier anomalies. Safe configured fallback occurs only after successful release.
+  Definitive 429 releases; 503, timeout and accepted-but-malformed cost evidence retain the original hold.
+  A returned provider request ID survives later parsing failure. Replay cannot reach a fallback after
+  an ambiguous or completed attempt, and a failed reservation release blocks further attempts.
+- All eight executable audio paths have network-mocked adapter checks: MiniMax Turbo/HD, Kling TTS,
+  Suno, Kling Sound Effects, Eleven Flash/Multilingual/v3. These are not real-provider quality/success tests.
+- Typecheck, optimized production build, changed-file lint and security source scan passed. Changed-file
+  lint retains six pre-existing video image-element warnings, no errors.
+- Exact four remaining gated IDs are asserted in the 57-model regression test; candidate readiness stays
+  53/57. No model, route, formula, FX, markup, receipt or historical hold was changed by this correction.

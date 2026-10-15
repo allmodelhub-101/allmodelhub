@@ -20,7 +20,7 @@ test("direct response-header settlement is allowed only for complete exact USD e
 test("successful direct audio is not failed by post-stream settlement work", () => {
   const billing = readFileSync(new URL("../../src/lib/billing/tts-billing.ts", import.meta.url), "utf8");
   const route = readFileSync(new URL("../../src/app/api/tts/route.ts", import.meta.url), "utf8");
-  assert.match(billing, /providerStarted = true[\s\S]*providerTtsStreamExact[\s\S]*try \{[\s\S]*providerReportedCost/);
+  assert.match(billing, /providerTtsStreamExact[\s\S]*onSubmit: \(\) => \{ providerStarted = true; \}[\s\S]*try \{[\s\S]*providerReportedCost/);
   assert.match(billing, /billing_write_failed/);
   assert.match(route, /tts-v3-post-stream-settlement/);
   assert.match(route, /X-AMH-Billing-Quote-Id/);
@@ -37,7 +37,7 @@ test("audio usage omits visual fields instead of sending zero-valued dimensions"
 
 test("definitive rejection releases while ambiguous TTS transport retains its hold", () => {
   const billing = readFileSync(new URL("../../src/lib/billing/tts-billing.ts", import.meta.url), "utf8");
-  assert.match(billing, /providerStarted = true;[\s\S]*await providerTtsStreamExact/);
+  assert.match(billing, /await providerTtsStreamExact[\s\S]*onSubmit: \(\) => \{ providerStarted = true; \}/);
   assert.match(billing, /if \(!upstream\.response\.ok\) throw providerFailure/);
   assert.match(billing, /definitive_rejection[\s\S]*providerStarted = false/);
   assert.match(billing, /authorization && !providerStarted[\s\S]*cancelBillingQuoteReservation/);

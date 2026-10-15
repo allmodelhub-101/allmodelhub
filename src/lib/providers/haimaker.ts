@@ -1,5 +1,6 @@
 import { getServerEnv } from "@/lib/env";
 import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
+import { submitProviderRequest, type ProviderSubmissionObserver } from "./submission";
 
 function apiUrl(path: string) {
   const base = getServerEnv().HAIMAKER_BASE_URL.replace(/\/+$/, "").replace(/\/v1$/i, "");
@@ -72,19 +73,19 @@ export async function haimakerPollTask(modality: "image" | "video", taskId: stri
   return { taskId, state, resultUrls: urls.length ? urls : undefined, failMsg: typeof data.error === "string" ? data.error : undefined, raw: json };
 }
 
-export async function haimakerTtsStream(body: { model: string; input: string; voice: string }) {
+export async function haimakerTtsStream(body: { model: string; input: string; voice: string }, observer?: ProviderSubmissionObserver) {
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
-  return fetch(apiUrl("audio/speech"), { method: "POST", headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" });
+  return submitProviderRequest(apiUrl("audio/speech"), { method: "POST", headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" }, body: JSON.stringify(body), cache: "no-store" }, observer);
 }
 
-export async function haimakerChatStream(request: ProviderChatRequest & { modelId: string; upstreamOverride?: string }) {
+export async function haimakerChatStream(request: ProviderChatRequest & { modelId: string; upstreamOverride?: string }, observer?: ProviderSubmissionObserver) {
   const env = getServerEnv();
   if (!env.HAIMAKER_API_KEY) throw new Error("HAIMAKER_API_KEY is not configured.");
   const mapped = request.upstreamOverride || haimakerModelFor(request.modelId);
   if (!mapped) throw new Error(`No Haimaker fallback mapping configured for ${request.modelId}.`);
 
-  return fetch(apiUrl("chat/completions"), {
+  return submitProviderRequest(apiUrl("chat/completions"), {
     method: "POST",
     headers: { Authorization: `Bearer ${env.HAIMAKER_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -96,5 +97,5 @@ export async function haimakerChatStream(request: ProviderChatRequest & { modelI
       stream_options: { include_usage: true }
     }),
     cache: "no-store"
-  });
+  }, observer);
 }

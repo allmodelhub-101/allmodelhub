@@ -1,6 +1,7 @@
 import "server-only";
 import { getServerEnv } from "@/lib/env";
 import type { AsyncTaskResult, ProviderChatRequest } from "@/lib/providers/types";
+import { submitProviderRequest, type ProviderSubmissionObserver } from "./submission";
 import {
   ApimodelsBillingRecordError,
   extractExactJsonDecimal,
@@ -120,13 +121,13 @@ export function providerFailure(status: number) {
   return new ProviderRequestError("configuration", "Invalid model configuration");
 }
 
-export async function apimodelsChatStream(request: ProviderChatRequest) {
-  const response = await fetch(apiUrl("chat/completions"), {
+export async function apimodelsChatStream(request: ProviderChatRequest, observer?: ProviderSubmissionObserver) {
+  const response = await submitProviderRequest(apiUrl("chat/completions"), {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(openAiBody(request)),
     cache: "no-store"
-  });
+  }, observer);
   logProviderResponse("apimodels", apiUrl("chat/completions"), request.upstreamModel, response);
   return { response, protocol: "openai" as const };
 }
@@ -156,14 +157,14 @@ export async function apimodelsPollTask(modality: "image" | "video" | "audio", t
   return normalizeTask(json);
 }
 
-export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }) {
+export async function apimodelsTtsStream(body: { model: string; text: string; voice_id: string; language_code?: string }, observer?: ProviderSubmissionObserver) {
   const endpoint = apiUrl("tts/stream");
-  const response = await fetch(endpoint, {
+  const response = await submitProviderRequest(endpoint, {
     method: "POST",
     headers: headers(),
     body: JSON.stringify({ model: body.model, text: body.text, voice_id: body.voice_id, ...(body.language_code ? { language_code: body.language_code } : {}) }),
     cache: "no-store"
-  });
+  }, observer);
   logProviderResponse("apimodels", endpoint, body.model, response);
   return response;
 }
