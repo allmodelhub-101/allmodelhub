@@ -108,7 +108,7 @@ export function openAiBody(request: ProviderChatRequest) {
   };
 }
 
-function providerFailure(status: number) {
+export function providerFailure(status: number) {
   if (status === 401 || status === 403) return new ProviderRequestError("authentication", "Provider authentication failed");
   if (status === 400 || status === 404) return new ProviderRequestError("model_unavailable", "Model unavailable");
   // A received 429 is a definitive rejection of this submission. The provider
@@ -116,7 +116,7 @@ function providerFailure(status: number) {
   // Transport failures and 5xx responses remain ambiguous: the provider may
   // have accepted billable work before the response was lost.
   if (status === 429) return new ProviderRequestError("definitive_rejection", "Provider rejected the request (rate limited)");
-  if (status === 409 || status >= 500) return new ProviderRequestError("temporary", "Provider temporarily unavailable");
+  if (status === 408 || status === 409 || status === 425 || status >= 500) return new ProviderRequestError("temporary", "Provider temporarily unavailable");
   return new ProviderRequestError("configuration", "Invalid model configuration");
 }
 

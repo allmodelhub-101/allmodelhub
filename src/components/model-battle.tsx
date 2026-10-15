@@ -23,7 +23,7 @@ export function ModelBattle() {
   const [outputs, setOutputs] = useState<Record<string, Output>>({});
   const [busy, setBusy] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
-  useEffect(() => { fetch("/api/models").then((response) => response.json()).then((data) => setModels((data.models || []).filter((model: Model) => model.modality === "text"))).catch(() => setModels([])); }, []);
+  useEffect(() => { fetch("/api/models", { cache: "no-store" }).then((response) => response.json()).then((data) => setModels((data.models || []).filter((model: Model) => model.modality === "text"))).catch(() => setModels([])); }, []);
   const selectedModels = useMemo(() => selected.map((id) => models.find((model) => model.id === id)).filter((model): model is Model => Boolean(model)), [models, selected]);
   const hasResults = Object.values(outputs).some((output) => output.text || output.error);
   const toggle = (id: string) => setSelected((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length < 3 ? [...current, id] : current);

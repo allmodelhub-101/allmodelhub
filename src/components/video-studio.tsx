@@ -347,7 +347,7 @@ export function VideoStudio({
   useEffect(() => {
     if (fixture) return;
     const c = new AbortController();
-    fetch("/api/models", { signal: c.signal })
+    fetch("/api/models", { signal: c.signal, cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         const list = (d.models || []).filter(

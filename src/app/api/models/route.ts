@@ -27,7 +27,7 @@ export async function GET() {
         per1kCharsCredits: model.per1kCharsUsd ? creditsFromUsd(model.per1kCharsUsd, model.markup, fxRate) : undefined
       }
     }))
-  });
+  }, { headers: { "Cache-Control": "private, no-store, max-age=0", "CDN-Cache-Control": "no-store", "Vercel-CDN-Cache-Control": "no-store" } });
 }
 
 

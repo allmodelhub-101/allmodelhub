@@ -1,6 +1,7 @@
 import "server-only";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { providerChatStreamExact } from "@/lib/providers";
+import { providerFailure } from "@/lib/providers/apimodels";
 import type { ChatMessage, NormalizedProviderUsage, ProviderChatResult } from "@/lib/providers/types";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { resolveBillingProviderRoutes } from "./provider-route";
@@ -70,17 +71,16 @@ export async function beginTextBillingAttempt(input: Readonly<{
         metadata: { operation: input.operation, parent_request_id: input.parentRequestId, ...input.metadata },
       });
       await assertSpendingAllowed(input.userId, authorization.authorizationCredits);
+      providerStarted = true;
       const upstream = await providerChatStreamExact(route, {
         messages: input.messages,
         maxTokens: input.maxOutputTokens,
         temperature: input.temperature,
         deepThink: input.deepThink,
       });
-      providerStarted = true;
       providerRequestId = upstream.providerRequestId;
-      if (!upstream.response.ok || !upstream.response.body) {
-        throw new Error(`Provider returned HTTP ${upstream.response.status}`);
-      }
+      if (!upstream.response.ok) throw providerFailure(upstream.response.status);
+      if (!upstream.response.body) throw new Error("Provider returned an empty text response");
       if (!upstream.providerRequestId) throw new Error("BILLING_V3_PROVIDER_REQUEST_ID_MISSING");
       const pending = await markProviderSettlementPending({
         quoteId: authorization.quoteId,
@@ -95,6 +95,10 @@ export async function beginTextBillingAttempt(input: Readonly<{
         providerBillingRecordId: pending.ledgerId,
       } as const;
     } catch (error) {
+      const rejection = error as { name?: string; kind?: string } | null;
+      if (rejection?.name === "ProviderRequestError" && ["authentication", "model_unavailable", "configuration", "definitive_rejection"].includes(rejection.kind ?? "")) {
+        providerStarted = false;
+      }
       lastError = error;
       if (authorization && providerStarted) {
         if (providerRequestId) {

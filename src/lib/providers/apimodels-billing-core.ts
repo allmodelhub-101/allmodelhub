@@ -37,7 +37,7 @@ export class ApimodelsBillingRecordError extends Error {
   }
 }
 
-const DECIMAL = /^(?:0|[1-9]\d*)(?:\.\d+)?$/;
+const DECIMAL = /^(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?$/;
 
 function object(value: unknown): Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value)
@@ -67,9 +67,22 @@ function normalizeState(value: unknown): ApimodelsBillingState {
 }
 
 export function extractExactJsonDecimal(jsonText: string, field: string) {
-  const escaped = field.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = new RegExp(`"${escaped}"\\s*:\\s*(?:"((?:0|[1-9]\\d*)(?:\\.\\d+)?)"|((?:0|[1-9]\\d*)(?:\\.\\d+)?))`, "i").exec(jsonText);
-  return match ? (match[1] ?? match[2]) : undefined;
+  // Preserve numeric lexemes before JSON.parse can round them. Tokenize
+  // strings as units so numbers inside IDs/text never become cost evidence.
+  const exactJson = jsonText.replace(/"(?:\\.|[^"\\])*"|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/g,
+    (token, numeric: string | undefined) => numeric === undefined ? token : JSON.stringify(numeric));
+  const root = object(JSON.parse(exactJson));
+  const data = object(root.data);
+  const source = Object.keys(data).length ? data : root;
+  const value = source[field];
+  return typeof value === "string" ? exactNonnegative(value, field) : undefined;
+}
+
+function providerTimestamp(value: unknown) {
+  if (typeof value === "string") return value;
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 0) return undefined;
+  const date = new Date(value);
+  return Number.isFinite(date.getTime()) ? date.toISOString() : undefined;
 }
 
 export function normalizeApimodelsBillingRecord(
@@ -112,8 +125,8 @@ export function normalizeApimodelsBillingRecord(
     creditsUsd,
     currency,
     usage: object(first(source.usage, root.usage)),
-    createdAt: typeof first(source.created_at, source.createdAt) === "string" ? String(first(source.created_at, source.createdAt)) : undefined,
-    completedAt: typeof first(source.completed_at, source.completedAt) === "string" ? String(first(source.completed_at, source.completedAt)) : undefined,
+    createdAt: providerTimestamp(first(source.created_at, source.createdAt)),
+    completedAt: providerTimestamp(first(source.completed_at, source.completedAt)),
   };
 }
 

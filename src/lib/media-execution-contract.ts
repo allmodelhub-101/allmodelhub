@@ -72,6 +72,9 @@ const contracts: readonly MediaExecutionContract[] = [
   { modelId: "eleven-tts-flash", modality: "audio", strategy: "apimodels_eleven_stream", inputModes: ["text"], maxReferences: 0 },
   { modelId: "eleven-tts-multilingual", modality: "audio", strategy: "apimodels_eleven_stream", inputModes: ["text"], maxReferences: 0 },
   { modelId: "eleven-tts-v3", modality: "audio", strategy: "apimodels_eleven_stream", inputModes: ["text"], maxReferences: 0 },
+  ...["minimax-speech-2-8-turbo", "minimax-speech-2-8-hd"].map((modelId): MediaExecutionContract => ({
+    modelId, modality: "audio", strategy: "apimodels_audio_async", inputModes: ["text"], maxReferences: 0, promptLimit: 10_000,
+  })),
   { modelId: "kling-tts", modality: "audio", strategy: "apimodels_audio_async", inputModes: ["text"], maxReferences: 0 },
   { modelId: "kling-sound-effects", modality: "audio", strategy: "apimodels_audio_async", inputModes: ["text"], maxReferences: 0, durationRange: { min: 3, max: 10, integer: false } },
   { modelId: "suno-v5", modality: "audio", strategy: "apimodels_audio_async", inputModes: ["text"], maxReferences: 0 },
