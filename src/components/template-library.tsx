@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Briefcase, GraduationCap, MagnifyingGlass, Megaphone, ShoppingCart, Sparkle, Storefront, VideoCamera } from "@phosphor-icons/react";
+import "./template-library.css";
 
 export type PromptTemplate = { id: string; slug: string; category: string; title: string; description: string; prompt: string; language: string | null; pakistan_focused: boolean | null };
 
@@ -25,18 +26,28 @@ export function TemplateLibrary({ templates }: { templates: PromptTemplate[] }) 
     return templates.filter((template) => (category === "all" || template.category === category) && (!needle || `${template.title} ${template.description} ${template.category} ${template.language || ""}`.toLowerCase().includes(needle)));
   }, [category, query, templates]);
 
-  return <main className="template-library-page">
+  return <div className="template-library-page template-refined">
     <section className="template-hero">
-      <div className="template-hero-copy"><div className="kicker">Pakistan workflow library</div><h1>Prompt Templates <span>Start with a proven workflow.</span></h1><p>Ready-to-use prompt templates for creators, freelancers, students, marketers and businesses. Save time, get better results, and do more with AI.</p></div>
-      <div className="template-hero-art" aria-hidden="true"><span className="template-art-icon"><Sparkle weight="fill" /></span><div className="template-art-card"><strong>Turn ideas<br />into results</strong><i /><i /><i /></div><small>Better prompts<br />Brighter possibilities</small></div>
+      <div className="template-hero-copy"><div className="kicker">Your next idea starts here</div><h1>Prompt <span>Templates</span></h1><p>A better starting point. Choose a workflow and make it yours in Chat.</p></div>
+      <div className="template-refined-art" aria-hidden="true"><Sparkle weight="duotone" /><i /><i /></div>
     </section>
 
     <section className="template-controls" aria-label="Browse prompt templates">
-      <label className="template-search"><MagnifyingGlass aria-hidden="true" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search templates (e.g. YouTube, marketing, proposal...)" aria-label="Search templates" /></label>
+      <div className="template-search-row"><label className="template-search"><MagnifyingGlass aria-hidden="true" /><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a workflow…" aria-label="Search templates" /></label>{query && <button className="template-reset" type="button" onClick={() => setQuery("")}>Clear search</button>}</div>
       <div className="template-filters" role="group" aria-label="Filter templates by category"><button type="button" className={category === "all" ? "active" : ""} aria-pressed={category === "all"} onClick={() => setCategory("all")}><Sparkle weight="bold" /> All</button>{categories.map((item) => { const { Icon } = categoryKind(item); return <button type="button" key={item} className={category === item ? "active" : ""} aria-pressed={category === item} onClick={() => setCategory(item)}><Icon weight="duotone" /> {item}</button>; })}</div>
-      {templates.length > 0 && <div className="template-facts"><span><Sparkle weight="fill" /><b>{templates.length} templates</b><small>Ready to use</small></span><span><Storefront weight="duotone" /><b>One-click launch</b><small>Open in Chat</small></span>{templates.some((template) => template.language) && <span><GraduationCap weight="duotone" /><b>Language ready</b><small>Templates retain their language</small></span>}</div>}
     </section>
 
-    {visibleTemplates.length > 0 ? <section className="template-grid">{visibleTemplates.map((template) => { const { Icon, tone } = categoryKind(template.category); const tags = [template.language, template.pakistan_focused ? "Pakistan focused" : null].filter((tag): tag is string => Boolean(tag)); return <article className="template-card" key={template.id}><div className={`template-card-icon ${tone}`}><Icon weight="fill" /></div><div className="template-card-copy"><div className="kicker">{template.category}</div><h2>{template.title}</h2><p>{template.description}</p>{tags.length > 0 && <div className="template-tags">{tags.map((tag) => <span key={tag}>{tag}</span>)}</div>}</div><Link className="template-use" href={`/chat?template=${encodeURIComponent(template.prompt)}`}>Use template <span aria-hidden="true">→</span></Link></article>; })}</section> : <section className="template-empty"><Sparkle weight="fill" /><h2>No templates match yet</h2><p>Try another search term or clear the category filter.</p><button type="button" onClick={() => { setQuery(""); setCategory("all"); }}>Clear filters</button></section>}
-  </main>;
+    <div className="template-results-head"><h2>{category === "all" ? "Discover a workflow" : category}</h2><p role="status" aria-live="polite" aria-atomic="true">{visibleTemplates.length} {visibleTemplates.length === 1 ? "template" : "templates"}{query.trim() ? " found" : " available"}</p></div>
+    {visibleTemplates.length > 0 ? <section className="template-grid" aria-label="Prompt templates">{visibleTemplates.map((template) => {
+      const { Icon, tone } = categoryKind(template.category);
+      const language = template.language === "en" ? "English" : template.language === "ur" ? "Urdu" : ["roman-urdu", "roman-ur"].includes(template.language || "") ? "Roman Urdu" : template.language;
+      const tags = [language, template.pakistan_focused ? "Pakistan focused" : null].filter((tag): tag is string => Boolean(tag));
+      return <article className={`template-card ${tone}`} key={template.id}>
+        <div className="template-card-heading"><div className={`template-card-icon ${tone}`}><Icon weight="duotone" aria-hidden="true" /></div><span>{template.category}</span></div>
+        <div className="template-card-copy"><h2>{template.title}</h2><p>{template.description}</p></div>
+        {tags.length > 0 && <div className="template-tags">{tags.map((tag) => <span key={tag}>{tag}</span>)}</div>}
+        <Link className="template-use" aria-label={`Use ${template.title} template`} href={`/chat?template=${encodeURIComponent(template.prompt)}`}>Use template <span aria-hidden="true">↗</span></Link>
+      </article>;
+    })}</section> : <section className="template-empty"><Sparkle weight="fill" aria-hidden="true" /><h2>{templates.length ? "No matching templates" : "New workflows are on the way"}</h2><p>{templates.length ? "Try another search or reset your filters." : "Check back soon for ready-to-use prompts."}</p>{templates.length > 0 && <button type="button" onClick={() => { setQuery(""); setCategory("all"); }}>Reset filters</button>}</section>}
+  </div>;
 }
