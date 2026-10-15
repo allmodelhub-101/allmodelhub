@@ -73,7 +73,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
   const [resultReferenceId, setResultReferenceId] = useState("");
 
   useEffect(() => {
-    fetch("/api/models").then((response) => response.json())
+    fetch("/api/models", { cache: "no-store" }).then((response) => response.json())
       .then((modelData) => {
         const list = (modelData.models || []).filter((model: ImageModel) => model.modality === "image");
         setModels(list);

@@ -1,5 +1,7 @@
 "use client";
 
+import { modelAvailabilityMessage } from "@/lib/model-availability-message";
+
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { ArrowClockwise, CheckCircle, DownloadSimple, MusicNote, SpeakerHigh, Sparkle, Waveform } from "@phosphor-icons/react";
 import { PremiumSelect } from "@/components/premium-select";
@@ -13,6 +15,7 @@ type AudioModel = {
   description?: string;
   capabilities: string[];
   available?: boolean;
+  availabilityReason?: string | null;
   retail?: { flatCredits?: number; perSecondCredits?: number; per1kCharsCredits?: number };
 };
 type GenerationJob = {
@@ -88,7 +91,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
   const failed = Boolean(job && ["failed", "cancelled", "expired"].includes(job.status || ""));
 
   useEffect(() => {
-    fetch("/api/models")
+    fetch("/api/models", { cache: "no-store" })
       .then((response) => response.json())
       .then((data) => {
         const list = (data.models || []).filter((item: AudioModel) => item.capabilities?.includes(desiredCapability));
@@ -159,7 +162,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
 
       <label className={styles.field}>
         <span>{details.modelLabel}</span>
-        <PremiumSelect className={styles.select} value={modelId} onChange={setModelId} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}${item.available === false ? " · Billing setup pending" : ""}`, disabled: item.available === false }))} aria-label={details.modelLabel} />
+        <PremiumSelect className={styles.select} value={modelId} onChange={setModelId} options={models.map((item) => ({ value: item.id, label: `${item.name} · ${item.tier}${item.available === false ? ` · ${modelAvailabilityMessage(item.availabilityReason)}` : ""}`, disabled: item.available === false }))} aria-label={details.modelLabel} />
         {model?.description && <small>{model.description}</small>}
       </label>
 
@@ -187,7 +190,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
       <div className={styles.previewHead}><span><i className={activeJob ? styles.live : ""} />{activeJob ? "Generating" : resultUrl ? details.resultName : "Audio preview"}</span><small>{model?.name || "Choose a model"}</small></div>
       <p>{activeJob ? "Your request is processing. You can safely keep working while it completes." : resultUrl ? "Listen, download, or create another variation." : "Your generated audio will appear here when it is ready."}</p>
       <div className={`${styles.waveArea} ${activeJob ? styles.isBusy : ""}`}><div className={styles.waveBars}>{Array.from({ length: 38 }, (_, index) => <i key={index} />)}</div>{activeJob && <span>Creating your audio…</span>}</div>
-      {resultUrl ? <div className={styles.resultPlayer}><audio controls src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>Ready · Charged {Number(job?.charged_credits || job?.estimated_credits || estimate).toFixed(2)} credits</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Your credits are handled automatically. Try again with the same direction."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : <div className={styles.emptyPreview}><span>{mode === "music" ? <MusicNote weight="fill" /> : <SpeakerHigh weight="fill" />}</span><h2>{details.emptyTitle}</h2><p>{details.emptyBody}</p><small>MODEL → DIRECTION → GENERATE</small></div>}
+      {resultUrl ? <div className={styles.resultPlayer}><audio controls src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>{job?.charged_credits != null ? `Ready · Charged ${Number(job.charged_credits).toFixed(2)} credits` : "Ready · Billing pending"}</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Your credits are handled automatically. Try again with the same direction."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : <div className={styles.emptyPreview}><span>{mode === "music" ? <MusicNote weight="fill" /> : <SpeakerHigh weight="fill" />}</span><h2>{details.emptyTitle}</h2><p>{details.emptyBody}</p><small>MODEL → DIRECTION → GENERATE</small></div>}
       <div className={styles.qualityStrip}><span className={styles.qualityIcon}><CheckCircle weight="fill" /></span><div><b>Built for your workflow.</b><p>{mode === "music" ? "Use a concise direction for a stronger musical result." : "Describe the sound and setting clearly for a more useful effect."}</p></div></div>
     </section>
   </div>;

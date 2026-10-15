@@ -10,6 +10,7 @@ import {
 import { classifyMediaRuntimeFailure } from "../../src/lib/media-runtime-error.ts";
 
 const repairSql = [
+  "20260928182225_add_billing_v3_provider_authoritative.sql",
   "20260929200000_media_image_contract_repair.sql",
   "20260929201000_media_audio_contract_repair.sql",
   "20260929202000_media_video_contract_repair.sql",

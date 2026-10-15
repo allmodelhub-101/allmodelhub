@@ -7,6 +7,7 @@ import { inspectMediaBytes, validateSeedanceReferenceVideoMetadata } from "@/lib
 import { getMediaExecutionContract, mediaProviderOptionPayload, referencePayload, validateMediaContractRequest } from "@/lib/media-execution-contract";
 import { mediaUsageFromRequest } from "@/lib/billing/media-job-billing-core";
 import type { DecimalString } from "@/lib/billing/money";
+import { isMinimaxSpeech, minimaxSpeechPayload } from "@/lib/audio-execution";
 
 export const generationInputSchema = z.object({
   requestId: z.string().uuid(), projectId: z.string().uuid().optional(), modelId: z.string().min(1),
@@ -27,6 +28,17 @@ export type GenerationInput = z.infer<typeof generationInputSchema>;
 export async function prepareMediaRequest(userId: string, input: GenerationInput, modality: "image" | "video" | "audio", publish = false) {
   const contract = getMediaExecutionContract(input.modelId);
   if (!contract || contract.modality !== modality) throw new Error("MEDIA_ADAPTER_UNAVAILABLE");
+  // Validate before reservation or transport. MiniMax settings cannot be
+  // silently dropped or confused with the ElevenLabs streaming contract.
+  const speechPayload = isMinimaxSpeech(input.modelId) ? minimaxSpeechPayload({
+    modelId: input.modelId, text: input.prompt, voiceId: input.voiceId,
+    languageCode: input.languageCode, voiceSpeed: input.voiceSpeed,
+  }) : undefined;
+  if (speechPayload && (input.duration !== undefined || input.inputDuration !== undefined || input.outputDuration !== undefined
+    || input.resolution !== undefined || input.quality !== undefined || input.fps !== undefined || input.imageCount !== undefined
+    || input.aspectRatio !== undefined || input.mode !== undefined || input.audioMode !== undefined || input.nativeAudio !== undefined)) {
+    throw new Error("MEDIA_OPTION_UNSUPPORTED:unverified_option");
+  }
   if (modality === "video" && input.aspectRatio && !contract.aspectRatios?.length) throw new Error("MEDIA_OPTION_UNSUPPORTED:aspect_ratio");
   if (contract.workflow === "upscale" && input.duration !== undefined) throw new Error("MEDIA_OPTION_UNSUPPORTED:duration");
   if (modality === "video" && (input.fps !== undefined || input.inputDuration !== undefined || input.outputDuration !== undefined
@@ -97,6 +109,10 @@ export async function prepareMediaRequest(userId: string, input: GenerationInput
     ...(modality !== "video" && input.outputDuration !== undefined ? { output_duration: input.outputDuration } : {}),
   };
   if (contract.modelId === "minimax-h3-max-turbo" && input.imageFileIds.length) delete providerBody.aspect_ratio;
+  if (speechPayload) {
+    delete providerBody.prompt;
+    Object.assign(providerBody, speechPayload);
+  }
   return { contract, quality, imageCount, usage, dimensions, storedRequest, providerBody };
 }
 

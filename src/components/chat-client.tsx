@@ -166,7 +166,7 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/models").then((response) => response.json()), fetch("/api/projects").then((response) => response.json()),
+      fetch("/api/models", { cache: "no-store" }).then((response) => response.json()), fetch("/api/projects").then((response) => response.json()),
       fetch("/api/files").then((response) => response.json()), fetch("/api/settings").then((response) => response.json())
     ]).then(([modelData, projectData, fileData, settingsData]) => {
       setModels((modelData.models || []).filter((model: Model) => model.modality === "text"));

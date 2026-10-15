@@ -1,4 +1,5 @@
-import { apimodelsChatStream, apimodelsCreateTask, apimodelsPollTask, apimodelsTtsStream } from "@/lib/providers/apimodels";
+import { apimodelsChatStream, apimodelsCreateTask, apimodelsPollTask, apimodelsTtsStream, providerFailure } from "@/lib/providers/apimodels";
+import type { ProviderSubmissionObserver } from "./submission";
 import { haimakerChatStream, haimakerCreateTask, haimakerModelFor, haimakerPollTask, haimakerTtsStream } from "@/lib/providers/haimaker";
 import type { ProviderChatRequest, ProviderChatResult } from "@/lib/providers/types";
 import type { ResolvedBillingProviderRoute } from "@/lib/billing/provider-route-core";
@@ -105,10 +106,12 @@ export async function providerCreateTaskExact(
 export async function providerChatStreamExact(
   route: ResolvedBillingProviderRoute,
   input: Omit<ProviderChatRequest, "upstreamModel">,
+  observer?: ProviderSubmissionObserver,
 ): Promise<ProviderChatResult> {
   const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
   if (key === "apimodels" || key === "apimodelsapp") {
-    const result = await apimodelsChatStream({ ...input, upstreamModel: route.upstreamModel });
+    const result = await apimodelsChatStream({ ...input, upstreamModel: route.upstreamModel }, observer);
+    if (!result.response.ok) throw providerFailure(result.response.status);
     return {
       response: result.response,
       provider: route.providerKey,
@@ -124,7 +127,8 @@ export async function providerChatStreamExact(
       upstreamModel: route.upstreamModel,
       modelId: route.modelId,
       upstreamOverride: route.upstreamModel,
-    });
+    }, observer);
+    if (!response.ok) throw providerFailure(response.status);
     return {
       response,
       provider: route.providerKey,
@@ -138,17 +142,19 @@ export async function providerChatStreamExact(
 export async function providerTtsStreamExact(
   route: ResolvedBillingProviderRoute,
   input: Readonly<{ text: string; voiceId: string; languageCode?: string }>,
+  observer?: ProviderSubmissionObserver,
 ) {
   if (!route.modelId.startsWith("eleven-tts-")) throw new Error("TTS_STREAM_STRATEGY_UNAVAILABLE");
   const key = route.providerKey.toLowerCase().replace(/[-_.]/g, "");
   let response: Response;
   if (key === "apimodels" || key === "apimodelsapp") {
-    response = await apimodelsTtsStream({ model: route.upstreamModel, text: input.text, voice_id: input.voiceId, language_code: input.languageCode });
+    response = await apimodelsTtsStream({ model: route.upstreamModel, text: input.text, voice_id: input.voiceId, language_code: input.languageCode }, observer);
   } else if (key === "haimaker" || key === "haimakerai") {
-    response = await haimakerTtsStream({ model: route.upstreamModel, input: input.text, voice: input.voiceId });
+    response = await haimakerTtsStream({ model: route.upstreamModel, input: input.text, voice: input.voiceId }, observer);
   } else {
     throw new Error(`Unsupported TTS provider route: ${route.providerKey}`);
   }
+  if (!response.ok) throw providerFailure(response.status);
   return {
     response,
     provider: route.providerKey,

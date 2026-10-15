@@ -62,7 +62,7 @@ export function WorkspaceTopbar({ balance, identity, language = "en" }: { balanc
     const saved = window.localStorage.getItem("amh-active-project") || "";
     window.setTimeout(()=>setProjectId(saved),0);
     fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
-    fetch("/api/models").then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
+    fetch("/api/models", { cache: "no-store" }).then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
     const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications();void refreshWallet()},0);
     const timer = window.setInterval(() => void loadJobs(), 12000);
     const walletTimer = window.setInterval(() => void refreshWallet(), 30000);

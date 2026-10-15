@@ -92,7 +92,7 @@ test("the full catalog stays visible while unavailable routes remain disabled", 
   assert.match(api, /available: model\.available !== false/);
   assert.match(api, /availabilityReason: model\.availabilityReason/);
   assert.match(picker, /disabled=\{unavailable\}/);
-  assert.match(picker, /Billing setup pending/);
+  assert.match(picker, /modelAvailabilityMessage\(model\.availabilityReason\)/);
 });
 
 test("wallet distinguishes spendable credits from temporary reservations", () => {

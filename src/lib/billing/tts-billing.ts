@@ -1,6 +1,8 @@
 import "server-only";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { providerTtsStreamExact } from "@/lib/providers";
+import { providerFailure } from "@/lib/providers/apimodels";
+import { apimodelsRequestId } from "@/lib/providers/apimodels-billing-core";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { resolveBillingProviderRoutes } from "./provider-route";
 import { cancelBillingQuoteReservation } from "./quote-reservation";
@@ -40,7 +42,10 @@ export async function beginTtsBillingAttempt(input: Readonly<{
   let lastError: unknown = new Error("No billable TTS provider route is available.");
   for (const route of routes) {
     const claim = await claimRequest(input.userId, `billing-v3:tts:${input.parentRequestId}`, route.routeId);
-    if (!claim.claimed) continue;
+    if (!claim.claimed) {
+      if (claim.existing.status === "failed") continue;
+      throw new Error("BILLING_V3_REQUEST_ALREADY_SUBMITTED");
+    }
     let authorization: ProviderAuthorization | null = null;
     let providerStarted = false;
     let providerRequestId: string | undefined;
@@ -55,10 +60,13 @@ export async function beginTtsBillingAttempt(input: Readonly<{
         throw new Error(`COST_CONFIRMATION_REQUIRED:${authorization.authorizationCredits}`);
       }
       await assertSpendingAllowed(input.userId, authorization.authorizationCredits);
-      const upstream = await providerTtsStreamExact(route, input);
+      const upstream = await providerTtsStreamExact(route, input, {
+        onSubmit: () => { providerStarted = true; },
+        onResponse: (response) => { providerRequestId = apimodelsRequestId(response.headers); },
+      });
       providerRequestId = upstream.providerRequestId;
-      if (!upstream.response.ok || !upstream.response.body) throw new Error(`Provider returned HTTP ${upstream.response.status}`);
-      providerStarted = true;
+      if (!upstream.response.ok) throw providerFailure(upstream.response.status);
+      if (!upstream.response.body) throw new Error("Provider returned an empty audio response");
       let providerBillingRecordId: string | undefined;
       let immediateSettlement: Record<string, unknown> | undefined;
       try {
@@ -103,6 +111,10 @@ export async function beginTtsBillingAttempt(input: Readonly<{
         response: upstream.response, providerRequestId: upstream.providerRequestId,
         providerBillingRecordId, immediateSettlement } as const;
     } catch (error) {
+      const rejection = error as { name?: string; kind?: string } | null;
+      if (rejection?.name === "ProviderRequestError" && ["authentication", "model_unavailable", "configuration", "definitive_rejection"].includes(rejection.kind ?? "")) {
+        providerStarted = false;
+      }
       lastError = error;
       if (authorization && providerStarted) {
         if (providerRequestId) {
@@ -115,7 +127,7 @@ export async function beginTtsBillingAttempt(input: Readonly<{
         }
       }
       if (authorization && !providerStarted) {
-        await cancelBillingQuoteReservation(authorization.quoteId, "tts_provider_attempt_failed").catch(() => undefined);
+        await cancelBillingQuoteReservation(authorization.quoteId, "tts_provider_attempt_failed");
       }
       await finalizeRequest(claim.id, providerStarted ? "completed" : "failed", providerStarted
         ? { resourceId: authorization?.quoteId, response: { billingStatus: "pending_reconciliation" } }

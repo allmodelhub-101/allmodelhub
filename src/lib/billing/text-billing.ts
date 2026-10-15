@@ -1,6 +1,8 @@
 import "server-only";
 import { claimRequest, finalizeRequest } from "@/lib/idempotency";
 import { providerChatStreamExact } from "@/lib/providers";
+import { providerFailure } from "@/lib/providers/apimodels";
+import { apimodelsRequestId } from "@/lib/providers/apimodels-billing-core";
 import type { ChatMessage, NormalizedProviderUsage, ProviderChatResult } from "@/lib/providers/types";
 import { assertSpendingAllowed } from "@/lib/spending";
 import { resolveBillingProviderRoutes } from "./provider-route";
@@ -54,7 +56,12 @@ export async function beginTextBillingAttempt(input: Readonly<{
       `billing-v3:${input.operation}:${input.parentRequestId}`,
       route.routeId,
     );
-    if (!claim.claimed) continue;
+    if (!claim.claimed) {
+      // Never skip a possibly billable attempt and submit the same request to
+      // a fallback on replay. Only definitively failed attempts may advance.
+      if (claim.existing.status === "failed") continue;
+      throw new Error("BILLING_V3_REQUEST_ALREADY_SUBMITTED");
+    }
 
     let authorization: ProviderAuthorization | null = null;
     let providerStarted = false;
@@ -75,12 +82,13 @@ export async function beginTextBillingAttempt(input: Readonly<{
         maxTokens: input.maxOutputTokens,
         temperature: input.temperature,
         deepThink: input.deepThink,
+      }, {
+        onSubmit: () => { providerStarted = true; },
+        onResponse: (response) => { providerRequestId = apimodelsRequestId(response.headers); },
       });
-      providerStarted = true;
       providerRequestId = upstream.providerRequestId;
-      if (!upstream.response.ok || !upstream.response.body) {
-        throw new Error(`Provider returned HTTP ${upstream.response.status}`);
-      }
+      if (!upstream.response.ok) throw providerFailure(upstream.response.status);
+      if (!upstream.response.body) throw new Error("Provider returned an empty text response");
       if (!upstream.providerRequestId) throw new Error("BILLING_V3_PROVIDER_REQUEST_ID_MISSING");
       const pending = await markProviderSettlementPending({
         quoteId: authorization.quoteId,
@@ -95,6 +103,10 @@ export async function beginTextBillingAttempt(input: Readonly<{
         providerBillingRecordId: pending.ledgerId,
       } as const;
     } catch (error) {
+      const rejection = error as { name?: string; kind?: string } | null;
+      if (rejection?.name === "ProviderRequestError" && ["authentication", "model_unavailable", "configuration", "definitive_rejection"].includes(rejection.kind ?? "")) {
+        providerStarted = false;
+      }
       lastError = error;
       if (authorization && providerStarted) {
         if (providerRequestId) {
@@ -107,7 +119,9 @@ export async function beginTextBillingAttempt(input: Readonly<{
         }
       }
       if (authorization && !providerStarted) {
-        await cancelBillingQuoteReservation(authorization.quoteId, "text_provider_attempt_failed").catch(() => undefined);
+        // If release fails, leave the claim blocked; do not add a second hold
+        // or paid attempt while the original reservation is still unresolved.
+        await cancelBillingQuoteReservation(authorization.quoteId, "text_provider_attempt_failed");
       }
       await finalizeRequest(claim.id, providerStarted ? "completed" : "failed", providerStarted
         ? { resourceId: authorization?.quoteId, response: { billingStatus: "pending_reconciliation" } }
