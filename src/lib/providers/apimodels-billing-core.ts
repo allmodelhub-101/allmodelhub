@@ -51,9 +51,19 @@ function first(...values: unknown[]) {
 
 function exactNonnegative(value: unknown, field: string) {
   const text = typeof value === "string" || typeof value === "number" ? String(value).trim() : "";
-  if (!DECIMAL.test(text)) throw new ApimodelsBillingRecordError("INVALID_COST", `${field} is not an exact non-negative decimal.`);
+  if (text.length > 256 || !DECIMAL.test(text)) throw new ApimodelsBillingRecordError("INVALID_COST", `${field} is not an exact non-negative decimal.`);
+  const exponent = text.split(/[eE]/)[1];
+  if (exponent && (BigInt(exponent) > 256n || BigInt(exponent) < -256n)) {
+    throw new ApimodelsBillingRecordError("INVALID_COST", `${field} exceeds safe provider-cost expansion bounds.`);
+  }
   const parsed = new Decimal(text);
   if (!parsed.isFinite() || parsed.isNegative()) throw new ApimodelsBillingRecordError("INVALID_COST", `${field} is invalid.`);
+  // Bound allocation BEFORE fixed expansion without rounding provider evidence.
+  // Retain existing high-precision parsing; ledger/authorization bounds remain
+  // separate downstream checks. The resulting string is at most 513 chars.
+  if (!parsed.isZero() && (parsed.e > 255 || parsed.decimalPlaces() > 256)) {
+    throw new ApimodelsBillingRecordError("INVALID_COST", `${field} exceeds safe provider-cost expansion bounds.`);
+  }
   return parsed.isZero() ? "0" : parsed.toFixed();
 }
 

@@ -3,7 +3,7 @@ import test from "node:test";
 import { readFileSync } from "node:fs";
 import { minimaxSpeechPayload, minimaxVoices } from "../../src/lib/audio-execution.ts";
 import { getMediaExecutionContract, validateMediaContractRequest } from "../../src/lib/media-execution-contract.ts";
-import { extractExactJsonDecimal, normalizeApimodelsBillingRecord } from "../../src/lib/providers/apimodels-billing-core.ts";
+import { extractExactJsonDecimal, normalizeApimodelsBillingRecord, apimodelsResponseCost, callbackProviderCost } from "../../src/lib/providers/apimodels-billing-core.ts";
 import { priceMediaAuthorization } from "../../src/lib/billing/media-authorization-pricing.ts";
 import { modelAvailabilityMessage } from "../../src/lib/model-availability-message.ts";
 import { ALL_MODELS } from "../../src/lib/models.ts";
@@ -97,6 +97,21 @@ test("documented pending records remain pending and Unix milliseconds become dur
   assert.equal(pending.creditsUsd, undefined);
   assert.equal(pending.createdAt, new Date(1790676571513).toISOString());
   assert.equal(pending.completedAt, undefined);
+});
+
+test("provider-controlled exponents are bounded before expansion across every cost ingress", () => {
+  for (const value of ["1e100000000", "1e-100000000", "1e-99999999999999999999", "0e100000000", "1e256", "1e-257", "9".repeat(257)]) {
+    assert.throws(() => extractExactJsonDecimal('{"data":{"credits":' + value + '}}', "credits"),
+      { name: "ApimodelsBillingRecordError", code: "INVALID_COST" });
+    assert.throws(() => apimodelsResponseCost(new Headers({ "x-apimodels-cost": value })),
+      { name: "ApimodelsBillingRecordError", code: "INVALID_COST" });
+    assert.throws(() => callbackProviderCost({ credits: value }), { code: "INVALID_COST" });
+    assert.throws(() => normalizeApimodelsBillingRecord({ task_id: "test", state: "completed",
+      settled: true, currency: "USD", credits: value }), { code: "INVALID_COST" });
+  }
+  assert.equal(extractExactJsonDecimal('{"credits":1e-18}', "credits"), "0.000000000000000001");
+  const maximum = "99999999999999999999.999999999999999999";
+  assert.equal(extractExactJsonDecimal('{"credits":' + maximum + '}', "credits"), maximum);
 });
 
 test("availability labels distinguish adapter support from authorization problems", () => {

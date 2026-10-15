@@ -18,6 +18,7 @@ const elevenVoices = [
 const klingVoices = [
   { value: "genshin_vindi2", label: "Vindi · Kling preset", note: "Kling multilingual voice" },
 ];
+const modelLoadingError = "Speech models are unavailable right now.";
 
 const templates = [
   { label: "Product explainer", copy: "Welcome to Models Suite. Create more, explore leading AI models, and bring your best ideas to life." },
@@ -46,13 +47,14 @@ export function TtsClient() {
       return response.json();
     }).then((data) => {
       if (!active) return;
+      setError((current) => current === modelLoadingError ? "" : current);
       const list = (data.models || []).filter((item: AudioModel) => item.capabilities?.includes("tts"));
       setModels(list);
       const executable = list.filter((item: AudioModel) => item.available !== false);
       const requested = new URLSearchParams(window.location.search).get("model");
       setModelId((current) => executable.some((item: AudioModel) => item.id === current) ? current
         : requested && executable.some((item: AudioModel) => item.id === requested) ? requested : executable[0]?.id || "");
-    }).catch(() => setError("Speech models are unavailable right now."));
+    }).catch(() => { if (active) setError(modelLoadingError); });
     void refresh();
     window.addEventListener("focus", refresh);
     return () => { active = false; window.removeEventListener("focus", refresh); };
