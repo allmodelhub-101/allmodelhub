@@ -1,0 +1,22 @@
+{
+  "phase1": {
+    "file": "src/app/globals.css",
+    "repeated": 774,
+    "dimensions": 601,
+    "smallTargets": 201,
+    "queries": 846
+  },
+  "phase2": {
+    "file": "src/app/globals.css",
+    "repeated": 768,
+    "dimensions": 598,
+    "smallTargets": 201,
+    "queries": 844
+  },
+  "globalBytes": {
+    "phase1": 647413,
+    "phase2": 644682,
+    "reduction": 2731
+  },
+  "note": "UTF-8 normalized LF; exact selector+condition repetition is a static candidate, not proof of a defect."
+}

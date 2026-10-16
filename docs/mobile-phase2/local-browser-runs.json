@@ -1,0 +1,245 @@
+[
+  {
+    "run": "phase2-auth-visual-create",
+    "stats": {
+      "startTime": "2026-10-16T12:51:37.492Z",
+      "duration": 21766.874,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-chat-chrome",
+    "stats": {
+      "startTime": "2026-10-16T12:44:29.394Z",
+      "duration": 54842.936,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-final-local",
+    "stats": {
+      "startTime": "2026-10-16T13:08:57.502Z",
+      "duration": 233439.122,
+      "expected": 45,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-focus",
+    "stats": {
+      "startTime": "2026-10-16T12:36:41.383Z",
+      "duration": 68878.17199999999,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "errors": [
+      {
+        "title": "workspace overlays trap focus, dismiss and restore scroll/focus",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: 'Open generation center', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: 'Open generation center', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Open generation center', exact: true })\u001b[22m\n\u001b[2m    22 \u00d7 locator resolved to <button type=\"button\" class=\"generation-trigger\" aria-label=\"Open generation center\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "document model shortcut owns Ctrl K; nested overlay closes only topmost",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.command-trigger')\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('.command-trigger') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.command-trigger')\u001b[22m\n\u001b[2m    22 \u00d7 locator resolved to <button type=\"button\" class=\"command-trigger\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      }
+    ]
+  },
+  {
+    "run": "phase2-legal-visual-create",
+    "stats": {
+      "startTime": "2026-10-16T12:52:55.462Z",
+      "duration": 23500.433,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-public-visual-verify",
+    "stats": {
+      "startTime": "2026-10-16T12:56:02.213Z",
+      "duration": 50833.363000000005,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-selection",
+    "stats": {
+      "startTime": "2026-10-16T12:48:11.959Z",
+      "duration": 16654.144,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-smoke",
+    "stats": {
+      "startTime": "2026-10-16T12:33:46.223Z",
+      "duration": 297977.848,
+      "expected": 39,
+      "skipped": 0,
+      "unexpected": 9,
+      "flaky": 0
+    },
+    "errors": [
+      {
+        "title": "workspace overlays trap focus, dismiss and restore scroll/focus",
+        "project": "chromium-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.command-trigger')\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('.command-trigger') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.command-trigger')\u001b[22m\n\u001b[2m    23 \u00d7 locator resolved to <button type=\"button\" class=\"command-trigger\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "document model shortcut owns Ctrl K; nested overlay closes only topmost",
+        "project": "chromium-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.command-trigger')\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('.command-trigger') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.command-trigger')\u001b[22m\n\u001b[2m    22 \u00d7 locator resolved to <button type=\"button\" class=\"command-trigger\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "workspace overlays trap focus, dismiss and restore scroll/focus",
+        "project": "chromium-901x900",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.command-trigger')\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('.command-trigger') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.command-trigger')\u001b[22m\n\u001b[2m    22 \u00d7 locator resolved to <button type=\"button\" class=\"command-trigger\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "navigation drawer or desktop account keyboard and persistence",
+        "project": "chromium-901x900",
+        "status": "timedOut",
+        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      },
+      {
+        "title": "navigation drawer or desktop account keyboard and persistence",
+        "project": "chromium-1366x768",
+        "status": "timedOut",
+        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      },
+      {
+        "title": "synthetic shell light: chrome, overflow, touch targets, screenshots",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ - A server/client branch `if (typeof window !== 'undefined')`.\u001b[39m\n\u001b[31m+ - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\u001b[39m\n\u001b[31m+ - Date formatting in a user's locale which doesn't match the server.\u001b[39m\n\u001b[31m+ - External changing data without sending a snapshot of it along with the HTML.\u001b[39m\n\u001b[31m+ - Invalid HTML tag nesting.\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\u001b[39m\n\u001b[31m+\u001b[39m\n\u001b[31m+ %s%s https://react.dev/link/hydra"
+      },
+      {
+        "title": "workspace overlays trap focus, dismiss and restore scroll/focus",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: 'Open generation center', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: 'Open generation center', exact: true }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Open generation center', exact: true })\u001b[22m\n\u001b[2m    23 \u00d7 locator resolved to <button type=\"button\" class=\"generation-trigger\" aria-label=\"Open generation center\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "navigation drawer or desktop account keyboard and persistence",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: 'Open more navigation' })\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" getByRole('button', { name: 'Open more navigation' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Open more navigation' })\u001b[22m\n\u001b[2m    22 \u00d7 locator resolved to <button class=\"\" type=\"button\" aria-expanded=\"false\" aria-label=\"Open more navigation\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n"
+      },
+      {
+        "title": "document model shortcut owns Ctrl K; nested overlay closes only topmost",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeFocused\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.command-trigger')\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeFocused\" locator('.command-trigger') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.command-trigger')\u001b[22m\n\u001b[2m    19 \u00d7 locator resolved to <button type=\"button\" class=\"command-trigger\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"inactive\"\u001b[22m\n\u001b[2m    - waiting for \"http://127.0.0.1:3100/responsive-fixture\" navigation to finish...\u001b[22m\n"
+      }
+    ]
+  },
+  {
+    "run": "phase2-smoke-final",
+    "stats": {
+      "startTime": "2026-10-16T12:38:44.311Z",
+      "duration": 403886.988,
+      "expected": 49,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "errors": [
+      {
+        "title": "marketing navigation opens, closes with Escape and navigates",
+        "project": "webkit-390x844",
+        "status": "timedOut",
+        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      },
+      {
+        "title": "synthetic shell light: chrome, overflow, touch targets, screenshots",
+        "project": "webkit-390x844",
+        "status": "timedOut",
+        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+      },
+      {
+        "title": "navigation drawer or desktop account keyboard and persistence",
+        "project": "webkit-390x844",
+        "status": "failed",
+        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Workspace navigation' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Workspace navigation' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Workspace navigation' })\u001b[22m\n"
+      }
+    ]
+  },
+  {
+    "run": "phase2-stacking",
+    "stats": {
+      "startTime": "2026-10-16T13:12:25.550Z",
+      "duration": 53930.751000000004,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-visual-create",
+    "stats": {
+      "startTime": "2026-10-16T12:49:39.688Z",
+      "duration": 63283.894,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-visual-verify",
+    "stats": {
+      "startTime": "2026-10-16T12:54:58.036Z",
+      "duration": 62482.915,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "run": "phase2-webkit-recheck",
+    "stats": {
+      "startTime": "2026-10-16T12:46:23.703Z",
+      "duration": 73674.77100000001,
+      "expected": 14,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  }
+]

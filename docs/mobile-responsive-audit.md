@@ -2,7 +2,7 @@
 
 ## Phase 2 implementation update (2026-10-16)
 
-Phase 1 evidence below is historical. Current code adds a gated synthetic shell route: **32 source pages, 42 HTTP handlers, 14 stylesheets** (one additional fixture and one owned stylesheet). The 22 real protected workflows remain blocked; fixture coverage is explicitly component coverage.
+Phase 1 evidence below is historical. Current code adds a gated synthetic shell route: **32 source pages, 42 HTTP handlers, 15 stylesheets** (one additional fixture and two owned stylesheets). The 22 real protected workflows remain blocked; fixture coverage is explicitly component coverage.
 
 MR-005 (mobile auth theme visibility) and MR-001 (Video Studio Escape from focused model search) are implemented with regression tests. MR-002 shortcut ownership is exercised using the real topbar and ModelPicker with a document-level fixture listener matching ChatClient's event boundary; the window handler now honors `defaultPrevented`. No chat submission logic changed. This does not verify authenticated ChatClient E2E.
 
