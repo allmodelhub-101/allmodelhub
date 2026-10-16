@@ -40582,7 +40582,7 @@
           {
             "selector": ".page",
             "conditions": [],
-            "line": 94,
+            "line": 137,
             "declarations": {
               "--ink": "#172039",
               "--muted": "#718099",
@@ -40601,7 +40601,7 @@
           {
             "selector": ".page",
             "conditions": [],
-            "line": 141,
+            "line": 184,
             "declarations": {
               "--muted": "#56657e",
               "--accent": "#4857d8"
@@ -40616,7 +40616,7 @@
           {
             "selector": ".studioToolbar",
             "conditions": [],
-            "line": 19,
+            "line": 62,
             "declarations": {
               "display": "flex",
               "align-items": "center",
@@ -40630,7 +40630,7 @@
           {
             "selector": ".studioToolbar",
             "conditions": [],
-            "line": 96,
+            "line": 139,
             "declarations": {
               "margin-bottom": "26px"
             }
@@ -40644,7 +40644,7 @@
           {
             "selector": ".studioToolbarTitle small",
             "conditions": [],
-            "line": 20,
+            "line": 63,
             "declarations": {
               "color": "#2188bd",
               "font-size": "9px",
@@ -40655,7 +40655,7 @@
           {
             "selector": ".studioToolbarTitle small",
             "conditions": [],
-            "line": 96,
+            "line": 139,
             "declarations": {
               "font-size": "8px",
               "color": "var(--accent)",
@@ -40671,7 +40671,7 @@
           {
             "selector": ".studioToolbarTitle b",
             "conditions": [],
-            "line": 20,
+            "line": 63,
             "declarations": {
               "font-size": "24px",
               "line-height": "1.05"
@@ -40680,7 +40680,7 @@
           {
             "selector": ".studioToolbarTitle b",
             "conditions": [],
-            "line": 96,
+            "line": 139,
             "declarations": {
               "font-size": "21px",
               "letter-spacing": "-.045em"
@@ -40695,7 +40695,7 @@
           {
             "selector": ".studioMark",
             "conditions": [],
-            "line": 21,
+            "line": 64,
             "declarations": {
               "display": "grid",
               "place-items": "center",
@@ -40711,7 +40711,7 @@
           {
             "selector": ".studioMark",
             "conditions": [],
-            "line": 96,
+            "line": 139,
             "declarations": {
               "width": "40px",
               "height": "40px",
@@ -40729,7 +40729,7 @@
           {
             "selector": ".workspaceTabs",
             "conditions": [],
-            "line": 22,
+            "line": 65,
             "declarations": {
               "display": "flex",
               "align-items": "center",
@@ -40745,7 +40745,7 @@
           {
             "selector": ".workspaceTabs",
             "conditions": [],
-            "line": 97,
+            "line": 140,
             "declarations": {
               "border": "1px solid var(--line)",
               "background": "var(--panel)",
@@ -40763,7 +40763,7 @@
           {
             "selector": ".workspaceTabs button,.workspaceTabs a",
             "conditions": [],
-            "line": 23,
+            "line": 66,
             "declarations": {
               "display": "grid",
               "place-items": "center",
@@ -40783,7 +40783,7 @@
           {
             "selector": ".workspaceTabs button,.workspaceTabs a",
             "conditions": [],
-            "line": 97,
+            "line": 140,
             "declarations": {
               "min-height": "35px",
               "min-width": "82px",
@@ -40802,7 +40802,7 @@
           {
             "selector": ".workspaceTabs .tabSelected",
             "conditions": [],
-            "line": 25,
+            "line": 68,
             "declarations": {
               "color": "#fff",
               "background": "linear-gradient(110deg,#168dda,#2c78ec 58%,#7869e7)",
@@ -40812,7 +40812,7 @@
           {
             "selector": ".workspaceTabs .tabSelected",
             "conditions": [],
-            "line": 97,
+            "line": 140,
             "declarations": {
               "background": "var(--ink)",
               "color": "#fff",
@@ -40828,7 +40828,7 @@
           {
             "selector": ".layout",
             "conditions": [],
-            "line": 27,
+            "line": 70,
             "declarations": {
               "display": "grid",
               "grid-template-columns": "minmax(460px,.85fr) minmax(0,1.15fr)",
@@ -40840,7 +40840,7 @@
           {
             "selector": ".layout",
             "conditions": [],
-            "line": 103,
+            "line": 146,
             "declarations": {
               "grid-template-columns": "minmax(350px,.83fr) minmax(0,1.17fr)",
               "gap": "24px",
@@ -40856,7 +40856,7 @@
           {
             "selector": ".leftColumn,.rightColumn",
             "conditions": [],
-            "line": 28,
+            "line": 71,
             "declarations": {
               "min-width": "0",
               "display": "grid",
@@ -40867,7 +40867,7 @@
           {
             "selector": ".leftColumn,.rightColumn",
             "conditions": [],
-            "line": 103,
+            "line": 146,
             "declarations": {
               "gap": "18px"
             }
@@ -40881,7 +40881,7 @@
           {
             "selector": ".modelRail",
             "conditions": [],
-            "line": 41,
+            "line": 84,
             "declarations": {
               "display": "flex",
               "gap": "7px",
@@ -40894,7 +40894,7 @@
           {
             "selector": ".modelRail",
             "conditions": [],
-            "line": 107,
+            "line": 150,
             "declarations": {
               "gap": "6px",
               "padding-bottom": "2px",
@@ -40910,7 +40910,7 @@
           {
             "selector": ".modelRail b",
             "conditions": [],
-            "line": 44,
+            "line": 87,
             "declarations": {
               "font-size": "11px",
               "white-space": "nowrap"
@@ -40919,7 +40919,7 @@
           {
             "selector": ".modelRail b",
             "conditions": [],
-            "line": 107,
+            "line": 150,
             "declarations": {
               "max-width": "100%",
               "font-size": "9px",
@@ -40936,7 +40936,7 @@
           {
             "selector": ".modelRail small",
             "conditions": [],
-            "line": 44,
+            "line": 87,
             "declarations": {
               "overflow": "hidden",
               "color": "var(--muted)",
@@ -40948,7 +40948,7 @@
           {
             "selector": ".modelRail small",
             "conditions": [],
-            "line": 107,
+            "line": 150,
             "declarations": {
               "display": "none"
             }
@@ -40962,7 +40962,7 @@
           {
             "selector": ".modelTrigger b",
             "conditions": [],
-            "line": 52,
+            "line": 95,
             "declarations": {
               "font-size": "12px"
             }
@@ -40970,7 +40970,7 @@
           {
             "selector": ".modelTrigger b",
             "conditions": [],
-            "line": 108,
+            "line": 151,
             "declarations": {
               "font-size": "12px"
             }
@@ -40984,7 +40984,7 @@
           {
             "selector": ".confirm",
             "conditions": [],
-            "line": 62,
+            "line": 105,
             "declarations": {
               "display": "flex",
               "gap": "7px",
@@ -40998,7 +40998,7 @@
           {
             "selector": ".confirm",
             "conditions": [],
-            "line": 115,
+            "line": 158,
             "declarations": {
               "font-size": "10px",
               "line-height": "1.55",
@@ -41014,7 +41014,7 @@
           {
             "selector": ".confirm input",
             "conditions": [],
-            "line": 62,
+            "line": 105,
             "declarations": {
               "margin": "1px 0 0",
               "accent-color": "var(--accent)"
@@ -41023,7 +41023,7 @@
           {
             "selector": ".confirm input",
             "conditions": [],
-            "line": 115,
+            "line": 158,
             "declarations": {
               "accent-color": "var(--accent)"
             }
@@ -41037,7 +41037,7 @@
           {
             "selector": ".playerControls button",
             "conditions": [],
-            "line": 69,
+            "line": 112,
             "declarations": {
               "display": "grid",
               "flex": "0 0 auto",
@@ -41054,7 +41054,7 @@
           {
             "selector": ".playerControls button",
             "conditions": [],
-            "line": 121,
+            "line": 164,
             "declarations": {
               "width": "30px",
               "height": "30px"
@@ -41069,7 +41069,7 @@
           {
             "selector": ".indeterminate i",
             "conditions": [],
-            "line": 75,
+            "line": 118,
             "declarations": {
               "display": "block",
               "width": "42%",
@@ -41082,7 +41082,7 @@
           {
             "selector": ".indeterminate i",
             "conditions": [],
-            "line": 125,
+            "line": 168,
             "declarations": {
               "background": "linear-gradient(90deg,#39bee8,#7c73ef)"
             }
@@ -41096,7 +41096,7 @@
           {
             "selector": ".viewerStage",
             "conditions": [],
-            "line": 79,
+            "line": 122,
             "declarations": {
               "min-height": "220px",
               "max-height": "min(62dvh,680px)",
@@ -41108,7 +41108,7 @@
           {
             "selector": ".viewerStage",
             "conditions": [],
-            "line": 80,
+            "line": 123,
             "declarations": {
               "position": "relative",
               "overflow": "hidden"
@@ -41123,7 +41123,7 @@
           {
             "selector": ".viewerUnavailable",
             "conditions": [],
-            "line": 79,
+            "line": 122,
             "declarations": {
               "padding": "20px",
               "color": "#eaf4ff",
@@ -41133,7 +41133,7 @@
           {
             "selector": ".viewerUnavailable",
             "conditions": [],
-            "line": 80,
+            "line": 123,
             "declarations": {
               "position": "absolute",
               "right": "0",
@@ -41153,7 +41153,7 @@
           {
             "selector": ":global(html:not([data-theme=\"light\"])) .page",
             "conditions": [],
-            "line": 83,
+            "line": 126,
             "declarations": {
               "--ink": "#ecf4ff",
               "--muted": "#9fb4cc",
@@ -41168,7 +41168,7 @@
           {
             "selector": ":global(html:not([data-theme=\"light\"])) .page",
             "conditions": [],
-            "line": 128,
+            "line": 171,
             "declarations": {
               "--ink": "#edf1fc",
               "--muted": "#98a5c0",
@@ -41193,7 +41193,7 @@
             "conditions": [
               "@container (max-width:1120px)"
             ],
-            "line": 88,
+            "line": 131,
             "declarations": {
               "grid-template-columns": "minmax(400px,.92fr) minmax(0,1.08fr)"
             }
@@ -41203,7 +41203,7 @@
             "conditions": [
               "@container (max-width:1120px)"
             ],
-            "line": 134,
+            "line": 177,
             "declarations": {
               "grid-template-columns": "minmax(330px,.9fr) minmax(0,1.1fr)",
               "gap": "18px"
@@ -41218,7 +41218,7 @@
           {
             "selector": ".studioIntro",
             "conditions": [],
-            "line": 98,
+            "line": 141,
             "declarations": {
               "max-width": "1540px",
               "margin": "0 auto 26px",
@@ -41231,7 +41231,7 @@
           {
             "selector": ".studioIntro",
             "conditions": [],
-            "line": 142,
+            "line": 185,
             "declarations": {
               "margin-bottom": "20px"
             }
@@ -41245,7 +41245,7 @@
           {
             "selector": ".page .modelTrigger",
             "conditions": [],
-            "line": 108,
+            "line": 151,
             "declarations": {
               "min-height": "52px",
               "background": "var(--panel)",
@@ -41255,7 +41255,7 @@
           {
             "selector": ".page .modelTrigger",
             "conditions": [],
-            "line": 152,
+            "line": 195,
             "declarations": {
               "justify-content": "flex-start",
               "gap": "10px"
@@ -41270,7 +41270,7 @@
           {
             "selector": ".page .modelList button",
             "conditions": [],
-            "line": 109,
+            "line": 152,
             "declarations": {
               "background": "var(--panel)"
             }
@@ -41278,7 +41278,7 @@
           {
             "selector": ".page .modelList button",
             "conditions": [],
-            "line": 152,
+            "line": 195,
             "declarations": {
               "align-items": "center",
               "gap": "10px"
@@ -41293,7 +41293,7 @@
           {
             "selector": ".page .showcase",
             "conditions": [],
-            "line": 117,
+            "line": 160,
             "declarations": {
               "padding": "7px",
               "border": "1px solid var(--line)",
@@ -41306,7 +41306,7 @@
           {
             "selector": ".page .showcase",
             "conditions": [],
-            "line": 157,
+            "line": 200,
             "declarations": {
               "padding": "8px",
               "box-shadow": "0 18px 50px #2438591a"
@@ -41321,7 +41321,7 @@
           {
             "selector": ".page .mainPoster",
             "conditions": [],
-            "line": 118,
+            "line": 161,
             "declarations": {
               "aspect-ratio": "16 / 11",
               "height": "auto",
@@ -41335,7 +41335,7 @@
           {
             "selector": ".page .mainPoster",
             "conditions": [],
-            "line": 153,
+            "line": 196,
             "declarations": {
               "aspect-ratio": "16/10",
               "border-radius": "16px",
@@ -41351,7 +41351,7 @@
           {
             "selector": ".page .posterShade",
             "conditions": [],
-            "line": 119,
+            "line": 162,
             "declarations": {
               "z-index": "1",
               "pointer-events": "none",
@@ -41361,7 +41361,7 @@
           {
             "selector": ".page .posterShade",
             "conditions": [],
-            "line": 155,
+            "line": 198,
             "declarations": {
               "background": "linear-gradient(180deg,#08111c66,transparent 15%,transparent 83%,#08111c70)"
             }
@@ -41375,7 +41375,7 @@
           {
             "selector": ".sceneHeading",
             "conditions": [],
-            "line": 120,
+            "line": 163,
             "declarations": {
               "position": "absolute",
               "z-index": "2",
@@ -41389,7 +41389,7 @@
           {
             "selector": ".sceneHeading",
             "conditions": [],
-            "line": 156,
+            "line": 199,
             "declarations": {
               "left": "14px",
               "top": "14px",
@@ -41405,7 +41405,7 @@
           {
             "selector": ".sceneHeading>span",
             "conditions": [],
-            "line": 120,
+            "line": 163,
             "declarations": {
               "display": "inline-flex",
               "align-items": "center",
@@ -41422,7 +41422,7 @@
           {
             "selector": ".sceneHeading>span",
             "conditions": [],
-            "line": 156,
+            "line": 199,
             "declarations": {
               "font-size": "9px",
               "color": "#f8fbff",
@@ -41439,7 +41439,7 @@
           {
             "selector": ".page .playerControls",
             "conditions": [],
-            "line": 121,
+            "line": 164,
             "declarations": {
               "z-index": "3",
               "bottom": "13px",
@@ -41454,7 +41454,7 @@
           {
             "selector": ".page .playerControls",
             "conditions": [],
-            "line": 158,
+            "line": 201,
             "declarations": {
               "left": "12px",
               "right": "12px",
@@ -41473,7 +41473,7 @@
           {
             "selector": ".deckHeading b",
             "conditions": [],
-            "line": 122,
+            "line": 165,
             "declarations": {
               "font-size": "14px",
               "letter-spacing": "-.025em"
@@ -41482,7 +41482,7 @@
           {
             "selector": ".deckHeading b",
             "conditions": [],
-            "line": 177,
+            "line": 220,
             "declarations": {
               "font-size": "16px"
             }
@@ -41496,7 +41496,7 @@
           {
             "selector": ".directionCards b",
             "conditions": [],
-            "line": 123,
+            "line": 166,
             "declarations": {
               "font-size": "11px"
             }
@@ -41504,7 +41504,7 @@
           {
             "selector": ".directionCards b",
             "conditions": [],
-            "line": 177,
+            "line": 220,
             "declarations": {
               "font-size": "13px"
             }
@@ -41518,7 +41518,7 @@
           {
             "selector": ".page .result",
             "conditions": [],
-            "line": 126,
+            "line": 169,
             "declarations": {
               "border-radius": "24px"
             }
@@ -41526,7 +41526,7 @@
           {
             "selector": ".page .result",
             "conditions": [],
-            "line": 173,
+            "line": 216,
             "declarations": {
               "overflow": "hidden",
               "background": "var(--panel)",
@@ -41542,7 +41542,7 @@
           {
             "selector": ".page .resultFooter",
             "conditions": [],
-            "line": 126,
+            "line": 169,
             "declarations": {
               "background": "var(--panel)"
             }
@@ -41550,7 +41550,7 @@
           {
             "selector": ".page .resultFooter",
             "conditions": [],
-            "line": 175,
+            "line": 218,
             "declarations": {
               "padding": "18px 20px",
               "display": "flex",
@@ -41572,7 +41572,7 @@
             "conditions": [
               "@container (max-width:900px)"
             ],
-            "line": 135,
+            "line": 178,
             "declarations": {
               "aspect-ratio": "16/9"
             }
@@ -41582,7 +41582,7 @@
             "conditions": [
               "@container (max-width:900px)"
             ],
-            "line": 178,
+            "line": 221,
             "declarations": {
               "max-height": "360px",
               "aspect-ratio": "16/10"
@@ -41601,7 +41601,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 136,
+            "line": 179,
             "declarations": {
               "font-size": "7px"
             }
@@ -41611,7 +41611,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 179,
+            "line": 222,
             "declarations": {
               "font-size": "7px"
             }
@@ -41629,7 +41629,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 136,
+            "line": 179,
             "declarations": {
               "grid-template-columns": "repeat(3,minmax(0,1fr))",
               "padding": "9px",
@@ -41641,7 +41641,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 179,
+            "line": 222,
             "declarations": {
               "grid-template-columns": "repeat(2,minmax(0,1fr))"
             }
@@ -41659,7 +41659,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 136,
+            "line": 179,
             "declarations": {
               "font-size": "9px"
             }
@@ -41669,7 +41669,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 179,
+            "line": 222,
             "declarations": {
               "font-size": "11px"
             }
@@ -41687,7 +41687,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 136,
+            "line": 179,
             "declarations": {
               "padding": "7px",
               "font-size": "10px",
@@ -41699,7 +41699,7 @@
             "conditions": [
               "@container (max-width:600px)"
             ],
-            "line": 179,
+            "line": 222,
             "declarations": {
               "font-size": "12px",
               "min-height": "42px"
@@ -41714,7 +41714,7 @@
           {
             "selector": ".page .modelRail",
             "conditions": [],
-            "line": 147,
+            "line": 190,
             "declarations": {
               "display": "flex",
               "gap": "10px",
@@ -41730,7 +41730,7 @@
           {
             "selector": ".page .modelRail",
             "conditions": [],
-            "line": 168,
+            "line": 211,
             "declarations": {
               "gap": "0",
               "padding": "2px 0",
@@ -41744,72 +41744,93 @@
     ],
     "dimensions": [
       {
-        "selector": ".layout",
+        "selector": ".page[data-studio=video] .field textarea",
+        "conditions": [],
+        "line": 22,
+        "property": "min-height",
+        "value": "112px"
+      },
+      {
+        "selector": ".page[data-studio=video] .mainPoster[data-aspect=\"9:16\"]",
+        "conditions": [],
+        "line": 26,
+        "property": "width",
+        "value": "min(100%,29.25dvh)"
+      },
+      {
+        "selector": ".page[data-studio=video] .mainPoster[data-aspect=\"1:1\"]",
         "conditions": [],
         "line": 27,
+        "property": "width",
+        "value": "min(100%,52dvh)"
+      },
+      {
+        "selector": ".layout",
+        "conditions": [],
+        "line": 70,
         "property": "grid-template-columns",
         "value": "minmax(460px,.85fr) minmax(0,1.15fr)"
       },
       {
         "selector": ".modelRail button",
         "conditions": [],
-        "line": 42,
+        "line": 85,
         "property": "min-width",
         "value": "142px"
       },
       {
         "selector": ".field textarea",
         "conditions": [],
-        "line": 57,
+        "line": 100,
         "property": "min-height",
         "value": "138px"
       },
       {
         "selector": ".settings",
         "conditions": [],
-        "line": 60,
+        "line": 103,
         "property": "grid-template-columns",
         "value": "repeat(auto-fit,minmax(120px,1fr))"
       },
       {
         "selector": ".showcase",
         "conditions": [],
-        "line": 67,
+        "line": 110,
         "property": "min-height",
         "value": "clamp(218px,19vw,300px)"
       },
       {
         "selector": ".jobState",
         "conditions": [],
-        "line": 75,
+        "line": 118,
         "property": "min-height",
         "value": "340px"
       },
       {
         "selector": ".indeterminate",
         "conditions": [],
-        "line": 75,
+        "line": 118,
         "property": "width",
         "value": "min(270px,100%)"
       },
       {
         "selector": ".viewerBackdrop",
         "conditions": [],
-        "line": 79,
+        "line": 122,
         "property": "position",
         "value": "fixed"
       },
       {
         "selector": ".viewer",
         "conditions": [],
-        "line": 79,
+        "line": 122,
         "property": "width",
         "value": "min(1080px,100%)"
       },
       {
         "selector": ".viewerStage",
         "conditions": [],
-        "line": 79,
+        "line": 122,
         "property": "min-height",
         "value": "220px"
       },
@@ -41818,7 +41839,7 @@
         "conditions": [
           "@container (max-width:1120px)"
         ],
-        "line": 88,
+        "line": 131,
         "property": "grid-template-columns",
         "value": "minmax(400px,.92fr) minmax(0,1.08fr)"
       },
@@ -41827,7 +41848,7 @@
         "conditions": [
           "@container (max-width:1120px)"
         ],
-        "line": 88,
+        "line": 131,
         "property": "min-height",
         "value": "120px"
       },
@@ -41836,7 +41857,7 @@
         "conditions": [
           "@container (max-width:930px)"
         ],
-        "line": 89,
+        "line": 132,
         "property": "min-height",
         "value": "260px"
       },
@@ -41845,35 +41866,35 @@
         "conditions": [
           "@container (max-width:520px)"
         ],
-        "line": 91,
+        "line": 134,
         "property": "min-height",
         "value": "235px"
       },
       {
         "selector": ".page::before",
         "conditions": [],
-        "line": 95,
+        "line": 138,
         "property": "height",
         "value": "470px"
       },
       {
         "selector": ".layout",
         "conditions": [],
-        "line": 103,
+        "line": 146,
         "property": "grid-template-columns",
         "value": "minmax(350px,.83fr) minmax(0,1.17fr)"
       },
       {
         "selector": ".page .field textarea",
         "conditions": [],
-        "line": 110,
+        "line": 153,
         "property": "min-height",
         "value": "120px"
       },
       {
         "selector": ".page .jobState",
         "conditions": [],
-        "line": 125,
+        "line": 168,
         "property": "min-height",
         "value": "390px"
       },
@@ -41882,7 +41903,7 @@
         "conditions": [
           "@container (max-width:1120px)"
         ],
-        "line": 134,
+        "line": 177,
         "property": "grid-template-columns",
         "value": "minmax(330px,.9fr) minmax(0,1.1fr)"
       },
@@ -41891,7 +41912,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "min-height",
         "value": "130px"
       },
@@ -41900,14 +41921,14 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "min-height",
         "value": "280px"
       },
       {
         "selector": ".page .result>video",
         "conditions": [],
-        "line": 175,
+        "line": 218,
         "property": "min-height",
         "value": "240px"
       }
@@ -41916,42 +41937,42 @@
       {
         "selector": ".workspaceTabs button,.workspaceTabs a",
         "conditions": [],
-        "line": 23,
+        "line": 66,
         "property": "min-height",
         "value": "38px"
       },
       {
         "selector": ".modeToggle button",
         "conditions": [],
-        "line": 37,
+        "line": 80,
         "property": "min-height",
         "value": "42px"
       },
       {
         "selector": ".uploadButton",
         "conditions": [],
-        "line": 59,
+        "line": 102,
         "property": "min-height",
         "value": "39px"
       },
       {
         "selector": ".playerControls button",
         "conditions": [],
-        "line": 69,
+        "line": 112,
         "property": "width",
         "value": "28px"
       },
       {
         "selector": ".playerControls button",
         "conditions": [],
-        "line": 69,
+        "line": 112,
         "property": "height",
         "value": "28px"
       },
       {
         "selector": ".viewerControls button,.viewerActions button,.viewerActions a",
         "conditions": [],
-        "line": 79,
+        "line": 122,
         "property": "min-height",
         "value": "34px"
       },
@@ -41960,42 +41981,42 @@
         "conditions": [
           "@media (max-height:950px) and (min-width:901px)"
         ],
-        "line": 92,
+        "line": 135,
         "property": "min-height",
         "value": "36px"
       },
       {
         "selector": ".workspaceTabs button,.workspaceTabs a",
         "conditions": [],
-        "line": 97,
+        "line": 140,
         "property": "min-height",
         "value": "35px"
       },
       {
         "selector": ".page .modeToggle button",
         "conditions": [],
-        "line": 106,
+        "line": 149,
         "property": "min-height",
         "value": "38px"
       },
       {
         "selector": ".settings :global(.premium-select-trigger)",
         "conditions": [],
-        "line": 112,
+        "line": 155,
         "property": "min-height",
         "value": "40px"
       },
       {
         "selector": ".playerControls button",
         "conditions": [],
-        "line": 121,
+        "line": 164,
         "property": "width",
         "value": "30px"
       },
       {
         "selector": ".playerControls button",
         "conditions": [],
-        "line": 121,
+        "line": 164,
         "property": "height",
         "value": "30px"
       },
@@ -42004,7 +42025,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "min-height",
         "value": "32px"
       },
@@ -42013,7 +42034,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "width",
         "value": "26px"
       },
@@ -42022,7 +42043,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "height",
         "value": "26px"
       },
@@ -42031,49 +42052,49 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 136,
+        "line": 179,
         "property": "min-height",
         "value": "37px"
       },
       {
         "selector": ".railHeading button",
         "conditions": [],
-        "line": 146,
+        "line": 189,
         "property": "width",
         "value": "34px"
       },
       {
         "selector": ".railHeading button",
         "conditions": [],
-        "line": 146,
+        "line": 189,
         "property": "height",
         "value": "34px"
       },
       {
         "selector": ".page .playerControls button",
         "conditions": [],
-        "line": 158,
+        "line": 201,
         "property": "min-height",
         "value": "34px"
       },
       {
         "selector": ".page .railHeading button",
         "conditions": [],
-        "line": 167,
+        "line": 210,
         "property": "width",
         "value": "26px"
       },
       {
         "selector": ".page .railHeading button",
         "conditions": [],
-        "line": 167,
+        "line": 210,
         "property": "height",
         "value": "26px"
       },
       {
         "selector": ".page .resultFooter button,.page .resultFooter a",
         "conditions": [],
-        "line": 175,
+        "line": 218,
         "property": "min-height",
         "value": "38px"
       },
@@ -42082,7 +42103,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 179,
+        "line": 222,
         "property": "width",
         "value": "30px"
       },
@@ -42091,7 +42112,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 179,
+        "line": 222,
         "property": "height",
         "value": "30px"
       },
@@ -42100,7 +42121,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 179,
+        "line": 222,
         "property": "min-height",
         "value": "30px"
       },
@@ -42109,7 +42130,7 @@
         "conditions": [
           "@container (max-width:600px)"
         ],
-        "line": 179,
+        "line": 222,
         "property": "min-height",
         "value": "42px"
       }
@@ -42117,63 +42138,53 @@
     "queries": [
       {
         "type": "container",
+        "condition": "(max-width:900px)",
+        "line": 35
+      },
+      {
+        "type": "container",
+        "condition": "(max-width:600px)",
+        "line": 41
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:700px)",
+        "line": 52
+      },
+      {
+        "type": "container",
         "condition": "(max-width:1400px)",
-        "line": 87
+        "line": 130
       },
       {
         "type": "container",
         "condition": "(max-width:1120px)",
-        "line": 88
+        "line": 131
       },
       {
         "type": "container",
         "condition": "(max-width:930px)",
-        "line": 89
+        "line": 132
       },
       {
         "type": "container",
         "condition": "(max-width:700px)",
-        "line": 90
+        "line": 133
       },
       {
         "type": "container",
         "condition": "(max-width:520px)",
-        "line": 91
+        "line": 134
       },
       {
         "type": "media",
         "condition": "(max-height:950px) and (min-width:901px)",
-        "line": 92
-      },
-      {
-        "type": "container",
-        "condition": "(max-width:1120px)",
-        "line": 134
-      },
-      {
-        "type": "container",
-        "condition": "(max-width:900px)",
         "line": 135
       },
       {
         "type": "container",
-        "condition": "(max-width:600px)",
-        "line": 136
-      },
-      {
-        "type": "media",
-        "condition": "(max-width:600px)",
-        "line": 137
-      },
-      {
-        "type": "media",
-        "condition": "(prefers-reduced-motion:reduce)",
-        "line": 138
-      },
-      {
-        "type": "container",
-        "condition": "(max-width:600px)",
-        "line": 176
+        "condition": "(max-width:1120px)",
+        "line": 177
       },
       {
         "type": "container",
@@ -42184,6 +42195,31 @@
         "type": "container",
         "condition": "(max-width:600px)",
         "line": 179
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 180
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion:reduce)",
+        "line": 181
+      },
+      {
+        "type": "container",
+        "condition": "(max-width:600px)",
+        "line": 219
+      },
+      {
+        "type": "container",
+        "condition": "(max-width:900px)",
+        "line": 221
+      },
+      {
+        "type": "container",
+        "condition": "(max-width:600px)",
+        "line": 222
       }
     ]
   },

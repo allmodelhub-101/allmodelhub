@@ -206,40 +206,40 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/video-studio-v2.module.css
 
-14 media/container conditions; 41 repeated exact selector + condition groups; 22 dimension/overflow candidates; 26 small-control declarations.
+17 media/container conditions; 41 repeated exact selector + condition groups; 25 dimension/overflow candidates; 26 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
-| .page | base | 1, 94, 141 |
-| .studioToolbar | base | 19, 96 |
-| .studioToolbarTitle small | base | 20, 96 |
-| .studioToolbarTitle b | base | 20, 96 |
-| .studioMark | base | 21, 96 |
-| .workspaceTabs | base | 22, 97 |
-| .workspaceTabs button,.workspaceTabs a | base | 23, 97 |
-| .workspaceTabs .tabSelected | base | 25, 97 |
-| .layout | base | 27, 103 |
-| .leftColumn,.rightColumn | base | 28, 103 |
-| .modelRail | base | 41, 107 |
-| .modelRail b | base | 44, 107 |
-| .modelRail small | base | 44, 107 |
-| .modelTrigger b | base | 52, 108 |
-| .confirm | base | 62, 115 |
-| .confirm input | base | 62, 115 |
-| .playerControls button | base | 69, 121 |
-| .indeterminate i | base | 75, 125 |
-| .viewerStage | base | 79, 80 |
-| .viewerUnavailable | base | 79, 80 |
-| :global(html:not([data-theme="light"])) .page | base | 83, 128 |
-| .layout | @container (max-width:1120px) | 88, 134 |
-| .studioIntro | base | 98, 142 |
-| .page .modelTrigger | base | 108, 152 |
-| .page .modelList button | base | 109, 152 |
-| .page .showcase | base | 117, 157 |
-| .page .mainPoster | base | 118, 153 |
-| .page .posterShade | base | 119, 155 |
-| .sceneHeading | base | 120, 156 |
-| .sceneHeading>span | base | 120, 156 |
+| .page | base | 1, 137, 184 |
+| .studioToolbar | base | 62, 139 |
+| .studioToolbarTitle small | base | 63, 139 |
+| .studioToolbarTitle b | base | 63, 139 |
+| .studioMark | base | 64, 139 |
+| .workspaceTabs | base | 65, 140 |
+| .workspaceTabs button,.workspaceTabs a | base | 66, 140 |
+| .workspaceTabs .tabSelected | base | 68, 140 |
+| .layout | base | 70, 146 |
+| .leftColumn,.rightColumn | base | 71, 146 |
+| .modelRail | base | 84, 150 |
+| .modelRail b | base | 87, 150 |
+| .modelRail small | base | 87, 150 |
+| .modelTrigger b | base | 95, 151 |
+| .confirm | base | 105, 158 |
+| .confirm input | base | 105, 158 |
+| .playerControls button | base | 112, 164 |
+| .indeterminate i | base | 118, 168 |
+| .viewerStage | base | 122, 123 |
+| .viewerUnavailable | base | 122, 123 |
+| :global(html:not([data-theme="light"])) .page | base | 126, 171 |
+| .layout | @container (max-width:1120px) | 131, 177 |
+| .studioIntro | base | 141, 185 |
+| .page .modelTrigger | base | 151, 195 |
+| .page .modelList button | base | 152, 195 |
+| .page .showcase | base | 160, 200 |
+| .page .mainPoster | base | 161, 196 |
+| .page .posterShade | base | 162, 198 |
+| .sceneHeading | base | 163, 199 |
+| .sceneHeading>span | base | 163, 199 |
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 

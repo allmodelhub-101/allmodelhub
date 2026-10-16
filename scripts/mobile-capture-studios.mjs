@@ -10,6 +10,8 @@ try{for(const [width,height]of[[320,568],[390,844],[768,1024],[844,390],[1366,76
   const page=await context.newPage();
   for(const state of ['idle','completed']){
    await page.goto(`http://127.0.0.1:3100/responsive-fixture?studio=${studio}&state=${state}`,{waitUntil:'networkidle'});
+   await page.getByRole('button',{name:/Switch to .* theme/}).waitFor();
+   if(stage==='after'&&state==='completed')await (studio==='image'?page.locator('.image-result-stage'):studio==='video'?page.getByRole('heading',{name:'Your scene is ready.'}):page.locator('audio')).first().scrollIntoViewIfNeeded();
    fs.mkdirSync(`docs/mobile-phase4/${studio}/${stage}`,{recursive:true});await page.screenshot({path:`docs/mobile-phase4/${studio}/${stage}/${state}-${width}.png`,fullPage:true,animations:'disabled',style:'nextjs-portal{visibility:hidden}'});
   }
  }finally{await context.close()}

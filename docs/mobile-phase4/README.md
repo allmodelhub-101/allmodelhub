@@ -14,4 +14,12 @@ Twenty Phase 3 function-body hashes guard Image, Video, music/SFX and speech exe
 
 ## Pending batches and acceptance
 
+## Batch B — Video Studio
+
+Creation controls precede preview on compact/tablet layouts; desktop retains two columns. The model rail, actual model picker and metadata-derived duration/resolution/aspects remain. A 9:16 selection has a correctly proportioned contained preview, native result playback stays contained, and primary/player controls have 44px targets. The viewer portals above mobile navigation and shares overlay focus, Escape and scroll restoration. Gallery/offscreen and reduced-motion media policies already existed and are preserved.
+
+The existing Video fixture is mounted inside the real shared shell. Local reference selection now uses a presentation adapter rather than the real upload function; normal production reference selection still delegates to that unchanged function. Upload/poll/submit hashes pass. Actual before/after captures exist at five representative sizes, including completed native-player output; phone and desktop images were reviewed. Early validation repaired an extraction mistake and incorrect test roles/mode order; these interrupted runs are not passes.
+
+Targeted tests exercise both themes, model Escape/focus, long prompt/file names, actual aspect ratio, viewer controls/focus return and queued/completed/failure states. Exact batch stats are in `video/browser-summary.json`. Existing Phase 2 dropdown behavior is retained for final full regression.
+
 Video and Audio implementation and final full-matrix validation are in progress. Phase 4 is not yet declared PASS. Protected workflows still require an authorized isolated account/backend. Physical iOS/Android keyboards, safe areas, zoom, assistive technology and low-end hardware performance remain UNVERIFIED. Fixtures do not prove real generation, upload, persistence, download security or settlement behavior.

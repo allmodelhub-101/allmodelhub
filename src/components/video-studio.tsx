@@ -1,6 +1,8 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks, react-hooks/set-state-in-effect */
 import Link from "next/link";
+import {createPortal} from "react-dom";
+import {useWorkspaceOverlay} from "./use-workspace-overlay";
 import { FormEvent, type KeyboardEvent as ReactKeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowClockwise,
@@ -294,8 +296,7 @@ export function VideoStudio({
     modelTriggerRef = useRef<HTMLButtonElement>(null),
     modalRef = useRef<HTMLDivElement>(null),
     modalVideoRef = useRef<HTMLVideoElement>(null),
-    creationRef = useRef<HTMLElement>(null),
-    lastFocused = useRef<HTMLElement | null>(null);
+    creationRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!fixtureTheme) return;
     const previousTheme = document.documentElement.dataset.theme;
@@ -313,38 +314,7 @@ export function VideoStudio({
     document.addEventListener("mousedown", closeOnOutside);
     return () => document.removeEventListener("mousedown", closeOnOutside);
   }, [picker]);
-  useEffect(() => {
-    if (!openClip) return;
-    lastFocused.current = document.activeElement as HTMLElement;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpenClip(null);
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), a[href], input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable?.length) return;
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    window.setTimeout(() => modalRef.current?.focus(), 0);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-      lastFocused.current?.focus();
-    };
-  }, [openClip]);
+  useWorkspaceOverlay(Boolean(openClip),modalRef,()=>setOpenClip(null));
   useEffect(() => {
     if (fixture) return;
     const c = new AbortController();
@@ -719,8 +689,14 @@ export function VideoStudio({
         }
       }
     };
+  const selectReference = async(file:File,kind:"image"|"video"|"audio"="image")=>{
+    if(!fixture)return upload(file,kind);
+    const setter=kind==="video"?setVideoRefs:kind==="audio"?setAudioRefs:setRefs;
+    setter(current=>[...current,{id:crypto.randomUUID(),name:file.name,previewUrl:"/image-studio-inspiration-v2.webp"}]);
+    if(kind==="image")setMode("image");
+  };
   return (
-    <main className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
+    <main data-studio="video" className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
       <header className={styles.studioToolbar}>
         <div className={styles.studioToolbarTitle}>
           <span className={styles.studioMark}><Sparkle weight="fill" /></span>
@@ -857,7 +833,7 @@ export function VideoStudio({
                   hidden
                   onChange={(e) => {
                     const f = e.currentTarget.files?.[0];
-                    if (f) void upload(f);
+                    if (f) void selectReference(f);
                     e.currentTarget.value = "";
                   }}
                 />
@@ -897,7 +873,7 @@ export function VideoStudio({
                   disabled={uploading || items.length >= limit}
                   onChange={(event) => {
                     const file = event.currentTarget.files?.[0];
-                    if (file) void upload(file, kind);
+                    if (file) void selectReference(file, kind);
                     event.currentTarget.value = "";
                   }} />
                 {items.map((item) => <div className={styles.reference} key={item.id}>
@@ -1017,7 +993,7 @@ export function VideoStudio({
         <section className={styles.rightColumn} aria-label="Video preview and results">
           {!job && (
             <div className={styles.showcase} ref={stageRef}>
-              <div className={styles.mainPoster}>
+              <div className={styles.mainPoster} data-aspect={effectiveAspect}>
                 {demo ? (
                   <video
                     ref={videoRef}
@@ -1103,7 +1079,7 @@ export function VideoStudio({
                   </span>
                 </div>}
               </div>
-              {demo && <div className={styles.previewMeta}><span><b>{demo.title}</b><small>Studio sample · {demo.orientation} · {formatDuration(demo.sourceDurationSeconds || 0)}</small></span><button type="button" onClick={() => openViewer(demo)}>Open player ↗</button></div>}
+              {demo && <div className={styles.previewMeta}><span><b>{demo.title}</b><small>Studio sample · {demo.orientation} · {formatDuration(demo.sourceDurationSeconds || 0)}</small></span><button type="button" onClick={event=>{event.currentTarget.focus();openViewer(demo)}}>Open player ↗</button></div>}
               <div className={styles.clipRail} aria-label="Choose a studio sample">{videoStudioClips.map(clip => <button type="button" key={clip.id} aria-label={`Preview ${clip.title}`} aria-pressed={demo?.id === clip.id} onClick={() => { setDemoId(clip.id); setProgress(0); setPlayerDuration(0); }}><img src={clip.poster} alt="" loading="lazy" /><span>{formatDuration(clip.sourceDurationSeconds || 0)}</span></button>)}</div>
             </div>
           )}
@@ -1213,7 +1189,7 @@ export function VideoStudio({
           {workspaceTab === "create" && <section className={styles.recentStrip} aria-label="Your video library"><div className={styles.inspirationHeader}><div><h2>Your stories, collected.</h2><p>Open your saved generations, downloads, and completed charges.</p></div><Link href="/history">Open library →</Link></div></section>}
         </section>
       </div>
-      {openClip && (
+      {openClip && createPortal(
         <div
           className={styles.viewerBackdrop}
           role="presentation"
@@ -1278,7 +1254,7 @@ export function VideoStudio({
             </div>
           </section>
         </div>
-      )}
+      ,document.body)}
     </main>
   );
 }
