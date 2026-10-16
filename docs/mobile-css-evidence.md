@@ -88,7 +88,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/audio-studio.module.css
 
-9 media/container conditions; 87 repeated exact selector + condition groups; 41 dimension/overflow candidates; 7 small-control declarations.
+11 media/container conditions; 87 repeated exact selector + condition groups; 44 dimension/overflow candidates; 7 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|

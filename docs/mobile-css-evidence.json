@@ -39005,6 +39005,29 @@
         "line": 58,
         "property": "height",
         "value": "220px"
+      },
+      {
+        "selector": ".page[data-studio=audio] .field textarea",
+        "conditions": [],
+        "line": 70,
+        "property": "min-height",
+        "value": "144px"
+      },
+      {
+        "selector": ".page[data-studio=audio] .soundStage",
+        "conditions": [],
+        "line": 78,
+        "property": "height",
+        "value": "210px"
+      },
+      {
+        "selector": ".page[data-studio=audio] .soundStage",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 95,
+        "property": "height",
+        "value": "170px"
       }
     ],
     "smallTargets": [
@@ -39107,6 +39130,16 @@
         "type": "media",
         "condition": "(prefers-reduced-motion:reduce)",
         "line": 59
+      },
+      {
+        "type": "container",
+        "condition": "(max-width:850px)",
+        "line": 81
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 86
       }
     ]
   },

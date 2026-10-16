@@ -61,7 +61,7 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
   }
 
   return <div ref={rootRef} className={`premium-select ${className}`} onKeyDown={handleKeyDown}>
-    <button type="button" role="combobox" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={() => { if (!open) setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen((current) => !current); }} aria-controls={open ? `${id}-options` : undefined} aria-activedescendant={open ? `${id}-option-${activeIndex}` : undefined} {...props}>
+    <button type="button" role="combobox" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={(event) => { event.currentTarget.focus(); if (!open) setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen((current) => !current); }} aria-controls={open ? `${id}-options` : undefined} aria-activedescendant={open ? `${id}-option-${activeIndex}` : undefined} {...props}>
       <span className="premium-select-value">{selected?.label || "Select an option"}</span><span className="premium-select-chevron" aria-hidden="true">⌄</span>
     </button>
     {open && <div id={`${id}-options`} className="premium-select-menu" role="listbox" aria-labelledby={id} tabIndex={-1}>

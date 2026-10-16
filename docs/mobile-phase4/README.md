@@ -23,3 +23,11 @@ The existing Video fixture is mounted inside the real shared shell. Local refere
 Targeted tests exercise both themes, model Escape/focus, long prompt/file names, actual aspect ratio, viewer controls/focus return and queued/completed/failure states. Exact batch stats are in `video/browser-summary.json`. Existing Phase 2 dropdown behavior is retained for final full regression.
 
 Video and Audio implementation and final full-matrix validation are in progress. Phase 4 is not yet declared PASS. Protected workflows still require an authorized isolated account/backend. Physical iOS/Android keyboards, safe areas, zoom, assistive technology and low-end hardware performance remain UNVERIFIED. Fixtures do not prove real generation, upload, persistence, download security or settlement behavior.
+
+## Batch C — Audio Studio
+
+Speech and music/SFX controllers now return typed presentation props to TtsView and AudioGenerationView. Their real requests, polling, estimates and settlement code are retained. AudioStudio accepts optional presentation panels for the guarded local fixture; production uses the original clients. Model/voice metadata remains dynamic in production, and all three modes remain available.
+
+Audio-owned styles improve mode-tab layout, tablet columns, readable 16px inputs, 44px primary actions, player containment and navigation clearance. Native audio controls expose real playback progress/duration from the media; no synthetic waveform is presented as output data. Existing decorative AudioStage artwork is explicitly labeled as decoration and now pauses when idle. Local two-second WAV data supports actual play/pause tests without external requests. It is a harmless static test asset, not an authenticated route.
+
+Targeted Audio checks: 12 passed in four representative projects, both themes, all three modes, long script, model/voice selection, native playback, starters, unavailable model and queued/error states. They found and repaired keyboard tab navigation from a focused inactive tab and WebKit select focus restoration. Phone, native-player and desktop screenshots were inspected. Final cross-studio regression, visual comparisons and Linux CI are pending.

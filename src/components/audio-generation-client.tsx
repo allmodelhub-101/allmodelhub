@@ -64,7 +64,8 @@ const copy = {
   }
 } as const;
 
-export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
+export const audioModeCopy=copy;
+function useAudioGenerationClient({ mode }: { mode: AudioMode }) {
   const [models, setModels] = useState<AudioModel[]>([]);
   const [modelId, setModelId] = useState("");
   const [prompt, setPrompt] = useState("");
@@ -152,7 +153,12 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
     }
   }
 
-  return <div className={styles.workspace}>
+  return {models,modelId,setModelId,prompt,setPrompt,projectId,job,setJob,busy,error,details,model,estimate,resultUrl,activeJob,failed,submit,mode};
+}
+export function AudioGenerationClient({mode}:{mode:AudioMode}) {return <AudioGenerationView {...useAudioGenerationClient({mode})}/>;}
+export type AudioGenerationViewProps=ReturnType<typeof useAudioGenerationClient>;
+export function AudioGenerationView({models,modelId,setModelId,prompt,setPrompt,projectId,job,setJob,busy,error,details,model,estimate,resultUrl,activeJob,failed,submit,mode}:AudioGenerationViewProps) {
+return <div className={styles.workspace}>
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}>
         <span className={styles.headIcon}>{mode === "music" ? <MusicNote weight="fill" /> : <SpeakerHigh weight="fill" />}</span>
@@ -187,7 +193,7 @@ export function AudioGenerationClient({ mode }: { mode: AudioMode }) {
       <div className={styles.previewHead}><span><i className={activeJob ? styles.live : ""} />{activeJob ? "Generating" : resultUrl ? details.resultName : "Audio preview"}</span><small>{model?.name || "Choose a model"}</small></div>
       {activeJob && <p role="status">Creating your audio. Follow this job in History if you leave the studio.</p>}
       <AudioStage mode={mode} busy={activeJob}/>
-      {resultUrl ? <div className={styles.resultPlayer}><audio controls src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>{job?.charged_credits != null ? `Charged ${Number(job.charged_credits).toFixed(2)} credits` : "Final charge pending"}</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Check this job in History for its current status."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : !activeJob && <div className={styles.emptyPreview}><h2>{details.emptyTitle}</h2><p>{mode === "music" ? "Your finished track will play here." : "Your finished sound will play here."}</p></div>}
+      {resultUrl ? <div className={styles.resultPlayer}><audio controls preload="metadata" aria-label="Generated audio playback" src={resultUrl} /><div><a className={styles.secondaryAction} href={resultUrl} download><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />New variation</button></div><small>{job?.charged_credits != null ? `Charged ${Number(job.charged_credits).toFixed(2)} credits` : "Final charge pending"}</small></div> : failed ? <div className={styles.failure}><b>{job?.status === "cancelled" ? "Generation cancelled" : "Generation could not complete"}</b><p>{job?.error_message || "Check this job in History for its current status."}</p><button className={styles.secondaryAction} type="button" onClick={() => setJob(null)}><ArrowClockwise />Try again</button></div> : !activeJob && <div className={styles.emptyPreview}><h2>{details.emptyTitle}</h2><p>{mode === "music" ? "Your finished track will play here." : "Your finished sound will play here."}</p></div>}
     </section>
   </div>;
 }

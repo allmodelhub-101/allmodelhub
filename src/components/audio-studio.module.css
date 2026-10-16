@@ -59,4 +59,41 @@
 @media(prefers-reduced-motion:reduce) { .page *,.page *::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; }.headerActions button { display:none; }.generate:hover:not(:disabled) { transform:none; } }
 .modeTabs button.active,.modeTabs button.active:hover { background:linear-gradient(115deg,#3c83e8,#6661de);color:#fff;box-shadow:0 5px 15px #6366ee25; }
 .modeTabs button.active b,.modeTabs button.active small { color:#fff; }
+.page[data-studio=audio] { min-width:0;height:auto;overflow:visible;padding:clamp(12px,2vw,26px); }
+.page[data-studio=audio] .hero { min-height:0;display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px; }
+.page[data-studio=audio] .headerActions :is(button,a) { min-height:44px;display:flex;align-items:center;font-size:12px; }
+.page[data-studio=audio] .modeTabs { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0 0 18px; }
+.page[data-studio=audio] .modeTabs button { min-width:0;min-height:52px;justify-content:center; }
+.page[data-studio=audio] .workspace { display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:20px;align-items:start; }
+.page[data-studio=audio] :is(.content,.controls,.preview,.sideColumn,.field,.settingsGrid) { min-width:0; }
+.page[data-studio=audio] .controls { padding:20px; }
+.page[data-studio=audio] .field textarea { font-size:16px;min-height:144px;max-height:360px;resize:vertical;line-height:1.6; }
+.page[data-studio=audio] :is(.generate,.secondaryAction,.starterGroup button,.advancedToggle button,.voiceCard,.templateList button) { min-height:44px; }
+.page[data-studio=audio] .select :global(.premium-select-trigger) { min-height:44px;white-space:normal; }
+.page[data-studio=audio] .resultPlayer { min-width:0; }
+.page[data-studio=audio] .resultPlayer audio { display:block;width:100%;min-width:0;max-width:100%; }
+.page[data-studio=audio] .resultPlayer>div { display:flex;flex-wrap:wrap;gap:8px; }
+.page[data-studio=audio] .previewHead { flex-wrap:wrap;gap:8px; }
+.page[data-studio=audio] .previewHead small { overflow-wrap:anywhere; }
+.page[data-studio=audio] .soundStage { height:210px; }
+.page[data-studio=audio] .soundStage:not(.rendering) * { animation-play-state:paused; }
+.page[data-studio=audio] :is(button,a,input,textarea,[tabindex]):focus-visible { outline:2px solid var(--audio-blue);outline-offset:3px; }
+@container(max-width:850px) {
+ .page[data-studio=audio] .workspace { grid-template-columns:minmax(0,1fr); }
+ .page[data-studio=audio] .sideColumn { display:grid;grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .page[data-studio=audio] .sideColumn>.preview { grid-column:1/-1; }
+}
+@media(max-width:600px) {
+ .page[data-studio=audio] .hero { margin-bottom:12px; }
+ .page[data-studio=audio] .hero h1 { font-size:25px; }
+ .page[data-studio=audio] .hero p { font-size:12px; }
+ .page[data-studio=audio] .modeTabs button { padding:10px 5px;gap:5px; }
+ .page[data-studio=audio] .modeTabs b { font-size:11px; }
+ .page[data-studio=audio] .controls { padding:14px;gap:14px; }
+ .page[data-studio=audio] .settingsGrid { grid-template-columns:minmax(0,1fr); }
+ .page[data-studio=audio] .sideColumn { grid-template-columns:minmax(0,1fr); }
+ .page[data-studio=audio] .soundStage { height:170px; }
+ .page[data-studio=audio] .templateList { grid-template-columns:minmax(0,1fr); }
+ .page[data-studio=audio] .modeTabs small { display:none; }
+}
 :global(html:not([data-theme="light"])) .page .modeTabs button.active,:global(html:not([data-theme="light"])) .page .modeTabs button.active:hover { color:#fff;background:linear-gradient(115deg,#375a9c,#6557aa); }

@@ -6,6 +6,7 @@ import {WorkspaceFrame} from "./workspace-frame";
 import {WorkspaceTopbar} from "./workspace-topbar";
 import {AppSidebar} from "./app-sidebar";
 import {VideoStudio,type VideoStudioFixtureState} from "./video-studio";
+import {AudioFixture} from "./audio-fixture";
 
 const imageModels:ImageStudioViewProps['models']=[
  {id:'local-image',name:'Sample image model',modality:'image',providerFamily:'Fixture',tier:'balanced',available:true,capabilities:['editing','multi-reference'],uiSchema:{inputModes:['text','image'],aspectRatios:['1:1','16:9','9:16'],resolutionOptions:['1K','2K'],maxReferences:3}},
@@ -13,7 +14,7 @@ const imageModels:ImageStudioViewProps['models']=[
  {id:'local-image-unavailable',name:'Sample unavailable',modality:'image',tier:'premium',available:false}
 ];
 export function StudioFixture({studio,state='idle'}:{studio:string;state?:string}){
- return <WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Studio reviewer" isAdmin={false} activePath={studio==='image'?'/images':`/${studio}`} />} topbar={<WorkspaceTopbar balance={1234.5} identity="Studio reviewer" offline />}>{studio==='video'?<VideoStudio fixtureState={(state==='error'?'failed':state) as VideoStudioFixtureState}/>:<ImageFixture state={state}/>}</WorkspaceFrame>;
+ return <WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Studio reviewer" isAdmin={false} activePath={studio==='image'?'/images':`/${studio}`} />} topbar={<WorkspaceTopbar balance={1234.5} identity="Studio reviewer" offline />}>{studio==='audio'?<AudioFixture state={state}/>:studio==='video'?<VideoStudio fixtureState={(state==='error'?'failed':state) as VideoStudioFixtureState}/>:<ImageFixture state={state}/>}</WorkspaceFrame>;
 }
 function ImageFixture({state}:{state:string}){
  const fileInputRef=useRef<HTMLInputElement|null>(null),promptInputRef=useRef<HTMLTextAreaElement|null>(null),settingsRef=useRef<HTMLDivElement|null>(null),settingsButtonRef=useRef<HTMLButtonElement|null>(null);

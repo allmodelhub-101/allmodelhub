@@ -27,7 +27,7 @@ const templates = [
   { label: "Social media", copy: "Stop scrolling. Your next great idea starts right here." }
 ];
 
-export function TtsClient() {
+function useTtsClient() {
   const [text, setText] = useState("");
   const [voice, setVoice] = useState(elevenVoices[0].value);
   const [languageCode, setLanguageCode] = useState("en");
@@ -137,7 +137,12 @@ export function TtsClient() {
     }
   }
 
-  return <div className={styles.workspace}>
+  return {text,setText,setVoice,languageCode,setLanguageCode,voiceSpeed,setVoiceSpeed,url,setUrl,credits,models,modelId,setModelId,confirmed,setConfirmed,busy,error,advanced,setAdvanced,selectedModel,asyncKling,scriptLimit,voices,selectedVoice,estimate,expensive,submit};
+}
+export function TtsClient() {return <TtsView {...useTtsClient()}/>;}
+export type TtsViewProps=ReturnType<typeof useTtsClient>;
+export function TtsView({text,setText,setVoice,languageCode,setLanguageCode,voiceSpeed,setVoiceSpeed,url,setUrl,credits,models,modelId,setModelId,confirmed,setConfirmed,busy,error,advanced,setAdvanced,selectedModel,asyncKling,scriptLimit,voices,selectedVoice,estimate,expensive,submit}:TtsViewProps) {
+return <div className={styles.workspace}>
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}><span className={styles.headIcon}><Microphone weight="fill" /></span><div><h2>Bring your words to life</h2><p>A voice for every story.</p></div></div>
       <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setVoice(isMinimaxSpeech(value) ? minimaxVoices[0].value : value === "kling-tts" ? klingVoices[0]?.value ?? "" : elevenVoices[0]?.value ?? ""); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}${model.available === false ? ` · ${modelAvailabilityMessage(model.availabilityReason)}` : ""}`, disabled: model.available === false }))} aria-label="Speech model" /></label>
@@ -156,11 +161,10 @@ export function TtsClient() {
     <div className={styles.sideColumn}>
       <section className={styles.preview} aria-label="Audio preview"><div className={styles.previewHead}><span><i className={busy ? styles.live : ""} />{url ? "Voice ready" : busy ? "Generating" : "Audio preview"}</span><small>{selectedModel?.name || "Choose a model"}</small></div><p>{url ? "Listen, download, or create another take." : "Your generated voice will appear here when it is ready."}</p>
         <AudioStage mode="speech" busy={busy}/>
-        {url ? <div className={styles.resultPlayer}><audio controls src={url} /><div><a className={styles.secondaryAction} href={url} download="voiceover.mp3"><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setUrl(undefined)}><Play />New take</button></div><small>{credits ? `Ready · Charged ${Number(credits).toFixed(2)} credits` : "Ready · Billing pending"}</small></div> : <div className={styles.emptyPreview}><h2>{busy ? "Finding your voice…" : "Ready when you are."}</h2><p>{busy ? "Your speech is being generated." : "Your finished voiceover will play here."}</p></div>}
+        {url ? <div className={styles.resultPlayer}><audio controls preload="metadata" aria-label="Generated speech playback" src={url} /><div><a className={styles.secondaryAction} href={url} download="voiceover.mp3"><DownloadSimple />Download</a><button className={styles.secondaryAction} type="button" onClick={() => setUrl(undefined)}><Play />New take</button></div><small>{credits ? `Ready · Charged ${Number(credits).toFixed(2)} credits` : "Ready · Billing pending"}</small></div> : <div className={styles.emptyPreview}><h2>{busy ? "Finding your voice…" : "Ready when you are."}</h2><p>{busy ? "Your speech is being generated." : "Your finished voiceover will play here."}</p></div>}
       </section>
       <section className={styles.quick}><div className={styles.sectionHead}><span><UsersThree weight="fill" /><div><h2>Voice palette</h2></div></span></div><div className={styles.voiceList}>{voices.map((item) => <button type="button" key={item.value} aria-label={`Select ${item.label.split(" · ")[0]} voice`} className={`${styles.voiceCard} ${selectedVoice === item.value ? styles.voiceSelected : ""}`} onClick={() => setVoice(item.value)} aria-pressed={selectedVoice === item.value}><span className={styles.voicePlay}><Microphone weight="fill" /></span><span><b>{item.label.split(" · ")[0]}</b><small>{item.note}</small></span></button>)}</div></section>
       <section className={styles.inspiration}><div className={styles.sectionHead}><span><Sparkle weight="fill" /><div><h2>Script starters</h2><p>Give your voiceover a useful first draft.</p></div></span></div><div className={styles.templateList}>{templates.map((item) => <button type="button" key={item.label} onClick={() => { setText(item.copy); setConfirmed(false); }}><span><Waveform /></span><b>{item.label}</b><small>Use this starter</small></button>)}</div></section>
     </div>
   </div>;
 }
-
