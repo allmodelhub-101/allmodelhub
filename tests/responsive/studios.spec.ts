@@ -6,8 +6,21 @@ async function open(page:Page,studio:string,state='idle',theme='light'){
  await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
 }
 async function fits(page:Page){expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)}
-async function reachable(page:Page,control:Locator){await control.evaluate(el=>el.scrollIntoView({block:'center'}));await expect(control).toBeInViewport();const box=await control.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(44);const clearance=await page.locator('.mobile-nav').evaluate(el=>el.getClientRects().length?el.getBoundingClientRect().top:innerHeight);expect(box!.y+box!.height).toBeLessThanOrEqual(clearance+1)}
-async function rotate(page:Page,control:Locator){const original=page.viewportSize()!;if(original.width>430)return;await page.setViewportSize({width:844,height:390});await fits(page);await reachable(page,control);await page.setViewportSize(original)}
+async function reachable(page:Page,control:Locator){
+ await control.scrollIntoViewIfNeeded();
+ await control.evaluate(el=>el.scrollIntoView({block:'center'}));
+ await expect(control).toBeInViewport();
+ const box=await control.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(44);
+ const clearance=await page.locator('.mobile-nav').evaluate(el=>el.getClientRects().length?el.getBoundingClientRect().top:innerHeight);
+ expect(box!.y+box!.height).toBeLessThanOrEqual(clearance+1);
+}
+async function rotate(page:Page,control:Locator){
+ const original=page.viewportSize()!;if(original.width>430)return;
+ await page.setViewportSize({width:844,height:390});
+ // WebKit can acknowledge a resize before its new layout/scroll position settles.
+ await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
+ await fits(page);await reachable(page,control);await page.setViewportSize(original);
+}
 async function visual(page:Page,studio:string,theme:string){if(process.env.PW_STUDIO_VISUAL==='1'&&[390,768,1366].includes(page.viewportSize()!.width))await expect(page).toHaveScreenshot(`phase4-${studio}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01})}
 for(const theme of ['light','dark'])test(`image ${theme}: prompt, settings, model and local references`,async({page},info)=>{
  await open(page,'image','idle',theme);await visual(page,'image',theme);await expect(page.getByRole('heading',{name:'Create an image'})).toBeVisible();const input=page.getByRole('textbox',{name:'Image prompt'});await input.fill('A thoughtful composition\n'.repeat(12));await input.scrollIntoViewIfNeeded();await expect(input).toBeInViewport();
