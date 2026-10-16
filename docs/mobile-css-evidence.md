@@ -31,7 +31,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/app/globals.css
 
-835 media/container conditions; 766 repeated exact selector + condition groups; 587 dimension/overflow candidates; 201 small-control declarations.
+835 media/container conditions; 766 repeated exact selector + condition groups; 585 dimension/overflow candidates; 201 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -136,14 +136,14 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/image-studio.css
 
-5 media/container conditions; 4 repeated exact selector + condition groups; 13 dimension/overflow candidates; 9 small-control declarations.
+6 media/container conditions; 4 repeated exact selector + condition groups; 15 dimension/overflow candidates; 9 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
-| body .image-workspace.image-studio-refined .image-prompt-dock form:focus-within | base | 125, 185 |
-| body .image-workspace.image-studio-refined .image-prompt-dock textarea | base | 127, 186 |
-| body .image-workspace.image-studio-refined .image-prompt-dock textarea:focus | base | 128, 187 |
-| body .image-workspace.image-studio-refined .compose-tool .model-brand | base | 133, 189 |
+| body .image-workspace.image-studio-refined .image-prompt-dock form:focus-within | base | 167, 227 |
+| body .image-workspace.image-studio-refined .image-prompt-dock textarea | base | 169, 228 |
+| body .image-workspace.image-studio-refined .image-prompt-dock textarea:focus | base | 170, 229 |
+| body .image-workspace.image-studio-refined .compose-tool .model-brand | base | 175, 231 |
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 

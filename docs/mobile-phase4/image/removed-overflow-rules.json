@@ -1,0 +1,10 @@
+[
+  {
+    "selector": ".app-content:has(.image-workspace)",
+    "declaration": "overflow-x:hidden!important"
+  },
+  {
+    "selector": ".image-workspace",
+    "declaration": "overflow-x:hidden!important"
+  }
+]

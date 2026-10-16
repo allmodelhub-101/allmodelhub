@@ -1819,8 +1819,8 @@ html:not([data-theme="light"]) .image-workspace .image-prompt-dock form{backgrou
 @media(prefers-reduced-motion:reduce){.hero-art,.image-studio-hero .direction-starters button{animation:none!important;transition:none!important}}
 
 /* Image Studio viewport fit: composer is primary; inspiration follows below. */
-.app-content:has(.image-workspace){width:100%;max-width:none!important;min-width:0;overflow-x:hidden!important}
-.image-workspace{width:100%;max-width:none;min-width:0;overflow-x:hidden!important}
+.app-content:has(.image-workspace){width:100%;max-width:none!important;min-width:0}
+.image-workspace{width:100%;max-width:none;min-width:0}
 .image-workspace .image-canvas-stage{width:100%;min-width:0;min-height:375px;padding-block:62px 16px}
 .image-workspace .image-empty-state.image-studio-hero{min-height:292px}
 .image-workspace .image-prompt-dock{width:100%;max-width:none;margin:0 0 20px}

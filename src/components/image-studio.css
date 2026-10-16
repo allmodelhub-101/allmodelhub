@@ -1,9 +1,51 @@
 /* Scoped Image Studio layout; one page scroll, with settings in the composer. */
 .premium-workstation-shell .app-content:has(.image-studio-refined) {
-  min-height:0;overflow-y:auto!important;overflow-x:hidden!important;
+  min-height:0;overflow:auto;
+}
+
+/* Phase 4: shell owns navigation clearance; the studio uses ordinary page flow. */
+.responsive-workspace .app-content:has(.image-studio-refined) { padding:0;overflow:auto; }
+.responsive-workspace .image-workspace.image-studio-refined { padding:20px clamp(12px,2.5vw,32px) 24px;min-width:0;overflow:visible; }
+.responsive-workspace .image-workspace.image-studio-refined .hero-copy { min-width:0;max-width:100%; }
+.responsive-workspace .image-workspace.image-studio-refined .image-creation-path { flex-wrap:wrap;gap:6px;font-size:10px;letter-spacing:.02em; }
+.responsive-workspace .image-workspace.image-studio-refined .image-canvas-stage { padding:40px 0 16px; }
+.responsive-workspace .image-workspace.image-studio-refined .image-studio-hero { min-height:220px; }
+.responsive-workspace .image-workspace.image-studio-refined .hero-copy h1 { font-size:clamp(30px,4.5vw,56px); }
+.responsive-workspace .image-workspace.image-studio-refined .hero-art { max-height:220px; }
+.responsive-workspace .image-workspace.image-studio-refined .image-result-stage { display:grid;justify-items:center;gap:12px; }
+.responsive-workspace .image-workspace.image-studio-refined .image-result-stage>img { width:auto;height:auto;max-height:58dvh;object-fit:contain; }
+.responsive-workspace .image-workspace.image-studio-refined :is(.image-result-toolbar button,.image-result-toolbar a,.image-view-trigger,.image-reference-chip button,.image-settings-close,.image-motion-toggle) { min-height:44px; }
+.responsive-workspace .image-workspace.image-studio-refined .image-reference-strip { min-width:0;display:flex;flex-wrap:nowrap;overflow-x:auto; }
+.responsive-workspace .image-workspace.image-studio-refined .image-reference-chip { flex:0 0 240px;min-width:0; }
+.responsive-workspace .image-workspace.image-studio-refined .image-reference-chip span { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.responsive-workspace .image-workspace.image-studio-refined .image-reference-chip button { min-width:44px; }
+.responsive-workspace .image-workspace.image-studio-refined :is(button,a,textarea,select,[tabindex]):focus-visible { outline:2px solid var(--image-accent);outline-offset:3px; }
+.image-viewer-overlay { position:fixed;inset:0;z-index:260;padding:12px;display:grid;place-items:center; }
+.image-viewer-backdrop { position:absolute;inset:0;border:0;background:#020611c9; }
+.image-viewer-overlay [role=dialog] { position:relative;display:grid;gap:12px;width:min(100%,1100px);max-height:calc(100dvh - 24px);overflow:auto;padding:16px;border-radius:20px;background:var(--panel-solid);color:var(--text); }
+.image-viewer-overlay header { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+.image-viewer-overlay h2 { margin:0;font-size:18px; }
+.image-viewer-overlay button { min-width:44px;min-height:44px; }
+.image-viewer-overlay img { display:block;width:100%;height:auto;max-height:70dvh;object-fit:contain; }
+.image-viewer-overlay a { min-height:44px;display:grid;place-items:center; }
+.responsive-workspace .image-workspace.image-studio-refined .image-view-trigger { padding:10px 16px;border:1px solid var(--image-line);border-radius:12px;background:var(--image-soft);color:var(--image-ink);font:inherit; }
+@media(max-width:700px) {
+ .responsive-workspace .image-workspace.image-studio-refined .hero-art { display:none; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-studio-hero { min-height:0; }
+ .responsive-workspace .image-workspace.image-studio-refined .hero-copy>p { margin-block:10px; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-creation-path { display:none; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-canvas-stage { padding-top:28px; }
+ .responsive-workspace .image-workspace.image-studio-refined .hero-copy h1 { margin-top:0; }
+ .responsive-workspace .image-workspace.image-studio-refined .direction-starters { margin-top:14px; }
+ .responsive-workspace .image-workspace.image-studio-refined .direction-starters button { min-height:44px; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-prompt-dock form { padding:12px; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-prompt-dock textarea { min-height:76px;padding:10px; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-compose-tools { grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+ .responsive-workspace .image-workspace.image-studio-refined .compose-tool.model-tool { grid-column:1/-1; }
+ .responsive-workspace .image-workspace.image-studio-refined .image-result-toolbar { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%; }
 }
 .premium-workstation-shell .app-content:has(.image-studio-refined) .image-workspace.image-studio-refined {
-  display:block;height:auto;min-height:100%;grid-template-rows:none;overflow:visible!important;
+  display:block;height:auto;min-height:100%;grid-template-rows:none;overflow:visible;
 }
 .image-workspace.image-studio-refined {
   height:auto;min-height:100%;padding:20px clamp(14px,2.5vw,36px) 32px;

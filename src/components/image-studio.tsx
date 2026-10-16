@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import {createPortal} from "react-dom";
+import {useWorkspaceOverlay} from "./use-workspace-overlay";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -43,7 +45,7 @@ function statusCopy(status?: string) {
   return { step: "Generating", title: "Creating your image" };
 }
 
-export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs?:boolean}) {
+function useImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs?:boolean}) {
   const qs = useSearchParams();
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -274,6 +276,16 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
     input.style.height = `${Math.min(input.scrollHeight, 120)}px`;
   }, [prompt]);
 
+  return {fileInputRef,promptInputRef,settingsRef,settingsButtonRef,models,modelId,setModelId,prompt,setPrompt,aspect,setAspect,setResolution,references,job,submitting,uploading,actionBusy,error,confirmed,setConfirmed,pickerOpen,setPickerOpen,inspectorOpen,setInspectorOpen,copied,dragActive,setDragActive,motionPaused,setMotionPaused,model,aspectRatios,resolutions,effectiveResolution,maxReferences,expensive,supportsEditing,supportsMultipleReferences,generating,resultUrl,status,addReferences,pasteReference,pasteFromClipboard,openSettings,submit,removeReference,resetResult,applyAsReference,animateInVideo,copySettings,shareResult,crossModalityHandoffs};
+}
+
+export function ImageStudio(props:{crossModalityHandoffs?:boolean}) { return <ImageStudioView {...useImageStudio(props)} />; }
+export type ImageStudioViewProps=ReturnType<typeof useImageStudio>;
+export function ImageStudioView({fileInputRef,promptInputRef,settingsRef,settingsButtonRef,models,modelId,setModelId,prompt,setPrompt,aspect,setAspect,setResolution,references,job,submitting,uploading,actionBusy,error,confirmed,setConfirmed,pickerOpen,setPickerOpen,inspectorOpen,setInspectorOpen,copied,dragActive,setDragActive,motionPaused,setMotionPaused,model,aspectRatios,resolutions,effectiveResolution,maxReferences,expensive,supportsEditing,supportsMultipleReferences,generating,resultUrl,status,addReferences,pasteReference,pasteFromClipboard,openSettings,submit,removeReference,resetResult,applyAsReference,animateInVideo,copySettings,shareResult,crossModalityHandoffs}:ImageStudioViewProps) {
+  const [viewerOpen,setViewerOpen]=useState(false);
+  const viewerRef=useRef<HTMLDivElement|null>(null);
+  useWorkspaceOverlay(viewerOpen,viewerRef,()=>setViewerOpen(false));
+  useWorkspaceOverlay(inspectorOpen,settingsRef,()=>setInspectorOpen(false),false);
   return <div className={`image-workspace image-studio-refined ${motionPaused ? "is-motion-paused" : ""} ${dragActive ? "is-dragging" : ""}`} onPaste={pasteReference} onDragEnter={(event) => { if (!event.dataTransfer.types.includes("Files")) return; event.preventDefault(); setDragActive(true); }} onDragOver={(event) => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { if (!event.dataTransfer.files.length) return; event.preventDefault(); setDragActive(false); void addReferences(Array.from(event.dataTransfer.files)); }}>
     <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" multiple={supportsMultipleReferences} hidden onChange={(event) => { void addReferences(Array.from(event.target.files || [])); event.currentTarget.value = ""; }} />
     {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>PNG, JPEG or WebP · Your selected model must support references.</span></div>}
@@ -283,7 +295,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         {!job && <div className="image-empty-state image-studio-hero"><div className="hero-art hero-art-left"><InspirationImage index={0} alt="Perfume product inspiration" /><em>From idea<br/>to stunning images</em></div><div className="hero-art hero-art-right"><InspirationImage index={4} alt="Mountain landscape inspiration" /><InspirationImage index={2} alt="Interior inspiration" /><em>Turn your ideas<br/>into amazing visuals</em></div><div className="hero-copy"><h1>Create an <span>image</span></h1><p>Describe your idea, customize the look, then create with the world’s<br className="desktop-only"/> most advanced AI models.</p><div className="image-creation-path" aria-label="How image creation works"><span><b>1</b>Describe</span><i/><span><b>2</b>Customize</span><i/><span><b>3</b>Create</span></div><div className="direction-starters" aria-label="Prompt ideas">{directionStarters.map((starter,index) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}>{index===0?<Cube/>:index===1?<UserCircle/>:<Lightbulb/>}<span><strong>{starter.label}</strong><small>Use direction</small></span></button>)}</div></div></div>}
         {generating && <div className="image-generating-state" role="status"><div className="image-generation-frame"><span /><span /><span /></div><span className="empty-kicker">{status.step}</span><h2>{status.title}</h2><p>{job?.public_id || "Your image will appear here when it is ready."}</p><small>No fake percentage—this updates from the provider.</small></div>}
         {job?.status === "failed" && <div className="image-failed-state"><span className="empty-kicker">Generation stopped</span><h2>That image was not created</h2><p>{job.error_message || "The provider returned a failure. Eligible reserved credits were released."}</p><button type="button" onClick={resetResult}>Try again</button></div>}
-        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><div className="image-result-toolbar"><a href={resultUrl} download><DownloadSimple/>Download</a><button type="button" onClick={() => void shareResult()}><ShareNetwork/>{copied === "link" ? "Link copied" : "Share"}</button><button type="button" onClick={resetResult}><ArrowsClockwise/>Create variation</button><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}><Plus aria-hidden="true" />Edit this image</button>{crossModalityHandoffs&&<button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button>}<button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Settings copied" : "Copy settings"}</button></div></div>}
+        {job?.status === "completed" && resultUrl && <div className="image-result-stage"><Image src={resultUrl} alt={`Generated image for: ${prompt}`} width={1536} height={1536} sizes="(max-width: 900px) 100vw, 75vw" unoptimized priority /><button type="button" className="image-view-trigger" onClick={event=>{event.currentTarget.focus();setViewerOpen(true)}}>View full image</button><div className="image-result-toolbar"><a href={resultUrl} download><DownloadSimple/>Download</a><button type="button" onClick={() => void shareResult()}><ShareNetwork/>{copied === "link" ? "Link copied" : "Share"}</button><button type="button" onClick={resetResult}><ArrowsClockwise/>Create variation</button><button type="button" disabled={actionBusy} onClick={() => void applyAsReference()}><Plus aria-hidden="true" />Edit this image</button>{crossModalityHandoffs&&<button type="button" disabled={actionBusy} onClick={() => void animateInVideo()}>Animate in Video</button>}<button type="button" onClick={() => void copySettings()}>{copied === "settings" ? "Settings copied" : "Copy settings"}</button></div></div>}
         {job?.status === "completed" && !resultUrl && <div className="image-failed-state"><h2>Generation completed</h2><p>The provider did not return a displayable image. You can find this job in Library.</p><Link href="/history">Open Library</Link></div>}
       </section>
 
@@ -296,7 +308,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
         {references.length > 0 && <div className="image-reference-strip" aria-label="Attached reference images">{references.map((reference) => <div className="image-reference-chip" key={reference.id}><Image src={reference.previewUrl} alt={reference.name} width={48} height={48} unoptimized /><span>{reference.name}</span><button type="button" disabled={uploading || submitting || generating} onClick={() => removeReference(reference.id)} aria-label={`Remove ${reference.name}`}><X size={14} aria-hidden="true" /></button></div>)}</div>}
         <div className="image-prompt-footer">
           <div className="image-compose-tools">
-            <button type="button" className="compose-tool model-tool" disabled={uploading || submitting || generating} onClick={() => setPickerOpen(true)}><ModelBrand compact modelName={model?.name || "Auto"} provider={model?.providerFamily || ""} /><span><small>Model</small>{model?.name || "Choose model"}</span><CaretDown className="image-tool-chevron" size={14} aria-hidden="true" /></button>
+            <button type="button" className="compose-tool model-tool" disabled={uploading || submitting || generating} onClick={(event) => {event.currentTarget.focus();setPickerOpen(true)}}><ModelBrand compact modelName={model?.name || "Auto"} provider={model?.providerFamily || ""} /><span><small>Model</small>{model?.name || "Choose model"}</span><CaretDown className="image-tool-chevron" size={14} aria-hidden="true" /></button>
             <button type="button" className="compose-tool reference-tool" disabled={uploading || submitting || generating || !supportsEditing || references.length >= maxReferences} title={supportsEditing ? "Upload or paste a reference image" : "Select a reference-capable model in Image settings"} onClick={() => fileInputRef.current?.click()}><Plus size={18} aria-hidden="true" /><span>{uploading ? "Uploading…" : "Add reference"}</span></button>
             <button ref={settingsButtonRef} type="button" className={`compose-tool settings-tool ${inspectorOpen ? "active" : ""}`} aria-expanded={inspectorOpen} aria-controls="image-settings-panel" onClick={() => inspectorOpen ? setInspectorOpen(false) : openSettings()}><SlidersHorizontal size={18} aria-hidden="true" /><span>Image settings<small>{aspectRatios.length ? aspect : "Automatic canvas"}{effectiveResolution ? ` · ${effectiveResolution}` : ""}</small></span></button>
           </div>
@@ -323,7 +335,7 @@ export function ImageStudio({crossModalityHandoffs=false}:{crossModalityHandoffs
       {error && <div className="image-error" role="alert"><strong>Couldn’t continue.</strong><span>{error}</span></div>}
     </div>
     {!job && <section className="image-inspiration" aria-labelledby="image-inspiration-title"><div><h2 id="image-inspiration-title">Get inspired</h2><p>Explore what’s possible with AI-generated images.</p></div><Link href="/history">View more <span aria-hidden="true">→</span></Link><div className="inspiration-grid">{inspirationTiles.map((alt,index)=><InspirationImage key={alt} index={index} alt={alt}/>)}</div></section>}
+    {viewerOpen && resultUrl && createPortal(<div className="image-viewer-overlay"><button className="image-viewer-backdrop" type="button" aria-label="Close image viewer" onClick={()=>setViewerOpen(false)}/><div ref={viewerRef} role="dialog" aria-modal="true" aria-label="Image viewer" tabIndex={-1}><header><h2>Image preview</h2><button type="button" aria-label="Close image viewer" onClick={()=>setViewerOpen(false)}><X size={20}/></button></header><Image src={resultUrl} alt={prompt||"Generated image"} width={1536} height={1536} unoptimized/><a href={resultUrl} download>Download image</a></div></div>,document.body)}
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); setResolution(""); setConfirmed(false); }} open={pickerOpen} onOpenChange={setPickerOpen} modality="image" showPrices={false} />
   </div>;
 }
-

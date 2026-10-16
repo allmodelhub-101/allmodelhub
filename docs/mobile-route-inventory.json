@@ -485,12 +485,15 @@
         "src/components/chat-fixture.tsx",
         "src/components/chat-workspace.css",
         "src/components/chat-workspace.tsx",
+        "src/components/image-studio.css",
+        "src/components/image-studio.tsx",
         "src/components/model-brand.tsx",
         "src/components/model-picker.css",
         "src/components/model-picker.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/responsive-fixture.tsx",
+        "src/components/studio-fixtures.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
         "src/components/workspace-frame.tsx",
@@ -501,6 +504,7 @@
         "src/app/globals.css",
         "src/components/app-sidebar.css",
         "src/components/chat-workspace.css",
+        "src/components/image-studio.css",
         "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
@@ -1065,10 +1069,10 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 643328,
+      "bytes": 643272,
       "lines": 2385,
       "mediaQueries": 835,
-      "important": 137,
+      "important": 135,
       "viewportUnits": 69
     },
     {
@@ -1105,11 +1109,11 @@
     },
     {
       "file": "src/components/image-studio.css",
-      "bytes": 29959,
-      "lines": 199,
-      "mediaQueries": 5,
-      "important": 10,
-      "viewportUnits": 1
+      "bytes": 34592,
+      "lines": 241,
+      "mediaQueries": 6,
+      "important": 7,
+      "viewportUnits": 4
     },
     {
       "file": "src/components/legal-page.module.css",
