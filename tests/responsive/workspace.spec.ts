@@ -28,6 +28,8 @@ for (const theme of ['light','dark']) {
     for(const control of geometry.chrome) { expect(control.left,control.name||'control').toBeGreaterThanOrEqual(0); expect(control.right,control.name||'control').toBeLessThanOrEqual(width+1); if(width<=1180){expect(control.height,control.name||'control').toBeGreaterThanOrEqual(44);expect(control.width,control.name||'control').toBeGreaterThanOrEqual(44);} }
     const shot=info.outputPath(`shell-${theme}.png`);await page.screenshot({path:shot,animations:'disabled',caret:'hide',style:'nextjs-portal{visibility:hidden}'});await info.attach(`shell-${theme}`,{path:shot,contentType:'image/png'});
     if(process.env.PW_SHARED_VISUAL==='1'&&[390,768,1366].includes(width)) await expect(page).toHaveScreenshot(`phase2-shell-${theme}.png`,{animations:'disabled',caret:'hide',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
+    const lastColumn=page.locator('thead th').last();await lastColumn.scrollIntoViewIfNeeded();await expect(lastColumn).toBeInViewport();
+    expect(await page.evaluate(()=>window.scrollX)).toBe(0);
     await page.getByText('End of sample content.',{exact:false}).scrollIntoViewIfNeeded();
     await expect(page.getByText('End of sample content.',{exact:false})).toBeInViewport();
     expect(apis,'offline fixture must never access application APIs').toEqual([]);

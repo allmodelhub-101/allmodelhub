@@ -43,6 +43,7 @@
   .responsive-workspace .app-main .workspace-topbar .wallet-chip svg { display:block; }
   .responsive-workspace .app-main .workspace-topbar .topbar-profile > svg { display:none; }
   .responsive-workspace :is(input,textarea,select,.premium-select-trigger) { font-size:16px; }
+  .responsive-workspace :is(.btn,.input,.select,.premium-select-trigger,.premium-select-option) { min-height:var(--workspace-touch); }
 }
 @media (max-width:900px) {
   .responsive-workspace .app-main { padding-bottom:var(--workspace-nav-clearance); }

@@ -75,6 +75,7 @@ function NavLink({ item, pathname, collapsed = false, language = "en" }: { item:
 export function AppSidebar({ balance, displayName, email, isAdmin, language = "en", activePath }: { balance: number; displayName?: string | null; email?: string | null; isAdmin: boolean; language?: string; activePath?: string }) {
   const routePath = usePathname();
   const pathname = activePath || routePath;
+  const lastPathRef = useRef(pathname);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -90,6 +91,8 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
     return () => window.clearTimeout(timer);
   }, []);
   useEffect(() => {
+    if (lastPathRef.current === pathname) return;
+    lastPathRef.current = pathname;
     const timer = window.setTimeout(() => { setMobileMoreOpen(false); setAccountOpen(false); }, 0);
     return () => window.clearTimeout(timer);
   }, [pathname]);

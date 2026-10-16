@@ -1132,8 +1132,8 @@
     },
     {
       "file": "src/components/workspace-shell.css",
-      "bytes": 5598,
-      "lines": 61,
+      "bytes": 5733,
+      "lines": 62,
       "mediaQueries": 4,
       "important": 0,
       "viewportUnits": 4
