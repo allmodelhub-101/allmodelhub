@@ -257,7 +257,7 @@
         "maxHeight": "none",
         "overflowX": "visible",
         "overflowY": "visible",
-        "gridTemplateRows": "81px 123px",
+        "gridTemplateRows": "89px 115px",
         "padding": "0px",
         "maxWidth": "100%",
         "bounds": {
@@ -269,7 +269,7 @@
       ".chat-layout-body": {
         "display": "block",
         "position": "static",
-        "height": "81px",
+        "height": "89px",
         "minHeight": "0px",
         "maxHeight": "none",
         "overflowX": "auto",
@@ -279,14 +279,14 @@
         "maxWidth": "none",
         "bounds": {
           "top": 108,
-          "bottom": 189,
+          "bottom": 197,
           "width": 844
         }
       },
       ".composer-wrap": {
         "display": "block",
         "position": "relative",
-        "height": "123px",
+        "height": "115px",
         "minHeight": "auto",
         "maxHeight": "none",
         "overflowX": "visible",
@@ -295,7 +295,7 @@
         "padding": "4px 20.256px",
         "maxWidth": "1080px",
         "bounds": {
-          "top": 189,
+          "top": 197,
           "bottom": 312,
           "width": 844
         }
@@ -303,16 +303,16 @@
       ".composer": {
         "display": "block",
         "position": "relative",
-        "height": "114px",
+        "height": "106px",
         "minHeight": "0px",
         "maxHeight": "none",
         "overflowX": "visible",
         "overflowY": "visible",
         "gridTemplateRows": "none",
-        "padding": "10px",
+        "padding": "6px",
         "maxWidth": "none",
         "bounds": {
-          "top": 194,
+          "top": 202,
           "bottom": 308,
           "width": 803.5
         }
@@ -329,9 +329,9 @@
         "padding": "0px",
         "maxWidth": "none",
         "bounds": {
-          "top": 253,
-          "bottom": 297,
-          "width": 781.5
+          "top": 257,
+          "bottom": 301,
+          "width": 789.5
         }
       },
       ".composer-tools": {
@@ -346,9 +346,9 @@
         "padding": "0px",
         "maxWidth": "none",
         "bounds": {
-          "top": 253,
-          "bottom": 297,
-          "width": 729.5
+          "top": 257,
+          "bottom": 301,
+          "width": 737.5
         }
       },
       ".chat-input": {
@@ -356,16 +356,16 @@
         "position": "static",
         "height": "44px",
         "minHeight": "44px",
-        "maxHeight": "72px",
+        "maxHeight": "44px",
         "overflowX": "auto",
         "overflowY": "hidden",
         "gridTemplateRows": "none",
         "padding": "8px 6px",
         "maxWidth": "none",
         "bounds": {
-          "top": 205,
-          "bottom": 249,
-          "width": 781.5
+          "top": 209,
+          "bottom": 253,
+          "width": 789.5
         }
       },
       ".mobile-nav": {
@@ -839,7 +839,7 @@
         "maxHeight": "none",
         "overflowX": "visible",
         "overflowY": "visible",
-        "gridTemplateRows": "81px 123px",
+        "gridTemplateRows": "89px 115px",
         "padding": "0px",
         "maxWidth": "100%",
         "bounds": {
@@ -851,7 +851,7 @@
       ".chat-layout-body": {
         "display": "block",
         "position": "static",
-        "height": "81px",
+        "height": "89px",
         "minHeight": "0px",
         "maxHeight": "none",
         "overflowX": "auto",
@@ -861,14 +861,14 @@
         "maxWidth": "none",
         "bounds": {
           "top": 108,
-          "bottom": 189,
+          "bottom": 197,
           "width": 844
         }
       },
       ".composer-wrap": {
         "display": "block",
         "position": "relative",
-        "height": "123px",
+        "height": "115px",
         "minHeight": "auto",
         "maxHeight": "none",
         "overflowX": "visible",
@@ -877,7 +877,7 @@
         "padding": "4px 20.256001px",
         "maxWidth": "1080px",
         "bounds": {
-          "top": 189,
+          "top": 197,
           "bottom": 312,
           "width": 844
         }
@@ -885,16 +885,16 @@
       ".composer": {
         "display": "block",
         "position": "relative",
-        "height": "114px",
+        "height": "106px",
         "minHeight": "0px",
         "maxHeight": "none",
         "overflowX": "visible",
         "overflowY": "visible",
         "gridTemplateRows": "none",
-        "padding": "10px",
+        "padding": "6px",
         "maxWidth": "none",
         "bounds": {
-          "top": 194,
+          "top": 202,
           "bottom": 308,
           "width": 803.5
         }
@@ -911,9 +911,9 @@
         "padding": "0px",
         "maxWidth": "none",
         "bounds": {
-          "top": 253,
-          "bottom": 297,
-          "width": 781.5
+          "top": 257,
+          "bottom": 301,
+          "width": 789.5
         }
       },
       ".composer-tools": {
@@ -928,9 +928,9 @@
         "padding": "0px",
         "maxWidth": "none",
         "bounds": {
-          "top": 253,
-          "bottom": 297,
-          "width": 729.5
+          "top": 257,
+          "bottom": 301,
+          "width": 737.5
         }
       },
       ".chat-input": {
@@ -938,16 +938,16 @@
         "position": "static",
         "height": "44px",
         "minHeight": "44px",
-        "maxHeight": "72px",
+        "maxHeight": "44px",
         "overflowX": "auto",
         "overflowY": "hidden",
         "gridTemplateRows": "none",
         "padding": "8px 6px",
         "maxWidth": "none",
         "bounds": {
-          "top": 205,
-          "bottom": 249,
-          "width": 781.5
+          "top": 209,
+          "bottom": 253,
+          "width": 789.5
         }
       },
       ".mobile-nav": {

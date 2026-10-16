@@ -126,5 +126,18 @@
     },
     "failures": [],
     "finalAcceptance": true
+  },
+  {
+    "label": "phase3-expanded-short-height-final",
+    "stats": {
+      "startTime": "2026-10-16T14:48:27.125Z",
+      "duration": 62073.914000000004,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
   }
 ]

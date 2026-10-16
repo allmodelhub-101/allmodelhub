@@ -152,7 +152,7 @@ export function ChatWorkspace({messages,busy,activeModelName,exact,popularModels
       </form>
       <div className="chat-response-status" role="status" aria-live="polite">{busy ? "Responding — use Stop to cancel." : privateMode ? "Private chat · conversation is not saved" : ""}</div>
       <p id="chat-composer-hint" className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
-      {error && <div className="soft-card small error-box" role="alert"><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}
+      {error && <div className="soft-card small error-box" role="alert" tabIndex={0}><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}
     </div>
     <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
   </div>;

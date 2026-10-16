@@ -5,12 +5,19 @@ const test=safeTest.extend<{chatDiagnostics:void}>({chatDiagnostics:[async({page
  page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});page.on('response',r=>{if(r.status()>=400)resources.push(`${r.status()} ${new URL(r.url()).pathname}`)});
  await use();expect(errors,'runtime/hydration errors').toEqual([]);expect(apis,'synthetic Chat must not access application APIs').toEqual([]);expect(resources,'failed resources').toEqual([]);
  },{auto:true}]});
-import type {Page} from '@playwright/test';
+import type {Page,TestInfo} from '@playwright/test';
 async function openChat(page:Page,state='welcome',theme='light'){
  await page.addInitScript(theme=>localStorage.setItem('amh-theme',theme),theme);
  await page.goto(`/responsive-fixture?chat=${state}`,{waitUntil:'networkidle'});
  await expect(page.locator('.chat-workspace')).toHaveAttribute('data-ready','true');
  await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
+}
+async function compactDraftBudget(page:Page,info:TestInfo,state:string){
+ const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill(Array(12).fill('A long draft in a short viewport').join('\n'));
+ const budget=await page.evaluate(()=>{const rect=(s:string)=>document.querySelector(s)!.getBoundingClientRect(),nav=document.querySelector('.mobile-nav')!;return {bottom:rect('.composer-wrap').bottom,navTop:nav.getClientRects().length?rect('.mobile-nav').top:innerHeight,history:rect('.chat-layout-body').height}});
+ expect(budget.bottom,'expanded composer stays above navigation').toBeLessThanOrEqual(budget.navTop+1);expect(budget.history,'history remains reachable above expanded drafts and secondary content').toBeGreaterThanOrEqual(24);
+ await expect(input).toBeInViewport();await expect(page.getByRole('button',{name:'Send message'})).toBeInViewport();
+ if([320,844].includes(page.viewportSize()!.width)&&page.viewportSize()!.height===390){const path=info.outputPath(`expanded-${state}.png`);await page.screenshot({path,animations:'disabled',style:'nextjs-portal{visibility:hidden}'});await info.attach(`expanded-${state}`,{path,contentType:'image/png'})}
 }
 for(const theme of ['light','dark'])test(`chat ${theme}: welcome, composer budget and real controls`,async({page},info)=>{
  const errors:string[]=[],apis:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});
@@ -71,17 +78,20 @@ test('streaming-like updates respect readers and Stop remains usable',async({pag
  await page.getByRole('button',{name:'Stop generation'}).click();await expect(page.getByRole('button',{name:'Send message'})).toBeVisible();await expect(page.getByText('Response interrupted · Retry available',{exact:true})).toBeVisible();
 });
 
-test('attachments and long filenames stay contained; reduced height keeps composer reachable',async({page})=>{
+test('attachments and long filenames stay contained; reduced height keeps composer reachable',async({page},info)=>{
  await openChat(page,'attachments');await expect(page.locator('.attachment-card')).toHaveCount(3);const remove=page.getByRole('button',{name:/Remove Research_notes_0_/});await remove.click();await expect(page.locator('.attachment-card')).toHaveCount(2);
  const size=page.viewportSize()!;await page.setViewportSize({width:size.width,height:Math.max(390,size.height-300)});const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill('Typing with a reduced viewport');await expect(input).toBeInViewport();await expect(page.getByRole('button',{name:'Send message'})).toBeInViewport();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await compactDraftBudget(page,info,'attachments');
 });
 
-test('loading, pending billing, interrupted and error presentation',async({page})=>{
+test('loading, pending billing, interrupted and error presentation',async({page},info)=>{
  await openChat(page,'loading');await expect(page.getByText('Understanding your request',{exact:true}).or(page.getByText('Sample model is responding',{exact:true}))).toBeVisible();await expect(page.getByRole('button',{name:'Stop generation'})).toBeInViewport();await page.getByRole('textbox',{name:'Message',exact:true}).focus();await page.keyboard.press('Escape');await expect(page.getByRole('button',{name:'Send message'})).toBeVisible();
  await openChat(page,'pending');await expect(page.getByText('Sample model · Billing pending',{exact:true})).toBeVisible();
  await openChat(page,'interrupted');await expect(page.getByText('Response interrupted · Retry available',{exact:true})).toBeVisible();
  await openChat(page,'error');await expect(page.getByRole('alert').filter({hasText:'Request not completed'})).toContainText('Synthetic connection failure');await expect(page.getByRole('textbox',{name:'Message',exact:true})).toHaveValue('My preserved draft');
+ const size=page.viewportSize()!;await page.setViewportSize({width:size.width,height:390});await compactDraftBudget(page,info,'error');
+ const alert=page.getByRole('alert').filter({hasText:'Request not completed'});await alert.focus();await expect(alert).toBeFocused();await page.keyboard.press('ArrowDown');
 });
 test('chat discovery, message actions, local attachment selection and voice presentation',async({page})=>{
  await openChat(page);
