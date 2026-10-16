@@ -1,0 +1,79 @@
+[
+  {
+    "line": 179,
+    "selectors": [
+      ".chat-page"
+    ],
+    "declarations": "min-height: calc(100vh - 116px);display: grid;grid-template-rows: auto 1fr auto"
+  },
+  {
+    "line": 179,
+    "selectors": [
+      ".chat-page:not(.is-welcome)"
+    ],
+    "declarations": "min-height: calc(100vh - 116px);display: grid;grid-template-rows: auto 1fr auto"
+  },
+  {
+    "line": 766,
+    "selectors": [
+      ".premium-workstation-shell .app-content:has(.chat-page) .chat-page"
+    ],
+    "declarations": "height:calc(100dvh - 56px);min-height:0"
+  },
+  {
+    "line": 766,
+    "selectors": [
+      ".premium-workstation-shell .app-content:has(.chat-page:not(.is-welcome)) .chat-page:not(.is-welcome)"
+    ],
+    "declarations": "height:calc(100dvh - 56px);min-height:0"
+  },
+  {
+    "line": 796,
+    "selectors": [
+      ".premium-workstation-shell .app-content:has(.chat-page) .chat-page"
+    ],
+    "declarations": "height:calc(100dvh - 120px)"
+  },
+  {
+    "line": 849,
+    "selectors": [
+      ".app-content:has(.chat-page)"
+    ],
+    "declarations": "width:100%;max-width:none;padding:0"
+  },
+  {
+    "line": 849,
+    "selectors": [
+      ".app-content:has(.chat-page:not(.is-welcome))"
+    ],
+    "declarations": "width:100%;max-width:none;padding:0"
+  },
+  {
+    "line": 849,
+    "selectors": [
+      ".app-content:has(.chat-page) .chat-page"
+    ],
+    "declarations": "height:calc(100dvh - 66px);min-height:620px;overflow:hidden"
+  },
+  {
+    "line": 849,
+    "selectors": [
+      ".app-content:has(.chat-page:not(.is-welcome)) .chat-page:not(.is-welcome)"
+    ],
+    "declarations": "height:calc(100dvh - 66px);min-height:620px;overflow:hidden"
+  },
+  {
+    "line": 857,
+    "selectors": [
+      ".app-content:has(.chat-page) .chat-page"
+    ],
+    "declarations": "height:calc(100dvh - 66px)"
+  },
+  {
+    "line": 1835,
+    "selectors": [
+      ".premium-workstation-shell .app-content:has(.chat-page:not(.is-welcome)) .chat-page:not(.is-welcome)"
+    ],
+    "declarations": "height:calc(100dvh - 64px)"
+  }
+]

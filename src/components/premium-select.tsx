@@ -44,7 +44,7 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); setOpen(false); rootRef.current?.querySelector<HTMLButtonElement>(".premium-select-trigger")?.focus(); return; }
+    if (event.key === "Escape") { if (!open) return; event.preventDefault(); event.stopPropagation(); setOpen(false); rootRef.current?.querySelector<HTMLButtonElement>(".premium-select-trigger")?.focus(); return; }
     if (event.key === "Home" || event.key === "End") { event.preventDefault(); setOpen(true); const item = event.key === "Home" ? available[0] : available.at(-1); if (item) setActiveIndex(item.index); return; }
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();

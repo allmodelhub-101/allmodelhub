@@ -2,7 +2,7 @@
 
 Run `pnpm audit:routes` from the repository root. Counts are source routes, not authenticated browser passes. Root layout globals apply to every page.
 
-32 page routes; 42 HTTP handlers; 15 CSS files. No Pages Router exists.
+32 page routes; 42 HTTP handlers; 16 CSS files. No Pages Router exists.
 
 | Route | Access | Source / redirect | Components (transitive) | Styles (transitive) |
 |---|---|---|---|---|
@@ -19,7 +19,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /auth/update-password | recovery form; session needed to submit | src/app/auth/update-password/page.tsx | pwa-register.tsx, theme-toggle.tsx, update-password-form.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
 | /auth/verified | confirmation session | src/app/auth/verified/page.tsx | email-verified-card.tsx, pwa-register.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
 | /battle | authenticated | src/app/battle/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, feature-unavailable.tsx, model-battle.tsx, model-brand.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
-| /chat | authenticated | src/app/chat/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, chat-client.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, premium-select.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/model-picker.css, src/components/workspace-shell.css |
+| /chat | authenticated | src/app/chat/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, chat-client.tsx, chat-workspace.css, chat-workspace.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, premium-select.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/chat-workspace.css, src/components/model-picker.css, src/components/workspace-shell.css |
 | /files | authenticated | src/app/files/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, files-client.tsx, premium-select.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/files/files.css, src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
 | /history | authenticated | src/app/history/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, history-client.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
 | /images | authenticated | src/app/images/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, image-studio.css, image-studio.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, pwa-register.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/image-studio.css, src/components/model-picker.css, src/components/workspace-shell.css |
@@ -29,7 +29,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /privacy | public | src/app/privacy/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
 | /projects | authenticated | src/app/projects/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
 | /refunds | public | src/app/refunds/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
-| /responsive-fixture | development fixture | src/app/responsive-fixture/page.tsx | app-sidebar.css, app-sidebar.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, premium-select.tsx, pwa-register.tsx, responsive-fixture.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/model-picker.css, src/components/workspace-shell.css |
+| /responsive-fixture | development fixture | src/app/responsive-fixture/page.tsx | app-sidebar.css, app-sidebar.tsx, chat-fixture.tsx, chat-workspace.css, chat-workspace.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, premium-select.tsx, pwa-register.tsx, responsive-fixture.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/chat-workspace.css, src/components/model-picker.css, src/components/workspace-shell.css |
 | /settings | authenticated | src/app/settings/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
 | /studio-fixture | development fixture | src/app/studio-fixture/page.tsx | premium-select.tsx, pwa-register.tsx, video-model-rail.tsx, video-studio-v2.module.css, video-studio.tsx | src/app/globals.css, src/components/video-studio-v2.module.css |
 | /support | authenticated | src/app/support/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-shell.css |
@@ -93,10 +93,11 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/app/admin/admin-premium.css | 8806 | 7 | 5 | 0 | 0 |
 | src/app/auth/login/auth-premium.css | 23541 | 422 | 5 | 0 | 2 |
 | src/app/files/files.css | 16170 | 10 | 6 | 4 | 0 |
-| src/app/globals.css | 644682 | 2390 | 844 | 137 | 78 |
+| src/app/globals.css | 643328 | 2385 | 835 | 137 | 69 |
 | src/app/wallet/wallet-premium.css | 88 | 2 | 0 | 0 | 0 |
 | src/components/app-sidebar.css | 4316 | 37 | 3 | 1 | 1 |
 | src/components/audio-studio.module.css | 32447 | 63 | 8 | 4 | 0 |
+| src/components/chat-workspace.css | 16530 | 140 | 4 | 0 | 5 |
 | src/components/image-studio.css | 29959 | 199 | 5 | 10 | 1 |
 | src/components/legal-page.module.css | 22395 | 37 | 9 | 5 | 1 |
 | src/components/marketing-nav.module.css | 1906 | 28 | 3 | 0 | 1 |

@@ -1,0 +1,307 @@
+✔ historical September migration recorded all 57 pricing decisions (8.4387ms)
+✔ unverified routes are explicit fail-closed registry state (0.5246ms)
+✔ historical V2 migration removed unverified routes before V3 replacement (0.4196ms)
+✔ verified rules preserve all distinct media strategies (1.0081ms)
+✔ Qwen 3.8 text routes use current authoritative per-token prices (0.4858ms)
+✔ async media settlement reloads authoritative quote numerics as exact strings (0.3887ms)
+(node:9616) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ TTS transports are provider-model specific (2.4243ms)
+✔ direct response-header settlement is allowed only for complete exact USD evidence (3.6922ms)
+✔ successful direct audio is not failed by post-stream settlement work (4.8123ms)
+✔ audio usage omits visual fields instead of sending zero-valued dimensions (4.0949ms)
+✔ definitive rejection releases while ambiguous TTS transport retains its hold (2.4715ms)
+✔ Kling async payload uses Kling voice fields and never Eleven streaming (3.9348ms)
+(node:24980) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ minimax-speech-2-8-turbo: async audio retains model, task ID, output, and exact records cost (836.646ms)
+✔ minimax-speech-2-8-hd: async audio retains model, task ID, output, and exact records cost (330.5768ms)
+✔ kling-tts: async audio retains model, task ID, output, and exact records cost (182.8658ms)
+✔ suno-v5: async audio retains model, task ID, output, and exact records cost (178.7696ms)
+✔ kling-sound-effects: async audio retains model, task ID, output, and exact records cost (209.5608ms)
+✔ eleven-tts-flash: real stream adapter preserves voice, body, request ID, and exact response cost (255.7107ms)
+✔ eleven-tts-multilingual: real stream adapter preserves voice, body, request ID, and exact response cost (161.9027ms)
+✔ eleven-tts-v3: real stream adapter preserves voice, body, request ID, and exact response cost (109.9244ms)
+(node:28092) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ golden exact TTS character charges for 1, 6, 100, 1000, 5000 and 10000 characters (10.0975ms)
+✔ submitted character counting is Unicode code-point exact (0.5969ms)
+✔ fixed and duration audio use their validated provider-specific strategies (1.1067ms)
+(node:15832) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/legacy-shadow-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ golden pricing fixtures cover every distinct active billing strategy exactly (34.1432ms)
+✔ shadow comparison preserves micro-costs and flags only meaningful mismatches (3.5181ms)
+✔ legacy shadow calculator remains comparison-only across text, TTS, media and failure (1.7442ms)
+✔ provider fallback remains provider-priced and unavailable or stale rules fail closed (2.5718ms)
+✔ failure, duplicate callback, and reservation shortfall outcomes remain financially safe (1.1483ms)
+✔ database contracts enforce duplicate request, concurrent capture, shadow idempotency and wallet reconciliation (200.9685ms)
+(node:17608) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ image workflow state is translated to documented reference fields (4.5308ms)
+✔ image contracts reject unsupported editing and require explicit priced resolution (12.757ms)
+✔ advertised UI options stay inside the executable adapter contract (1.4268ms)
+✔ quality-bound image contracts reject unsupported provider options (0.8319ms)
+(node:11880) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ FLUX editing includes every reference-image surcharge (13.9405ms)
+✔ image resolution rules select distinct validated prices (1.0897ms)
+✔ video duration, resolution, and native audio produce different costs (1.5398ms)
+✔ fixed-price media stays deterministic (0.9677ms)
+✔ provider usage overrides requested media dimensions where reported (3.3719ms)
+✔ async failure settles once and duplicate callbacks are no-ops (0.5267ms)
+(node:15808) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ every advertised media execution contract has all source-controlled runtime layers (10.2955ms)
+✔ runtime availability fails closed on missing adapter, pricing, or UI agreement (8.1803ms)
+✔ media authorization is request-bounded while settlement remains provider-authoritative (30.9604ms)
+✔ known media failures produce safe, accurate public categories (2.8889ms)
+(node:20812) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/money.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ uses exact decimal arithmetic for familiar binary floating-point edge cases (6.2616ms)
+✔ preserves very tiny provider costs (4.5959ms)
+✔ preserves large values without IEEE-754 precision loss (0.5052ms)
+✔ keeps one Credit equal to one PKR exactly (0.4681ms)
+✔ round-trips USD through PKR and Credits at the configured internal rate (6.8603ms)
+✔ rejects non-decimal inputs and non-positive conversion rates (1.1913ms)
+(node:19256) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ selects the exact provider and never reuses the primary provider price for fallback (7.0287ms)
+✔ selects and snapshots the requested pricing version and exact FX rate (5.7642ms)
+✔ fails closed for unavailable, stale, blocked, pending, inactive, future, and expired rules (1.399ms)
+✔ a newer blocked rule fails closed instead of falling back to an older verified price (0.6242ms)
+✔ calculates token, cached-token, and cache-write pricing exactly (1.2542ms)
+✔ calculates character and TTS pricing proportionally per 1,000 characters (1.4594ms)
+✔ supports fixed, per-image, reference-image, and duration pricing (1.7002ms)
+✔ requires and applies validated resolution and mode-specific pricing (1.9395ms)
+✔ supports safe extensible formulas and blocks unknown formula kinds (2.7863ms)
+✔ option-matrix authorization pricing uses the exact resolution and quality (1.6768ms)
+✔ rejects missing billable usage and invalid financial configuration (0.9231ms)
+✔ fails closed when providers report cache usage without validated cache rates (0.8444ms)
+✔ Qwen normal mode explicitly disables provider-default thinking (6.5334ms)
+✔ V3 text authorization uses a policy-versioned request ceiling (4.5447ms)
+✔ chat never resubmits empty failed assistant placeholders (6.6566ms)
+✔ text availability requires the same complete policy metadata as authorization (8.2252ms)
+✔ request-bounded migration matches Production schema and switches policies atomically (2.6731ms)
+✔ successful provider output gets bounded background settlement retries (5.4625ms)
+✔ pending billing is not presented as a zero charge (11.4435ms)
+✔ the full catalog stays visible while unavailable routes remain disabled (14.3734ms)
+✔ wallet distinguishes spendable credits from temporary reservations (10.2765ms)
+✔ user-owned settlement polling is safe, bounded, and provider-authoritative (8.0995ms)
+✔ pending V3 messages use nullable costs and never enter historical billing (19.4579ms)
+✔ traffic reconciliation uses the existing database claim function (9.6976ms)
+(node:17724) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ normalizes a settled APIMODELS USD billing record without losing tiny decimals (26.3295ms)
+✔ keeps unsettled records pending and rejects invented or malformed final costs (1.8069ms)
+✔ requires USD and authoritative failed records to have exactly zero cost (1.086ms)
+✔ extracts APIMODELS headers in provider-preferred order and exact callback credits (123.7021ms)
+✔ calculates exact customer charge from provider USD times frozen FX and markup (17.2183ms)
+✔ authorization constraints fail closed and shortfalls never become capped charges (2.4427ms)
+✔ text authorization uses the exact request token ceiling without floating-point loss (1.2022ms)
+✔ model availability uses authorization policy under V3, not detailed final pricing (0.7837ms)
+✔ incomplete text authorization policies never become executable (0.8419ms)
+✔ public settlement summaries never expose supplier cost (0.6916ms)
+✔ database contract enforces provider idempotency, authorization ceiling, pending reconciliation and zero-cost failure (31.0506ms)
+✔ streaming and callback paths retain successful output while provider billing reconciles (8.9194ms)
+✔ new request entry points use Billing V3 only (88.4244ms)
+✔ consolidation migration makes V3 permanent and adds exactly 20 defensible policies (4.4492ms)
+(node:9524) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/stream-normalizer.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ normalizes OpenAI exact usage without double-charging cached input (7.6601ms)
+✔ normalizes Anthropic cache reads, cache writes and thinking usage (0.622ms)
+✔ normalizes Gemini cached and reasoning tokens and merges partial events (0.7272ms)
+✔ rejects fractional or negative token counts instead of coercing them (0.484ms)
+(node:23388) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ resolves an exact database route and keeps fallback providers financially separate (8.8769ms)
+✔ fixed-price calls quote and reserve deterministically with exact snapshots (7.71ms)
+✔ variable calls reserve the server-derived maximum, not the estimated final charge (2.0286ms)
+✔ profitability validation fails closed before reservation (1.2638ms)
+✔ tiny real prices are preserved unless an explicit product minimum is configured (1.9358ms)
+✔ reservation shortfalls surface a critical anomaly for fail-closed settlement (1.1492ms)
+(node:12304) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/reconciliation-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reconciliation backoff starts conservatively and caps at six hours (5.6083ms)
+✔ confirmed success settles and processing retains the reservation (0.5086ms)
+✔ only contract-confirmed non-billable failures release (0.8486ms)
+✔ provider terminal state preserves cancelled and expired outcomes (0.5912ms)
+(node:16684) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/audio-execution.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real media preparation binds MiniMax text, voice, and billed characters without dropping options (1423.04ms)
+✔ all 57 audited routes preserve readiness and only the two repaired MiniMax routes become ready (204.8418ms)
+✔ MiniMax uses its own async speech contract and rejects foreign voices/options (3.1966ms)
+✔ record costs preserve exponent notation, large decimals, and correct envelope field (2.8354ms)
+✔ documented pending records remain pending and Unix milliseconds become durable timestamps (3.1572ms)
+✔ provider-controlled exponents are bounded before expansion across every cost ingress (146.0418ms)
+✔ availability labels distinguish adapter support from authorization problems (10.6669ms)
+✔ MiniMax authorization prices submitted Unicode characters with policy data, never output duration (4.9678ms)
+✔ all model-list clients explicitly bypass stale HTTP cache (168.9643ms)
+(node:21488) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ text: missing credentials cause no submission, anomaly, or retained hold (1032.3989ms)
+✔ text: local unsupported-provider releases before safe configured fallback (629.3742ms)
+✔ text: local missing-first-key releases before safe configured fallback (471.0948ms)
+✔ text: request construction failure happens before the submission marker (267.2979ms)
+✔ text: network timeout retains one hold, forbids fallback, and blocks replay (314.1101ms)
+✔ text: received 503 remains ambiguous and cannot trigger another paid attempt (302.3226ms)
+✔ text: definitive 429 releases before trying the next configured route (406.3769ms)
+✔ text: failed release stops fallback and blocks replay (230.5427ms)
+✔ text: acceptance followed by malformed billing evidence preserves task ID and hold (250.903ms)
+✔ text: successful Haimaker adapter forwards the actual submission boundary (329.2165ms)
+✔ tts: missing credentials cause no submission, anomaly, or retained hold (264.6442ms)
+✔ tts: local unsupported-provider releases before safe configured fallback (342.119ms)
+✔ tts: local missing-first-key releases before safe configured fallback (398.894ms)
+✔ tts: request construction failure happens before the submission marker (234.7542ms)
+✔ tts: network timeout retains one hold, forbids fallback, and blocks replay (204.3852ms)
+✔ tts: received 503 remains ambiguous and cannot trigger another paid attempt (354.5439ms)
+✔ tts: definitive 429 releases before trying the next configured route (796.3594ms)
+✔ tts: failed release stops fallback and blocks replay (538.3333ms)
+✔ tts: acceptance followed by malformed billing evidence preserves task ID and hold (357.3398ms)
+✔ tts: successful Haimaker adapter forwards the actual submission boundary (263.1444ms)
+✔ TTS: unsupported stream adapter releases before the valid Eleven stream fallback (237.9251ms)
+✔ text: local failure does not bypass explicit fallback prohibition (265.2096ms)
+✔ actual speech refresh effect clears only its recovered loading error and ignores unmounted results (448.457ms)
+(node:12516) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Kling V3 maps AMH options to exact provider fields (5.3615ms)
+✔ VEO keeps fixed duration and resolution out of the provider request (0.5387ms)
+✔ MiniMax H3 and Lite enforce only safely priced request subsets (0.8414ms)
+✔ video migration has exact request-bounded maxima and current evidence (41.0252ms)
+(node:23468) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/media-job-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ actual video callback ignores callback price and duplicate completion settles once (1236.8744ms)
+✔ actual video callback retains settling status while records are unavailable (204.1146ms)
+✔ actual polling completes V3 video and retries pending records without legacy settlement (366.534ms)
+✔ actual scheduled reconciliation restores output and confirms records settlement (205.1464ms)
+✔ actual failed callback releases only after authoritative zero-cost records (315.9159ms)
+✔ actual submission retry never resubmits an accepted task after ledger write failure (165.8725ms)
+✔ definitive HTTP 429 releases its hold and retries a later route (139.0651ms)
+✔ ambiguous provider timeout retains the hold and does not retry submission (97.0107ms)
+(node:27928) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ forward migration and real V3 RPCs preserve exact wallet/receipt invariants (8091.0182ms)
+(node:1548) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all fifteen video catalog entries have deterministic canonical readiness (14.2313ms)
+✔ verified native definitions become ready without any V2 lookup or frozen policy FX (79.1994ms)
+✔ request duration, resolution and current economics change exact V3 estimates (1.9604ms)
+✔ existing six contracts still validate and generate their verified provider options (2.345ms)
+✔ new adapters enforce positional frames, reference limits and upscale-only sources (3.6546ms)
+✔ Seedance contracts enforce documented generation subsets and native-audio payloads (3.0119ms)
+✔ formula authorization requires exact verified rates, not approximate seconds prices (2.2017ms)
+✔ uploaded MP4 duration is parsed from server bytes and corrupt input fails closed (2.0849ms)
+✔ Seedance reference MP4 metadata enforces provider media limits (6.1412ms)
+✔ video callback, polling and reconciliation only enter V3 records authority (48.2358ms)
+(node:21272) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/auth-confirmation.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ signup confirmation accepts only email verification OTP types (2.2864ms)
+(node:11096) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/security/request.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ safeInternalPath accepts local paths and rejects redirect bypasses (3.4038ms)
+✔ safeAuthenticatedPath defaults to chat and prevents auth redirect loops (1.3474ms)
+✔ mutation origin validation blocks cross-site requests (201.3455ms)
+✔ audio modes expose keyboard navigation and a labeled panel (64.1053ms)
+✔ decorative artwork cannot be confused with audio playback and motion is optional (15.0135ms)
+✔ first-loaded Kling voice matches its provider and financial confirmation remains guarded (2.3258ms)
+✔ music and sound effects cannot re-submit an active job or invent a final charge (2.1836ms)
+(node:1708) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/chat-composer-events.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Enter sends, Shift Enter and IME preserve native editing (6.0652ms)
+✔ Escape stops only an active request and unrelated keys remain native (0.3827ms)
+✔ context threshold and exact submitted prompt formatting are unchanged (0.7472ms)
+✔ Phase 2 transport/persistence boundary unchanged: pollPendingBilling (4.0376ms)
+✔ Phase 2 transport/persistence boundary unchanged: enhancePrompt (0.364ms)
+✔ Phase 2 transport/persistence boundary unchanged: startVoiceInput (0.3044ms)
+✔ Phase 2 transport/persistence boundary unchanged: stopVoiceInput (0.3172ms)
+✔ Phase 2 transport/persistence boundary unchanged: cancelVoiceInput (0.2993ms)
+✔ Phase 2 transport/persistence boundary unchanged: sendPrompt (0.2958ms)
+✔ Phase 2 transport/persistence boundary unchanged: uploadFiles (0.269ms)
+✔ Phase 2 transport/persistence boundary unchanged: branchAt (0.4232ms)
+✔ Phase 2 transport/persistence boundary unchanged: editPrompt (0.5688ms)
+✔ Phase 2 transport/persistence boundary unchanged: regenerate (0.5978ms)
+(node:27864) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/image-clipboard.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ clipboard items preserve multiple images without double-counting FileList (15.4081ms)
+✔ FileList-only clipboard works, null items and ordinary text stay harmless (0.8306ms)
+✔ FLUX maps to an official mark and paste remains a user-triggered guarded action (18.1831ms)
+✔ image polish remains scoped and supports light/dark surfaces (2.1209ms)
+✔ decorative motion is gentle, pausable and disabled for reduced motion (0.6193ms)
+✔ model, reference and settings controls preserve authorization and accessible state (0.5576ms)
+✔ Library contains decorative overflow without restricting its content height (20.3137ms)
+(node:28320) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/responsive-fixture-access.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ explicit development opt-in accepts only loopback hosts (2.595ms)
+✔ fixture fails closed in production and test even with the flag (0.4541ms)
+✔ fixture fails closed without exact explicit opt-in (3.2577ms)
+✔ fixture fails closed whenever Vercel is present (0.4651ms)
+✔ fixture rejects remote hosts and loopback lookalikes (0.542ms)
+✔ collapsed navigation keeps accessible labels and linked toggle state (6.8819ms)
+✔ account menu remains readable and keyboard operable in both sidebar states (0.5898ms)
+✔ sidebar motion and saved preferences have safe fallbacks (0.5191ms)
+✔ template launch preserves the exact encoded prompt and descriptive accessible action (2.3383ms)
+✔ search combines with category, announces results and supports reset (0.4023ms)
+✔ cards size to content and titles remain readable, with optional decorative motion (1.995ms)
+(node:7276) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/video-studio-media.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all sixteen supplied samples have full-length, fast-start browser assets (328.0592ms)
+✔ model browsing and full-frame playback preserve generation protections (20.6028ms)
+✔ compact navigation and completed outputs expose clear, honest actions (1.3872ms)
+✔ verified provider marks exist locally and FlashVSR remains honestly labeled (17.6055ms)
+ℹ tests 199
+ℹ suites 0
+ℹ pass 199
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20692.5273

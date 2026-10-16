@@ -1,0 +1,12 @@
+{
+  "pollPendingBilling": "cf27d70ae89595341f2f44ae8953294a50d839becdbd51aced58dfc1f6170823",
+  "enhancePrompt": "58ab55a4db570c3b6a548a00029b00233522066e6edc7cef627727cff6b203c3",
+  "startVoiceInput": "3e46ad272a1eade018771a681f8ffadafe79559732776b32d7d16c134374d88a",
+  "stopVoiceInput": "9c5136321461c535bff0d99b1485ac25a7972c401c76fd738253b1952c8d6ea8",
+  "cancelVoiceInput": "16c921cdfc88f6e9e9203d990a37e436594de949f8b5aac77216bdbcea6d0dbf",
+  "sendPrompt": "6545f09953edf24fa4e290e76770aa5fe408202d9ca6d60b359f7b46dbd889cd",
+  "uploadFiles": "5df835f371ff90c0c2f5dc9dcf6d21f2b56d4446a9a61374be38401e177acd66",
+  "branchAt": "783b77a1955d8a9bac4a401d41b1aa55e47ae2cdfa0c465166361aab073f53ba",
+  "editPrompt": "e5ea1c025bc81e42b98b4558e2fe8172f11e181033a10ef71d48f631c0113e5d",
+  "regenerate": "6c1d3c6a94517d5ba807cf18c7bcb71b88fc75dc4cf3493b65be3779d85fc9f8"
+}

@@ -23,7 +23,7 @@ jobs:
       - run: pnpm check:homepage && pnpm check:security
       - run: pnpm test:billing && pnpm test:security && pnpm test:ui
       - name: Lint changed responsive components (repository baseline errors remain documented)
-        run: pnpm exec eslint src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
+        run: pnpm exec eslint src/components/chat-client.tsx src/components/chat-workspace.tsx src/components/chat-fixture.tsx src/lib/chat-composer-events.ts src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
       - run: pnpm build && pnpm typecheck
         env:
           NEXT_TELEMETRY_DISABLED: '1'

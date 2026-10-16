@@ -31,40 +31,40 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/app/globals.css
 
-844 media/container conditions; 768 repeated exact selector + condition groups; 598 dimension/overflow candidates; 201 small-control declarations.
+835 media/container conditions; 766 repeated exact selector + condition groups; 587 dimension/overflow candidates; 201 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
-| .hero-orbit | base | 105, 1909 |
-| .model-pill | base | 128, 441 |
-| .app-shell | base | 161, 410, 826 |
-| .app-sidebar:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 162, 411, 880, 884 |
-| .app-sidebar | @media (max-width:900px) | 162, 411, 431, 431, 828, 880, 884 |
-| html[data-theme="light"] .app-sidebar:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 163, 412 |
-| html[data-theme="light"] .app-sidebar | @media (max-width:900px) | 163, 412 |
-| .sidebar-brand:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 164, 414, 884 |
-| .sidebar-brand | @media (max-width:900px) | 164, 414, 884 |
-| .sidebar-section:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 165, 424, 884 |
-| .sidebar-section | @media (max-width:900px) | 165, 424, 884 |
-| .sidebar-nav:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 166, 424, 884 |
-| .sidebar-nav | @media (max-width:900px) | 166, 424, 884 |
-| .sidebar-link:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 167, 425 |
-| .sidebar-link | @media (max-width:900px) | 167, 874 |
-| .sidebar-link:hover:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 168, 426, 874 |
-| .sidebar-link:hover | @media (max-width:900px) | 168, 874 |
-| .sidebar-bottom | @media (max-width:900px) | 169, 428, 884 |
-| .app-main | base | 170, 826, 880 |
-| .app-topbar | base | 171, 826, 888, 894, 1359, 1516 |
-| .app-content | base | 173, 826, 1898 |
-| .wallet-chip | base | 176, 894 |
-| .chat-toolbar | base | 180, 850, 880 |
-| .chat-messages | @media (max-width:900px) | 199, 851, 857, 880, 881 |
-| .chat-messages:where(:not(.premium-chat-page.is-welcome,.premium-chat-page.is-welcome *)) | @media (min-width:901px) | 199, 851, 880 |
-| .chat-row | base | 200, 852 |
-| .chat-content | base | 202, 852 |
-| .chat-meta | base | 203, 852 |
-| .chat-empty | base | 206, 851, 880 |
-| .premium-empty | base | 218, 851 |
+| .hero-orbit | base | 105, 1904 |
+| .model-pill | base | 128, 439 |
+| .app-shell | base | 161, 408, 821 |
+| .app-sidebar:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 162, 409, 875, 879 |
+| .app-sidebar | @media (max-width:900px) | 162, 409, 429, 429, 823, 875, 879 |
+| html[data-theme="light"] .app-sidebar:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 163, 410 |
+| html[data-theme="light"] .app-sidebar | @media (max-width:900px) | 163, 410 |
+| .sidebar-brand:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 164, 412, 879 |
+| .sidebar-brand | @media (max-width:900px) | 164, 412, 879 |
+| .sidebar-section:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 165, 422, 879 |
+| .sidebar-section | @media (max-width:900px) | 165, 422, 879 |
+| .sidebar-nav:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 166, 422, 879 |
+| .sidebar-nav | @media (max-width:900px) | 166, 422, 879 |
+| .sidebar-link:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 167, 423 |
+| .sidebar-link | @media (max-width:900px) | 167, 869 |
+| .sidebar-link:hover:where(:not(.premium-workstation-shell,.premium-workstation-shell *)) | base | 168, 424, 869 |
+| .sidebar-link:hover | @media (max-width:900px) | 168, 869 |
+| .sidebar-bottom | @media (max-width:900px) | 169, 426, 879 |
+| .app-main | base | 170, 821, 875 |
+| .app-topbar | base | 171, 821, 883, 889, 1354, 1511 |
+| .app-content | base | 173, 821, 1893 |
+| .wallet-chip | base | 176, 889 |
+| .chat-toolbar | base | 178, 845, 875 |
+| .chat-messages | @media (max-width:900px) | 197, 846, 852, 875, 876 |
+| .chat-messages:where(:not(.premium-chat-page.is-welcome,.premium-chat-page.is-welcome *)) | @media (min-width:901px) | 197, 846, 875 |
+| .chat-row | base | 198, 847 |
+| .chat-content | base | 200, 847 |
+| .chat-meta | base | 201, 847 |
+| .chat-empty | base | 204, 846, 875 |
+| .premium-empty | base | 216, 846 |
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
@@ -122,6 +122,15 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 | .costRow small | base | 4, 37 |
 | .costRow b | base | 4, 37 |
 | .confirm | base | 4, 37 |
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/chat-workspace.css
+
+4 media/container conditions; 0 repeated exact selector + condition groups; 6 dimension/overflow candidates; 1 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 

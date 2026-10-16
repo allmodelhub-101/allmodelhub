@@ -22,7 +22,7 @@ export function useWorkspaceOverlay(open: boolean, ref: RefObject<HTMLElement | 
     if (modal) {
       if (!document.body.hasAttribute("data-workspace-modal-count")) {
         savedOverflow = document.body.style.overflow;
-        scrollOwners = Array.from(document.querySelectorAll<HTMLElement>(".responsive-workspace .app-content,.responsive-workspace .sidebar-scroll")).map(element => ({element, overflow:element.style.overflow}));
+        scrollOwners = Array.from(document.querySelectorAll<HTMLElement>(".responsive-workspace .app-content,.responsive-workspace .sidebar-scroll,.chat-workspace .chat-layout-body")).map(element => ({element, overflow:element.style.overflow}));
         for (const {element} of scrollOwners) element.style.overflow = "hidden";
       }
       document.body.dataset.workspaceModalCount = String(Number(document.body.dataset.workspaceModalCount || 0) + 1);

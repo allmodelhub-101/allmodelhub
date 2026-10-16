@@ -238,6 +238,8 @@
         "src/components/app-sidebar.css",
         "src/components/app-sidebar.tsx",
         "src/components/chat-client.tsx",
+        "src/components/chat-workspace.css",
+        "src/components/chat-workspace.tsx",
         "src/components/model-brand.tsx",
         "src/components/model-picker.css",
         "src/components/model-picker.tsx",
@@ -254,6 +256,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/chat-workspace.css",
         "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
@@ -479,6 +482,9 @@
       "components": [
         "src/components/app-sidebar.css",
         "src/components/app-sidebar.tsx",
+        "src/components/chat-fixture.tsx",
+        "src/components/chat-workspace.css",
+        "src/components/chat-workspace.tsx",
         "src/components/model-brand.tsx",
         "src/components/model-picker.css",
         "src/components/model-picker.tsx",
@@ -494,6 +500,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/chat-workspace.css",
         "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
@@ -1058,11 +1065,11 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 644682,
-      "lines": 2390,
-      "mediaQueries": 844,
+      "bytes": 643328,
+      "lines": 2385,
+      "mediaQueries": 835,
       "important": 137,
-      "viewportUnits": 78
+      "viewportUnits": 69
     },
     {
       "file": "src/app/wallet/wallet-premium.css",
@@ -1087,6 +1094,14 @@
       "mediaQueries": 8,
       "important": 4,
       "viewportUnits": 0
+    },
+    {
+      "file": "src/components/chat-workspace.css",
+      "bytes": 16530,
+      "lines": 140,
+      "mediaQueries": 4,
+      "important": 0,
+      "viewportUnits": 5
     },
     {
       "file": "src/components/image-studio.css",
