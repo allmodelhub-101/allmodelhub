@@ -1,0 +1,488 @@
+{
+  "geometry": {
+    "viewport": 390,
+    "scroll": 390,
+    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "body": 390,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "video-studio-v2-module__bOxVpW__modelTrack",
+        "left": 23,
+        "right": 617
+      },
+      {
+        "tag": "DIV",
+        "class": "video-studio-v2-module__bOxVpW__modelGroup",
+        "left": 23,
+        "right": 617
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 221,
+        "right": 411
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 419,
+        "right": 609
+      },
+      {
+        "tag": "SPAN",
+        "class": "video-studio-v2-module__bOxVpW__videoBrand",
+        "left": 430,
+        "right": 462
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 434,
+        "right": 458
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 471,
+        "right": 560.953125
+      },
+      {
+        "tag": "B",
+        "class": "",
+        "left": 471,
+        "right": 560.953125
+      },
+      {
+        "tag": "SMALL",
+        "class": "",
+        "left": 471,
+        "right": 560.953125
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 362,
+        "right": 437
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 364,
+        "right": 435
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 406.484375,
+        "right": 431
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 445,
+        "right": 520
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 447,
+        "right": 518
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 489.484375,
+        "right": 514
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 528,
+        "right": 603
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 530,
+        "right": 601
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 572.484375,
+        "right": 597
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 611,
+        "right": 686
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 613,
+        "right": 684
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 655.484375,
+        "right": 680
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 694,
+        "right": 769
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 696,
+        "right": 767
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 738.484375,
+        "right": 763
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 777,
+        "right": 852
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 779,
+        "right": 850
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 821.484375,
+        "right": 846
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 860,
+        "right": 935
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 862,
+        "right": 933
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 904.484375,
+        "right": 929
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 943,
+        "right": 1018
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 945,
+        "right": 1016
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 987.484375,
+        "right": 1012
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 1026,
+        "right": 1101
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 1028,
+        "right": 1099
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1070.484375,
+        "right": 1095
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 1109,
+        "right": 1184
+      },
+      {
+        "tag": "IMG",
+        "class": "",
+        "left": 1111,
+        "right": 1182
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1153.484375,
+        "right": 1178
+      },
+      {
+        "tag": "BUTTON",
+        "class": "",
+        "left": 1192,
+        "right": 1267
+      }
+    ]
+  },
+  "controls": [
+    {
+      "tag": "BUTTON",
+      "label": "Create",
+      "width": 52.765625,
+      "height": 32
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Explore",
+      "width": 52.78125,
+      "height": 32
+    },
+    {
+      "tag": "A",
+      "label": "History ↗",
+      "width": 52.765625,
+      "height": 40
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Previous video models",
+      "width": 26,
+      "height": 26
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Next video models",
+      "width": 26,
+      "height": 26
+    },
+    {
+      "tag": "BUTTON",
+      "label": "MiniMax H3 LiteMiniMax✓",
+      "width": 190,
+      "height": 50
+    },
+    {
+      "tag": "BUTTON",
+      "label": "VSRFlashVSRDevelopment fixture",
+      "width": 190,
+      "height": 50
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Wan 3.0 VideoDevelopment fixture",
+      "width": 190,
+      "height": 50
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Text to Video",
+      "width": 159.5,
+      "height": 38
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Image to Video",
+      "width": 159.5,
+      "height": 38
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Choose a video model: MiniMax H3 Lite",
+      "width": 332,
+      "height": 56
+    },
+    {
+      "tag": "TEXTAREA",
+      "label": "Scene direction",
+      "width": 332,
+      "height": 130
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Video duration: 5 seconds",
+      "width": 152.5,
+      "height": 42
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Video aspect ratio: 16:9",
+      "width": 152.5,
+      "height": 42
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Video resolution: 720p",
+      "width": 152.5,
+      "height": 42
+    },
+    {
+      "tag": "INPUT",
+      "label": null,
+      "width": 13,
+      "height": 13
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Generate Video →",
+      "width": 332,
+      "height": 48
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Play preview",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "tag": "INPUT",
+      "label": "Preview progress",
+      "width": 164.53125,
+      "height": 16
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Unmute preview",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Fullscreen preview",
+      "width": 30,
+      "height": 30
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open player ↗",
+      "width": 92.453125,
+      "height": 33
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Monochrome tension",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Night drive",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Interior portrait",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Dark procession",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Everyday stories",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Automotive detail",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview A wider perspective",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Character in focus",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Profile study",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Glass worlds",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview After-hours ride",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Street style",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview City astronaut",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Unexpected duet",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview Urban surprise",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Preview A little curiosity",
+      "width": 75,
+      "height": 66
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open Next.js Dev Tools",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "errors": [],
+  "resources": []
+}

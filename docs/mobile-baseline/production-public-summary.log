@@ -1,0 +1,15 @@
+{
+  "label": "production-public",
+  "stats": {
+    "startTime": "2026-10-16T10:35:21.816Z",
+    "duration": 205888.27,
+    "expected": 48,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "passed": 48
+  },
+  "failures": []
+}

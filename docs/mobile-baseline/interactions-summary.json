@@ -1,0 +1,260 @@
+{
+  "source": "test-results/interactions/results.json",
+  "label": "interactions",
+  "stats": {
+    "startTime": "2026-10-16T10:24:50.357Z",
+    "duration": 130753.86599999998,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "counts": {
+    "failed": 6,
+    "passed": 10
+  },
+  "cases": [
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-390x844",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"http://127.0.0.1:3100/\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 10000ms\u001b[22m\n\u001b[2m    7 × locator resolved to <html lang=\"en\" data-theme=\"light\">…</html>\u001b[22m\n\u001b[2m      - unexpected value \"http://127.0.0.1:3100/\"\u001b[22m\n\n\n  13 |     await page.getByRole('link',{name:'Login',exact:true}).first().click();\n  14 |   }\n> 15 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n     |                      ^\n  16 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  17 | });\n  18 | test('login form focus, typing, password visibility and reduced viewport',async({page})=>{\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:15:22"
+      ],
+      "attachments": [
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-390x844",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  39 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  40 |   await page.keyboard.press('Escape');\n> 41 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  42 | });\n  43 | test('safe video fixture form and viewer modal',async({page})=>{\n  44 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:41:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-768x1024",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveURL\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/\\/auth\\/login/\u001b[39m\nReceived string:  \u001b[31m\"http://127.0.0.1:3100/\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveURL\" with timeout 10000ms\u001b[22m\n\u001b[2m    9 × locator resolved to <html lang=\"en\" data-theme=\"light\">…</html>\u001b[22m\n\u001b[2m      - unexpected value \"http://127.0.0.1:3100/\"\u001b[22m\n\n\n  13 |     await page.getByRole('link',{name:'Login',exact:true}).first().click();\n  14 |   }\n> 15 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n     |                      ^\n  16 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  17 | });\n  18 | test('login form focus, typing, password visibility and reduced viewport',async({page})=>{\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:15:22"
+      ],
+      "attachments": [
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-768x1024\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-768x1024\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-768x1024",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  39 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  40 |   await page.keyboard.press('Escape');\n> 41 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  42 | });\n  43 | test('safe video fixture form and viewer modal',async({page})=>{\n  44 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:41:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-1366x768",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  39 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  40 |   await page.keyboard.press('Escape');\n> 41 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  42 | });\n  43 | test('safe video fixture form and viewer modal',async({page})=>{\n  44 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:41:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "webkit-390x844",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    22 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  39 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  40 |   await page.keyboard.press('Escape');\n> 41 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  42 | });\n  43 | test('safe video fixture form and viewer modal',async({page})=>{\n  44 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:41:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    }
+  ]
+}

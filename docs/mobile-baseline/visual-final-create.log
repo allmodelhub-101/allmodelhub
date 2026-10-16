@@ -1,0 +1,25 @@
+
+Running 12 tests using 2 workers
+
+(node:9440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (5.1s)
+  ok  2 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (5.1s)
+  ok  4 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (3.9s)
+  ok  3 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (4.9s)
+  ok  5 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (5.2s)
+  ok  6 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (5.4s)
+(node:21036) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (4.7s)
+  ok  8 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.4s)
+  ok  9 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (4.3s)
+  ok 10 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (6.3s)
+  ok 11 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (4.6s)
+  ok 12 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (3.7s)
+
+  12 passed (36.1s)

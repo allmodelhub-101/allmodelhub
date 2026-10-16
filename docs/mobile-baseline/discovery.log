@@ -1,0 +1,938 @@
+Listing tests:
+  [chromium-320x568] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-320x568] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-320x568] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-320x568] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-320x568] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-320x568] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-320x568] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-320x568] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-320x568] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-320x568] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-360x800] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-360x800] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-360x800] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-360x800] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-360x800] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-360x800] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-360x800] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-360x800] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-360x800] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-360x800] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-375x812] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-375x812] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-375x812] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-375x812] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-375x812] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-375x812] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-375x812] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-375x812] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-375x812] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-375x812] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-390x844] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-390x844] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-390x844] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-390x844] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-390x844] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-390x844] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-390x844] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-390x844] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-390x844] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-390x844] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-430x932] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-430x932] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-430x932] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-430x932] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-430x932] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-430x932] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-430x932] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-430x932] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-430x932] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-430x932] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-844x390] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-844x390] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-844x390] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-844x390] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-844x390] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-844x390] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-844x390] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-844x390] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-844x390] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-844x390] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-600x960] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-600x960] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-600x960] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-600x960] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-600x960] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-600x960] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-600x960] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-600x960] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-600x960] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-600x960] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-768x1024] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-768x1024] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-768x1024] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-768x1024] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-768x1024] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-768x1024] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-768x1024] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-768x1024] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-768x1024] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-1024x768] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-1024x768] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-1024x768] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-1024x768] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-1024x768] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-1024x768] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-1024x768] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-1024x768] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-1024x768] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-1180x820] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-1180x820] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-1180x820] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-1180x820] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-1180x820] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-1180x820] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-1180x820] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-1180x820] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-1180x820] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-1366x768] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-1366x768] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-1366x768] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-1366x768] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-1366x768] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-1366x768] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-1366x768] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-1366x768] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-1366x768] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [chromium-1920x1080] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [chromium-1920x1080] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [chromium-1920x1080] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [chromium-1920x1080] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [chromium-1920x1080] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [chromium-1920x1080] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [chromium-1920x1080] › visual.spec.ts:4:7 › visual baseline login
+  [chromium-1920x1080] › visual.spec.ts:4:7 › visual baseline legal
+  [chromium-1920x1080] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-320x568] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-320x568] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-320x568] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-320x568] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-320x568] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-320x568] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-320x568] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-320x568] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-320x568] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-320x568] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-360x800] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-360x800] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-360x800] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-360x800] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-360x800] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-360x800] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-360x800] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-360x800] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-360x800] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-360x800] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-375x812] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-375x812] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-375x812] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-375x812] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-375x812] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-375x812] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-375x812] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-375x812] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-375x812] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-375x812] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-390x844] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-390x844] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-390x844] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-390x844] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-390x844] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-390x844] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-390x844] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-390x844] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-390x844] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-390x844] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-430x932] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-430x932] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-430x932] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-430x932] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-430x932] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-430x932] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-430x932] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-430x932] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-430x932] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-430x932] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-844x390] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-844x390] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-844x390] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-844x390] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-844x390] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-844x390] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-844x390] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-844x390] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-844x390] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-844x390] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-600x960] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-600x960] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-600x960] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-600x960] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-600x960] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-600x960] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-600x960] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-600x960] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-600x960] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-600x960] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-768x1024] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-768x1024] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-768x1024] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-768x1024] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-768x1024] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-768x1024] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-768x1024] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-768x1024] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-768x1024] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-1024x768] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-1024x768] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-1024x768] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-1024x768] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-1024x768] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-1024x768] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-1024x768] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-1024x768] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-1024x768] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-1180x820] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-1180x820] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-1180x820] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-1180x820] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-1180x820] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-1180x820] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-1180x820] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-1180x820] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-1180x820] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-1366x768] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-1366x768] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-1366x768] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-1366x768] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-1366x768] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-1366x768] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-1366x768] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-1366x768] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-1366x768] › visual.spec.ts:4:7 › visual baseline video-fixture
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin/models authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin/payments authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin/profits authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin/settings authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /admin/users authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /audio authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /auth/verified authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /battle authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /chat authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /files authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /history authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /images authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /models authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /notifications authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /projects authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /settings authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /support authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /templates authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /usage authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /video authenticated workflow BLOCKED
+  [webkit-1920x1080] › baseline.spec.ts:35:8 › /wallet authenticated workflow BLOCKED
+  [webkit-1920x1080] › interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  [webkit-1920x1080] › interactions.spec.ts:8:5 › marketing navigation opens, closes with Escape and navigates
+  [webkit-1920x1080] › interactions.spec.ts:25:5 › login form focus, typing, password visibility and reduced viewport
+  [webkit-1920x1080] › interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search
+  [webkit-1920x1080] › interactions.spec.ts:50:5 › safe video fixture form and viewer modal
+  [webkit-1920x1080] › visual.spec.ts:4:7 › visual baseline login
+  [webkit-1920x1080] › visual.spec.ts:4:7 › visual baseline legal
+  [webkit-1920x1080] › visual.spec.ts:4:7 › visual baseline video-fixture
+Total: 936 tests in 3 files

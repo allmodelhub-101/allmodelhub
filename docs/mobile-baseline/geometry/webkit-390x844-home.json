@@ -1,0 +1,284 @@
+{
+  "geometry": {
+    "viewport": 390,
+    "scroll": 390,
+    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+    "body": 390,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "cin-aurora cin-aurora-one",
+        "left": -85.796875,
+        "right": 132.59375
+      },
+      {
+        "tag": "DIV",
+        "class": "cin-aurora cin-aurora-two",
+        "left": 280.8125,
+        "right": 468
+      },
+      {
+        "tag": "DIV",
+        "class": "cin-model-track",
+        "left": 0,
+        "right": 2045.125
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 356.59375,
+        "right": 469.8125
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 386.59375,
+        "right": 391.59375
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 469.8125,
+        "right": 611.09375
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 499.8125,
+        "right": 504.8125
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 611.09375,
+        "right": 750.671875
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 641.09375,
+        "right": 646.09375
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 750.671875,
+        "right": 887.390625
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 780.671875,
+        "right": 785.671875
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 887.390625,
+        "right": 1022.5625
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 917.390625,
+        "right": 922.390625
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1022.5625,
+        "right": 1124.671875
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1052.5625,
+        "right": 1057.5625
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1124.671875,
+        "right": 1253.09375
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1154.671875,
+        "right": 1159.671875
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1253.09375,
+        "right": 1379.15625
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1283.09375,
+        "right": 1288.09375
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1379.15625,
+        "right": 1492.375
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1409.15625,
+        "right": 1414.15625
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1492.375,
+        "right": 1633.65625
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1522.375,
+        "right": 1527.375
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1633.65625,
+        "right": 1773.234375
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1663.65625,
+        "right": 1668.65625
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1773.234375,
+        "right": 1909.953125
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1803.234375,
+        "right": 1808.234375
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 1909.953125,
+        "right": 2045.125
+      },
+      {
+        "tag": "I",
+        "class": "",
+        "left": 1939.953125,
+        "right": 1944.953125
+      },
+      {
+        "tag": "DIV",
+        "class": "cin-receipt",
+        "left": 318,
+        "right": 411.4685974121094
+      },
+      {
+        "tag": "DIV",
+        "class": "cin-final-glow",
+        "left": -155,
+        "right": 545
+      }
+    ]
+  },
+  "controls": [
+    {
+      "tag": "A",
+      "label": "Models Suite",
+      "width": 31,
+      "height": 31
+    },
+    {
+      "tag": "A",
+      "label": "Start Free",
+      "width": 78.90625,
+      "height": 38
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open navigation menu",
+      "width": 40,
+      "height": 40
+    },
+    {
+      "tag": "A",
+      "label": "Start creating ↗",
+      "width": 374.390625,
+      "height": 50
+    },
+    {
+      "tag": "A",
+      "label": "Explore the experience",
+      "width": 374.390625,
+      "height": 50
+    },
+    {
+      "tag": "A",
+      "label": "Enter the workspace →",
+      "width": 181.65625,
+      "height": 21
+    },
+    {
+      "tag": "A",
+      "label": "Buy credits ↗",
+      "width": 362,
+      "height": 50
+    },
+    {
+      "tag": "A",
+      "label": "Read pricing answers",
+      "width": 167.25,
+      "height": 21
+    },
+    {
+      "tag": "A",
+      "label": "Create your account ↗",
+      "width": 212.546875,
+      "height": 50
+    },
+    {
+      "tag": "A",
+      "label": "Terms",
+      "width": 28.421875,
+      "height": 15
+    },
+    {
+      "tag": "A",
+      "label": "Privacy",
+      "width": 33.921875,
+      "height": 15
+    },
+    {
+      "tag": "A",
+      "label": "Acceptable Use",
+      "width": 74.6875,
+      "height": 15
+    },
+    {
+      "tag": "A",
+      "label": "Refunds",
+      "width": 39.0625,
+      "height": 15
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open Next.js Dev Tools",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "errors": [],
+  "resources": []
+}
