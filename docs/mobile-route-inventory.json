@@ -1025,6 +1025,13 @@
       "methods": [
         "POST"
       ]
+    },
+    {
+      "route": "/responsive-fixture/audio",
+      "file": "src/app/responsive-fixture/audio/route.ts",
+      "methods": [
+        "GET"
+      ]
     }
   ],
   "auxiliary": [
@@ -1121,11 +1128,11 @@
     },
     {
       "file": "src/components/image-studio.css",
-      "bytes": 34592,
+      "bytes": 34853,
       "lines": 241,
       "mediaQueries": 6,
       "important": 7,
-      "viewportUnits": 4
+      "viewportUnits": 5
     },
     {
       "file": "src/components/legal-page.module.css",

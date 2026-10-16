@@ -1,5 +1,14 @@
 # Models Suite responsive transformation — implementation plan
 
+## Phase 4 delivery and Phase 5 entry
+
+Image, Video and Audio continue the existing branch/PR in three ordered implementation commits. [Phase 4 handoff](mobile-phase4/README.md) records batch acceptance, screenshots, fixture boundaries and actual verification. Preserve the Phase 2 shell, Phase 3 Chat and all controller payloads, authorization, settlement, uploads and polling.
+
+Phase 5 order: inspect current main/overlapping work; then history/library/projects/templates and tables; account/settings/support forms; wallet/payment presentation without purchases or mutations; admin/public polish under authorized roles or explicit blockers; full browser/production/contract regression and reviewed screenshots. Reuse WorkspaceFrame/useWorkspaceOverlay/ModelPicker/PremiumSelect and component-owned CSS, local content scrolling, 44px primary actions and visible focus.
+
+Phase 5 entry requires exact-head Linux CI success and reviewed Phase 4 visual comparisons. Fixtures do not prove authentication or real generation. Release requires authorized isolated E2E and physical iOS/Android keyboard/safe-area/zoom/assistive-technology checks. Phase 6 remains full accessibility/performance/regression hardening with a separate release decision. No merge or production promotion is authorized.
+
+
 ## Phase 3 implementation and Phase 4 entry
 
 Chat implementation is on the existing feature branch and draft PR #149. See [Phase 3 handoff](mobile-phase3/README.md) for exact acceptance and CI evidence; earlier Phase 1/2 sections below describe prior milestones. ChatWorkspace and chat-workspace.css own presentation, while ChatClient keeps business/state contracts. The safe fixture mounts those real components and uses only synthetic local callbacks. Model, project, reasoning, privacy, enhancement, paste, attachment, voice and Send/Stop controls remain available.
@@ -11,7 +20,7 @@ Phase 4 implementation order:
 1. Recheck main, PR head and overlapping #117 Video/#106 billing work. Reuse this branch/PR and read each studio's actual controller/CSS dependencies before editing.
 2. Image Studio first: extract presentation only when it reduces risk; cover welcome, prompt/options, upload previews, synthetic result grids/viewers, errors/loading, long filenames and short-height overlays. Preserve model flags, request fields, upload contracts and billing.
 3. Video Studio next: preserve Phase 2 Escape/focus work, generation/settlement handlers and aspect-ratio behavior; test synthetic long controls, history and preview media without provider calls.
-4. Audio Studio modes last: speech/music/transcription controls, long text, file previews, audio-player reachability and mode switching, with synthetic media and no real purchases/generations.
+4. Audio Studio modes last: speech/music/sound-effects controls, long text, file previews, audio-player reachability and mode switching, with synthetic media and no real purchases/generations.
 5. For every studio, use owner-scoped CSS, guarded real presentation fixtures, all 28 projects, light/dark plus 900/901 breakpoint checks, before/after image review, production component/Next checks and existing billing/security/UI tests. Do not add broad global overflow clipping.
 
 Phase 5 remains workspace/account/data/payment/admin/public polish; Phase 6 remains full accessibility/performance/regression hardening and a separate release decision. Obtain an authorized isolated account/backend to unblock the 22 authenticated workflows; physical iOS/Android keyboards, zoom, safe areas and assistive technology remain release gates. Phase 4 presentation work can proceed with the existing safe fixture approach after Phase 3's available gates are green; this does not authorize merging or production promotion.

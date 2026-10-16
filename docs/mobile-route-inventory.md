@@ -2,7 +2,7 @@
 
 Run `pnpm audit:routes` from the repository root. Counts are source routes, not authenticated browser passes. Root layout globals apply to every page.
 
-32 page routes; 42 HTTP handlers; 16 CSS files. No Pages Router exists.
+32 page routes; 43 HTTP handlers; 16 CSS files. No Pages Router exists.
 
 | Route | Access | Source / redirect | Components (transitive) | Styles (transitive) |
 |---|---|---|---|---|
@@ -85,6 +85,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /auth/callback | GET | src/app/auth/callback/route.ts |
 | /auth/confirm | GET | src/app/auth/confirm/route.ts |
 | /auth/logout | POST | src/app/auth/logout/route.ts |
+| /responsive-fixture/audio | GET | src/app/responsive-fixture/audio/route.ts |
 
 ## Stylesheet measurements
 
@@ -98,7 +99,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/components/app-sidebar.css | 4316 | 37 | 3 | 1 | 1 |
 | src/components/audio-studio.module.css | 35369 | 100 | 9 | 4 | 0 |
 | src/components/chat-workspace.css | 17081 | 146 | 4 | 0 | 5 |
-| src/components/image-studio.css | 34592 | 241 | 6 | 7 | 4 |
+| src/components/image-studio.css | 34853 | 241 | 6 | 7 | 5 |
 | src/components/legal-page.module.css | 22395 | 37 | 9 | 5 | 1 |
 | src/components/marketing-nav.module.css | 1906 | 28 | 3 | 0 | 1 |
 | src/components/model-picker.css | 836 | 13 | 1 | 0 | 0 |

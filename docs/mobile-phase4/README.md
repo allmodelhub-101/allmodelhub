@@ -8,11 +8,9 @@ ImageStudioView is the actual production presentation; useImageStudio retains co
 
 Scoped layout replaces duplicate navigation padding with the shell's clearance, contains long reference names locally, preserves result image content with object-fit containment and adds a focus-trapped full-image viewer. Settings remain an inline disclosure with Escape/focus restoration; all existing model-derived options remain. A 320px visual inspection revealed an intrinsic-width welcome layout concealed by global overflow clipping. Two Image-specific clipping declarations were removed and archived; actual content sizing now resolves the overflow.
 
-Before/after actual screenshots: `image/before/` and `image/after/`, idle/results at 320×568, 390×844, 768×1024, 844×390 and 1366×768. Inspected small-phone, phone result and desktop captures; reduced mobile decoration after review to bring the prompt closer. Initial test failures were an incorrect model-picker dialog name, fixed to its image-specific accessible name. Targeted Image run: 12 passed, 0 failed in four representative projects, both themes. Further final regression/CI is pending.
+Before/after actual screenshots: `image/before/` and `image/after/`, idle/results at 320×568, 390×844, 768×1024, 844×390 and 1366×768. Inspected small-phone, phone result and desktop captures; reduced mobile decoration after review to bring the prompt closer. Initial test failures were an incorrect model-picker dialog name, fixed to its image-specific accessible name. Targeted Image run: 12 passed, 0 failed in four representative projects, both themes. See the combined verification below.
 
 Twenty Phase 3 function-body hashes guard Image, Video, music/SFX and speech execution handlers in `tests/ui/studio-contracts.test.mjs`; all pass after Image extraction. These guards supplement billing/security tests, not authenticated E2E. Never regenerate hashes merely to hide a presentation change.
-
-## Pending batches and acceptance
 
 ## Batch B — Video Studio
 
@@ -22,12 +20,37 @@ The existing Video fixture is mounted inside the real shared shell. Local refere
 
 Targeted tests exercise both themes, model Escape/focus, long prompt/file names, actual aspect ratio, viewer controls/focus return and queued/completed/failure states. Exact batch stats are in `video/browser-summary.json`. Existing Phase 2 dropdown behavior is retained for final full regression.
 
-Video and Audio implementation and final full-matrix validation are in progress. Phase 4 is not yet declared PASS. Protected workflows still require an authorized isolated account/backend. Physical iOS/Android keyboards, safe areas, zoom, assistive technology and low-end hardware performance remain UNVERIFIED. Fixtures do not prove real generation, upload, persistence, download security or settlement behavior.
+Image, Video and Audio implementation is complete; combined verification is recorded below. Protected workflows still require an authorized isolated account/backend. Physical iOS/Android keyboards, safe areas, zoom, assistive technology and low-end hardware performance remain UNVERIFIED. Fixtures do not prove real generation, upload, persistence, download security or settlement behavior.
 
 ## Batch C — Audio Studio
 
 Speech and music/SFX controllers now return typed presentation props to TtsView and AudioGenerationView. Their real requests, polling, estimates and settlement code are retained. AudioStudio accepts optional presentation panels for the guarded local fixture; production uses the original clients. Model/voice metadata remains dynamic in production, and all three modes remain available.
 
-Audio-owned styles improve mode-tab layout, tablet columns, readable 16px inputs, 44px primary actions, player containment and navigation clearance. Native audio controls expose real playback progress/duration from the media; no synthetic waveform is presented as output data. Existing decorative AudioStage artwork is explicitly labeled as decoration and now pauses when idle. Local two-second WAV data supports actual play/pause tests without external requests. It is a harmless static test asset, not an authenticated route.
+Audio-owned styles improve mode-tab layout, tablet columns, readable 16px inputs, 44px primary actions, player containment and navigation clearance. Native audio controls expose real playback progress/duration from the media; no synthetic waveform is presented as output data. Existing decorative AudioStage artwork is explicitly labeled as decoration and now pauses when idle. A two-second synthetic PCM WAV lives in tests/fixtures and is served only by a media handler with the same explicit development/loopback/no-Vercel gates as the fixture page. No public test-media asset is shipped. Data URLs were rejected by the unchanged CSP and Windows WebKit could not play Blob WAVs; the guarded local handler preserves the real native-player checks without relaxing security.
 
-Targeted Audio checks: 12 passed in four representative projects, both themes, all three modes, long script, model/voice selection, native playback, starters, unavailable model and queued/error states. They found and repaired keyboard tab navigation from a focused inactive tab and WebKit select focus restoration. Phone, native-player and desktop screenshots were inspected. Final cross-studio regression, visual comparisons and Linux CI are pending.
+Targeted Audio checks: 12 passed in four representative projects, both themes, all three modes, long script, model/voice selection, native playback, starters, unavailable model and queued/error states. They found and repaired keyboard tab navigation from a focused inactive tab and WebKit select focus restoration. Phone, native-player and desktop screenshots were inspected. See combined verification below for the final validation gates.
+
+## Boundaries, evidence and independent acceptance
+
+| Studio | Scoped implementation acceptance | Evidence |
+|---|---|---|
+| Image | Implemented and visually reviewed; initial 12/12 targeted cases pass | image/before, image/after, image/browser-summary.json |
+| Video | Implemented and visually reviewed; initial 12/12 targeted cases pass | video/before, video/after, video/browser-summary.json |
+| Audio speech/music/SFX | Implemented and visually reviewed; initial 12/12 targeted cases pass | audio/before, audio/after, audio/browser-summary.json |
+
+Batch commits: Image `86c5eed`, Video `7fe4e8e`, Audio `ca7c12d`. Follow-up verification commits retain the same branch/draft PR. Before captures use the real original presentation after fixture/controller separation and before the studio layout changes. They are synthetic states, not customer pages. App content scrolls within the shell, so fullPage captures still show the current app viewport; completed Video baseline captures do not claim playback verification. After result captures scroll to the output. `controls/` adds expanded Image settings, both viewers, Music and SFX at phone/landscape/desktop sizes. Source PNGs and Windows reference snapshots are retained; no raw trace trees are committed.
+
+Combined validation includes 36/36 targeted cases (both engines, small phone, phone, short landscape and desktop), actual native Video result/viewer play-pause, native speech/music/SFX WAV playback, primary action height/navigation clearance and local fixture state interactions. Approved Windows references cover 36 light/dark snapshots; all 36 approved visual comparisons passed and are saved separately. Twenty unchanged Phase 3 studio execution-body hashes join existing Chat/billing/security guards. All 219 billing/security/UI tests pass. Scoped lint has zero errors and six existing Video img warnings; full lint retains two pre-existing LoginForm errors and 14 warnings. The Windows raw-byte homepage guard remains CRLF-sensitive; LF-normalized unchanged bytes match the protected hash and Linux exact-byte CI must pass.
+
+Production React verification covers 72 studio scenarios with Next's bundled CSS Modules plugins. The bundle uses production React without minification; it is not an optimized Next chunk or authenticated SSR equivalence claim. Actual Next production rendering/fixture denial passed 54 checks, including the local media route returning 404 with opt-in set. Next production build and explicit TypeScript validation passed. Build, type checks, production evidence and visual-comparison summaries are saved in verification/, production/ and next-production/ as available. The final exact-head Linux workflow and outcome are linked in PR #149's description/checks; require that head's success before Phase 5. This document never substitutes an earlier successful commit for the current head.
+
+## Final gates and Phase 5 handoff
+
+- Keep all 28 viewport projects, nine studio cases per project, and prior shell/Chat/public/fixture-gate coverage. No retries or coverage reduction to obtain green results.
+- Preserve all 20 studio contract hashes, existing Chat hashes, billing/security suites and original execution callbacks. No API/lib/schema/provider/wallet/auth/pricing code was changed during Phase 4.
+- Shared components: PremiumSelect's explicit pointer focus is tested with Audio and the preserved shell/Chat matrix. Both viewers use the shared overlay lifecycle; settings and wide references use in-flow/local scrolling, not root clipping.
+- Fixtures and actual generation are separate acceptance layers. All 22 authenticated workflows remain BLOCKED without an authorized isolated session/backend. Real uploads, generation, persisted history, settlement and protected downloads have not been executed.
+- Physical iOS/Android software keyboards, IME, safe areas, pinch/text zoom, screen readers and native device fullscreen remain UNVERIFIED. Mid-range/low-end media profiling remains necessary; no device performance certification is claimed.
+- Phase 5 may start after the current PR head's full Linux checks pass: remaining workspace/data surfaces, account/settings/support, then wallet/admin/public presentation under the same safety boundaries. Phase 6 retains hardware/accessibility/performance hardening and a separate release decision. Do not merge or promote production.
+
+Exploratory runs found and repaired incorrect test dialog/action names, an extraction placement mistake, Audio inactive-tab arrow handling and WebKit select focus. An interrupted comparison run was invalidated while its test source changed; approved reference images were preserved and a clean comparison rerun is authoritative. Existing full-repository lint debt and Windows line-ending guard behavior are documented rather than hidden.

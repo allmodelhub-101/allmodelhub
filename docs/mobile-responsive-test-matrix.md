@@ -1,5 +1,23 @@
 # Responsive baseline test matrix
 
+## Phase 4 studio coverage
+
+The same 14 viewport sizes and both engines (28 projects) are retained. Nine studio cases per project add 252 executed opportunities without reducing Chat/shell/public coverage. Exact final executed counts and CI head are recorded in [Phase 4 handoff](mobile-phase4/README.md) and PR #149 checks; configuration discovery is not execution.
+
+| Layer | Actual safe coverage |
+|---|---|
+| Image | Both themes; prompt, real model/Escape/focus, metadata-derived settings/9:16, local file metadata/removal/long name, queued/error/reset, contained result viewer and Generate clearance. |
+| Video | Both themes; real model search/Escape/focus, measured portrait ratio, local image reference, long prompt/file, native result/viewer playback, queued/error/result controls and Generate clearance. Existing tests retain video/audio reference and upscale contracts. |
+| Audio | Speech/music/SFX, long text, model/voice/unavailable choices, arrow navigation, starters/local queued/failure states, actual local WAV playback and native player/Generate containment. |
+| Diagnostics | Console/runtime and application API requests rejected; shared network policy aborts external/mutating requests. No sessions, purchases, paid generation or real uploads. |
+| Visual | 60 before/after captures at five sizes; expanded settings/viewer/music/SFX captures; 36 reviewed Windows references (both engines x 390/768/1366 x light/dark x three studios). PW_STUDIO_VISUAL=1 enables comparisons; never regenerate references to hide failures. |
+| Production | 72 standalone production-React/CSS-Modules scenarios: both engines x phone/landscape/desktop x idle/completed/queued/error x three studios. Actual Next production public rendering and fixture-denial checks are separate. Neither is authenticated E2E. |
+
+Run `pnpm exec playwright test tests/responsive/studios.spec.ts`; full `pnpm test:responsive` retains all 28 projects and no retries. `LOCAL_RESPONSIVE_FIXTURES=1 node scripts/mobile-studios-production-check.mjs` runs the standalone harness. After `pnpm build`, `node scripts/mobile-studios-next-production-check.mjs` starts/stops a loopback production server and checks public routes plus studio fixture 404s even with opt-in. Capture scripts require explicit local opt-in. Compact summaries distinguish clean final results from exploratory failures.
+
+The 22 protected workflows remain BLOCKED (616 skipped project cases); optional prior visual cases add 84 default skips. Hardware keyboard/IME, fullscreen, safe areas, zoom, screen readers, actual download permissions, uploads/provider/persistence/financial workflows and low-end media performance remain UNVERIFIED. Authorized accounts and hardware are required before release.
+
+
 ## Phase 3 Chat coverage
 
 Both Chromium and WebKit use **320×568, 360×800, 375×812, 390×844, 430×932, 844×390, 600×960, 768×1024, 900×900, 901×900, 1024×768, 1180×820, 1366×768 and 1920×1080**. Ten Chat cases per project add 280 executed opportunities to the preserved Phase 2 suite. Exact final Linux counts/run links are in [Phase 3 handoff](mobile-phase3/README.md); configuration discovery alone is not a pass.

@@ -1,0 +1,1 @@
+Production Next build and explicit tsc --noEmit both completed with exit code 0.

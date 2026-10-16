@@ -23,7 +23,7 @@ jobs:
       - run: pnpm check:homepage && pnpm check:security
       - run: pnpm test:billing && pnpm test:security && pnpm test:ui
       - name: Lint changed responsive components (repository baseline errors remain documented)
-        run: pnpm exec eslint src/components/chat-client.tsx src/components/chat-workspace.tsx src/components/chat-fixture.tsx src/lib/chat-composer-events.ts src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
+        run: pnpm exec eslint src/components/chat-client.tsx src/components/chat-workspace.tsx src/components/chat-fixture.tsx src/lib/chat-composer-events.ts src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/image-studio.tsx src/components/audio-studio.tsx src/components/tts-client.tsx src/components/audio-generation-client.tsx src/components/audio-fixture.tsx src/components/studio-fixtures.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/app/responsive-fixture/audio/route.ts src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
       - run: pnpm build && pnpm typecheck
         env:
           NEXT_TELEMETRY_DISABLED: '1'
@@ -46,6 +46,14 @@ jobs:
         run: node scripts/mobile-chat-production-check.mjs
         env:
           LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Production React studio components (local synthetic data only)
+        run: node scripts/mobile-studios-production-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Next production public rendering and studio fixture denial
+        run: pnpm build && node scripts/mobile-studios-next-production-check.mjs
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
       - name: All viewport projects / both browser engines
         run: pnpm test:responsive
         env:
@@ -58,5 +66,7 @@ jobs:
             playwright-report/
             test-results/**/results.json
             docs/mobile-phase3/production/
+            docs/mobile-phase4/production/
+            docs/mobile-phase4/next-production/
           retention-days: 7
           if-no-files-found: warn

@@ -1,0 +1,12 @@
+{
+  "runLabel": "phase4-controls-verified",
+  "stats": {
+    "startTime": "2026-10-16T16:41:02.842Z",
+    "duration": 210706.611,
+    "expected": 36,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": []
+}

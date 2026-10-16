@@ -1,5 +1,23 @@
 # Models Suite — Phase 1 responsive architecture audit
 
+## Phase 4 studio implementation update (2026-10-16)
+
+Image, Video and Audio were implemented in separate tested batches. See [Phase 4 handoff](mobile-phase4/README.md) for actual verification and acceptance. The inventory remains 32 source pages and 43 HTTP handlers (including one strictly gated fixture-media handler). No authenticated route or execution contract was added.
+
+| Finding | Resolution and owner |
+|---|---|
+| P4-I01: intrinsic welcome width hidden by clipping | Image hero children shrink/wrap; two proven Image-specific global clipping declarations were removed and archived. image-studio.css owns page flow, spacing, references and results. |
+| P4-I02: result/settings focus | ImageStudioView adds a contained full-image dialog with shared overlay ownership and an accessible inline settings disclosure; existing reference limits/options remain. |
+| P4-V01: creation competes with preview | Video module owns compact/tablet creation-first stacking, desktop columns, 16px input, 44px actions and precise portrait/square preview proportions. Native playback/result actions remain. |
+| P4-V02: viewer below shared chrome | Viewer portals to body and uses useWorkspaceOverlay. Production still calls the unchanged upload function; fixture reference selection is local. |
+| P4-A01: duplicate bottom clearance/cramped modes | Audio module owns shell-integrated flow, three equal tabs, compact decoration, tablet side cards, readable input and contained native playback. Idle decoration pauses. |
+| P4-A02: keyboard and WebKit focus | Audio arrow navigation derives the focused tab; PremiumSelect explicitly focuses its pointer trigger, preserving Escape focus return. |
+
+Dependencies: ImageStudio/useImageStudio -> ImageStudioView -> ModelPicker/shared overlay; VideoStudio -> VideoModelRail/PremiumSelect/native media/shared overlay; AudioStudio -> TtsClient/useTtsClient/TtsView or AudioGenerationClient/useAudioGenerationClient/AudioGenerationView -> AudioStage/PremiumSelect. Twenty Phase 3 execution-handler hashes supplement Chat, billing and security regression guards.
+
+Performance review preserves existing Video offscreen/visibility/reduced-motion media policies, metadata loading and native controls; Audio idle artwork pauses. No hardware performance gains are claimed. Global cascade debt remains; no framework or broad rewrite was introduced. Hardware media profiling, real keyboards/IME, safe areas, zoom and assistive technology remain UNVERIFIED; 22 authenticated workflows remain BLOCKED without an authorized isolated account/backend.
+
+
 ## Phase 3 Chat implementation update (2026-10-16)
 
 The live inventory remains **32 source pages / 42 HTTP handlers**, now **16 stylesheets**. Chat presentation is extracted from ChatClient into the production ChatWorkspace component and its scoped stylesheet. No route, authentication, provider, upload API, persistence, pricing or settlement contract was added or changed. Phase 1/2 sections below remain historical evidence. Current acceptance and exact runs are in [Phase 3 handoff](mobile-phase3/README.md).
