@@ -1,0 +1,60 @@
+/* Shared workspace ownership. Studios keep their own content layouts.
+   Tokens are local to the frame; no html/body overflow clipping or theme overrides. */
+.responsive-workspace {
+  --workspace-touch:44px;
+  --workspace-gap:clamp(8px,1.4vw,20px);
+  --workspace-nav-clearance:calc(78px + env(safe-area-inset-bottom));
+  min-width:0;
+}
+.responsive-workspace :is(.app-main,.app-content,.global-project-wrap,.topbar-actions) { min-width:0;max-width:100%; }
+.responsive-workspace .app-content { scroll-padding-block:16px var(--workspace-nav-clearance); }
+.responsive-workspace .app-content > * { min-width:0;max-width:100%; }
+.responsive-workspace :is(.table-wrap,.responsive-scroll-region) { max-width:100%;overflow-x:auto;overscroll-behavior-x:contain; }
+.responsive-workspace :is(.table-wrap,.responsive-scroll-region) > table { min-width:max-content; }
+.responsive-workspace :is(a,button,input,textarea,select,[tabindex]):focus-visible { outline:2px solid var(--accent);outline-offset:3px; }
+.responsive-workspace :is(.project-popover,.sidebar-account-menu) { overscroll-behavior:contain; }
+.responsive-workspace :is(.project-popover,.mobile-nav-sheet,.generation-drawer,.command-panel,.keyboard-panel) :is(button,a) { min-height:var(--workspace-touch); }
+.responsive-workspace .project-popover { max-width:calc(100vw - 24px); }
+.responsive-workspace .generation-drawer { width:min(420px,100%);height:100dvh;max-height:100dvh;padding-bottom:env(safe-area-inset-bottom); }
+.responsive-workspace .drawer-scroll { min-height:0;overscroll-behavior:contain; }
+.responsive-workspace .command-overlay { padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)); }
+.responsive-workspace :is(.command-panel,.keyboard-panel) { width:min(680px,100%);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain; }
+.responsive-workspace .command-input input { min-width:0;font-size:16px; }
+.responsive-workspace .sidebar-account-menu { z-index:200; }
+.responsive-workspace .mobile-nav-layer { position:fixed;inset:0;z-index:190;isolation:isolate; }
+.responsive-workspace .mobile-nav-layer .nav-backdrop { position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%; }
+.responsive-workspace .mobile-nav-layer .mobile-nav-sheet { position:absolute;inset:auto 0 0;z-index:1;max-height:min(85dvh,680px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(22px,env(safe-area-inset-bottom)); }
+.responsive-fixture { padding:var(--workspace-gap);display:grid;gap:16px; }
+.responsive-fixture h1,.responsive-fixture p { margin:0; }
+.responsive-fixture label { display:grid;gap:8px;max-width:560px; }
+.responsive-fixture :is(input,.btn) { min-height:44px;font-size:16px; }
+.responsive-fixture th,.responsive-fixture td { padding:12px;text-align:start;border-bottom:1px solid var(--line); }
+/* Content-driven chrome transition: 901px still has a sidebar, so search gets
+   a second row until there is room for all desktop controls. */
+@media (max-width:1180px) {
+  .responsive-workspace .app-main { grid-template-rows:108px minmax(0,1fr); }
+  .responsive-workspace .app-main .app-topbar { height:108px;min-height:108px;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:44px 44px;gap:4px;padding:8px max(8px,env(safe-area-inset-right)) 8px max(8px,env(safe-area-inset-left)); }
+  .responsive-workspace .app-topbar .command-trigger { display:flex;grid-column:1 / -1;grid-row:2;width:100%;max-width:none;height:44px;min-width:0; }
+  .responsive-workspace .app-topbar .global-project { width:100%;max-width:220px;min-width:0;height:44px; }
+  .responsive-workspace .app-topbar .topbar-actions { display:flex;gap:4px;grid-column:2;grid-row:1; }
+  .responsive-workspace .app-topbar :is(.generation-trigger,.topbar-icon-trigger,.theme-toggle,.wallet-chip,.topbar-profile) { display:grid;place-items:center;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0; }
+  .responsive-workspace .app-topbar .generation-trigger { font-size:0; }
+  .responsive-workspace .app-topbar .wallet-chip :is(span,small) { display:none; }
+  .responsive-workspace .app-topbar .wallet-chip svg { display:block; }
+  .responsive-workspace .app-topbar .topbar-profile > svg { display:none; }
+  .responsive-workspace :is(input,textarea,select,.premium-select-trigger) { font-size:16px; }
+}
+@media (max-width:900px) {
+  .responsive-workspace .app-main { padding-bottom:var(--workspace-nav-clearance); }
+  .responsive-workspace .mobile-nav { left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(7px,env(safe-area-inset-bottom));height:62px;padding:4px; }
+  .responsive-workspace .mobile-nav :is(a,button) { min-height:48px;min-width:0; }
+  .responsive-workspace .mobile-nav button.active { color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--panel)); }
+  .responsive-workspace .mobile-sheet-head button { width:44px;min-height:44px; }
+  .responsive-workspace .mobile-sheet-grid a { min-height:64px;overflow-wrap:anywhere; }
+}
+@media (pointer:coarse) and (min-width:901px) {
+  .responsive-workspace.app-shell aside.app-sidebar :is(.sidebar-link,.sidebar-profile,.sidebar-collapse) { min-height:44px;height:auto; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .responsive-workspace :is(.app-content > *,.command-list section,.project-popover,.mobile-nav-sheet) { animation:none; }
+}

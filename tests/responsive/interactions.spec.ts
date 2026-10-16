@@ -44,8 +44,15 @@ test('safe video fixture model dropdown Escape from search',async({page})=>{
   const picker=page.getByRole('button',{name:/Choose a video model:/});
   await picker.click();
   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();
+  await expect(page.getByPlaceholder('Search live video models')).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(picker).toHaveAttribute('aria-expanded','false');
+  await expect(picker).toBeFocused();
+  await picker.click();await page.getByPlaceholder('Search live video models').fill('FlashVSR');
+  await expect(page.getByRole('option')).toHaveCount(1);await page.keyboard.press('Enter');
+  await expect(picker).toContainText('FlashVSR');await expect(picker).toBeFocused();
+  await picker.click();await page.getByPlaceholder('Search live video models').fill('no-matching-model');
+  await expect(page.getByRole('option')).toHaveCount(0);await page.keyboard.press('Escape');await expect(picker).toBeFocused();
 });
 test('safe video fixture form and viewer modal',async({page})=>{
   await page.goto('/studio-fixture',{waitUntil:'networkidle'});

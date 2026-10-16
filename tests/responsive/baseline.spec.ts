@@ -22,8 +22,14 @@ for(const route of [...publicRoutes,'/studio-fixture']) {
     }).map(n=>{const b=n.getBoundingClientRect();return {tag:n.tagName,label:n.getAttribute('aria-label')||n.textContent?.trim()||n.getAttribute('name'),width:b.width,height:b.height};}));
     const geometry=await page.evaluate(()=>({viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,fontFamily:getComputedStyle(document.body).fontFamily,
       body:document.body.scrollWidth, offenders:[...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+1||r.left< -1);}).slice(0,40).map(e=>({tag:e.tagName,class:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))}));
-    await info.attach('geometry-and-controls',{body:JSON.stringify({geometry,controls,errors,resources},null,2),contentType:'application/json'});
-    await info.attach('responsive-viewport',{body:await page.screenshot({animations:'disabled',caret:'initial'}),contentType:'image/png'});
+    const diagnostics=info.outputPath('geometry.json');
+    fs.writeFileSync(diagnostics,JSON.stringify({geometry,controls,errors,resources},null,2));
+    await info.attach('geometry-and-controls',{path:diagnostics,contentType:'application/json'});
+    if(process.env.PW_CAPTURE_ALL==='1'||[390,768,1366].includes(page.viewportSize()!.width)){
+      const screenshot=info.outputPath('viewport.png');
+      await page.screenshot({path:screenshot,animations:'disabled',caret:'hide'});
+      await info.attach('responsive-viewport',{path:screenshot,contentType:'image/png'});
+    }
     expect.soft(response?.status(),'document status').toBeLessThan(400);
     expect.soft(geometry.scroll,'document horizontal overflow').toBeLessThanOrEqual(geometry.viewport+1);
     expect.soft(controls.length,'visible interactive controls').toBeGreaterThan(0);

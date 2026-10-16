@@ -126,14 +126,18 @@
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/tts-client.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
-        "src/components/audio-studio.module.css"
+        "src/components/audio-studio.module.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -211,13 +215,17 @@
         "src/components/model-brand.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -235,13 +243,17 @@
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -257,14 +269,18 @@
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/files/files.css",
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -279,13 +295,17 @@
         "src/components/history-client.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -303,14 +323,18 @@
         "src/components/model-picker.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
-        "src/components/image-studio.css"
+        "src/components/image-studio.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -326,13 +350,17 @@
         "src/components/models-marketplace.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -346,14 +374,18 @@
         "src/components/app-sidebar.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
         "src/components/workspace-clients.tsx",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -405,13 +437,17 @@
         "src/components/pwa-register.tsx",
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -432,6 +468,31 @@
       ]
     },
     {
+      "route": "/responsive-fixture",
+      "file": "src/app/responsive-fixture/page.tsx",
+      "access": "development fixture",
+      "redirect": [],
+      "components": [
+        "src/components/app-sidebar.css",
+        "src/components/app-sidebar.tsx",
+        "src/components/model-brand.tsx",
+        "src/components/model-picker.tsx",
+        "src/components/premium-select.tsx",
+        "src/components/pwa-register.tsx",
+        "src/components/responsive-fixture.tsx",
+        "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
+        "src/components/workspace-shell.css",
+        "src/components/workspace-topbar.tsx"
+      ],
+      "styles": [
+        "src/app/globals.css",
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
+      ]
+    },
+    {
       "route": "/settings",
       "file": "src/app/settings/page.tsx",
       "access": "authenticated",
@@ -444,13 +505,17 @@
         "src/components/pwa-register.tsx",
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -483,13 +548,17 @@
         "src/components/pwa-register.tsx",
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -505,14 +574,18 @@
         "src/components/template-library.css",
         "src/components/template-library.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
-        "src/components/template-library.css"
+        "src/components/template-library.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -544,13 +617,17 @@
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/usage-icon.tsx",
+        "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -566,17 +643,21 @@
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
         "src/components/video-model-rail.tsx",
         "src/components/video-studio-v2.module.css",
         "src/components/video-studio.tsx",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
-        "src/components/video-studio-v2.module.css"
+        "src/components/video-studio-v2.module.css",
+        "src/components/workspace-shell.css"
       ]
     },
     {
@@ -590,15 +671,19 @@
         "src/components/app-sidebar.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
+        "src/components/use-workspace-overlay.ts",
         "src/components/wallet-client.tsx",
+        "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
+        "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
         "src/app/globals.css",
         "src/app/wallet/wallet-premium.css",
-        "src/components/app-sidebar.css"
+        "src/components/app-sidebar.css",
+        "src/components/workspace-shell.css"
       ]
     }
   ],
@@ -967,11 +1052,11 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 647413,
-      "lines": 2420,
-      "mediaQueries": 846,
+      "bytes": 644682,
+      "lines": 2390,
+      "mediaQueries": 844,
       "important": 137,
-      "viewportUnits": 79
+      "viewportUnits": 78
     },
     {
       "file": "src/app/wallet/wallet-premium.css",
@@ -1044,6 +1129,14 @@
       "mediaQueries": 10,
       "important": 70,
       "viewportUnits": 1
+    },
+    {
+      "file": "src/components/workspace-shell.css",
+      "bytes": 5453,
+      "lines": 61,
+      "mediaQueries": 4,
+      "important": 0,
+      "viewportUnits": 4
     }
   ]
 }

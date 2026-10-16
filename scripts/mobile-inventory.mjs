@@ -15,7 +15,7 @@ const pages = files.filter(f=>/\/page\.(tsx|ts|jsx|js)$/.test(f)).sort().map(fil
   const route='/'+file.replace(/^src\/app\//,'').replace(/\/?page\.[^.]+$/,'').split('/').filter(s=>!/^\(.*\)$/.test(s)&&!s.startsWith('@')).join('/');
   const layouts=files.filter(f=>/\/layout\.tsx$/.test(f)&&file.startsWith(f.replace(/layout\.tsx$/,'')));
   const dependencies=[...new Set([file,...layouts].flatMap(f=>[...graph(f)]))].sort();
-  const access=route==='/studio-fixture'?'development fixture':route.startsWith('/admin')?'admin':route==='/auth/verified'?'confirmation session':route==='/auth/update-password'?'recovery form; session needed to submit':/^\/(auth|privacy|terms|refunds|acceptable-use)(\/|$)/.test(route)||route==='/'?'public':'authenticated';
+  const access=['/studio-fixture','/responsive-fixture'].includes(route)?'development fixture':route.startsWith('/admin')?'admin':route==='/auth/verified'?'confirmation session':route==='/auth/update-password'?'recovery form; session needed to submit':/^\/(auth|privacy|terms|refunds|acceptable-use)(\/|$)/.test(route)||route==='/'?'public':'authenticated';
   return {route,file,access,redirect:[...read(file).matchAll(/redirect\("([^"]+)"\)/g)].map(x=>x[1]),components:dependencies.filter(f=>f.startsWith('src/components/')),styles:dependencies.filter(f=>f.endsWith('.css'))};
 });
 const handlers=files.filter(f=>/\/route\.[jt]s$/.test(f)).sort().map(file=>({route:'/'+file.replace(/^src\/app\//,'').replace(/\/route\.[jt]s$/,''),file,methods:[...read(file).matchAll(/export\s+(?:async\s+)?function\s+(GET|POST|PUT|PATCH|DELETE|OPTIONS|HEAD)/g)].map(x=>x[1])}));

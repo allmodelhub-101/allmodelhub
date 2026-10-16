@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { BRAND } from "@/lib/brand";
 import "./app-sidebar.css";
+import { useWorkspaceOverlay } from "./use-workspace-overlay";
 
 type NavItem = { label: string; href: string; icon: Icon };
 
@@ -76,6 +77,8 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const mobileSheetRef = useRef<HTMLElement | null>(null);
+  useWorkspaceOverlay(mobileMoreOpen, mobileSheetRef, () => setMobileMoreOpen(false));
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
   const accountTriggerRef = useRef<HTMLButtonElement | null>(null);
 
@@ -90,10 +93,6 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
     return () => window.clearTimeout(timer);
   }, [pathname]);
   useEffect(() => {
-    document.body.classList.toggle("nav-drawer-open", mobileMoreOpen);
-    return () => document.body.classList.remove("nav-drawer-open");
-  }, [mobileMoreOpen]);
-  useEffect(() => {
     if (!accountOpen) return;
     const close = (event: MouseEvent) => { if (!accountMenuRef.current?.contains(event.target as Node)) setAccountOpen(false); };
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape") { setAccountOpen(false); accountTriggerRef.current?.focus(); } };
@@ -102,14 +101,6 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
     document.addEventListener("pointerdown", close); document.addEventListener("focusin", blur); window.addEventListener("keydown", escape);
     return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("focusin", blur); window.removeEventListener("keydown", escape); };
   }, [accountOpen]);
-  useEffect(() => {
-    if (!mobileMoreOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileMoreOpen(false);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [mobileMoreOpen]);
 
   function toggleCollapsed() {
     setAccountOpen(false);
@@ -153,9 +144,9 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
       </div>
     </aside>
 
-    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>{BRAND.name}</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{mobileMoreItems.map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{translatedLabel(item, language)}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
+    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section ref={mobileSheetRef} tabIndex={-1} className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>{BRAND.name}</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{mobileMoreItems.map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{translatedLabel(item, language)}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
 
-    <nav className="mobile-nav" aria-label="Mobile workspace navigation">{createItems.map((item) => { const ItemIcon = item.icon; const active = isActive(pathname, item.href); return <Link className={active ? "active" : ""} href={item.href} key={item.href}><ItemIcon size={21} weight={active ? "fill" : "regular"} aria-hidden="true" /><small>{item.label}</small></Link>; })}<button className={mobileMoreOpen ? "active" : ""} type="button" onClick={() => setMobileMoreOpen(true)} aria-label="Open more navigation" aria-expanded={mobileMoreOpen}><DotsThree size={22} weight="bold" aria-hidden="true" /><small>More</small></button></nav>
+    <nav className="mobile-nav" aria-label="Mobile workspace navigation">{createItems.map((item) => { const ItemIcon = item.icon; const active = isActive(pathname, item.href); return <Link className={active ? "active" : ""} href={item.href} aria-current={active ? "page" : undefined} key={item.href}><ItemIcon size={21} weight={active ? "fill" : "regular"} aria-hidden="true" /><small>{translatedLabel(item, language)}</small></Link>; })}<button className={mobileMoreOpen ? "active" : ""} type="button" onClick={(event) => { event.currentTarget.focus(); setMobileMoreOpen(true); }} aria-label="Open more navigation" aria-expanded={mobileMoreOpen}><DotsThree size={22} weight="bold" aria-hidden="true" /><small>More</small></button></nav>
   </>;
 }
 

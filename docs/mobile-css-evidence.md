@@ -31,7 +31,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/app/globals.css
 
-846 media/container conditions; 774 repeated exact selector + condition groups; 601 dimension/overflow candidates; 201 small-control declarations.
+844 media/container conditions; 768 repeated exact selector + condition groups; 598 dimension/overflow candidates; 201 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -261,5 +261,14 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 | :global(.video-workspace):has(.root) :global(.video-workflow-guide) | @media (max-width:620px) | 45, 95 |
 | :global(.video-workspace):has(.root) :global(.advanced-grid) | @media (max-width:620px) | 45, 95 |
 | .root | @media (max-width:620px) | 45, 74, 95 |
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/workspace-shell.css
+
+4 media/container conditions; 0 repeated exact selector + condition groups; 6 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.

@@ -291,6 +291,7 @@ export function VideoStudio({
     videoRef = useRef<HTMLVideoElement>(null),
     stageRef = useRef<HTMLDivElement>(null),
     pickerRef = useRef<HTMLDivElement>(null),
+    modelTriggerRef = useRef<HTMLButtonElement>(null),
     modalRef = useRef<HTMLDivElement>(null),
     modalVideoRef = useRef<HTMLVideoElement>(null),
     creationRef = useRef<HTMLElement>(null),
@@ -526,6 +527,7 @@ export function VideoStudio({
     if (!(next.uiSchema?.inputModes || ["text"]).includes("image"))
       setMode("text");
     setPicker(false);
+    modelTriggerRef.current?.focus();
     invalidate("Model settings were updated to match its supported workflow.");
   };
   async function upload(file: File, kind: "image" | "video" | "audio" = "image") {
@@ -700,7 +702,9 @@ export function VideoStudio({
       if (!picker) return;
       if (event.key === "Escape") {
         event.preventDefault();
+        event.stopPropagation();
         setPicker(false);
+        modelTriggerRef.current?.focus();
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
         setHighlightedModel((index) => Math.min(index + 1, Math.max(0, visibleModels.length - 1)));
@@ -759,6 +763,7 @@ export function VideoStudio({
               <div className={styles.fieldHeading}><label>Choose a video model</label><span>Live availability</span></div>
               <button
                 type="button"
+                ref={modelTriggerRef}
                 className={styles.modelTrigger}
                 onClick={() => setPicker((v) => !v)}
                 onKeyDown={handlePickerKeyDown}
@@ -779,7 +784,7 @@ export function VideoStudio({
                 <CaretDown />
               </button>
               {picker && (
-                <div className={styles.modelPicker}>
+                <div className={styles.modelPicker} onKeyDown={handlePickerKeyDown}>
                   <div className={styles.search}>
                     <MagnifyingGlass />
                     <input
@@ -789,7 +794,7 @@ export function VideoStudio({
                       placeholder="Search live video models"
                     />
                   </div>
-                  <div className={styles.modelList} id="video-model-options" role="listbox" aria-label="Available video models" onKeyDown={handlePickerKeyDown}>
+                  <div className={styles.modelList} id="video-model-options" role="listbox" aria-label="Available video models">
                     {visibleModels.length === 0 && <p className={styles.noModels}>No video models match this search.</p>}
                     {visibleModels.map((x, index) => (
                       <button

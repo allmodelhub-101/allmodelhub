@@ -2,7 +2,8 @@
 
 import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, Wallet, X } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 type Project = { id: string; name: string };
@@ -29,7 +30,7 @@ const destinations = [
   { label: "Help", detail: "Guidance and support", href: "/support" }
 ];
 
-export function WorkspaceTopbar({ balance, identity, language = "en" }: { balance: number; identity: string; language?: string }) {
+export function WorkspaceTopbar({ balance, identity, language = "en", offline = false }: { balance: number; identity: string; language?: string; offline?: boolean }) {
   const [liveBalance, setLiveBalance] = useState(balance);
   const [walletRefreshing, setWalletRefreshing] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -45,37 +46,50 @@ export function WorkspaceTopbar({ balance, identity, language = "en" }: { balanc
   const [projectOpen,setProjectOpen]=useState(false);
   const [productResults,setProductResults]=useState<SearchResult[]>([]);
   const [searching,setSearching]=useState(false);
+  const generationRef = useRef<HTMLElement | null>(null);
+  const notificationsRef = useRef<HTMLElement | null>(null);
+  const helpRef = useRef<HTMLDivElement | null>(null);
+  const paletteRef = useRef<HTMLDivElement | null>(null);
+  const projectRef = useRef<HTMLDivElement | null>(null);
+  useWorkspaceOverlay(open, generationRef, () => setOpen(false));
+  useWorkspaceOverlay(notificationsOpen, notificationsRef, () => setNotificationsOpen(false));
+  useWorkspaceOverlay(keyboardHelp, helpRef, () => setKeyboardHelp(false));
+  useWorkspaceOverlay(palette, paletteRef, () => setPalette(false));
+  useWorkspaceOverlay(projectOpen, projectRef, () => setProjectOpen(false), false);
 
-  async function loadJobs() {
+
+  const loadJobs = useCallback(async () => {
+    if (offline) return;
     const response = await fetch("/api/jobs?limit=20", { cache: "no-store" });
     if (response.ok) setJobs((await response.json()).jobs || []);
-  }
-  async function loadNotifications(){const response=await fetch("/api/notifications",{cache:"no-store"});if(response.ok)setNotifications((await response.json()).notifications||[])}
-  async function refreshWallet(){
+  }, [offline]);
+  const loadNotifications = useCallback(async () => {if(offline)return;const response=await fetch("/api/notifications",{cache:"no-store"});if(response.ok)setNotifications((await response.json()).notifications||[])}, [offline]);
+  const refreshWallet = useCallback(async () => {
+    if (offline) return;
     setWalletRefreshing(true);
     try { const response=await fetch("/api/wallet",{cache:"no-store"});if(response.ok){const data=await response.json();if(Number.isFinite(Number(data.wallet?.available)))setLiveBalance(Number(data.wallet.available));} }
     finally { setWalletRefreshing(false); }
-  }
-  async function markNotificationsRead(id?:string){await fetch("/api/notifications",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(id?{id}:{all:true})});await loadNotifications()}
+  }, [offline]);
+  async function markNotificationsRead(id?:string){if(offline)return;await fetch("/api/notifications",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(id?{id}:{all:true})});await loadNotifications()}
 
   useEffect(() => {
     const saved = window.localStorage.getItem("amh-active-project") || "";
     window.setTimeout(()=>setProjectId(saved),0);
-    fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
-    fetch("/api/models", { cache: "no-store" }).then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
+    if (!offline) fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
+    if (!offline) fetch("/api/models", { cache: "no-store" }).then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
     const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications();void refreshWallet()},0);
     const timer = window.setInterval(() => void loadJobs(), 12000);
     const walletTimer = window.setInterval(() => void refreshWallet(), 30000);
     const shortcut = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
+      if (!event.defaultPrevented && (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
       if(event.key==="?"&&!event.metaKey&&!event.ctrlKey&&!event.altKey&&!(["INPUT","TEXTAREA","SELECT"].includes((event.target as HTMLElement)?.tagName))){event.preventDefault();setKeyboardHelp(true)}
-      if (event.key === "Escape") { setPalette(false); setOpen(false); setNotificationsOpen(false); setKeyboardHelp(false); setProjectOpen(false); }
+
     };
     window.addEventListener("keydown", shortcut);
     const walletRefresh = () => void refreshWallet();
     window.addEventListener("amh-wallet-refresh", walletRefresh);
     return () => { window.clearTimeout(initialLoad);window.clearInterval(timer);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); window.removeEventListener("amh-wallet-refresh", walletRefresh); };
-  }, []);
+  }, [offline, loadJobs, loadNotifications, refreshWallet]);
 
   const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
   const activeProjectName=projects.find(project=>project.id===projectId)?.name||"Personal";
@@ -84,12 +98,12 @@ export function WorkspaceTopbar({ balance, identity, language = "en" }: { balanc
   const matchingDestinations = useMemo(() => destinations.filter((item) => !normalizedQuery || `${item.label} ${item.detail}`.toLowerCase().includes(normalizedQuery)), [normalizedQuery]);
   const matchingProjects = useMemo(() => projects.filter((project) => normalizedQuery && project.name.toLowerCase().includes(normalizedQuery)).slice(0, 4), [normalizedQuery, projects]);
   const matchingModels = useMemo(() => models.filter((model) => normalizedQuery && [model.name, model.providerFamily, model.modality, ...(model.capabilities || [])].join(" ").toLowerCase().includes(normalizedQuery)).slice(0, 6), [models, normalizedQuery]);
-  useEffect(()=>{const controller=new AbortController();const timer=window.setTimeout(()=>{if(!palette||normalizedQuery.length<2){setProductResults([]);setSearching(false);return}setSearching(true);fetch(`/api/search?q=${encodeURIComponent(query.trim())}`,{signal:controller.signal}).then(response=>response.ok?response.json():{results:[]}).then(data=>setProductResults(data.results||[])).catch(()=>undefined).finally(()=>setSearching(false))},palette&&normalizedQuery.length>=2?220:0);return()=>{window.clearTimeout(timer);controller.abort()}},[normalizedQuery,palette,query]);
+  useEffect(()=>{const controller=new AbortController();const timer=window.setTimeout(()=>{if(offline||!palette||normalizedQuery.length<2){setProductResults([]);setSearching(false);return}setSearching(true);fetch(`/api/search?q=${encodeURIComponent(query.trim())}`,{signal:controller.signal}).then(response=>response.ok?response.json():{results:[]}).then(data=>setProductResults(data.results||[])).catch(()=>undefined).finally(()=>setSearching(false))},palette&&normalizedQuery.length>=2?220:0);return()=>{window.clearTimeout(timer);controller.abort()}},[normalizedQuery,palette,query,offline]);
   const modelHref = (model: Model) => `${model.modality === "image" ? "/images" : `/${model.modality === "text" ? "chat" : model.modality}`}?model=${encodeURIComponent(model.id)}`;
   function selectProject(next: string) {
     setProjectId(next);
     window.localStorage.setItem("amh-active-project", next);
-    window.dispatchEvent(new CustomEvent("amh-project-change", { detail: next }));
+    if (!offline) window.dispatchEvent(new CustomEvent("amh-project-change", { detail: next }));
   }
 
   function workspaceHref(job: Job, retry = false) {
@@ -106,24 +120,24 @@ export function WorkspaceTopbar({ balance, identity, language = "en" }: { balanc
 
   return <>
     <header className="app-topbar">
-      <div className="global-project-wrap"><button className="global-project" type="button" onClick={()=>setProjectOpen(value=>!value)} aria-haspopup="listbox" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div className="project-popover" role="listbox" aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" role="option" aria-selected={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
-      <button className="command-trigger" type="button" onClick={() => { setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>{language==="ur"?"تلاش کریں یا جائیں…":language==="roman-ur"?"Talash karein ya jayein…":"Search or jump to…"}</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
+      <div className="global-project-wrap"><button className="global-project" type="button" onClick={(event)=>{event.currentTarget.focus();setProjectOpen(value=>!value)}} aria-haspopup="dialog" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div ref={projectRef} className="project-popover" role="dialog" tabIndex={-1} aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" aria-pressed={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
+      <button className="command-trigger" type="button" onClick={(event) => { event.currentTarget.focus(); setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>{language==="ur"?"تلاش کریں یا جائیں…":language==="roman-ur"?"Talash karein ya jayein…":"Search or jump to…"}</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
       <div className="topbar-actions">
-        <button className="generation-trigger" type="button" onClick={() => setOpen(true)} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} ${language==="ur"?"جاری":language==="roman-ur"?"jaari":"working"}` : language==="ur"?"تخلیقات":language==="roman-ur"?"Generations":"Generations"}</button>
-        <button className="topbar-icon-trigger" type="button" onClick={()=>{setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
+        <button className="generation-trigger" type="button" onClick={(event) => { event.currentTarget.focus(); setOpen(true); }} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} ${language==="ur"?"جاری":language==="roman-ur"?"jaari":"working"}` : language==="ur"?"تخلیقات":language==="roman-ur"?"Generations":"Generations"}</button>
+        <button className="topbar-icon-trigger" type="button" onClick={(event)=>{event.currentTarget.focus();setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
         <Link href="/wallet" className={`wallet-chip wallet-chip-live ${walletRefreshing ? "is-refreshing" : ""}`} aria-label={`${liveBalance.toFixed(2)} credits available. Balance refreshes automatically.`}><span className="wallet-live-signal" aria-hidden="true" /><Wallet size={14} aria-hidden="true" /><span>{liveBalance.toFixed(2)} Credits</span><small>Live</small></Link>
         <ThemeToggle />
         <Link href="/settings" className="topbar-profile" aria-label="Open account settings"><span>{identity.slice(0, 1).toUpperCase()}</span><CaretDown size={12} weight="bold" aria-hidden="true" /></Link>
       </div>
     </header>
-    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
+    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside ref={generationRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
       const terminalFailure = ["failed", "cancelled", "expired"].includes(job.status);
       const active = ["queued", "submitted", "processing", "settling"].includes(job.status);
       return <article className="generation-row" key={job.id}><span className={`job-state ${job.status}`} /><span className="generation-row-content"><Link href={workspaceHref(job)} onClick={() => setOpen(false)}><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {Number(job.charged_credits || job.estimated_credits || 0).toFixed(2)} credits</small></Link>{job.error_message && terminalFailure && <small className="generation-error">{job.error_message}</small>}<span className="generation-row-actions">{terminalFailure && <button type="button" onClick={() => retryJob(job)}>Retry with settings</button>}<Link href="/usage" onClick={() => setOpen(false)}>Cost details</Link>{active && <small>Cancellation becomes available only when the provider supports it safely.</small>}</span></span></article>;
     }) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts <CaretRight size={14} /></Link></aside></>}
-    {notificationsOpen&&<><button className="workspace-scrim" aria-label="Close notifications" onClick={()=>setNotificationsOpen(false)}/><aside className="generation-drawer notification-drawer" aria-label="Notifications"><div className="drawer-head"><div><div className="kicker">Updates</div><h2>Notifications</h2></div><button className="icon-button" onClick={()=>setNotificationsOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{notifications.length?notifications.map(item=><button type="button" className={`drawer-notification ${item.read_at?"":"unread"}`} key={item.id} onClick={()=>void markNotificationsRead(item.id)}><span><b>{item.title}</b><small>{item.body}</small></span><time>{new Date(item.created_at).toLocaleString()}</time></button>):<div className="drawer-empty">You’re all caught up.</div>}</div><div className="drawer-footer drawer-footer-actions"><button type="button" disabled={!unreadCount} onClick={()=>void markNotificationsRead()}>Mark all read</button><Link href="/notifications" onClick={()=>setNotificationsOpen(false)}>Open all <CaretRight size={14} /></Link></div></aside></>}
-    {keyboardHelp&&<div className="command-overlay keyboard-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><button className="workspace-scrim" aria-label="Close keyboard shortcuts" onClick={()=>setKeyboardHelp(false)}/><div className="keyboard-panel"><div className="drawer-head"><div><div className="kicker">Work faster</div><h2>Keyboard shortcuts</h2></div><button className="icon-button" onClick={()=>setKeyboardHelp(false)} aria-label="Close"><X size={18} /></button></div><div className="shortcut-list"><span><b>Search and jump</b><kbd>Ctrl/⌘ K</kbd></span><span><b>Close an open panel</b><kbd>Esc</kbd></span><span><b>Open this help</b><kbd>?</kbd></span><span><b>Send a chat message</b><kbd>Enter</kbd></span><span><b>New line in chat</b><kbd>Shift Enter</kbd></span></div></div></div>}
-    {palette && <div className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><MagnifyingGlass size={19} aria-hidden="true" /><input autoFocus value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats, generations, files, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
+    {notificationsOpen&&<><button className="workspace-scrim" aria-label="Close notifications" onClick={()=>setNotificationsOpen(false)}/><aside ref={notificationsRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer notification-drawer" aria-label="Notifications"><div className="drawer-head"><div><div className="kicker">Updates</div><h2>Notifications</h2></div><button className="icon-button" onClick={()=>setNotificationsOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{notifications.length?notifications.map(item=><button type="button" className={`drawer-notification ${item.read_at?"":"unread"}`} key={item.id} onClick={()=>void markNotificationsRead(item.id)}><span><b>{item.title}</b><small>{item.body}</small></span><time>{new Date(item.created_at).toLocaleString()}</time></button>):<div className="drawer-empty">You’re all caught up.</div>}</div><div className="drawer-footer drawer-footer-actions"><button type="button" disabled={!unreadCount} onClick={()=>void markNotificationsRead()}>Mark all read</button><Link href="/notifications" onClick={()=>setNotificationsOpen(false)}>Open all <CaretRight size={14} /></Link></div></aside></>}
+    {keyboardHelp&&<div ref={helpRef} tabIndex={-1} className="command-overlay keyboard-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><button className="workspace-scrim" aria-label="Close keyboard shortcuts" onClick={()=>setKeyboardHelp(false)}/><div className="keyboard-panel"><div className="drawer-head"><div><div className="kicker">Work faster</div><h2>Keyboard shortcuts</h2></div><button className="icon-button" onClick={()=>setKeyboardHelp(false)} aria-label="Close"><X size={18} /></button></div><div className="shortcut-list"><span><b>Search and jump</b><kbd>Ctrl/⌘ K</kbd></span><span><b>Close an open panel</b><kbd>Esc</kbd></span><span><b>Open this help</b><kbd>?</kbd></span><span><b>Send a chat message</b><kbd>Enter</kbd></span><span><b>New line in chat</b><kbd>Shift Enter</kbd></span></div></div></div>}
+    {palette && <div ref={paletteRef} tabIndex={-1} className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><MagnifyingGlass size={19} aria-hidden="true" /><input aria-label="Search workspace" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats, generations, files, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">
       {matchingDestinations.length > 0 && <section><span className="command-section-label">Destinations</span>{matchingDestinations.map((item) => <Link key={item.href} href={item.href} onClick={() => setPalette(false)}><span><b>{item.label}</b><small>{item.detail}</small></span><span>→</span></Link>)}</section>}
       {matchingProjects.length > 0 && <section><span className="command-section-label">Projects</span>{matchingProjects.map((project) => <button key={project.id} type="button" onClick={() => { selectProject(project.id); setPalette(false); }}><span><b>{project.name}</b><small>Switch active project</small></span><span>Activate</span></button>)}</section>}
       {matchingModels.length > 0 && <section><span className="command-section-label">Models</span>{matchingModels.map((model) => <Link key={model.id} href={modelHref(model)} onClick={() => setPalette(false)}><span><b>{model.name}</b><small>{model.providerFamily || "AI"} · {model.modality}</small></span><span>Open</span></Link>)}</section>}

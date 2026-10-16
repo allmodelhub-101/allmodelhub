@@ -1,4 +1,4 @@
-name: Responsive baseline
+name: Responsive foundation
 on:
   pull_request:
   workflow_dispatch:
@@ -23,16 +23,16 @@ jobs:
       - run: pnpm audit:routes && pnpm audit:css
       - run: git diff --exit-code -- docs/mobile-route-inventory.json docs/mobile-route-inventory.md docs/mobile-css-evidence.json docs/mobile-css-evidence.md
       - run: pnpm exec playwright install --with-deps chromium webkit
-      - name: All viewport projects (known baseline defects may fail)
+      - name: All viewport projects / both browser engines
         run: pnpm test:responsive
         env:
           CI: 'true'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ !cancelled() }}
         with:
-          name: responsive-baseline
+          name: responsive-foundation
           path: |
             playwright-report/
-            test-results/
-          retention-days: 14
+            test-results/**/results.json
+          retention-days: 7
           if-no-files-found: warn

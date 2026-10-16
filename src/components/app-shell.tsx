@@ -1,3 +1,4 @@
+import { WorkspaceFrame } from "@/components/workspace-frame";
 import { AppSidebar } from "@/components/app-sidebar";
 import { WorkspaceTopbar } from "@/components/workspace-topbar";
 import { requireUser } from "@/lib/auth";
@@ -14,15 +15,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
   const { data: profile } = await admin.from("profiles").select("low_bandwidth,role,display_name").eq("id", user.id).single();
   const isAdmin = profile && ["admin", "owner"].includes(profile.role);
 
-  return <div className={`app-shell premium-workstation-shell ${profile?.low_bandwidth ? "low-bandwidth" : ""}`}>
-    <AppSidebar balance={Number(wallet.available)} displayName={profile?.display_name} email={user.email} isAdmin={Boolean(isAdmin)} />
-    <main className="app-main">
-      <WorkspaceTopbar balance={Number(wallet.available)} identity={profile?.display_name || user.email || "Member"} />
-      <div className="app-content">{children}</div>
-    </main>
-    <WorkspaceOnboarding />
-    <WorkspaceNetworkStatus />
-  </div>;
+  return <WorkspaceFrame lowBandwidth={Boolean(profile?.low_bandwidth)} sidebar={<AppSidebar balance={Number(wallet.available)} displayName={profile?.display_name} email={user.email} isAdmin={Boolean(isAdmin)} />} topbar={<WorkspaceTopbar balance={Number(wallet.available)} identity={profile?.display_name || user.email || "Member"} />} auxiliary={<><WorkspaceOnboarding /><WorkspaceNetworkStatus /></>}>
+    {children}
+  </WorkspaceFrame>;
 }
-
-
