@@ -8,6 +8,25 @@ concurrency:
   group: responsive-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  foundation-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - run: npm install --global pnpm@10.34.3
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:homepage && pnpm check:security
+      - run: pnpm test:billing && pnpm test:security && pnpm test:ui
+      - name: Lint changed responsive components (repository baseline errors remain documented)
+        run: pnpm exec eslint src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
+      - run: pnpm build && pnpm typecheck
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
   browser-baseline:
     runs-on: ubuntu-latest
     timeout-minutes: 45

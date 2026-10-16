@@ -1,5 +1,18 @@
 # Models Suite — Phase 1 responsive architecture audit
 
+## Phase 2 implementation update (2026-10-16)
+
+Phase 1 evidence below is historical. Current code adds a gated synthetic shell route: **32 source pages, 42 HTTP handlers, 14 stylesheets** (one additional fixture and one owned stylesheet). The 22 real protected workflows remain blocked; fixture coverage is explicitly component coverage.
+
+MR-005 (mobile auth theme visibility) and MR-001 (Video Studio Escape from focused model search) are implemented with regression tests. MR-002 shortcut ownership is exercised using the real topbar and ModelPicker with a document-level fixture listener matching ChatClient's event boundary; the window handler now honors `defaultPrevented`. No chat submission logic changed. This does not verify authenticated ChatClient E2E.
+
+Shared changes: layout-only WorkspaceFrame extraction; scoped workspace-shell.css; responsive topbar/search row through 1180px; five mobile destinations and accessible More sheet; active route semantics/translations; sidebar/account keyboard preservation; select-only combobox semantics/Home/End; shared modal focus, nested Escape and scroll locking. Safari pointer activation explicitly focuses opening controls for reliable return. Chat-specific global selectors remain legacy debt; an explicit topbar class establishes shared ownership and a synthetic chat-style case checks their effect.
+
+Removed the old shared stabilization block and its global html/body horizontal clipping. Content/table scrolling is local. The removed block is preserved under `mobile-phase2/shared-css-before.txt`. Root globals shrink rather than receiving another appended override section. Existing studio CSS and backend behavior remain outside this phase.
+
+See [Phase 2 evidence and acceptance](mobile-phase2/README.md) for final checks, screenshots, CI and remaining limitations. Physical keyboards/zoom and real authenticated populated workspaces still require dedicated validation; screenshot review of synthetic content is not production-workflow sign-off.
+
+
 Baseline: `main` at `314c76404b98156ea4bdd8bb63899df24e9eb8b4`, 2026-10-16 (Asia/Karachi). No production UI or backend implementation is changed in this phase.
 
 ## Discovery and repository preflight

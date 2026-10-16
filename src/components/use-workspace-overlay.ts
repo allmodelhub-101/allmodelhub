@@ -18,7 +18,7 @@ export function useWorkspaceOverlay(open: boolean, ref: RefObject<HTMLElement | 
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     stack.push(token);
     const isTop = () => stack.at(-1) === token;
-    const candidates = () => Array.from(root.querySelectorAll<HTMLElement>(focusables)).filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== "hidden");
+    const candidates = () => Array.from(root.querySelectorAll<HTMLElement>(focusables)).filter(el => el.tabIndex >= 0 && el.getClientRects().length && getComputedStyle(el).visibility !== "hidden");
     if (modal) {
       if (!document.body.hasAttribute("data-workspace-modal-count")) {
         savedOverflow = document.body.style.overflow;

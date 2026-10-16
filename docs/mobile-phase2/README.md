@@ -21,3 +21,13 @@ The immutable Phase 1 Linux CI run is https://github.com/allmodelhub-101/allmode
 New tests cover both themes, shell geometry, primary chrome visibility and 44px targets at compact widths, content reachability, five mobile destinations, overlays, nested Escape ownership, no API requests, sidebar persistence/account keyboard, selector languages/reduced viewport, theme persistence, and fixture host rejection. Added 900/901px projects retain all original viewport projects and assertions. Chromium and WebKit are both required.
 
 Final results, curated after screenshots, CI links, architecture metrics and Phase 3 handoff will be recorded after execution. Authenticated data, physical software keyboards, real provider work and billing flows cannot be signed off by synthetic tests.
+
+## Additional safety and coverage
+
+The fixture guard has five unit tests covering loopback hosts, absent/exact flag, production/test modes, Vercel (including an empty value), and host lookalikes. A delayed readiness attribute ensures fixture interactions begin after hydration and initial sidebar route-reset timers. Fixture link capture changes only synthetic active-route state; it keeps real hrefs and exercises actual link callbacks without navigating into protected routes. This is not authenticated route navigation.
+
+A synthetic `?chrome=chat` variant exercises legacy chat ancestor selectors against the shared topbar. The topbar's explicit class supplies component ownership at the necessary specificity. Individual chat content/composer sizing and all live ChatClient workflows remain Phase 3 validation work.
+
+The Linux workflow now runs build/typecheck, scoped changed-component lint, homepage/security checks and billing/security/UI tests in a separate job. Full repository lint remains 2 baseline login-form errors and 14 existing warnings; no broad lint suppression was added. Browser CI uses four isolated workers and still runs every original assertion/viewport, plus the new cases. Login/legal Phase 2 snapshots are separately named because removing the unscoped theme hide rule intentionally restores their small-screen theme button; all Phase 1 images remain historical.
+
+Preview access: the ec7aa75 Vercel preview deployed successfully, but anonymous requests redirect to Vercel SSO. The connector returned 403 for the owning team, and scoped CLI inspection returned "The specified scope does not exist". No protection setting or credential was changed. Preview visual testing is BLOCKED until an authorized identity for that team is available.

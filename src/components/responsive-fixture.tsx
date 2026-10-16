@@ -1,11 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppSidebar } from "./app-sidebar";
 import { WorkspaceTopbar } from "./workspace-topbar";
 import { WorkspaceFrame } from "./workspace-frame";
 import { ModelPicker } from "./model-picker";
 import { PremiumSelect } from "./premium-select";
-export function ResponsiveFixture() {
+export function ResponsiveFixture({ chatChrome = false }: { chatChrome?: boolean }) {
+  const rootRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const timer = window.setTimeout(() => { if(rootRef.current) rootRef.current.dataset.ready = "true"; }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+  const [activePath, setActivePath] = useState("/chat");
   const [language, setLanguage] = useState("en");
   const [picker, setPicker] = useState(false);
   const [model, setModel] = useState("");
@@ -19,9 +25,12 @@ export function ResponsiveFixture() {
     document.addEventListener("keydown", shortcut);
     return () => document.removeEventListener("keydown", shortcut);
   }, []);
-  return <WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Layout reviewer" email="fixture@example.invalid" isAdmin={false} language={language} />}
+  return <div onClickCapture={(event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+    if(link?.getAttribute("href")?.startsWith("/")) { event.preventDefault();setActivePath(new URL(link.href).pathname); }
+  }}><WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Layout reviewer" email="fixture@example.invalid" isAdmin={false} language={language} activePath={activePath} />}
     topbar={<WorkspaceTopbar balance={1234.5} identity="Layout reviewer" offline language={language} />}>
-    <section className="responsive-fixture" dir={language === "ur" ? "rtl" : "ltr"}>
+    <section ref={rootRef} className={`responsive-fixture ${chatChrome ? "premium-chat-page" : ""}`} dir={language === "ur" ? "rtl" : "ltr"}>
       <p className="kicker">Synthetic local workspace / no account or backend</p><h1>Workspace foundation</h1>
       <p>Exercise real navigation, menus, drawers and model library with synthetic content.</p>
       <label>Navigation language<PremiumSelect aria-label="Navigation language" value={language} onChange={setLanguage} options={[{value:"en",label:"English"},{value:"ur",label:"Urdu"},{value:"roman-ur",label:"Roman Urdu"}]} /></label>
@@ -32,5 +41,5 @@ export function ResponsiveFixture() {
       <p>End of sample content. Navigation must remain reachable.</p>
     </section>
     <ModelPicker models={[{id:"sample",name:"Sample model",providerFamily:"Fixture",tier:"standard",autoEligible:true}]} value={model} onChange={setModel} open={picker} onOpenChange={setPicker} />
-  </WorkspaceFrame>;
+  </WorkspaceFrame></div>;
 }

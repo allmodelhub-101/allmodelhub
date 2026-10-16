@@ -20,6 +20,6 @@ for(const [name,route] of [['login','/auth/login'],['legal','/privacy'],['video-
       await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
     }
     await page.evaluate(()=>document.fonts.ready);
-    await expect(page).toHaveScreenshot(`${name}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
+    await expect(page).toHaveScreenshot(`${name==='video-fixture'?name:`phase2-${name}`}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
   });
 }

@@ -1,5 +1,14 @@
 # Responsive baseline test matrix
 
+## Phase 2 coverage
+
+Current projects: both Chromium and WebKit at all original 12 dimensions plus **900×900 and 901×900**, for 28 projects. `workspace.spec.ts` exercises the gated real shared components with synthetic state in light/dark, visible chrome/touch geometry, long-content access, focus/scroll/Escape, nested shortcut ownership, sidebar/account persistence, mobile More/backdrop, language/reduced viewport, theme persistence, non-loopback rejection, chat-coupled selectors and synthetic active-route selection. Marketing navigation still tests actual public route navigation. Protected workflow tests remain separately BLOCKED.
+
+Historical Phase 1 results below are unchanged. Current exact run results and links belong to `mobile-phase2/README.md`. Do not aggregate exploratory runs during editing as a final clean run or count a synthetic route selection as authenticated navigation.
+
+Screenshots are file attachments, geometry JSON is attached by path, HTML artifacts contain useful failure evidence, and CI uploads only HTML plus result JSON (7-day retention) to avoid duplicating the raw attachment tree. Default baseline screenshots are limited to 390/768/1366; `PW_CAPTURE_ALL=1` restores captures at every size. Assertions still run at every configured size. Windows/Linux snapshots remain separate; `PW_SHARED_VISUAL=1` enables shared-shell comparisons at representative widths after baseline review.
+
+
 Source baseline: `314c76404b98156ea4bdd8bb63899df24e9eb8b4`, 2026-10-16, Asia/Karachi. Evidence is from an isolated Windows localhost checkout, not a production verification.
 
 ## Configuration and execution

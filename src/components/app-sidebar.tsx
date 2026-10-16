@@ -72,8 +72,9 @@ function NavLink({ item, pathname, collapsed = false, language = "en" }: { item:
   );
 }
 
-export function AppSidebar({ balance, displayName, email, isAdmin, language = "en" }: { balance: number; displayName?: string | null; email?: string | null; isAdmin: boolean; language?: string }) {
-  const pathname = usePathname();
+export function AppSidebar({ balance, displayName, email, isAdmin, language = "en", activePath }: { balance: number; displayName?: string | null; email?: string | null; isAdmin: boolean; language?: string; activePath?: string }) {
+  const routePath = usePathname();
+  const pathname = activePath || routePath;
   const [collapsed, setCollapsed] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -144,7 +145,7 @@ export function AppSidebar({ balance, displayName, email, isAdmin, language = "e
       </div>
     </aside>
 
-    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section ref={mobileSheetRef} tabIndex={-1} className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>{BRAND.name}</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{mobileMoreItems.map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{translatedLabel(item, language)}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
+    {mobileMoreOpen && <div className="mobile-nav-layer"><button className="nav-backdrop" type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)} /><section ref={mobileSheetRef} tabIndex={-1} className="mobile-nav-sheet" role="dialog" aria-modal="true" aria-label="Workspace navigation"><div className="mobile-sheet-head"><div><strong>{BRAND.name}</strong><span>Workspace</span></div><button type="button" aria-label="Close navigation" onClick={() => setMobileMoreOpen(false)}><X size={19} /></button></div><div className="mobile-sheet-grid">{mobileMoreItems.map((item) => { const ItemIcon = item.icon; return <Link className={isActive(pathname, item.href) ? "active" : ""} href={item.href} aria-current={isActive(pathname, item.href) ? "page" : undefined} onClick={() => setMobileMoreOpen(false)} key={item.href}><ItemIcon size={21} weight={isActive(pathname, item.href) ? "fill" : "regular"} aria-hidden="true" /><span>{translatedLabel(item, language)}</span></Link>; })}{isAdmin && <Link href="/admin" onClick={() => setMobileMoreOpen(false)}><ShieldCheck size={21} /><span>Admin</span></Link>}</div></section></div>}
 
     <nav className="mobile-nav" aria-label="Mobile workspace navigation">{createItems.map((item) => { const ItemIcon = item.icon; const active = isActive(pathname, item.href); return <Link className={active ? "active" : ""} href={item.href} aria-current={active ? "page" : undefined} key={item.href}><ItemIcon size={21} weight={active ? "fill" : "regular"} aria-hidden="true" /><small>{translatedLabel(item, language)}</small></Link>; })}<button className={mobileMoreOpen ? "active" : ""} type="button" onClick={(event) => { event.currentTarget.focus(); setMobileMoreOpen(true); }} aria-label="Open more navigation" aria-expanded={mobileMoreOpen}><DotsThree size={22} weight="bold" aria-hidden="true" /><small>More</small></button></nav>
   </>;

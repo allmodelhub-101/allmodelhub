@@ -1,5 +1,16 @@
 # Models Suite responsive transformation — implementation plan
 
+## Phase 2 continuation
+
+Phase 2 is implemented on the existing branch/PR; see `mobile-phase2/README.md` for validation and acceptance. Phase 1 sections below describe the original baseline and proposed sequence. Shared layout now uses WorkspaceFrame + workspace-shell.css, with a gated synthetic shell and central overlay hook. Do not interpret the original Phase 1-only scope paragraph as prohibiting the explicitly requested Phase 2 UI work.
+
+Before Phase 3, require green Linux responsive CI, reviewed before/after evidence, passing build/type/security/billing/relevant UI checks, and an explicit record of blocked authenticated/device cases. Full lint's pre-existing login-form effects are independent debt unless safely addressed in a dedicated change.
+
+Phase 3 implementation order: (1) validate an authorized isolated chat account when available, (2) connect the chat content/message/composer height budget to the new shell header and mobile safe-area clearance, (3) make model/tool/attachment popovers share overlay ownership, (4) test long messages, code/tables, attachments and empty/error states with safe fixture data, (5) verify keyboard resizing and focus on physical iOS/Android, then (6) compare desktop screenshots and run billing/security/UI plus Chromium/WebKit matrices. Preserve Enter/Shift+Enter, streaming, cancellation, pricing and file-upload/server contracts. No live generation is needed for layout verification.
+
+Phases 4–6 retain the sequence below: studio layouts/media first, workspace/data/payment/admin surfaces second, cross-device accessibility/performance/regression sign-off last. Each change needs owner-scoped CSS, actual screenshots, functionality checks and an explicit blocked list. Do not expand Phase 3 into the full global stylesheet rewrite.
+
+
 Phase 1 baseline source: `314c76404b98156ea4bdd8bb63899df24e9eb8b4` on `main`, inspected 2026-10-16 (Asia/Karachi). Branch: `feat/mobile-first-responsive-overhaul`. This phase adds documentation and test tooling only. See the audit and test matrix for actual results and remaining blockers.
 
 ## Scope and safety contract

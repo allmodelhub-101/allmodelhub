@@ -9,7 +9,7 @@ if (!['127.0.0.1','localhost','[::1]'].includes(new URL(baseURL).hostname)) {
 }
 export default defineConfig({
   testDir: './tests/responsive', timeout: 60_000, expect: { timeout: 10_000 },
-  fullyParallel: false, workers: process.env.CI ? 2 : 1, retries: 0,
+  fullyParallel: false, workers: process.env.CI ? 4 : 1, retries: 0,
   outputDir: `test-results/${runLabel}`,
   reporter: [['list'],['html',{open:'never',outputFolder:`playwright-report/${runLabel}`}],['json',{outputFile:`test-results/${runLabel}/results.json`}]],
   snapshotPathTemplate: '{testDir}/__screenshots__/{platform}/{projectName}/{arg}{ext}',

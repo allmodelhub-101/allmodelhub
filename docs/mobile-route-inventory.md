@@ -103,7 +103,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/components/template-library.css | 8901 | 66 | 2 | 2 | 0 |
 | src/components/video-studio-v2.module.css | 47881 | 180 | 3 | 12 | 7 |
 | src/components/video-studio.module.css | 23171 | 97 | 10 | 70 | 1 |
-| src/components/workspace-shell.css | 5453 | 61 | 4 | 0 | 4 |
+| src/components/workspace-shell.css | 5598 | 61 | 4 | 0 | 4 |
 
 ## Auxiliary routes and states
 

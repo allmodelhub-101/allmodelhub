@@ -33,15 +33,15 @@
    a second row until there is room for all desktop controls. */
 @media (max-width:1180px) {
   .responsive-workspace .app-main { grid-template-rows:108px minmax(0,1fr); }
-  .responsive-workspace .app-main .app-topbar { height:108px;min-height:108px;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:44px 44px;gap:4px;padding:8px max(8px,env(safe-area-inset-right)) 8px max(8px,env(safe-area-inset-left)); }
-  .responsive-workspace .app-topbar .command-trigger { display:flex;grid-column:1 / -1;grid-row:2;width:100%;max-width:none;height:44px;min-width:0; }
-  .responsive-workspace .app-topbar .global-project { width:100%;max-width:220px;min-width:0;height:44px; }
-  .responsive-workspace .app-topbar .topbar-actions { display:flex;gap:4px;grid-column:2;grid-row:1; }
-  .responsive-workspace .app-topbar :is(.generation-trigger,.topbar-icon-trigger,.theme-toggle,.wallet-chip,.topbar-profile) { display:grid;place-items:center;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0; }
-  .responsive-workspace .app-topbar .generation-trigger { font-size:0; }
-  .responsive-workspace .app-topbar .wallet-chip :is(span,small) { display:none; }
-  .responsive-workspace .app-topbar .wallet-chip svg { display:block; }
-  .responsive-workspace .app-topbar .topbar-profile > svg { display:none; }
+  .responsive-workspace .app-main .app-topbar.workspace-topbar { height:108px;min-height:108px;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:44px 44px;gap:4px;padding:8px max(8px,env(safe-area-inset-right)) 8px max(8px,env(safe-area-inset-left)); }
+  .responsive-workspace .app-main .workspace-topbar .command-trigger { display:flex;grid-column:1 / -1;grid-row:2;width:100%;max-width:none;height:44px;min-width:0; }
+  .responsive-workspace .app-main .workspace-topbar .global-project { width:100%;max-width:220px;min-width:0;height:44px; }
+  .responsive-workspace .app-main .workspace-topbar .topbar-actions { display:flex;gap:4px;grid-column:2;grid-row:1; }
+  .responsive-workspace .app-main .workspace-topbar :is(.generation-trigger,.topbar-icon-trigger,.theme-toggle,.wallet-chip,.topbar-profile) { display:grid;place-items:center;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0; }
+  .responsive-workspace .app-main .workspace-topbar .generation-trigger { font-size:0; }
+  .responsive-workspace .app-main .workspace-topbar .wallet-chip :is(span,small) { display:none; }
+  .responsive-workspace .app-main .workspace-topbar .wallet-chip svg { display:block; }
+  .responsive-workspace .app-main .workspace-topbar .topbar-profile > svg { display:none; }
   .responsive-workspace :is(input,textarea,select,.premium-select-trigger) { font-size:16px; }
 }
 @media (max-width:900px) {

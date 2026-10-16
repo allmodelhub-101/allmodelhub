@@ -43790,7 +43790,7 @@
         "value": "fixed"
       },
       {
-        "selector": ".responsive-workspace .app-main .app-topbar",
+        "selector": ".responsive-workspace .app-main .app-topbar.workspace-topbar",
         "conditions": [
           "@media (max-width:1180px)"
         ],
@@ -43799,7 +43799,7 @@
         "value": "108px"
       },
       {
-        "selector": ".responsive-workspace .app-main .app-topbar",
+        "selector": ".responsive-workspace .app-main .app-topbar.workspace-topbar",
         "conditions": [
           "@media (max-width:1180px)"
         ],

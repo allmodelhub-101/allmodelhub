@@ -1,4 +1,9 @@
 import { test, expect } from './safety';
+import type { Page } from '@playwright/test';
+async function openShell(page:Page, url='/responsive-fixture'){
+  await page.goto(url,{waitUntil:'networkidle'});
+  await expect(page.locator('.responsive-fixture')).toHaveAttribute('data-ready','true');
+}
 
 for (const theme of ['light','dark']) {
   test(`synthetic shell ${theme}: chrome, overflow, touch targets, screenshots`, async ({page},info) => {
@@ -7,7 +12,7 @@ for (const theme of ['light','dark']) {
     page.on('pageerror',error=>failures.push(error.message));
     page.on('console',message=>{if(message.type()==='error') failures.push(message.text());});
     const apis:string[]=[]; page.on('request',request=>{if(new URL(request.url()).pathname.startsWith('/api/')) apis.push(request.url());});
-    await page.goto('/responsive-fixture',{waitUntil:'networkidle'});
+    await openShell(page);
     await expect(page.getByRole('heading',{name:'Workspace foundation'})).toBeVisible();
     await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
     const width=page.viewportSize()!.width;
@@ -31,7 +36,7 @@ for (const theme of ['light','dark']) {
 }
 
 test('workspace overlays trap focus, dismiss and restore scroll/focus',async({page})=>{
-  await page.goto('/responsive-fixture',{waitUntil:'networkidle'});
+  await openShell(page);
   for(const [trigger,label] of [['Open generation center','Generation center'],['Notifications','Notifications'],['Search or jump to','Command palette']] as const){
     const button=trigger==='Search or jump to'?page.locator('.command-trigger'):page.getByRole('button',{name:trigger,exact:true});
     await button.click(); const dialog=page.getByRole('dialog',{name:label,exact:true}); await expect(dialog).toBeVisible();
@@ -45,7 +50,7 @@ test('workspace overlays trap focus, dismiss and restore scroll/focus',async({pa
 });
 
 test('navigation drawer or desktop account keyboard and persistence',async({page})=>{
-  await page.goto('/responsive-fixture',{waitUntil:'networkidle'});
+  await openShell(page);
   if(page.viewportSize()!.width<=900){
     const more=page.getByRole('button',{name:'Open more navigation'});await more.click();const dialog=page.getByRole('dialog',{name:'Workspace navigation'});await expect(dialog).toBeVisible();
     await dialog.getByRole('link',{name:'Help & Support'}).scrollIntoViewIfNeeded();await expect(dialog.getByRole('link',{name:'Help & Support'})).toBeInViewport();
@@ -60,7 +65,7 @@ test('navigation drawer or desktop account keyboard and persistence',async({page
 });
 
 test('document model shortcut owns Ctrl K; nested overlay closes only topmost',async({page})=>{
-  await page.goto('/responsive-fixture',{waitUntil:'networkidle'});
+  await openShell(page);
   await page.locator('.command-trigger').click(); const palette=page.getByRole('dialog',{name:'Command palette'});await expect(palette).toBeVisible();
   await page.keyboard.press('Control+k');const picker=page.getByRole('dialog',{name:'Choose the right intelligence'});await expect(picker).toBeVisible();
   await page.keyboard.press('Escape');await expect(picker).toHaveCount(0);await expect(palette).toBeVisible();await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
@@ -69,7 +74,7 @@ test('document model shortcut owns Ctrl K; nested overlay closes only topmost',a
 });
 
 test('shared selector and languages, keyboard-reduced viewport',async({page})=>{
-  await page.goto('/responsive-fixture',{waitUntil:'networkidle'});
+  await openShell(page);
   const select=page.getByRole('combobox',{name:'Navigation language'});await select.focus();await page.keyboard.press('End');await page.keyboard.press('Enter');await expect(select).toContainText('Roman Urdu');
   await select.focus();await page.keyboard.press('ArrowUp');await page.keyboard.press('Enter');await expect(select).toContainText('Urdu');
   await expect(page.locator('.responsive-fixture')).toHaveAttribute('dir','rtl');
@@ -86,4 +91,26 @@ test('auth login and signup theme switches persist in both directions',async({pa
 test('shell fixture rejects non-loopback host',async({request})=>{
   const response=await request.get('/responsive-fixture',{headers:{host:'preview.example.invalid'}});
   expect(response.status()).toBe(404);
+});
+
+test('shared chrome also fits with legacy chat ancestor selectors',async({page})=>{
+  await openShell(page,'/responsive-fixture?chrome=chat');
+  await expect(page.locator('.app-topbar .theme-toggle')).toBeVisible();
+  await expect(page.locator('.command-trigger')).toBeVisible();
+  await expect(page.getByRole('button',{name:'Open generation center'})).toBeVisible();
+  const width=page.viewportSize()!.width;
+  const geometry=await page.locator('.app-topbar').evaluate(el=>({height:el.getBoundingClientRect().height,controls:[...el.querySelectorAll('a,button')].filter(e=>e.getClientRects().length).map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,height:e.getBoundingClientRect().height}))}));
+  if(width<=1180) expect(geometry.height).toBe(108);
+  for(const control of geometry.controls){expect(control.left).toBeGreaterThanOrEqual(0);expect(control.right).toBeLessThanOrEqual(width+1);if(width<=1180)expect(control.height).toBeGreaterThanOrEqual(44);}
+});
+
+test('real navigation links expose selected destination using synthetic route state',async({page})=>{
+  await openShell(page);
+  const mobile=page.viewportSize()!.width<=900;
+  const navigation=mobile?page.getByRole('navigation',{name:'Mobile workspace navigation'}):page.getByRole('navigation',{name:'Workspace pages'});
+  await expect(navigation.getByRole('link',{name:'Chat',exact:true})).toHaveAttribute('aria-current','page');
+  const image=navigation.getByRole('link',{name:'Image',exact:true});await expect(image).toHaveAttribute('href','/images');await image.click();await expect(image).toHaveAttribute('aria-current','page');
+  await expect(navigation.getByRole('link',{name:'Chat',exact:true})).not.toHaveAttribute('aria-current','page');
+  if(mobile){await page.getByRole('button',{name:'Open more navigation'}).click();const dialog=page.getByRole('dialog',{name:'Workspace navigation'});await dialog.getByRole('link',{name:'Settings',exact:true}).click();await expect(dialog).toHaveCount(0);await page.getByRole('button',{name:'Open more navigation'}).click();await expect(page.getByRole('dialog',{name:'Workspace navigation'}).getByRole('link',{name:'Settings',exact:true})).toHaveAttribute('aria-current','page');}
+  await expect(page).toHaveURL(/\/responsive-fixture$/); // selection is synthetic; protected navigation is not bypassed.
 });
