@@ -1097,8 +1097,8 @@
     },
     {
       "file": "src/components/chat-workspace.css",
-      "bytes": 16752,
-      "lines": 142,
+      "bytes": 17081,
+      "lines": 146,
       "mediaQueries": 4,
       "important": 0,
       "viewportUnits": 5
