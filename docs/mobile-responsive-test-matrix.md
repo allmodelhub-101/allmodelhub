@@ -1,5 +1,24 @@
 # Responsive baseline test matrix
 
+## Phase 3 Chat coverage
+
+Both Chromium and WebKit use **320×568, 360×800, 375×812, 390×844, 430×932, 844×390, 600×960, 768×1024, 900×900, 901×900, 1024×768, 1180×820, 1366×768 and 1920×1080**. Ten Chat cases per project add 280 executed opportunities to the preserved Phase 2 suite. Exact final Linux counts/run links are in [Phase 3 handoff](mobile-phase3/README.md); configuration discovery alone is not a pass.
+
+| Coverage | Implementation and limit |
+|---|---|
+| Welcome / themes / controls | Light/dark, geometry, document overflow, composer/header/nav separation, compact single toolbar row and 44px primary controls. Actual screenshots at representative widths. |
+| Input | Native text entry, Shift+Enter, synthetic composition Enter, auto-growth cap, long paste/context removal and local send. Shared pure input policy tested separately. Real mobile IME remains unverified. |
+| Models / overlays | Real ModelPicker search, disabled unavailable result, selection, focus return, Escape and Ctrl+K exclusivity; project/tier selection and settings focus containment; privacy/reasoning/enhancement reachability. |
+| Conversation | Long Markdown headings/lists/quote/URLs/unbroken text, focusable local code/table scrolling, draft-preserved history position, Latest, explicit new submission and synthetic streaming/Stop. |
+| Files / actions / feedback | Long attachment names, local file picker, removal, reduced viewport, local edit/retry/branch/voice presentation, loading, pending billing, interrupted response and preserved error draft. No upload/microphone/provider/billing E2E claim. |
+| Diagnostics | Every Chat case rejects console/runtime/hydration errors, failed resources and any `/api/` request. Shared suite additionally retains external/mutation guards and production fixture gating. |
+| Visual references | 12 reviewed Windows welcome references, then 12 comparison passes at both engines × 390/768/1366 × light/dark. Opt in with `PW_CHAT_VISUAL=1`; never compare Windows snapshots to Linux or regenerate to hide a failure. Long content/attachments/controls have reviewed screenshot evidence, without claimed visual baseline comparisons. |
+| Production | 30 production-React component scenarios (both engines × phone/landscape/desktop × five states), plus 30 actual local Next production public-render/fixture-denial checks. The component bundle uses production React but does not claim Next authenticated E2E or optimized chunk equivalence. |
+
+Reproduction: `pnpm test:responsive` runs the complete matrix with no retries. `pnpm exec playwright test tests/responsive/chat.spec.ts` selects Chat only. For approved Windows comparisons use `PW_CHAT_VISUAL=1` with both engines at 390×844, 768×1024 and 1366×768. `LOCAL_RESPONSIVE_FIXTURES=1 node scripts/mobile-chat-production-check.mjs` runs the loopback standalone harness. Build and start Next at 127.0.0.1:3101 with the same explicit flag, then run `node scripts/mobile-chat-next-production-check.mjs` to verify public production rendering and fixture 404s. These commands never create a session or trigger paid requests.
+
+The **22 protected workflows remain BLOCKED**, multiplied across the matrix in the suite's skip count; optional approved-visual cases also skip by default. Those skips are not functional passes. The local fixture has welcome/conversation/long/streaming/loading/pending/error/interrupted/attachments/project states. Authentication, persisted conversation switching, real SSE/provider behavior, microphone recognition, settlement and physical-device keyboard/assistive technology still need an authorized environment/hardware.
+
 ## Phase 2 coverage
 
 Current projects: both Chromium and WebKit at all original 12 dimensions plus **900×900 and 901×900**, for 28 projects. `workspace.spec.ts` exercises the gated real shared components with synthetic state in light/dark, visible chrome/touch geometry, long-content access, focus/scroll/Escape, nested shortcut ownership, sidebar/account persistence, mobile More/backdrop, language/reduced viewport, theme persistence, non-loopback rejection, chat-coupled selectors and synthetic active-route selection. Marketing navigation still tests actual public route navigation. Protected workflow tests remain separately BLOCKED.

@@ -1,5 +1,24 @@
 # Models Suite — Phase 1 responsive architecture audit
 
+## Phase 3 Chat implementation update (2026-10-16)
+
+The live inventory remains **32 source pages / 42 HTTP handlers**, now **16 stylesheets**. Chat presentation is extracted from ChatClient into the production ChatWorkspace component and its scoped stylesheet. No route, authentication, provider, upload API, persistence, pricing or settlement contract was added or changed. Phase 1/2 sections below remain historical evidence. Current acceptance and exact runs are in [Phase 3 handoff](mobile-phase3/README.md).
+
+| Finding / dependency | Evidence and resolution |
+|---|---|
+| P3-C01: competing viewport owners | Retired `.chat-page` selectors included `100vh - 116px` and `100dvh - 56px` while the repaired shell already owns a 108px compact header and navigation clearance. Chat now fills one shell cell, with a history row and an in-flow composer. Direct VisualViewport height at scale 1 supplies the frame, without a keyboard-height guess. |
+| P3-C02: inherited compact toolbar cap | Browser inspection found `.composer-tools` constrained enough to wrap at 320px. The owned rule explicitly clears that max-width; tests assert one compact toolbar row and 44px primary controls. Attachments use a separate named local horizontal scroll region. |
+| P3-C03: uncontrolled history follow | A synthetic streaming race initially forced readers back down. The presentation tracks the last followed offset and detects upward reading before a delayed scroll event; draft edits and incoming tokens preserve history position. Latest and explicit submission resume following. |
+| P3-C04: composer overlay stacking | Screenshot review exposed a settings backdrop below the shared mobile navigation. Chat controls now portal to body and share focus/scroll/Escape handling. PremiumSelect consumes Escape only when its own list is open. |
+| P3-C05: long content and readability | Production Markdown is memoized by content; code and GFM tables have named focusable local scroll regions. Long prose/URLs wrap, mobile avatars yield space, assistant answers use available width, and message actions remain reachable. |
+| P3-C06: feedback and discovery | Welcome retains dynamic model data and all starter actions. The ticker pauses on hover/focus and stops for reduced motion. Pending billing, empty/loading/interrupted/error states keep their existing values; changing response status is concise, without live-announcing every timer tick. |
+
+`production/computed-styles.json` records the actual computed shell, history, composer, toolbar and textarea properties in both engines at phone, landscape and desktop sizes. The owning declarations are in `chat-workspace.css`; source order alone was not used as visual proof. Eleven selector groups requiring the unused exact `.chat-page` class were removed and archived. Globals still contains **835 media/container conditions and 766 repeated exact selector/condition groups**: this is remaining debt, not a claim that all are defects. Phase 2's synthetic `premium-chat-page` compatibility case is preserved. No global stylesheet rewrite or artificial document clipping was introduced.
+
+Dependencies: ChatClient → ChatWorkspace → ReactMarkdown/remark-gfm, ModelPicker/ModelBrand, PremiumSelect and useWorkspaceOverlay; WorkspaceFrame → workspace-shell.css, shared header/sidebar/mobile navigation. ChatClient still owns request/SSE processing, refresh, uploads, billing polling, recognition and conversation state. Ten Phase 2 function hashes and three shared input-policy tests guard this boundary; fixture adapters do not prove real persistence.
+
+Remaining risks: actual IME/keyboard resizing, device safe areas, pinch/text zoom and assistive technology need hardware verification; real conversation switching, recognition, billing transitions and provider streaming require an authorized isolated backend/session. Long-answer rendering has memoization and restrained motion, but no low-end-device performance certification. Error banners and attachment rows can still reduce history space at extremely small visual viewports; supported emulated reduced heights are covered, physical keyboards are not.
+
 ## Phase 2 implementation update (2026-10-16)
 
 Phase 1 evidence below is historical. Current code adds a gated synthetic shell route: **32 source pages, 42 HTTP handlers, 15 stylesheets** (one additional fixture and two owned stylesheets). The 22 real protected workflows remain blocked; fixture coverage is explicitly component coverage.

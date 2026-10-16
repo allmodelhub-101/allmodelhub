@@ -2,7 +2,7 @@
 import './mobile-chat-production-harness.mjs';
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';
 import {chromium,webkit,expect} from '@playwright/test';
-const root=process.cwd(),directory=path.join(root,'test-results','phase3-production-component'),results=[];
+const root=process.cwd(),directory=path.join(root,'test-results','phase3-production-component'),results=[],computedStyles=[];
 const server=http.createServer((request,response)=>{
  if(!/^(127\.0\.0\.1|localhost)(?::\d+)?$/.test(request.headers.host||'')||request.method!=='GET'){response.writeHead(403).end();return}
  const url=new URL(request.url,'http://127.0.0.1');let file;
@@ -23,6 +23,7 @@ try{
    await context.route('**/*',async route=>{const r=route.request(),u=new URL(r.url());if((/^https?:$/.test(u.protocol)&&u.origin!==base)||!['GET','HEAD','OPTIONS'].includes(r.method()))await route.abort();else await route.continue()});
    await page.goto(`${base}/?state=${state}`,{waitUntil:'networkidle'});await expect(page.locator('.chat-workspace')).toHaveAttribute('data-ready','true');await expect(page.getByRole('textbox',{name:'Message',exact:true})).toBeInViewport();
    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+   if(state==='welcome')computedStyles.push({browser:name,width,height,styles:await page.evaluate(()=>Object.fromEntries(['.responsive-workspace','.app-main','.app-content','.chat-workspace','.chat-layout-body','.composer-wrap','.composer','.composer-footer','.composer-tools','.chat-input','.mobile-nav'].map(selector=>{const element=document.querySelector(selector),style=getComputedStyle(element),rect=element.getBoundingClientRect();return [selector,{display:style.display,position:style.position,height:style.height,minHeight:style.minHeight,maxHeight:style.maxHeight,overflowX:style.overflowX,overflowY:style.overflowY,gridTemplateRows:style.gridTemplateRows,padding:style.padding,maxWidth:style.maxWidth,bounds:{top:rect.top,bottom:rect.bottom,width:rect.width}}]})))});
    if(state==='welcome'){await page.getByRole('textbox',{name:'Message',exact:true}).fill('Production React local draft');await page.getByRole('button',{name:'Send message'}).click();await expect(page.getByText('Local fixture response. No request was sent.',{exact:true})).toBeVisible()}
    if(state==='loading'){await page.getByRole('button',{name:'Stop generation'}).click();await expect(page.getByRole('button',{name:'Send message'})).toBeVisible()}
    if(state==='attachments')await expect(page.locator('.attachment-card')).toHaveCount(3);
@@ -33,5 +34,5 @@ try{
    results.push({browser:name,width,height,state,status:'PASS',mode:'production React standalone component bundle; not authenticated Next E2E'});await context.close();
   }}finally{await browser.close()}
  }
- fs.writeFileSync('docs/mobile-phase3/production/results.json',JSON.stringify(results,null,2));console.log(`${results.length} production React component scenarios passed`);
+ fs.writeFileSync('docs/mobile-phase3/production/results.json',JSON.stringify(results,null,2));fs.writeFileSync('docs/mobile-phase3/production/computed-styles.json',JSON.stringify(computedStyles,null,2)+'\n');console.log(`${results.length} production React component scenarios passed`);
 }finally{await new Promise(resolve=>server.close(resolve))}

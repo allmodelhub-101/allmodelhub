@@ -1,5 +1,21 @@
 # Models Suite responsive transformation — implementation plan
 
+## Phase 3 implementation and Phase 4 entry
+
+Chat implementation is on the existing feature branch and draft PR #149. See [Phase 3 handoff](mobile-phase3/README.md) for exact acceptance and CI evidence; earlier Phase 1/2 sections below describe prior milestones. ChatWorkspace and chat-workspace.css own presentation, while ChatClient keeps business/state contracts. The safe fixture mounts those real components and uses only synthetic local callbacks. Model, project, reasoning, privacy, enhancement, paste, attachment, voice and Send/Stop controls remain available.
+
+Phase 3 completion gates: green full Linux Chromium/WebKit matrix and regression checks; reviewed before/after and approved Windows screenshot comparisons; production Next build/typecheck and fixture-denial checks; ten unchanged contract hashes plus shared input-policy tests; explicit protected/device blockers. Repository-wide lint's two pre-existing LoginForm errors and 14 warnings are independent debt. The Windows homepage raw-byte guard is line-ending-sensitive; Linux and the LF-normalized unchanged homepage match the pinned hash.
+
+Phase 4 implementation order:
+
+1. Recheck main, PR head and overlapping #117 Video/#106 billing work. Reuse this branch/PR and read each studio's actual controller/CSS dependencies before editing.
+2. Image Studio first: extract presentation only when it reduces risk; cover welcome, prompt/options, upload previews, synthetic result grids/viewers, errors/loading, long filenames and short-height overlays. Preserve model flags, request fields, upload contracts and billing.
+3. Video Studio next: preserve Phase 2 Escape/focus work, generation/settlement handlers and aspect-ratio behavior; test synthetic long controls, history and preview media without provider calls.
+4. Audio Studio modes last: speech/music/transcription controls, long text, file previews, audio-player reachability and mode switching, with synthetic media and no real purchases/generations.
+5. For every studio, use owner-scoped CSS, guarded real presentation fixtures, all 28 projects, light/dark plus 900/901 breakpoint checks, before/after image review, production component/Next checks and existing billing/security/UI tests. Do not add broad global overflow clipping.
+
+Phase 5 remains workspace/account/data/payment/admin/public polish; Phase 6 remains full accessibility/performance/regression hardening and a separate release decision. Obtain an authorized isolated account/backend to unblock the 22 authenticated workflows; physical iOS/Android keyboards, zoom, safe areas and assistive technology remain release gates. Phase 4 presentation work can proceed with the existing safe fixture approach after Phase 3's available gates are green; this does not authorize merging or production promotion.
+
 ## Phase 2 continuation
 
 Phase 2 is implemented on the existing branch/PR; see `mobile-phase2/README.md` for validation and acceptance. Phase 1 sections below describe the original baseline and proposed sequence. Shared layout now uses WorkspaceFrame + workspace-shell.css, with a gated synthetic shell and central overlay hook. Do not interpret the original Phase 1-only scope paragraph as prohibiting the explicitly requested Phase 2 UI work.

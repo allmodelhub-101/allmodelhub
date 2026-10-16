@@ -1,0 +1,130 @@
+[
+  {
+    "label": "phase3-smoke",
+    "status": "Interrupted exploratory run; no complete result JSON",
+    "finalAcceptance": false
+  },
+  {
+    "label": "phase3-recheck",
+    "stats": {
+      "startTime": "2026-10-16T13:55:10.637Z",
+      "duration": 142306.22,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "streaming-like updates respect readers and Stop remains usable",
+        "project": "chromium-320x568",
+        "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Latest', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" getByRole('button', { name: 'Latest', exact: true }) with timeout 10000ms\n  - waiting for getByRole('button', { name: 'Latest', exact: true })\n"
+      },
+      {
+        "title": "loading, pending billing, interrupted and error presentation",
+        "project": "chromium-320x568",
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByRole('alert')\nExpected substring: \"Synthetic connection failure\"\nError: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"soft-card small error-box\">…</div> aka getByText('Request not completed. Synthetic connection failure. Retry when ready. Your')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nC"
+      },
+      {
+        "title": "loading, pending billing, interrupted and error presentation",
+        "project": "webkit-390x844",
+        "error": "Error: expect(locator).toContainText(expected) failed\n\nLocator: getByRole('alert')\nExpected substring: \"Synthetic connection failure\"\nError: strict mode violation: getByRole('alert') resolved to 2 elements:\n    1) <div role=\"alert\" class=\"soft-card small error-box\">…</div> aka getByText('Request not completed. Synthetic connection failure. Retry when ready. Your')\n    2) <div role=\"alert\" aria-live=\"assertive\" id=\"__next-route-announcer__\"></div> aka locator('[id=\"__next-route-announcer__\"]')\n\nC"
+      }
+    ],
+    "finalAcceptance": false
+  },
+  {
+    "label": "phase3-stable",
+    "stats": {
+      "startTime": "2026-10-16T13:58:09.226Z",
+      "duration": 193765.035,
+      "expected": 36,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
+  },
+  {
+    "label": "phase3-adjacent",
+    "stats": {
+      "startTime": "2026-10-16T14:03:35.435Z",
+      "duration": 189711.48799999998,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "chat discovery, message actions, local attachment selection and voice presentation",
+        "project": "chromium-320x568",
+        "error": "Test timeout of 60000ms exceeded."
+      },
+      {
+        "title": "chat discovery, message actions, local attachment selection and voice presentation",
+        "project": "chromium-1366x768",
+        "error": "Test timeout of 60000ms exceeded."
+      },
+      {
+        "title": "chat discovery, message actions, local attachment selection and voice presentation",
+        "project": "webkit-390x844",
+        "error": "Test timeout of 60000ms exceeded."
+      }
+    ],
+    "finalAcceptance": false
+  },
+  {
+    "label": "phase3-adjacent-final",
+    "stats": {
+      "startTime": "2026-10-16T14:06:48.677Z",
+      "duration": 51271.810000000005,
+      "expected": 9,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
+  },
+  {
+    "label": "phase3-toolbar",
+    "stats": {
+      "startTime": "2026-10-16T14:09:01.079Z",
+      "duration": 44420.632,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
+  },
+  {
+    "label": "phase3-visual-create",
+    "stats": {
+      "startTime": "2026-10-16T14:08:16.426Z",
+      "duration": 84062.185,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": false
+  },
+  {
+    "label": "phase3-visual-verify",
+    "stats": {
+      "startTime": "2026-10-16T14:13:41.286Z",
+      "duration": 100728.487,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
+  }
+]

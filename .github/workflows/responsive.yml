@@ -57,5 +57,6 @@ jobs:
           path: |
             playwright-report/
             test-results/**/results.json
+            docs/mobile-phase3/production/
           retention-days: 7
           if-no-files-found: warn
