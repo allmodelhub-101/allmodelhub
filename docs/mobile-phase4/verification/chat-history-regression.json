@@ -1,0 +1,13 @@
+{
+  "runLabel": "phase4-chat-history-budget",
+  "stats": {
+    "startTime": "2026-10-16T17:50:26.246Z",
+    "duration": 191691.222,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "scope": "Existing error/loading/pending/interrupted Chat case, six representative browser/viewport projects repeated three times; all original budget assertions retained"
+}

@@ -28,6 +28,10 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: '1'
   browser-baseline:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -55,13 +59,13 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: '1'
       - name: All viewport projects / both browser engines
-        run: pnpm test:responsive
+        run: pnpm test:responsive --shard=${{ matrix.shard }}/2
         env:
           CI: 'true'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ !cancelled() }}
         with:
-          name: responsive-foundation
+          name: responsive-foundation-${{ matrix.shard }}
           path: |
             playwright-report/
             test-results/**/results.json

@@ -14,10 +14,11 @@ async function openChat(page:Page,state='welcome',theme='light'){
 }
 async function compactDraftBudget(page:Page,info:TestInfo,state:string){
  const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill(Array(12).fill('A long draft in a short viewport').join('\n'));
- const budget=await page.evaluate(()=>{const rect=(s:string)=>document.querySelector(s)!.getBoundingClientRect(),nav=document.querySelector('.mobile-nav')!;return {bottom:rect('.composer-wrap').bottom,navTop:nav.getClientRects().length?rect('.mobile-nav').top:innerHeight,history:rect('.chat-layout-body').height}});
+ const budget=await page.evaluate(()=>{const rect=(s:string)=>document.querySelector(s)!.getBoundingClientRect(),nav=document.querySelector('.mobile-nav')!;return {bottom:rect('.composer-wrap').bottom,navTop:nav.getClientRects().length?rect('.mobile-nav').top:innerHeight,history:rect('.chat-layout-body').height,padding:getComputedStyle(document.querySelector('.composer')!).padding}});
+ await info.attach(`compact-${state}-geometry`,{body:JSON.stringify({state,...budget}),contentType:'application/json'});
  expect(budget.bottom,'expanded composer stays above navigation').toBeLessThanOrEqual(budget.navTop+1);expect(budget.history,'history remains reachable above expanded drafts and secondary content').toBeGreaterThanOrEqual(24);
  await expect(input).toBeInViewport();await expect(page.getByRole('button',{name:'Send message'})).toBeInViewport();
- if([320,844].includes(page.viewportSize()!.width)&&page.viewportSize()!.height===390){const path=info.outputPath(`expanded-${state}.png`);await page.screenshot({path,animations:'disabled',style:'nextjs-portal{visibility:hidden}'});await info.attach(`expanded-${state}`,{path,contentType:'image/png'})}
+ if([320,768,844].includes(page.viewportSize()!.width)&&page.viewportSize()!.height===390){const path=info.outputPath(`expanded-${state}.png`);await page.screenshot({path,animations:'disabled',style:'nextjs-portal{visibility:hidden}'});await info.attach(`expanded-${state}`,{path,contentType:'image/png'})}
 }
 for(const theme of ['light','dark'])test(`chat ${theme}: welcome, composer budget and real controls`,async({page},info)=>{
  const errors:string[]=[],apis:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});

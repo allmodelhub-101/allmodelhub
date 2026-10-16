@@ -2,6 +2,8 @@
 
 ## Phase 4 studio coverage
 
+CI partitions the full suite into two parallel shards; require both artifacts and sum their results. Compact Chat budget geometry is attached and reduced-height screenshots also include 768px. A Linux 23px history boundary failure was repaired by reducing short-height composer padding by 2px, preserving the existing minimum/clearance assertions.
+
 The same 14 viewport sizes and both engines (28 projects) are retained. Nine studio cases per project add 252 executed opportunities without reducing Chat/shell/public coverage. Exact final executed counts and CI head are recorded in [Phase 4 handoff](mobile-phase4/README.md) and PR #149 checks; configuration discovery is not execution.
 
 | Layer | Actual safe coverage |

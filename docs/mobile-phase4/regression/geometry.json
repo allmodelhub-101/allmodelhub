@@ -1,0 +1,8 @@
+{
+  "engine": "Windows WebKit with project mobile/touch emulation",
+  "viewport": "768x1024 reduced to 768x390",
+  "history": 35,
+  "padding": "5px 6px",
+  "composerBottom": 312,
+  "navTop": 321
+}
