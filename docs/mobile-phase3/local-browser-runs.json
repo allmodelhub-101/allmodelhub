@@ -139,5 +139,18 @@
     },
     "failures": [],
     "finalAcceptance": true
+  },
+  {
+    "label": "phase3-short-editing",
+    "stats": {
+      "startTime": "2026-10-16T14:54:50.493Z",
+      "duration": 15714.215000000002,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": [],
+    "finalAcceptance": true
   }
 ]

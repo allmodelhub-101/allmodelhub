@@ -37,7 +37,7 @@ test('chat native editing, IME, textarea growth, context and local send',async({
  await openChat(page);const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill('First line');const short=(await input.boundingBox())!.height;
  await input.press('Shift+Enter');await input.type('Second line');await expect(input).toHaveValue('First line\nSecond line');
  await input.dispatchEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,isComposing:true});await expect(input).toHaveValue('First line\nSecond line');
- await input.fill(Array(12).fill('A useful draft').join('\n'));expect((await input.boundingBox())!.height).toBeGreaterThan(short);expect((await input.boundingBox())!.height).toBeLessThanOrEqual(146);
+ await input.fill(Array(12).fill('A useful draft').join('\n'));if(page.viewportSize()!.height<=480){expect((await input.boundingBox())!.height).toBe(short);expect(await input.evaluate(el=>el.scrollHeight>el.clientHeight),'long drafts retain native internal scrolling at short heights').toBe(true)}else expect((await input.boundingBox())!.height).toBeGreaterThan(short);expect((await input.boundingBox())!.height).toBeLessThanOrEqual(146);
  await input.fill('Analyze');
  await input.evaluate(el=>{const data=new DataTransfer();data.setData('text','synthetic context '.repeat(100));el.dispatchEvent(new ClipboardEvent('paste',{clipboardData:data,bubbles:true,cancelable:true}))});
  await expect(page.getByText('Pasted text',{exact:true})).toBeVisible();await page.getByRole('button',{name:'Remove pasted text'}).click();await expect(page.getByText('Pasted text',{exact:true})).toHaveCount(0);
