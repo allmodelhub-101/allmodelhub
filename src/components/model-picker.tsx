@@ -1,5 +1,7 @@
 "use client";
 
+import "./model-picker.css";
+
 import { modelAvailabilityMessage } from "@/lib/model-availability-message";
 
 import { useMemo, useRef, useState } from "react";

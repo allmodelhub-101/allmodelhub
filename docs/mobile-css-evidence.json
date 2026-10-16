@@ -40581,6 +40581,19 @@
     ]
   },
   {
+    "file": "src/components/model-picker.css",
+    "repeated": [],
+    "dimensions": [],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 9
+      }
+    ]
+  },
+  {
     "file": "src/components/template-library.css",
     "repeated": [],
     "dimensions": [
@@ -43764,28 +43777,28 @@
       {
         "selector": ".responsive-workspace .generation-drawer",
         "conditions": [],
-        "line": 18,
+        "line": 19,
         "property": "width",
         "value": "min(420px,100%)"
       },
       {
         "selector": ".responsive-workspace .generation-drawer",
         "conditions": [],
-        "line": 18,
+        "line": 19,
         "property": "height",
         "value": "100dvh"
       },
       {
         "selector": ".responsive-workspace :is(.command-panel,.keyboard-panel)",
         "conditions": [],
-        "line": 21,
+        "line": 22,
         "property": "width",
         "value": "min(680px,100%)"
       },
       {
         "selector": ".responsive-workspace .mobile-nav-layer",
         "conditions": [],
-        "line": 24,
+        "line": 25,
         "property": "position",
         "value": "fixed"
       },
@@ -43794,7 +43807,7 @@
         "conditions": [
           "@media (max-width:1180px)"
         ],
-        "line": 36,
+        "line": 37,
         "property": "height",
         "value": "108px"
       },
@@ -43803,7 +43816,7 @@
         "conditions": [
           "@media (max-width:1180px)"
         ],
-        "line": 36,
+        "line": 37,
         "property": "min-height",
         "value": "108px"
       }
@@ -43813,22 +43826,22 @@
       {
         "type": "media",
         "condition": "(max-width:1180px)",
-        "line": 34
+        "line": 35
       },
       {
         "type": "media",
         "condition": "(max-width:900px)",
-        "line": 48
+        "line": 49
       },
       {
         "type": "media",
         "condition": "(pointer:coarse) and (min-width:901px)",
-        "line": 56
+        "line": 57
       },
       {
         "type": "media",
         "condition": "(prefers-reduced-motion:reduce)",
-        "line": 59
+        "line": 60
       }
     ]
   }

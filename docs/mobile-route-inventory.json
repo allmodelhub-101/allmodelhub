@@ -239,6 +239,7 @@
         "src/components/app-sidebar.tsx",
         "src/components/chat-client.tsx",
         "src/components/model-brand.tsx",
+        "src/components/model-picker.css",
         "src/components/model-picker.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
@@ -253,6 +254,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -320,6 +322,7 @@
         "src/components/image-studio.css",
         "src/components/image-studio.tsx",
         "src/components/model-brand.tsx",
+        "src/components/model-picker.css",
         "src/components/model-picker.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
@@ -334,6 +337,7 @@
         "src/app/globals.css",
         "src/components/app-sidebar.css",
         "src/components/image-studio.css",
+        "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -476,6 +480,7 @@
         "src/components/app-sidebar.css",
         "src/components/app-sidebar.tsx",
         "src/components/model-brand.tsx",
+        "src/components/model-picker.css",
         "src/components/model-picker.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
@@ -489,6 +494,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/model-picker.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -1107,6 +1113,14 @@
       "viewportUnits": 1
     },
     {
+      "file": "src/components/model-picker.css",
+      "bytes": 836,
+      "lines": 13,
+      "mediaQueries": 1,
+      "important": 0,
+      "viewportUnits": 0
+    },
+    {
       "file": "src/components/template-library.css",
       "bytes": 8901,
       "lines": 66,
@@ -1132,8 +1146,8 @@
     },
     {
       "file": "src/components/workspace-shell.css",
-      "bytes": 5733,
-      "lines": 62,
+      "bytes": 5783,
+      "lines": 63,
       "mediaQueries": 4,
       "important": 0,
       "viewportUnits": 4

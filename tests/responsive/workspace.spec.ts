@@ -42,6 +42,7 @@ test('workspace overlays trap focus, dismiss and restore scroll/focus',async({pa
   for(const [trigger,label] of [['Open generation center','Generation center'],['Notifications','Notifications'],['Search or jump to','Command palette']] as const){
     const button=trigger==='Search or jump to'?page.locator('.command-trigger'):page.getByRole('button',{name:trigger,exact:true});
     await button.click(); const dialog=page.getByRole('dialog',{name:label,exact:true}); await expect(dialog).toBeVisible();
+    if(page.viewportSize()!.width<=900) expect(await page.locator('.mobile-nav').evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !!hit?.closest('.mobile-nav');}),'modal/scrim must paint above bottom navigation').toBe(false);
     await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
     for(let i=0;i<20;i++) await page.keyboard.press('Tab');
     expect(await dialog.evaluate(el=>el.contains(document.activeElement))).toBe(true);
@@ -70,6 +71,7 @@ test('document model shortcut owns Ctrl K; nested overlay closes only topmost',a
   await openShell(page);
   await page.locator('.command-trigger').click(); const palette=page.getByRole('dialog',{name:'Command palette'});await expect(palette).toBeVisible();
   await page.keyboard.press('Control+k');const picker=page.getByRole('dialog',{name:'Choose the right intelligence'});await expect(picker).toBeVisible();
+  const optionHeight=await picker.locator('.model-picker-option').first().evaluate(el=>el.getBoundingClientRect().height);expect(optionHeight,'short results must not stretch into viewport-sized rows').toBeLessThan(200);
   await page.keyboard.press('Escape');await expect(picker).toHaveCount(0);await expect(palette).toBeVisible();await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
   await page.keyboard.press('Escape');await expect(palette).toHaveCount(0);await expect(page.locator('.command-trigger')).toBeFocused();
   await page.keyboard.press('Control+k');await expect(picker).toBeVisible();await expect(palette).toHaveCount(0);await page.keyboard.press('Escape');

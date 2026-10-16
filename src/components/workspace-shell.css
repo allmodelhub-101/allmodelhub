@@ -7,6 +7,7 @@
   min-width:0;
 }
 .responsive-workspace :is(.app-main,.app-content,.global-project-wrap,.topbar-actions) { min-width:0;max-width:100%; }
+.responsive-workspace .app-main { z-index:auto; }
 .responsive-workspace .app-content { scroll-padding-block:16px var(--workspace-nav-clearance); }
 .responsive-workspace .app-content > * { min-width:0;max-width:100%; }
 .responsive-workspace :is(.table-wrap,.responsive-scroll-region) { max-width:100%;overflow-x:auto;overscroll-behavior-x:contain; }
