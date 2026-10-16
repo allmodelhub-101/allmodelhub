@@ -131,7 +131,7 @@
   .responsive-workspace .chat-workspace .composer { padding:5px 6px; }
   .responsive-workspace .chat-workspace .attachment-card { padding-block:0; }
   .responsive-workspace .chat-workspace .attachment-strip { padding-bottom:4px; }
-  .responsive-workspace .chat-workspace .error-box { max-height:48px; }
+  .responsive-workspace .chat-workspace .error-box { max-height:32px;margin-top:4px;padding:6px 10px; }
   .responsive-workspace .chat-workspace .composer-hint { display:none; }
 }
 @media (prefers-reduced-motion:reduce) {
