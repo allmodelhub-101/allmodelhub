@@ -21,6 +21,7 @@ for(const theme of ['light','dark'])test(`chat ${theme}: welcome, composer budge
  expect(geometry.scroll).toBeLessThanOrEqual(geometry.width+1);expect(geometry.composer.top).toBeGreaterThanOrEqual(geometry.header);expect(geometry.composer.bottom).toBeLessThanOrEqual(geometry.navTop+1);expect(geometry.bodyHeight).toBeGreaterThan(35);expect(geometry.composer.height).toBeLessThan(page.viewportSize()!.height*.45);
  for(const name of ['Attach files','Start voice typing','Send message','Chat controls: project, routing and privacy']){const button=page.getByRole('button',{name,exact:true});await expect(button).toBeInViewport();const box=await button.boundingBox();expect(box!.width).toBeGreaterThanOrEqual(44);expect(box!.height).toBeGreaterThanOrEqual(44)}
  await expect(page.getByRole('button',{name:/Choose AI model. Current selection/})).toBeInViewport();
+ if(page.viewportSize()!.width<=430)expect((await page.locator('.composer-footer').boundingBox())!.height,'primary controls stay on one compact toolbar row').toBeLessThanOrEqual(48);
  if([390,768,1366].includes(page.viewportSize()!.width)){const path=info.outputPath(`chat-${theme}.png`);await page.screenshot({path,animations:'disabled',style:'nextjs-portal{visibility:hidden}'});await info.attach(`chat-${theme}`,{path,contentType:'image/png'});if(process.env.PW_CHAT_VISUAL==='1')await expect(page).toHaveScreenshot(`phase3-welcome-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01})}
  expect(errors).toEqual([]);expect(apis).toEqual([]);
 });
@@ -61,6 +62,7 @@ test('chat long Markdown is readable with local code/table scrolling',async({pag
  const position=await body.evaluate(el=>el.scrollTop);await page.getByRole('textbox',{name:'Message',exact:true}).fill('Keep reading');expect(Math.abs((await body.evaluate(el=>el.scrollTop))-position)).toBeLessThan(10);
  if([390,768,1366].includes(page.viewportSize()!.width)){const path=info.outputPath('long-content.png');await page.screenshot({path,animations:'disabled'});await info.attach('long-content',{path,contentType:'image/png'})}
  await page.getByRole('button',{name:'Latest',exact:true}).click();expect(await body.evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight)).toBeLessThan(5);
+ await body.evaluate(el=>el.scrollTop=0);await expect(page.getByRole('button',{name:'Latest',exact:true})).toBeVisible();const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill('A new question while reading history');await input.press('Enter');await expect(page.getByText('Local fixture response. No request was sent.',{exact:true})).toBeVisible();expect(await body.evaluate(el=>el.scrollHeight-el.scrollTop-el.clientHeight)).toBeLessThan(5);
 });
 
 test('streaming-like updates respect readers and Stop remains usable',async({page})=>{
@@ -83,7 +85,7 @@ test('loading, pending billing, interrupted and error presentation',async({page}
 });
 test('chat discovery, message actions, local attachment selection and voice presentation',async({page})=>{
  await openChat(page);
- await page.getByRole('navigation',{name:'Popular AI models'}).getByRole('button',{name:'Sample fast',exact:true}).click();await expect(page.getByRole('button',{name:/Choose AI model. Current selection/})).toContainText('Sample fast');
+ await page.emulateMedia({reducedMotion:'no-preference'});const track=page.locator('.popular-model-track');await expect(track).toHaveCSS('animation-name','chat-discovery-drift');const discovery=page.getByRole('navigation',{name:'Popular AI models'}).getByRole('button',{name:'Sample fast',exact:true});await discovery.focus();await expect(track).toHaveCSS('animation-play-state','paused');await discovery.click();await page.emulateMedia({reducedMotion:'reduce'});await expect(page.getByRole('button',{name:/Choose AI model. Current selection/})).toContainText('Sample fast');
  await page.locator('input[type=file]').setInputFiles({name:'local-layout-sample.txt',mimeType:'text/plain',buffer:Buffer.from('Synthetic local attachment only')});await expect(page.locator('.attachment-card')).toContainText('local-layout-sample.txt');
  await page.getByRole('button',{name:'Remove local-layout-sample.txt'}).click();await expect(page.locator('.attachment-card')).toHaveCount(0);
  await page.getByRole('button',{name:'Start voice typing'}).click();await expect(page.getByRole('button',{name:'Stop voice typing'})).toBeVisible();await page.getByRole('button',{name:'Cancel',exact:true}).click();await expect(page.getByRole('button',{name:'Start voice typing'})).toBeVisible();

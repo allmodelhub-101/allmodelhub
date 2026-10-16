@@ -37,7 +37,7 @@ console.log(reference);
 | ${Array(9).fill("---").join(" | ")} |
 ${Array.from({length:5},(_,i)=>"| "+Array.from({length:9},(_,j)=>`Detailed sample ${i}-${j}`).join(" | ")+" |").join("\n")}
 
-${Array.from({length:12},(_,i)=>`### Finding ${i+1}\n\nA substantial answer paragraph. `.repeat(5)).join("\n\n")}`;
+${Array.from({length:12},(_,i)=>`### Finding ${i+1}\n\n${"A substantial answer paragraph. ".repeat(5)}`).join("\n\n")}`;
 function initialMessages(state:string):ChatMessage[]{
  if(state==="welcome")return [];
  if(state==="long"||state==="streaming")return Array.from({length:10},(_,i)=>[{id:`user-${i}`,role:"user" as const,content:`Research question ${i+1}`},{id:`answer-${i}`,role:"assistant" as const,content:i===9?markdown:"A clear, concise sample response.",meta:"Sample model · 0.1250 credits"}]).flat();

@@ -8,6 +8,7 @@ import { memo, useEffect, useRef, useState, type Dispatch, type SetStateAction, 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./chat-workspace.css";
+import { chatComposerKeyAction } from "@/lib/chat-composer-events";
 import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { ModelPicker, PickerModel } from "@/components/model-picker";
 import { ModelBrand } from "@/components/model-brand";
@@ -96,7 +97,7 @@ export function ChatWorkspace({messages,busy,activeModelName,exact,popularModels
             <span className="popular-models-label">Popular models</span>
             <div className="popular-model-list"><div className="popular-model-track">
               {[0, 1].map((copy) => <div className="popular-model-set" aria-hidden={copy === 1 ? "true" : undefined} key={copy}>
-                {popularModels.map((model) => <button type="button" tabIndex={copy === 1 ? -1 : undefined} className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
+                {popularModels.map((model) => <button type="button" tabIndex={copy === 1 ? -1 : undefined} className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-label={model.name} aria-pressed={modelId === model.id}>
                   <ModelBrand modelName={model.name} provider={model.providerFamily} compact /><b>{model.name}</b>
                 </button>)}
                 <button type="button" tabIndex={copy === 1 ? -1 : undefined} className="popular-more" onClick={(event) => {event.currentTarget.focus();setPickerOpen(true)}}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
@@ -124,12 +125,12 @@ export function ChatWorkspace({messages,busy,activeModelName,exact,popularModels
     </div>
 
     <div className="composer-wrap premium-composer-wrap">
-      <form className="glass composer premium-composer" onSubmit={submit}>
-        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip">
+      <form className="glass composer premium-composer" onSubmit={event=>{followRef.current=true;lastFollowTop.current=0;submit(event)}}>
+        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip" role="region" aria-label="Prompt attachments" tabIndex={0}>
           {pastedContext && <div className="attachment-card"><span className="attachment-type">TXT</span><div><strong>Pasted text</strong><small>{pastedContext.length.toLocaleString()} characters</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted text"><X size={14} /></button></div>}
           {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-type">FILE</span><div><strong>{file.name}</strong><small>{Math.max(1, Math.round(file.size_bytes / 1024)).toLocaleString()} KB</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}><X size={14} /></button></div> : null; })}
         </div>}
-        <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={handleComposerKeyDown} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" aria-describedby="chat-composer-hint" />
+        <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={event=>{if(chatComposerKeyAction({key:event.key,shiftKey:event.shiftKey,isComposing:event.nativeEvent.isComposing},busy)==="send"){followRef.current=true;lastFollowTop.current=0;}handleComposerKeyDown(event)}} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" aria-describedby="chat-composer-hint" />
         <div className="composer-footer"><div className="composer-tools">
           <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
             <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>

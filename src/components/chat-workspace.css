@@ -46,7 +46,7 @@
 .responsive-workspace .chat-workspace .chat-content :is(ul,ol) { padding-inline-start:24px; }
 .responsive-workspace .chat-workspace .chat-content blockquote { padding:10px 14px;border-inline-start:3px solid var(--accent);color:var(--muted);background:var(--panel); }
 .responsive-workspace .chat-workspace .chat-rich-scroll { max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:var(--panel); }
-.responsive-workspace .chat-workspace .chat-rich-scroll pre { width:max-content;min-width:100%;margin:0;padding:16px;border:0;white-space:pre;overflow:visible;font-size:12px;line-height:1.7; }
+.responsive-workspace .chat-workspace .chat-rich-scroll pre { width:max-content;min-width:100%;margin:0;padding:16px;border:0;white-space:pre;overflow:visible;background:var(--panel-solid);color:var(--text);font-size:12px;line-height:1.7; }
 .responsive-workspace .chat-workspace .chat-content table { width:max-content;min-width:100%;margin:0;border-collapse:collapse; }
 .responsive-workspace .chat-workspace .chat-content :is(th,td) { padding:10px 14px;border:1px solid var(--line);white-space:nowrap;font-size:13px; }
 .responsive-workspace .chat-workspace .chat-actions { display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0;opacity:1; }
@@ -57,7 +57,7 @@
 .responsive-workspace .chat-workspace .composer { backdrop-filter:none;transform:none;filter:none;display:block;position:relative;width:100%;max-width:none;min-width:0;padding:10px;border:1px solid var(--line);border-radius:20px;background:var(--panel-solid);box-shadow:0 6px 24px rgba(0,0,0,.06); }
 .responsive-workspace .chat-workspace .chat-input { display:block;width:100%;min-height:44px;max-height:min(144px,22dvh);height:44px;padding:8px 6px;border:0;border-radius:0;background:transparent;color:var(--text);font:inherit;font-size:16px;line-height:1.5;resize:none;box-shadow:none; }
 .responsive-workspace .chat-workspace .composer-footer { display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0 0;min-width:0; }
-.responsive-workspace .chat-workspace .composer-tools { display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-width:0; }
+.responsive-workspace .chat-workspace .composer-tools { max-width:none;flex:1 1 auto;display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-width:0; }
 .responsive-workspace .chat-workspace :is(.composer-icon-button,.composer-send,.chat-controls-trigger) { flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:13px;background:var(--panel);color:var(--text); }
 .responsive-workspace .chat-workspace .composer-send { background:var(--accent);color:var(--bg); }
 .responsive-workspace .chat-workspace .composer-send:disabled { opacity:.4; }
@@ -82,7 +82,7 @@
 .chat-workspace-controls .setting-toggle-row { display:flex;align-items:center;justify-content:space-between;gap:14px; }
 .chat-workspace-controls .setting-toggle-row small { display:block;margin-top:4px;line-height:1.5;color:var(--muted); }
 .chat-workspace-controls .chat-enhance-action { display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text); }
-.responsive-workspace .chat-workspace .attachment-strip { display:flex;gap:8px;max-height:100px;overflow:auto;padding:0 0 8px;overscroll-behavior:contain; }
+.responsive-workspace .chat-workspace .attachment-strip { display:flex;flex-wrap:nowrap;gap:8px;max-height:100px;overflow-x:auto;overflow-y:hidden;padding:0 0 8px;overscroll-behavior:contain; }
 .responsive-workspace .chat-workspace .attachment-card { flex:0 0 min(240px,85%);min-width:0;display:flex;align-items:center;gap:8px;padding:6px;border:1px solid var(--line);border-radius:12px;background:var(--panel); }
 .responsive-workspace .chat-workspace .attachment-card > div { min-width:0;flex:1; }
 .responsive-workspace .chat-workspace .attachment-card strong { display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px; }
@@ -137,3 +137,5 @@
 }
 
 .chat-workspace-controls :is(button,input,[tabindex]):focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+
+.responsive-workspace .chat-workspace .chat-rich-scroll pre code { background:transparent;color:inherit; }
