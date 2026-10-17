@@ -17,7 +17,8 @@ type Detail={kind:"job";item:Job}|{kind:"file";item:FileRow;url?:string};
 type LibraryEntry={id:string;type:Exclude<View,"all">;date:string;pinned:boolean;item:Conversation|Job|FileRow};
 
 const filters: {value:View; label:string}[]=[{value:"all",label:"All"},{value:"chat",label:"Chat"},{value:"image",label:"Image"},{value:"video",label:"Video"},{value:"audio",label:"Audio"},{value:"file",label:"File"}];
-const formatDate=(value:string)=>new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",year:"numeric"}).format(new Date(value));
+const libraryDateFormatter=new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",year:"numeric"});
+const formatDate=(value:string)=>libraryDateFormatter.format(new Date(value));
 const mediaTitle=(item:Job)=>item.prompt?.trim().slice(0,88)||item.model_id||"Generated media";
 
 function useHistoryClient({crossModalityHandoffs=false}:{crossModalityHandoffs?:boolean}) {

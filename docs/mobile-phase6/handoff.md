@@ -1,5 +1,7 @@
 # Phase 6 continuation and release decision
 
+The final performance addition caches Library date formatting without changing locale/options/date inputs. Four normal-motion production-React cases measure 503 to one formatter construction and identical dates/search results with zero application APIs/errors. No consistent startup speedup is claimed: 500-record local startup still varies up to about 16 seconds. See performance/library-before.json, library-after.json and the opt-in scripts/mobile-library-performance-check.mjs lab. CI repeats its four functional scenarios; hardware/SSR performance acceptance remains open.
+
 Final visual correction supersedes the root-only attempt: normal scrolled viewport review still showed pale inherited labels. The existing hero/section-heading and proof-label rules now explicitly own the text token; the ineffective root-only addition is removed. Full-page and normal scrolled captures are retained alongside strict direct colors/axe. Read the latest verification entry and inspect the final proof screenshots, not only computed CSS or earlier green checks.
 
 The subsequent early Linux gate on 3749996 passed both stress cases but exposed real pale homepage proof text in the full-page render. Same-document scanning did not solve that defect. The existing cinematic homepage root now declares the original text theme token explicitly, and direct computed-color plus default axe assertions guard it. Read the latest verification entry; do not treat either earlier run as automated acceptance.

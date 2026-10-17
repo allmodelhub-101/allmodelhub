@@ -66,6 +66,10 @@ jobs:
         run: node scripts/mobile-workspace-production-check.mjs
         env:
           LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Production React 500-record library/search lab
+        run: node scripts/mobile-library-performance-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
       - name: Next production public rendering and studio fixture denial
         run: pnpm build && node scripts/mobile-studios-next-production-check.mjs && node scripts/mobile-workspace-next-production-check.mjs && node scripts/mobile-homepage-production-check.mjs
         env:
@@ -81,6 +85,7 @@ jobs:
           path: |
             playwright-report/
             test-results/**/results.json
+            test-results/phase6-production-library/
             docs/mobile-phase3/production/
             docs/mobile-phase4/production/
             docs/mobile-phase4/next-production/
