@@ -1,5 +1,10 @@
 # Models Suite — Phase 1 responsive architecture audit
 
+## Phase 5 progress — workspace/discovery
+
+[Batch A findings](mobile-phase5/batch-a/findings.md) records seven implemented surfaces and actual 320px overflow/hidden-sort/typography/dialog defects. Production controllers retain 21 independently checked Phase 4 handler bodies; fixtures mount the real views without controllers or application API calls. CSS ownership is workspace-data.module.css, with bounded legacy clipping/font/padding migration. Before/after and 36 reviewed Windows comparison references are retained. Overall Phase 5 remains in progress; account, wallet, admin/public batches and final exact-head Linux acceptance follow. Route counts remain 32 pages / 43 handlers, with 17 stylesheets at Batch A.
+
+
 ## Phase 4 studio implementation update (2026-10-16)
 
 Image, Video and Audio were implemented in separate tested batches. See [Phase 4 handoff](mobile-phase4/README.md) for actual verification and acceptance. The inventory remains 32 source pages and 43 HTTP handlers (including one strictly gated fixture-media handler). No authenticated route or execution contract was added.

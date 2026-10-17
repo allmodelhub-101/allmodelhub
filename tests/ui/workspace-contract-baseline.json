@@ -1,0 +1,23 @@
+{
+  "src/components/history-client.tsx#useHistoryClient#load": "d7c977b2d763e0f33c02fe1ae9b63b8a800e53ff054fc1ae6fe6732a507a45eb",
+  "src/components/history-client.tsx#useHistoryClient#patchConversation": "0917b58bdd2ad650945148e5aa7ffc5e7eb49dc54c25556cb538d1fc1291b7b5",
+  "src/components/history-client.tsx#useHistoryClient#removeConversation": "eb7fede1cba6a40b3c3bc685ed4510aa6fd4bac1a39ba0f8fa90547011b05d68",
+  "src/components/history-client.tsx#useHistoryClient#removeFile": "e7d8716f9eedccc6606e0a12dcfdb25a71717e633b986053d72b7bfa29eaa242",
+  "src/components/history-client.tsx#useHistoryClient#toggleFavorite": "a13c1664269a59dc948a979f81aa487217fe90a97c95212817f9da1a52db0b05",
+  "src/components/history-client.tsx#useHistoryClient#openFileDetail": "019bac2d44c03e72d91081ed59ee1fb97cdf19817abf2da59a239a4cc4913207",
+  "src/components/files-client.tsx#useFilesClient#load": "12aa57a647b6603a9179377d41548926e7e01dff5ccf66c0e91ee7a422728dc0",
+  "src/components/files-client.tsx#useFilesClient#choose": "17d27e6ac78d3bd743d0e528b18f5d5cae2fae90f7ab3526eb9c932ef587e7a1",
+  "src/components/files-client.tsx#useFilesClient#onFileChange": "9ad74d24f3f95bd7875e34b68fe222d7b5e359e99d1c7c5de8f6d4ed4d2fc3bf",
+  "src/components/files-client.tsx#useFilesClient#onDrop": "881d238d43f039b1897cd418df258e3e5ef2d242915dd4f8d544fcd8520d8748",
+  "src/components/files-client.tsx#useFilesClient#upload": "c4235981b23c423654aad742b429cd9c0dab5f915b3ef850ebd67badd54cd037",
+  "src/components/files-client.tsx#useFilesClient#remove": "9c6fcbf16268822a0ad57cfeab0126f87a93119e08a075eb30bb213332bddbb8",
+  "src/components/workspace-clients.tsx#useNotificationsClient#load": "f4b1e9e8af80311bd23b3c4189bdb70be89fcbedadf1a8d7094215bd5a6a6dbc",
+  "src/components/workspace-clients.tsx#useNotificationsClient#markRead": "d9922ca04c0a048c61a8a30b602501ae7b610aa367fde17b93c632aff9153c38",
+  "src/components/simple-forms.tsx#useProjectsClient#load": "24a4be67d3090ba74125a249509448766ddceae3d2bcb9149422f47a823233b9",
+  "src/components/simple-forms.tsx#useProjectsClient#activate": "24584eefda7825ec4906a2f5b987570b26e822680a4f7b5301d752b712c1b37b",
+  "src/components/simple-forms.tsx#useProjectsClient#submit": "dd32560e591db14cb0ac3f95244ff3d3e7e7dc856a35b1a82712cff1327dfda1",
+  "src/components/simple-forms.tsx#useProjectsClient#edit": "a651fe374f788126f17d16ff5eada819870b3abeed4ef850b0d56f3f241c3088",
+  "src/components/simple-forms.tsx#useProjectsClient#remove": "9fa5b512dbd74b229bdd59ccf18cb83d8b74c8dddefa58e62d563e799480a819",
+  "src/components/model-battle.tsx#useModelBattle#submit": "e84d6d1a7708254613804a6b4372b0be62a9e5184139910d661f30165f5ad669",
+  "src/components/model-battle.tsx#module#runModel": "afd34af77e720676b08fc04f30549d59090d6c083d9dff5223a4c472746c4a5c"
+}

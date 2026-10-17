@@ -282,6 +282,22 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
+## src/components/workspace-data.module.css
+
+7 media/container conditions; 7 repeated exact selector + condition groups; 10 dimension/overflow candidates; 3 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+| .surface.library :global(.library-meta) | base | 22, 167 |
+| .surface.projects :global(.project-card p) | base | 43, 172 |
+| .surface.projects :global(.project-meta) | base | 48, 173 |
+| .surface.models :global(.model-sort) | base | 74, 190 |
+| .surface.templates :global(.template-card-copy p) | base | 77, 175 |
+| .surface.battle :global(.battle-response) | base | 86, 185 |
+| .surface.models :global(.models-marketplace-hero) | @media (max-width:600px) | 139, 207 |
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
 ## src/components/workspace-shell.css
 
 4 media/container conditions; 0 repeated exact selector + condition groups; 6 dimension/overflow candidates; 0 small-control declarations.

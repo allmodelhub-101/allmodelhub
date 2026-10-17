@@ -1,0 +1,14 @@
+{
+  "viewport": 320,
+  "document": 320,
+  "content": 320,
+  "width": 320,
+  "grid": [
+    {
+      "class": "notification-tools",
+      "width": 302,
+      "columns": "none",
+      "overflow": "visible"
+    }
+  ]
+}

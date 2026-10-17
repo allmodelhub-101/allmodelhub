@@ -1,0 +1,14 @@
+{
+  "viewport": 320,
+  "document": 320,
+  "content": 354,
+  "width": 320,
+  "grid": [
+    {
+      "class": "project-card-grid ",
+      "width": 314.90625,
+      "columns": "314.906px",
+      "overflow": "visible"
+    }
+  ]
+}

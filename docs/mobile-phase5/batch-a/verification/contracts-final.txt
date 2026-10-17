@@ -1,0 +1,30 @@
+✔ Library contains decorative overflow without restricting its content height (11.6213ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#load (155.729ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#patchConversation (33.2571ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeConversation (29.4729ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeFile (30.274ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#toggleFavorite (24.9223ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#openFileDetail (25.2111ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#load (32.5515ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#choose (13.1688ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onFileChange (12.9503ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onDrop (11.7405ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#upload (9.3309ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#remove (8.9261ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#load (9.0814ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#markRead (8.218ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#load (45.3197ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#activate (20.5591ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#submit (14.5966ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#edit (15.6806ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#remove (19.5114ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#useModelBattle#submit (15.5589ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#module#runModel (12.4939ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1464.1536

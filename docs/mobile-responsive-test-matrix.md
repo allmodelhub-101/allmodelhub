@@ -1,5 +1,12 @@
 # Responsive baseline test matrix
 
+## Phase 5 progress — Batch A
+
+The same 28 projects remain. Fifteen new workspace/discovery cases per project exercise seven real production presentations, both themes, search/filter/sort/layout, native editing, local selection/read/pin state, 44px controls, document and inner-canvas overflow, one main landmark, computed compact input fonts, modal Escape/focus and rapid global-shortcut hand-off. Diagnostics abort/fail fixture API requests and reject console/runtime/resource HTTP errors. Final Linux execution remains pending until all four Phase 5 batches finish.
+
+Local results and overlap are recorded in [Phase 5 evidence](mobile-phase5/README.md); they are not aggregated as a final matrix. All 36 newly reviewed Windows references passed comparison without updates. Prior Phase 1–4 tests and references remain. Protected authenticated E2E remains BLOCKED; physical-device keyboard, safe-area, zoom, assistive technology and low-end hardware checks remain UNVERIFIED.
+
+
 ## Phase 4 studio coverage
 
 CI partitions the full suite into two parallel shards; require both artifacts and sum their results. Compact Chat budget geometry is attached and reduced-height screenshots also include 768px. A Linux 23px history boundary failure was repaired by reducing short-height composer padding by 2px, preserving the existing minimum/clearance assertions.

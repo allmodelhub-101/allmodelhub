@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./workspace-data.module.css";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CaretDown, ChatCircle, ImageSquare, MagnifyingGlass, SlidersHorizontal, SquaresFour, VideoCamera, Waveform } from "@phosphor-icons/react";
@@ -71,7 +72,7 @@ export function ModelsMarketplace({ models, fxRate }: Props) {
   }, [models, modality, tier, query, sort, fxRate]);
   const hrefFor = (model: CatalogModel) => model.modality === "text" ? `/chat?model=${encodeURIComponent(model.id)}` : `/${model.modality === "image" ? "images" : model.modality === "video" ? "video" : "audio"}?model=${encodeURIComponent(model.id)}`;
 
-  return <div className="marketplace">
+  return <div className={`${styles.surface} ${styles.models} marketplace`}>
     <section className="models-marketplace-hero" aria-labelledby="models-marketplace-title">
       <div className="models-hero-copy">
         <span className="kicker">Model marketplace</span>
@@ -115,7 +116,7 @@ function ModelCard({ model, href }: { model: CatalogModel; href: string }) {
     <div className="model-card-heading">
       <ModelBrand modelName={model.name} provider={model.providerFamily} />
       <div className="model-card-badges"><span className={`category-badge category-${model.modality}`}>{titleCase(model.modality)}</span><span className={`tier tier-${model.tier}`}>{titleCase(model.tier)}</span></div>
-      <span className="model-signal" aria-label="Available" />
+      <span className="model-signal" aria-label={model.available===false?"Unavailable":"Available"} title={model.available===false?"Temporarily unavailable":"Available"} />
     </div>
     <div className="model-card-title"><div><h2>{model.name}</h2><p>{model.providerFamily}</p></div></div>
     <div className="capability-chips">{model.capabilities.slice(0, 4).map((item) => <span key={item}>{item}</span>)}</div>

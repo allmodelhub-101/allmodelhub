@@ -24,3 +24,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Preserve the Phase 2 contract hashes in `tests/ui/chat-contract-baseline.json`; changes to submission/settlement/voice/upload/conversation actions require explicit scope review. Do not overwrite them to hide a presentation regression. Phase 3 evidence belongs in `docs/mobile-phase3`.
 
 - Phase 4 evidence belongs in `docs/mobile-phase4`. ImageStudioView, TtsView and AudioGenerationView receive original controller callbacks; Video retains its controller and fixture-only local reference selection. Preserve twenty execution-handler hashes in `tests/ui/studio-contract-baseline.json`; never regenerate them to conceal changes. Studio fixtures use the existing development/loopback/no-Vercel gate and never contact application APIs.
+
+- Phase 5 workspace/discovery presentation belongs to the exported Views and workspace-data.module.css. Continue docs/mobile-phase5/README.md in ordered batches. Preserve original execution hashes in tests/ui/workspace-contract-baseline.json; fixtures mount presentation with synthetic local callbacks, never production controllers or fabricated sessions.

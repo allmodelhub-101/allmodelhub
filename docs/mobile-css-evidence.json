@@ -19234,7 +19234,7 @@
             "conditions": [],
             "line": 1904,
             "declarations": {
-              "padding-bottom": "64px !important"
+              "padding-bottom": "24px"
             }
           }
         ]
@@ -19881,7 +19881,7 @@
             ],
             "line": 1904,
             "declarations": {
-              "padding": "0 0 86px !important",
+              "padding": "0 0 24px",
               "overflow": "visible"
             }
           }
@@ -43716,6 +43716,317 @@
         "type": "media",
         "condition": "(max-width:620px)",
         "line": 95
+      }
+    ]
+  },
+  {
+    "file": "src/components/workspace-data.module.css",
+    "repeated": [
+      {
+        "selector": ".surface.library :global(.library-meta)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.library :global(.library-meta)",
+            "conditions": [],
+            "line": 22,
+            "declarations": {
+              "white-space": "normal"
+            }
+          },
+          {
+            "selector": ".surface.library :global(.library-meta)",
+            "conditions": [],
+            "line": 167,
+            "declarations": {
+              "font-size": "12px"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.projects :global(.project-card p)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.projects :global(.project-card p)",
+            "conditions": [],
+            "line": 43,
+            "declarations": {
+              "white-space": "normal",
+              "overflow-wrap": "anywhere"
+            }
+          },
+          {
+            "selector": ".surface.projects :global(.project-card p)",
+            "conditions": [],
+            "line": 172,
+            "declarations": {
+              "font-size": "14px",
+              "line-height": "1.6"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.projects :global(.project-meta)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.projects :global(.project-meta)",
+            "conditions": [],
+            "line": 48,
+            "declarations": {
+              "flex-wrap": "wrap",
+              "gap": "6px"
+            }
+          },
+          {
+            "selector": ".surface.projects :global(.project-meta)",
+            "conditions": [],
+            "line": 173,
+            "declarations": {
+              "font-size": "12px"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.models :global(.model-sort)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.models :global(.model-sort)",
+            "conditions": [],
+            "line": 74,
+            "declarations": {
+              "min-height": "46px"
+            }
+          },
+          {
+            "selector": ".surface.models :global(.model-sort)",
+            "conditions": [],
+            "line": 190,
+            "declarations": {
+              "display": "grid"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.templates :global(.template-card-copy p)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.templates :global(.template-card-copy p)",
+            "conditions": [],
+            "line": 77,
+            "declarations": {
+              "display": "block",
+              "-webkit-line-clamp": "unset",
+              "overflow": "visible"
+            }
+          },
+          {
+            "selector": ".surface.templates :global(.template-card-copy p)",
+            "conditions": [],
+            "line": 175,
+            "declarations": {
+              "font-size": "14px",
+              "line-height": "1.65"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.battle :global(.battle-response)",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".surface.battle :global(.battle-response)",
+            "conditions": [],
+            "line": 86,
+            "declarations": {
+              "white-space": "pre-wrap",
+              "overflow-wrap": "anywhere",
+              "max-height": "560px",
+              "overflow": "auto"
+            }
+          },
+          {
+            "selector": ".surface.battle :global(.battle-response)",
+            "conditions": [],
+            "line": 185,
+            "declarations": {
+              "font-size": "14px",
+              "line-height": "1.7"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".surface.models :global(.models-marketplace-hero)",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "rules": [
+          {
+            "selector": ".surface.models :global(.models-marketplace-hero)",
+            "conditions": [
+              "@media (max-width:600px)"
+            ],
+            "line": 139,
+            "declarations": {
+              "display": "block",
+              "padding": "20px 12px"
+            }
+          },
+          {
+            "selector": ".surface.models :global(.models-marketplace-hero)",
+            "conditions": [
+              "@media (max-width:600px)"
+            ],
+            "line": 207,
+            "declarations": {
+              "min-height": "0",
+              "height": "auto"
+            }
+          }
+        ]
+      }
+    ],
+    "dimensions": [
+      {
+        "selector": ".surface.library :global(.library-hero)",
+        "conditions": [],
+        "line": 11,
+        "property": "grid-template-columns",
+        "value": "minmax(0,1fr) 260px"
+      },
+      {
+        "selector": ".surface.library :global(.library-hero)",
+        "conditions": [],
+        "line": 11,
+        "property": "min-height",
+        "value": "156px"
+      },
+      {
+        "selector": ".assetOverlay:global(.asset-detail-overlay)",
+        "conditions": [],
+        "line": 27,
+        "property": "position",
+        "value": "fixed"
+      },
+      {
+        "selector": ".assetOverlay :global(.asset-detail-panel)",
+        "conditions": [],
+        "line": 28,
+        "property": "width",
+        "value": "min(760px,100%)"
+      },
+      {
+        "selector": ".surface.projects :global(.projects-workspace)",
+        "conditions": [],
+        "line": 37,
+        "property": "grid-template-columns",
+        "value": "minmax(260px,.8fr) minmax(0,1.6fr)"
+      },
+      {
+        "selector": ".surface.files :global(.files-grid)",
+        "conditions": [],
+        "line": 50,
+        "property": "grid-template-columns",
+        "value": "minmax(260px,.8fr) minmax(0,1.3fr)"
+      },
+      {
+        "selector": ".surface.notifications :global(.notification-actions label)",
+        "conditions": [],
+        "line": 94,
+        "property": "min-width",
+        "value": "min(240px,100%)"
+      },
+      {
+        "selector": ".surface.battle :global(.battle-prompt textarea)",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 149,
+        "property": "min-height",
+        "value": "120px"
+      },
+      {
+        "selector": ".surface.library::after",
+        "conditions": [],
+        "line": 161,
+        "property": "width",
+        "value": "min(460px,100%)"
+      },
+      {
+        "selector": ".surface.library :global(.library-hero-art)",
+        "conditions": [],
+        "line": 164,
+        "property": "width",
+        "value": "260px"
+      }
+    ],
+    "smallTargets": [
+      {
+        "selector": ".surface.files :global(.files-clear-selection svg)",
+        "conditions": [],
+        "line": 58,
+        "property": "width",
+        "value": "18px"
+      },
+      {
+        "selector": ".surface.projects :global(.projects-new-trigger svg)",
+        "conditions": [],
+        "line": 193,
+        "property": "width",
+        "value": "18px"
+      },
+      {
+        "selector": ".surface.projects :global(.projects-new-trigger svg)",
+        "conditions": [],
+        "line": 193,
+        "property": "height",
+        "value": "18px"
+      }
+    ],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:1180px)",
+        "line": 101
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:900px)",
+        "line": 107
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 119
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion:reduce)",
+        "line": 155
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:900px)",
+        "line": 198
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 202
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:900px)",
+        "line": 210
       }
     ]
   },

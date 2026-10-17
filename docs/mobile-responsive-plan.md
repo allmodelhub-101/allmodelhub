@@ -1,5 +1,10 @@
 # Models Suite responsive transformation — implementation plan
 
+## Phase 5 progress — Batch A
+
+Seven workspace/discovery surfaces are implemented with production View components and scoped workspace-data.module.css. [Phase 5 record](mobile-phase5/README.md) distinguishes local acceptance from final Linux/production acceptance. Next: Batch B Settings/Support/Usage, Batch C Wallet/payment presentation, Batch D Admin/public/auth, then complete retained regression and exact-head CI. Keep all 22 authenticated workflows BLOCKED, preserve existing hashes and do not merge/promote.
+
+
 ## Phase 4 delivery and Phase 5 entry
 
 Image, Video and Audio continue the existing branch/PR in three ordered implementation commits. [Phase 4 handoff](mobile-phase4/README.md) records batch acceptance, screenshots, fixture boundaries and actual verification. Preserve the Phase 2 shell, Phase 3 Chat and all controller payloads, authorization, settlement, uploads and polling.

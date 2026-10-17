@@ -216,6 +216,7 @@
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -225,6 +226,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -271,10 +273,12 @@
         "src/components/app-sidebar.css",
         "src/components/app-sidebar.tsx",
         "src/components/files-client.tsx",
+        "src/components/files-workspace.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -285,6 +289,7 @@
         "src/app/files/files.css",
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -301,6 +306,7 @@
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -310,6 +316,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -358,6 +365,7 @@
         "src/components/pwa-register.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -367,6 +375,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -383,6 +392,7 @@
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
         "src/components/workspace-clients.tsx",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -392,6 +402,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -445,6 +456,7 @@
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -454,6 +466,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -490,33 +503,47 @@
         "src/components/chat-fixture.tsx",
         "src/components/chat-workspace.css",
         "src/components/chat-workspace.tsx",
+        "src/components/files-client.tsx",
+        "src/components/files-workspace.tsx",
+        "src/components/history-client.tsx",
         "src/components/image-studio.css",
         "src/components/image-studio.tsx",
+        "src/components/model-battle.tsx",
         "src/components/model-brand.tsx",
         "src/components/model-picker.css",
         "src/components/model-picker.tsx",
+        "src/components/models-marketplace.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx",
         "src/components/responsive-fixture.tsx",
+        "src/components/simple-forms.tsx",
         "src/components/studio-fixtures.tsx",
+        "src/components/template-library.css",
+        "src/components/template-library.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/tts-client.tsx",
         "src/components/use-workspace-overlay.ts",
         "src/components/video-model-rail.tsx",
         "src/components/video-studio-v2.module.css",
         "src/components/video-studio.tsx",
+        "src/components/workspace-clients.tsx",
+        "src/components/workspace-data-fixture.tsx",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-shell.css",
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
+        "src/app/files/files.css",
         "src/app/globals.css",
         "src/components/app-sidebar.css",
         "src/components/audio-studio.module.css",
         "src/components/chat-workspace.css",
         "src/components/image-studio.css",
         "src/components/model-picker.css",
+        "src/components/template-library.css",
         "src/components/video-studio-v2.module.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -534,6 +561,7 @@
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -543,6 +571,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -578,6 +607,7 @@
         "src/components/simple-forms.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -587,6 +617,7 @@
       "styles": [
         "src/app/globals.css",
         "src/components/app-sidebar.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -604,6 +635,7 @@
         "src/components/template-library.tsx",
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -614,6 +646,7 @@
         "src/app/globals.css",
         "src/components/app-sidebar.css",
         "src/components/template-library.css",
+        "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
     },
@@ -1080,18 +1113,18 @@
     },
     {
       "file": "src/app/files/files.css",
-      "bytes": 16170,
+      "bytes": 16104,
       "lines": 10,
       "mediaQueries": 6,
-      "important": 4,
+      "important": 2,
       "viewportUnits": 0
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 643272,
+      "bytes": 643206,
       "lines": 2385,
       "mediaQueries": 835,
-      "important": 135,
+      "important": 131,
       "viewportUnits": 69
     },
     {
@@ -1181,6 +1214,14 @@
       "mediaQueries": 10,
       "important": 70,
       "viewportUnits": 1
+    },
+    {
+      "file": "src/components/workspace-data.module.css",
+      "bytes": 18041,
+      "lines": 218,
+      "mediaQueries": 7,
+      "important": 0,
+      "viewportUnits": 2
     },
     {
       "file": "src/components/workspace-shell.css",

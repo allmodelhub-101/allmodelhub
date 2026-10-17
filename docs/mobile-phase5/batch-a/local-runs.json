@@ -1,0 +1,252 @@
+[
+  {
+    "run": "phase5-a-before",
+    "stats": {
+      "startTime": "2026-10-17T07:44:45.776Z",
+      "duration": 161433.214,
+      "expected": 35,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "Superseded: capture occurred before hydration readiness."
+  },
+  {
+    "run": "phase5-a-before-clean",
+    "stats": {
+      "startTime": "2026-10-17T07:48:12.710Z",
+      "duration": 139133.625,
+      "expected": 35,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-smoke",
+    "stats": {
+      "startTime": "2026-10-17T07:50:54.736Z",
+      "duration": 403511.626,
+      "expected": 59,
+      "skipped": 0,
+      "unexpected": 11,
+      "flaky": 0
+    },
+    "note": "Exploratory source changed while repairing; not final acceptance."
+  },
+  {
+    "run": "phase5-a-clean",
+    "stats": {
+      "startTime": "2026-10-17T07:57:50.513Z",
+      "duration": 527828.728,
+      "expected": 68,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "note": "68 pass / 2 fail: desktop comparison CTA was 43px. Repaired to 48px."
+  },
+  {
+    "run": "phase5-a-sort-clean",
+    "stats": {
+      "startTime": "2026-10-17T08:11:16.494Z",
+      "duration": 31324.036,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-acceptance",
+    "stats": {
+      "startTime": "2026-10-17T08:12:08.747Z",
+      "duration": 408948.48600000003,
+      "expected": 70,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-final-review",
+    "stats": {
+      "startTime": "2026-10-17T08:19:56.732Z",
+      "duration": 448715.636,
+      "expected": 55,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-input-final",
+    "stats": {
+      "startTime": "2026-10-17T08:28:15.929Z",
+      "duration": 151265.33000000002,
+      "expected": 34,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "note": "30 typography cases passed; one rapid-shortcut failure was repaired and followed by 15 clean repetitions."
+  },
+  {
+    "run": "phase5-a-shortcuts-final",
+    "stats": {
+      "startTime": "2026-10-17T08:32:24.030Z",
+      "duration": 61036.949,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-images-clean",
+    "stats": {
+      "startTime": "2026-10-17T08:33:41.482Z",
+      "duration": 101590.127,
+      "expected": 35,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-project-final",
+    "stats": {
+      "startTime": "2026-10-17T08:35:39.912Z",
+      "duration": 57834.946,
+      "expected": 15,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-project-phone-image",
+    "stats": {
+      "startTime": "2026-10-17T08:38:19.518Z",
+      "duration": 3679.169,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "See README for layer and overlap; do not add overlapping runs as one matrix."
+  },
+  {
+    "run": "phase5-a-new-references",
+    "stats": {
+      "startTime": "2026-10-17T08:38:24.345Z",
+      "duration": 146614.749,
+      "expected": 54,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "36 newly generated references plus 18 dark capture cases. Generation is not a comparison pass."
+  },
+  {
+    "run": "phase5-a-final",
+    "status": "INTERRUPTED",
+    "note": "Expanded sort test exposed hidden compact sorting. Run stopped to repair; not counted as a completed matrix."
+  },
+  {
+    "run": "phase5-a-final-images",
+    "status": "INTERRUPTED",
+    "note": "Capture client stopped before its shared test-owned server could exit. Superseded by phase5-a-images-clean using a persistent local server."
+  },
+  {
+    "run": "phase5-a-visual-compare",
+    "stats": {
+      "startTime": "2026-10-17T08:42:23.592Z",
+      "duration": 93285.263,
+      "expected": 36,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "No snapshot updates; overlapping focused verification, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-files-ssr-compare",
+    "stats": {
+      "startTime": "2026-10-17T08:49:27.077Z",
+      "duration": 30267.649999999998,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "No snapshot updates; overlapping focused verification, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-dialog-final",
+    "stats": {
+      "startTime": "2026-10-17T08:45:52.629Z",
+      "duration": 44160.012,
+      "expected": 9,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "No snapshot updates; overlapping focused verification, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-final-library-controls",
+    "stats": {
+      "startTime": "2026-10-17T08:56:47.144Z",
+      "duration": 98976.84300000001,
+      "expected": 20,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "Final focused controls/capture verification; overlapping checks, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-focus-containment",
+    "stats": {
+      "startTime": "2026-10-17T09:00:23.203Z",
+      "duration": 26448.425,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "Final focused controls/capture verification; overlapping checks, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-dialog-acceptance",
+    "stats": {
+      "startTime": "2026-10-17T09:01:44.846Z",
+      "duration": 96153.914,
+      "expected": 20,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "Final focused controls/capture verification; overlapping checks, not an aggregate matrix."
+  },
+  {
+    "run": "phase5-a-dialog-dark-final",
+    "stats": {
+      "startTime": "2026-10-17T09:03:22.205Z",
+      "duration": 9691.124,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "note": "Final focused controls/capture verification; overlapping checks, not an aggregate matrix."
+  }
+]

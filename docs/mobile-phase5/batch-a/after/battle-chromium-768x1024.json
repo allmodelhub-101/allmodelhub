@@ -1,0 +1,106 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "TEXTAREA",
+      "name": "",
+      "height": 86,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Explain quantum computing simply",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Write a product launch email",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Analyze this business idea",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Compare pros and cons",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Create a travel itinerary",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Clear all",
+      "height": 14,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Sample research model",
+      "height": 44,
+      "fontSize": "10px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Sample reasoning model Research_Research_Research_Research_Research_Research_Res",
+      "height": 54,
+      "fontSize": "10px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Unavailable sample",
+      "height": 44,
+      "fontSize": "10px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Compare 2 models ",
+      "height": 48,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " New comparison",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Copy",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Choose winner",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Copy",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Choose winner",
+      "height": 44,
+      "fontSize": "9px"
+    }
+  ],
+  "grid": []
+}

@@ -1,0 +1,104 @@
+✔ audio modes expose keyboard navigation and a labeled panel (24.7385ms)
+✔ decorative artwork cannot be confused with audio playback and motion is optional (5.2047ms)
+✔ first-loaded Kling voice matches its provider and financial confirmation remains guarded (2.1043ms)
+✔ music and sound effects cannot re-submit an active job or invent a final charge (2.4213ms)
+(node:25900) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/chat-composer-events.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Enter sends, Shift Enter and IME preserve native editing (4.1898ms)
+✔ Escape stops only an active request and unrelated keys remain native (0.633ms)
+✔ context threshold and exact submitted prompt formatting are unchanged (1.1059ms)
+✔ Phase 2 transport/persistence boundary unchanged: pollPendingBilling (4.0458ms)
+✔ Phase 2 transport/persistence boundary unchanged: enhancePrompt (0.35ms)
+✔ Phase 2 transport/persistence boundary unchanged: startVoiceInput (0.3292ms)
+✔ Phase 2 transport/persistence boundary unchanged: stopVoiceInput (0.6028ms)
+✔ Phase 2 transport/persistence boundary unchanged: cancelVoiceInput (0.4709ms)
+✔ Phase 2 transport/persistence boundary unchanged: sendPrompt (0.3183ms)
+✔ Phase 2 transport/persistence boundary unchanged: uploadFiles (1.5437ms)
+✔ Phase 2 transport/persistence boundary unchanged: branchAt (0.4767ms)
+✔ Phase 2 transport/persistence boundary unchanged: editPrompt (4.5097ms)
+✔ Phase 2 transport/persistence boundary unchanged: regenerate (2.4274ms)
+(node:1156) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/image-clipboard.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ clipboard items preserve multiple images without double-counting FileList (6.5487ms)
+✔ FileList-only clipboard works, null items and ordinary text stay harmless (0.878ms)
+✔ FLUX maps to an official mark and paste remains a user-triggered guarded action (5.8604ms)
+✔ image polish remains scoped and supports light/dark surfaces (2.4685ms)
+✔ decorative motion is gentle, pausable and disabled for reduced motion (0.5777ms)
+✔ model, reference and settings controls preserve authorization and accessible state (0.4884ms)
+✔ Library contains decorative overflow without restricting its content height (92.4113ms)
+(node:12868) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/responsive-fixture-access.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ explicit development opt-in accepts only loopback hosts (3.2608ms)
+✔ fixture fails closed in production and test even with the flag (1.2016ms)
+✔ fixture fails closed without exact explicit opt-in (0.8533ms)
+✔ fixture fails closed whenever Vercel is present (0.7065ms)
+✔ fixture rejects remote hosts and loopback lookalikes (1.2956ms)
+✔ collapsed navigation keeps accessible labels and linked toggle state (2.1888ms)
+✔ account menu remains readable and keyboard operable in both sidebar states (0.5ms)
+✔ sidebar motion and saved preferences have safe fallbacks (0.4077ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#uploadReference (864.4389ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#addReferences (265.6684ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteReference (204.3113ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteFromClipboard (347.4802ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#poll (117.3287ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#submit (76.0725ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#removeReference (133.168ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#ensureResultReference (61.6108ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#resetResult (118.3388ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#applyAsReference (120.6998ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#animateInVideo (101.774ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#copySettings (72.9593ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#shareResult (35.7144ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#upload (79.1695ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#poll (84.342ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#submit (51.4977ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#poll (28.2122ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#submit (29.3951ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#pollAsyncJob (33.4908ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#submit (10.1886ms)
+✔ template launch preserves the exact encoded prompt and descriptive accessible action (4.2223ms)
+✔ search combines with category, announces results and supports reset (0.4948ms)
+✔ cards size to content and titles remain readable, with optional decorative motion (4.2799ms)
+(node:3512) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/video-studio-media.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all sixteen supplied samples have full-length, fast-start browser assets (1379.5328ms)
+✔ model browsing and full-frame playback preserve generation protections (100.1091ms)
+✔ compact navigation and completed outputs expose clear, honest actions (2.3671ms)
+✔ verified provider marks exist locally and FlashVSR remains honestly labeled (412.1692ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#load (289.3373ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#patchConversation (78.16ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeConversation (78.7948ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeFile (112.5048ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#toggleFavorite (145.3836ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#openFileDetail (38.4195ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#load (46.9927ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#choose (10.2819ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onFileChange (33.8452ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onDrop (10.857ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#upload (38.7864ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#remove (45.2162ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#load (48.2414ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#markRead (51.7493ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#load (65.3709ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#activate (22.1837ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#submit (52.9703ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#edit (17.6116ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#remove (46.6227ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#useModelBattle#submit (20.249ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#module#runModel (83.5449ms)
+ℹ tests 80
+ℹ suites 0
+ℹ pass 80
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11716.3917

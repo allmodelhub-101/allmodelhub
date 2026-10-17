@@ -1,0 +1,149 @@
+{
+  "viewport": 1366,
+  "document": 1366,
+  "content": 1134,
+  "width": 1134,
+  "shellClearance": "0px",
+  "controls": [
+    {
+      "tag": "BUTTON",
+      "name": "New project",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "INPUT",
+      "name": "",
+      "height": 43,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "TEXTAREA",
+      "name": "",
+      "height": 92,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Create project",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "SELECT",
+      "name": "Sort projects",
+      "height": 44,
+      "fontSize": "9px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Grid view",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "List view",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Edit Campaign Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "A",
+      "name": "Open Chat",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Image",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Video",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Set active",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Edit",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Edit Research notes",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "A",
+      "name": "Open Chat",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Image",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Video",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Set active",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Edit",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Create another projectKeep building. Turn ideas into organized workspaces.",
+      "height": 160,
+      "fontSize": "16px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "project-card-grid ",
+      "width": 610.4375,
+      "columns": "299.219px 299.219px",
+      "overflow": "visible"
+    }
+  ]
+}
