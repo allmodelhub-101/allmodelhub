@@ -48,6 +48,12 @@ jobs:
       - run: pnpm audit:routes && pnpm audit:css
       - run: git diff --exit-code -- docs/mobile-route-inventory.json docs/mobile-route-inventory.md docs/mobile-css-evidence.json docs/mobile-css-evidence.md
       - run: pnpm exec playwright install --with-deps chromium webkit
+      - name: WebKit hydration and accessibility readiness regressions
+        if: matrix.shard == 2
+        run: pnpm exec playwright test tests/responsive/hardening-accessibility.spec.ts tests/responsive/hardening-stress.spec.ts --project=webkit-390x844 --project=webkit-1366x768 --grep 'homepage|500 library' --workers=2
+        env:
+          CI: 'true'
+          PW_RUN_LABEL: hardening-readiness
       - name: Production React Chat components (local synthetic data only)
         run: node scripts/mobile-chat-production-check.mjs
         env:

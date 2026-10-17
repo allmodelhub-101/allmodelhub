@@ -7,10 +7,20 @@ test('hardening stress: long Chat keeps native scroll and composer access',async
  await expect(page.getByRole('textbox',{name:'Message',exact:true})).toBeInViewport();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);expect(apis).toEqual([]);expect(errors).toEqual([]);
 });
-test('hardening stress: 500 library records and admin rows remain searchable',async({page})=>{
- await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});await expect(page.locator('.library-card-chat')).toHaveCount(500);
+test('hardening stress: 500 library records and admin rows remain searchable',async({page},info)=>{
+ // Development hydration of thousands of SVG/DOM nodes can exceed the normal
+ // control timeout. Measure readiness separately; this is not a device speed SLA.
+ test.setTimeout(120_000);
+ const started=Date.now();
+ await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+ await expect(page.locator('html')).toHaveAttribute('data-workspace-data-ready','history',{timeout:45_000});
+ const historyReady=Date.now()-started;
+ await expect(page.locator('.library-card-chat')).toHaveCount(500);
  await page.getByRole('textbox',{name:'Search library'}).fill('Product research 499 ');await expect(page.locator('.library-card-chat')).toHaveCount(1);
- await page.goto('/responsive-fixture?surface=admin&state=stress',{waitUntil:'networkidle'});await page.getByRole('navigation',{name:'Admin sections'}).getByRole('button',{name:'Users',exact:true}).click();
+ await page.goto('/responsive-fixture?surface=admin&state=stress',{waitUntil:'networkidle'});
+ await expect(page.locator('html')).toHaveAttribute('data-admin-fixture-ready','true',{timeout:45_000});
+ await page.getByRole('navigation',{name:'Admin sections'}).getByRole('button',{name:'Users',exact:true}).click();
  await expect(page.locator('tbody tr')).toHaveCount(500);const search=page.getByRole('textbox',{name:'Search users'});await search.fill('demo-user-499');await expect(page.locator('tbody tr')).toHaveCount(1);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await info.attach('stress-readiness',{body:JSON.stringify({historyReadyMs:historyReady,totalMs:Date.now()-started,rows:500,environment:'development browser emulation; not hardware performance acceptance'}),contentType:'application/json'});
 });
