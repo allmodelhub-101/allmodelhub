@@ -2382,3 +2382,6 @@ html[data-theme="light"] .cin-site .marketing-nav .nav-actions .btn-primary { bo
   .premium-chat-page.has-messages .composer-model-button { max-width:160px; }
   .premium-chat-page.has-messages .model-selector-copy strong { max-width:95px; }
 }
+
+/* Phase 5 route recovery: compact actions remain reachable and wrap naturally. */
+.route-error>div>div{flex-wrap:wrap}.route-error .btn{min-height:44px}.route-error small{overflow-wrap:anywhere}

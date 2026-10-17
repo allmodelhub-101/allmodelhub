@@ -1,7 +1,65 @@
 [
   {
     "file": "src/app/admin/admin-premium.css",
-    "repeated": [],
+    "repeated": [
+      {
+        "selector": ".admin-header",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".admin-header",
+            "conditions": [],
+            "line": 1,
+            "declarations": {
+              "height": "68px",
+              "display": "flex",
+              "align-items": "center",
+              "justify-content": "space-between",
+              "gap": "16px",
+              "padding": "0 24px",
+              "border-bottom": "1px solid var(--line)",
+              "background": "color-mix(in srgb,var(--bg) 88%,transparent)",
+              "backdrop-filter": "blur(18px)"
+            }
+          },
+          {
+            "selector": ".admin-header",
+            "conditions": [],
+            "line": 9,
+            "declarations": {
+              "min-height": "68px",
+              "height": "auto",
+              "flex-wrap": "wrap",
+              "padding-block": "10px"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".admin-header small",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".admin-header small",
+            "conditions": [],
+            "line": 1,
+            "declarations": {
+              "margin-top": "2px",
+              "color": "var(--muted)",
+              "font-size": "8px"
+            }
+          },
+          {
+            "selector": ".admin-header small",
+            "conditions": [],
+            "line": 9,
+            "declarations": {
+              "overflow-wrap": "anywhere"
+            }
+          }
+        ]
+      }
+    ],
     "dimensions": [
       {
         "selector": ".admin-metric",
@@ -135,6 +193,11 @@
         "type": "media",
         "condition": "(max-width:480px)",
         "line": 6
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:900px)",
+        "line": 10
       }
     ]
   },
@@ -351,6 +414,11 @@
         "type": "media",
         "condition": "(prefers-reduced-motion: reduce)",
         "line": 406
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:620px)",
+        "line": 426
       }
     ]
   },
@@ -13380,6 +13448,54 @@
             "line": 992,
             "declarations": {
               "overflow": "hidden"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".route-error small",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".route-error small",
+            "conditions": [],
+            "line": 815,
+            "declarations": {
+              "display": "block",
+              "margin": "12px 0",
+              "color": "var(--muted)"
+            }
+          },
+          {
+            "selector": ".route-error small",
+            "conditions": [],
+            "line": 2386,
+            "declarations": {
+              "overflow-wrap": "anywhere"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".route-error>div>div",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".route-error>div>div",
+            "conditions": [],
+            "line": 815,
+            "declarations": {
+              "display": "flex",
+              "gap": "8px",
+              "margin-top": "20px"
+            }
+          },
+          {
+            "selector": ".route-error>div>div",
+            "conditions": [],
+            "line": 2386,
+            "declarations": {
+              "flex-wrap": "wrap"
             }
           }
         ]
@@ -35900,6 +36016,41 @@
     ]
   },
   {
+    "file": "src/components/admin-workspace.module.css",
+    "repeated": [],
+    "dimensions": [
+      {
+        "selector": ".surface :global(table)",
+        "conditions": [],
+        "line": 20,
+        "property": "min-width",
+        "value": "850px"
+      },
+      {
+        "selector": ".surface :global(.admin-metric)",
+        "conditions": [
+          "@media (max-width:620px)"
+        ],
+        "line": 25,
+        "property": "min-height",
+        "value": "140px"
+      }
+    ],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:1100px)",
+        "line": 24
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:620px)",
+        "line": 25
+      }
+    ]
+  },
+  {
     "file": "src/components/app-sidebar.css",
     "repeated": [],
     "dimensions": [
@@ -39621,6 +39772,35 @@
         ]
       },
       {
+        "selector": ".headerActions :global(.theme-toggle),.loginLink,.startLink",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".headerActions :global(.theme-toggle),.loginLink,.startLink",
+            "conditions": [],
+            "line": 7,
+            "declarations": {
+              "height": "42px",
+              "display": "inline-flex",
+              "align-items": "center",
+              "justify-content": "center",
+              "border": "1px solid var(--legal-line)",
+              "border-radius": "13px",
+              "font-size": "13px",
+              "font-weight": "800"
+            }
+          },
+          {
+            "selector": ".headerActions :global(.theme-toggle),.loginLink,.startLink",
+            "conditions": [],
+            "line": 39,
+            "declarations": {
+              "min-height": "44px"
+            }
+          }
+        ]
+      },
+      {
         "selector": ".heroGlow",
         "conditions": [],
         "rules": [
@@ -39791,6 +39971,35 @@
             "declarations": {
               "position": "relative",
               "z-index": "1"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".contents a",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".contents a",
+            "conditions": [],
+            "line": 12,
+            "declarations": {
+              "position": "relative",
+              "z-index": "1",
+              "padding": "8px 8px 8px 34px",
+              "color": "var(--legal-muted)",
+              "font-size": "11px",
+              "line-height": "1.35",
+              "border-radius": "9px",
+              "transition": "color .18s ease,background .18s ease"
+            }
+          },
+          {
+            "selector": ".contents a",
+            "conditions": [],
+            "line": 41,
+            "declarations": {
+              "font-size": "12px"
             }
           }
         ]
@@ -40018,6 +40227,128 @@
             "line": 22,
             "declarations": {
               "font-size": "clamp(42px,12vw,64px)",
+              "overflow-wrap": "anywhere"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".description",
+        "conditions": [
+          "@media (max-width:760px)"
+        ],
+        "rules": [
+          {
+            "selector": ".description",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 19,
+            "declarations": {
+              "font-size": "16px"
+            }
+          },
+          {
+            "selector": ".description",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 42,
+            "declarations": {
+              "line-height": "1.7"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".policySwitcher",
+        "conditions": [
+          "@media (max-width:760px)"
+        ],
+        "rules": [
+          {
+            "selector": ".policySwitcher",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 19,
+            "declarations": {
+              "width": "calc(100% - 20px)",
+              "margin-bottom": "14px",
+              "padding": "6px",
+              "display": "flex",
+              "overflow-x": "auto",
+              "scrollbar-width": "none",
+              "scroll-snap-type": "x mandatory"
+            }
+          },
+          {
+            "selector": ".policySwitcher",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 42,
+            "declarations": {
+              "overflow-x": "auto"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".mobileContents nav",
+        "conditions": [
+          "@media (max-width:760px)"
+        ],
+        "rules": [
+          {
+            "selector": ".mobileContents nav",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 19,
+            "declarations": {
+              "padding": "4px 9px 10px",
+              "display": "grid",
+              "grid-template-columns": "repeat(2,1fr)",
+              "gap": "5px"
+            }
+          },
+          {
+            "selector": ".mobileContents nav",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 42,
+            "declarations": {
+              "grid-template-columns": "minmax(0,1fr)"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".sectionCopy p,.sectionCopy li",
+        "conditions": [
+          "@media (max-width:760px)"
+        ],
+        "rules": [
+          {
+            "selector": ".sectionCopy p,.sectionCopy li",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 19,
+            "declarations": {
+              "font-size": "13px"
+            }
+          },
+          {
+            "selector": ".sectionCopy p,.sectionCopy li",
+            "conditions": [
+              "@media (max-width:760px)"
+            ],
+            "line": 42,
+            "declarations": {
+              "font-size": "14px",
               "overflow-wrap": "anywhere"
             }
           }
@@ -40452,6 +40783,11 @@
         "type": "media",
         "condition": "(max-width:760px)",
         "line": 36
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:760px)",
+        "line": 42
       }
     ]
   },

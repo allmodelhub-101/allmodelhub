@@ -4,16 +4,18 @@ Run `pnpm audit:css`. PostCSS parses every stylesheet. Repetition and dimensions
 
 ## src/app/admin/admin-premium.css
 
-5 media/container conditions; 0 repeated exact selector + condition groups; 8 dimension/overflow candidates; 6 small-control declarations.
+6 media/container conditions; 2 repeated exact selector + condition groups; 8 dimension/overflow candidates; 6 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
+| .admin-header | base | 1, 9 |
+| .admin-header small | base | 1, 9 |
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
 ## src/app/auth/login/auth-premium.css
 
-5 media/container conditions; 0 repeated exact selector + condition groups; 15 dimension/overflow candidates; 8 small-control declarations.
+6 media/container conditions; 0 repeated exact selector + condition groups; 15 dimension/overflow candidates; 8 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -31,7 +33,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/app/globals.css
 
-835 media/container conditions; 766 repeated exact selector + condition groups; 585 dimension/overflow candidates; 201 small-control declarations.
+835 media/container conditions; 768 repeated exact selector + condition groups; 585 dimension/overflow candidates; 201 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -80,6 +82,15 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 ## src/components/account-workspace.module.css
 
 2 media/container conditions; 0 repeated exact selector + condition groups; 1 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/admin-workspace.module.css
+
+2 media/container conditions; 0 repeated exact selector + condition groups; 2 dimension/overflow candidates; 0 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -158,17 +169,19 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/legal-page.module.css
 
-9 media/container conditions; 21 repeated exact selector + condition groups; 23 dimension/overflow candidates; 4 small-control declarations.
+10 media/container conditions; 27 repeated exact selector + condition groups; 23 dimension/overflow candidates; 4 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
 | .headerInner | base | 4, 28 |
+| .headerActions :global(.theme-toggle),.loginLink,.startLink | base | 7, 39 |
 | .heroGlow | base | 8, 28 |
 | .heroCopy | base | 8, 28 |
 | .hero h1 | base | 8, 28 |
 | .heroVisual | base | 9, 28 |
 | .policySwitcher | base | 10, 28 |
 | .policySwitcher a | base | 10, 28 |
+| .contents a | base | 12, 41 |
 | .glance | base | 13, 28 |
 | .highlight | base | 13, 28 |
 | .policySection | base | 14, 28 |
@@ -177,6 +190,10 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 | .footer | base | 16, 28 |
 | .hero | @media (max-width:760px) | 19, 22 |
 | .hero h1 | @media (max-width:760px) | 19, 22 |
+| .description | @media (max-width:760px) | 19, 42 |
+| .policySwitcher | @media (max-width:760px) | 19, 42 |
+| .mobileContents nav | @media (max-width:760px) | 19, 42 |
+| .sectionCopy p,.sectionCopy li | @media (max-width:760px) | 19, 42 |
 | .hero h1 | @media (max-width:420px) | 20, 23 |
 | .trustPanel | base | 24, 28 |
 | .trustRow | base | 24, 28 |

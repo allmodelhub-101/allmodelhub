@@ -39,13 +39,15 @@
       "redirect": [],
       "components": [
         "src/components/admin-client.tsx",
+        "src/components/admin-workspace.module.css",
         "src/components/admin-workspace.tsx",
         "src/components/premium-select.tsx",
         "src/components/pwa-register.tsx"
       ],
       "styles": [
         "src/app/admin/admin-premium.css",
-        "src/app/globals.css"
+        "src/app/globals.css",
+        "src/components/admin-workspace.module.css"
       ]
     },
     {
@@ -495,6 +497,9 @@
       "components": [
         "src/components/account-fixture.tsx",
         "src/components/account-workspace.module.css",
+        "src/components/admin-client.tsx",
+        "src/components/admin-fixture.tsx",
+        "src/components/admin-workspace.module.css",
         "src/components/app-sidebar.css",
         "src/components/app-sidebar.tsx",
         "src/components/audio-fixture.tsx",
@@ -543,9 +548,11 @@
         "src/components/workspace-topbar.tsx"
       ],
       "styles": [
+        "src/app/admin/admin-premium.css",
         "src/app/files/files.css",
         "src/app/globals.css",
         "src/components/account-workspace.module.css",
+        "src/components/admin-workspace.module.css",
         "src/components/app-sidebar.css",
         "src/components/audio-studio.module.css",
         "src/components/chat-workspace.css",
@@ -1119,17 +1126,17 @@
   "styles": [
     {
       "file": "src/app/admin/admin-premium.css",
-      "bytes": 8806,
-      "lines": 7,
-      "mediaQueries": 5,
+      "bytes": 9376,
+      "lines": 11,
+      "mediaQueries": 6,
       "important": 0,
       "viewportUnits": 0
     },
     {
       "file": "src/app/auth/login/auth-premium.css",
-      "bytes": 23541,
-      "lines": 422,
-      "mediaQueries": 5,
+      "bytes": 23999,
+      "lines": 427,
+      "mediaQueries": 6,
       "important": 0,
       "viewportUnits": 2
     },
@@ -1143,8 +1150,8 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 643206,
-      "lines": 2385,
+      "bytes": 643402,
+      "lines": 2387,
       "mediaQueries": 835,
       "important": 131,
       "viewportUnits": 69
@@ -1161,6 +1168,14 @@
       "file": "src/components/account-workspace.module.css",
       "bytes": 5977,
       "lines": 57,
+      "mediaQueries": 2,
+      "important": 0,
+      "viewportUnits": 0
+    },
+    {
+      "file": "src/components/admin-workspace.module.css",
+      "bytes": 2862,
+      "lines": 26,
       "mediaQueries": 2,
       "important": 0,
       "viewportUnits": 0
@@ -1199,9 +1214,9 @@
     },
     {
       "file": "src/components/legal-page.module.css",
-      "bytes": 22395,
-      "lines": 37,
-      "mediaQueries": 9,
+      "bytes": 23055,
+      "lines": 43,
+      "mediaQueries": 10,
       "important": 5,
       "viewportUnits": 1
     },

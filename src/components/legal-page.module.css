@@ -34,3 +34,9 @@
 @keyframes sectionReveal{from{opacity:.18;transform:translateY(24px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @media(prefers-reduced-motion:reduce){.page:before,.page:after,.headerInner,.heroCopy,.heroVisual,.heroGlow,.hero h1,.trustPanel,.trustPanel:after,.trustRow,.policySwitcher,.policySwitcher:before,.glance,.supportCard,.supportCard:after,.footer,.sectionList .policySection{animation:none!important}.policySection,.highlight,.sectionIcon{transition:none!important}.policySection:hover{transform:none}.policySection:hover .sectionIcon{transform:none}}
 @media(max-width:760px){.page:before{width:23rem;height:23rem;top:-10rem;right:-13rem}.page:after{width:18rem;height:18rem;left:-12rem}.policySection:hover{transform:none}.highlight:hover{transform:none}.trustRow{animation-duration:7s}.headerInner:after{animation-duration:10s}}
+/* Phase 5: readable policy navigation and keyboard-visible controls. */
+.page :is(a,button,summary):focus-visible{outline:3px solid var(--legal-accent);outline-offset:3px}
+.headerActions :global(.theme-toggle),.loginLink,.startLink{min-height:44px}
+.contents a,.mobileContents a,.supportCard a,.footer nav a{min-height:44px;display:flex;align-items:center}
+.contents a{font-size:12px}.mobileContents a{font-size:13px}.footer nav a{font-size:12px}
+@media(max-width:760px){.policySwitcher{overflow-x:auto}.mobileContents nav{grid-template-columns:minmax(0,1fr)}.sectionCopy p,.sectionCopy li{font-size:14px;overflow-wrap:anywhere}.description{line-height:1.7}}

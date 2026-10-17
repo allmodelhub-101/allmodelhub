@@ -4,3 +4,7 @@
 .admin-nav-mark{display:grid;place-items:center;width:21px;height:21px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));border-radius:6px;color:var(--accent);font-size:7px;font-weight:950;letter-spacing:-.04em}.admin-shell .sidebar-link:hover .admin-nav-mark{background:color-mix(in srgb,var(--accent) 10%,transparent)}.admin-back-link .admin-nav-mark{flex:none}
 
 .admin-profit-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.admin-profit-breakdown>span{display:grid;gap:4px;padding:13px 15px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}.admin-profit-breakdown small{color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}.admin-profit-breakdown b{font-size:15px}.admin-profit-breakdown em{color:var(--muted);font-size:8px;font-style:normal}@media(max-width:900px){.admin-profit-breakdown{grid-template-columns:1fr 1fr}}@media(max-width:480px){.admin-profit-breakdown{grid-template-columns:1fr}}
+
+/* Compact admin escape route; the desktop sidebar keeps its original links. */
+.admin-mobile-return{display:none}.admin-header{min-height:68px;height:auto;flex-wrap:wrap;padding-block:10px}.admin-header small{overflow-wrap:anywhere}
+@media(max-width:900px){.admin-header{padding-inline:14px}.admin-mobile-return{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:12px}.admin-mobile-return:focus-visible{outline:3px solid var(--accent);outline-offset:3px}.admin-identity{margin-left:auto}}

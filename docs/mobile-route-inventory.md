@@ -2,13 +2,13 @@
 
 Run `pnpm audit:routes` from the repository root. Counts are source routes, not authenticated browser passes. Root layout globals apply to every page.
 
-32 page routes; 43 HTTP handlers; 19 CSS files. No Pages Router exists.
+32 page routes; 43 HTTP handlers; 20 CSS files. No Pages Router exists.
 
 | Route | Access | Source / redirect | Components (transitive) | Styles (transitive) |
 |---|---|---|---|---|
 | /acceptable-use | public | src/app/acceptable-use/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
 | /admin/models | admin | src/app/admin/models/page.tsx → /admin?tab=models | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
-| /admin | admin | src/app/admin/page.tsx | admin-client.tsx, admin-workspace.tsx, premium-select.tsx, pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
+| /admin | admin | src/app/admin/page.tsx | admin-client.tsx, admin-workspace.module.css, admin-workspace.tsx, premium-select.tsx, pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css, src/components/admin-workspace.module.css |
 | /admin/payments | admin | src/app/admin/payments/page.tsx → /admin?tab=payments | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/profits | admin | src/app/admin/profits/page.tsx → /admin?tab=jobs | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/settings | admin | src/app/admin/settings/page.tsx → /admin?tab=settings | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
@@ -29,7 +29,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /privacy | public | src/app/privacy/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
 | /projects | authenticated | src/app/projects/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-data.module.css, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
 | /refunds | public | src/app/refunds/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
-| /responsive-fixture | development fixture | src/app/responsive-fixture/page.tsx | account-fixture.tsx, account-workspace.module.css, app-sidebar.css, app-sidebar.tsx, audio-fixture.tsx, audio-generation-client.tsx, audio-stage.tsx, audio-studio.module.css, audio-studio.tsx, chat-fixture.tsx, chat-workspace.css, chat-workspace.tsx, files-client.tsx, files-workspace.tsx, history-client.tsx, image-studio.css, image-studio.tsx, model-battle.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, models-marketplace.tsx, premium-select.tsx, pwa-register.tsx, responsive-fixture.tsx, settings-workspace.tsx, simple-forms.tsx, studio-fixtures.tsx, support-workspace.tsx, template-library.css, template-library.tsx, theme-toggle.tsx, tts-client.tsx, usage-icon.tsx, usage-workspace.tsx, use-workspace-overlay.ts, video-model-rail.tsx, video-studio-v2.module.css, video-studio.tsx, wallet-client.tsx, wallet-fixture.tsx, wallet-workspace.module.css, workspace-clients.tsx, workspace-data-fixture.tsx, workspace-data.module.css, workspace-frame.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/files/files.css, src/app/globals.css, src/components/account-workspace.module.css, src/components/app-sidebar.css, src/components/audio-studio.module.css, src/components/chat-workspace.css, src/components/image-studio.css, src/components/model-picker.css, src/components/template-library.css, src/components/video-studio-v2.module.css, src/components/wallet-workspace.module.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
+| /responsive-fixture | development fixture | src/app/responsive-fixture/page.tsx | account-fixture.tsx, account-workspace.module.css, admin-client.tsx, admin-fixture.tsx, admin-workspace.module.css, app-sidebar.css, app-sidebar.tsx, audio-fixture.tsx, audio-generation-client.tsx, audio-stage.tsx, audio-studio.module.css, audio-studio.tsx, chat-fixture.tsx, chat-workspace.css, chat-workspace.tsx, files-client.tsx, files-workspace.tsx, history-client.tsx, image-studio.css, image-studio.tsx, model-battle.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, models-marketplace.tsx, premium-select.tsx, pwa-register.tsx, responsive-fixture.tsx, settings-workspace.tsx, simple-forms.tsx, studio-fixtures.tsx, support-workspace.tsx, template-library.css, template-library.tsx, theme-toggle.tsx, tts-client.tsx, usage-icon.tsx, usage-workspace.tsx, use-workspace-overlay.ts, video-model-rail.tsx, video-studio-v2.module.css, video-studio.tsx, wallet-client.tsx, wallet-fixture.tsx, wallet-workspace.module.css, workspace-clients.tsx, workspace-data-fixture.tsx, workspace-data.module.css, workspace-frame.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/admin/admin-premium.css, src/app/files/files.css, src/app/globals.css, src/components/account-workspace.module.css, src/components/admin-workspace.module.css, src/components/app-sidebar.css, src/components/audio-studio.module.css, src/components/chat-workspace.css, src/components/image-studio.css, src/components/model-picker.css, src/components/template-library.css, src/components/video-studio-v2.module.css, src/components/wallet-workspace.module.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
 | /settings | authenticated | src/app/settings/page.tsx | account-workspace.module.css, app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, settings-workspace.tsx, simple-forms.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-data.module.css, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/account-workspace.module.css, src/components/app-sidebar.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
 | /studio-fixture | development fixture | src/app/studio-fixture/page.tsx | premium-select.tsx, pwa-register.tsx, use-workspace-overlay.ts, video-model-rail.tsx, video-studio-v2.module.css, video-studio.tsx | src/app/globals.css, src/components/video-studio-v2.module.css |
 | /support | authenticated | src/app/support/page.tsx | account-workspace.module.css, app-shell.tsx, app-sidebar.css, app-sidebar.tsx, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, support-workspace.tsx, theme-toggle.tsx, use-workspace-overlay.ts, workspace-data.module.css, workspace-frame.tsx, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/account-workspace.module.css, src/components/app-sidebar.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
@@ -91,17 +91,18 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 
 | File | Bytes | Lines | Media queries | Important declarations | Viewport units |
 |---|---:|---:|---:|---:|---:|
-| src/app/admin/admin-premium.css | 8806 | 7 | 5 | 0 | 0 |
-| src/app/auth/login/auth-premium.css | 23541 | 422 | 5 | 0 | 2 |
+| src/app/admin/admin-premium.css | 9376 | 11 | 6 | 0 | 0 |
+| src/app/auth/login/auth-premium.css | 23999 | 427 | 6 | 0 | 2 |
 | src/app/files/files.css | 16104 | 10 | 6 | 2 | 0 |
-| src/app/globals.css | 643206 | 2385 | 835 | 131 | 69 |
+| src/app/globals.css | 643402 | 2387 | 835 | 131 | 69 |
 | src/app/wallet/wallet-premium.css | 88 | 2 | 0 | 0 | 0 |
 | src/components/account-workspace.module.css | 5977 | 57 | 2 | 0 | 0 |
+| src/components/admin-workspace.module.css | 2862 | 26 | 2 | 0 | 0 |
 | src/components/app-sidebar.css | 4316 | 37 | 3 | 1 | 1 |
 | src/components/audio-studio.module.css | 35369 | 100 | 9 | 4 | 0 |
 | src/components/chat-workspace.css | 17117 | 146 | 4 | 0 | 5 |
 | src/components/image-studio.css | 34853 | 241 | 6 | 7 | 5 |
-| src/components/legal-page.module.css | 22395 | 37 | 9 | 5 | 1 |
+| src/components/legal-page.module.css | 23055 | 43 | 10 | 5 | 1 |
 | src/components/marketing-nav.module.css | 1906 | 28 | 3 | 0 | 1 |
 | src/components/model-picker.css | 836 | 13 | 1 | 0 | 0 |
 | src/components/template-library.css | 8901 | 66 | 2 | 2 | 0 |
