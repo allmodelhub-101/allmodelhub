@@ -1,0 +1,75 @@
+[
+  {
+    "tag": "STRONG",
+    "classes": "",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "LI",
+    "classes": "",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "UL",
+    "classes": "cin-proof",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "DIV",
+    "classes": "cin-hero-copy",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "DIV",
+    "classes": "container cin-hero-layout",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "SECTION",
+    "classes": "cin-hero",
+    "color": "rgb(245, 248, 251)",
+    "textToken": "#0b1220",
+    "rules": []
+  },
+  {
+    "tag": "MAIN",
+    "classes": "cin-site",
+    "color": "rgb(11, 18, 32)",
+    "textToken": "#0b1220",
+    "rules": [
+      {
+        "selector": ".cin-site",
+        "color": "var(--text)"
+      }
+    ]
+  },
+  {
+    "tag": "BODY",
+    "classes": "",
+    "color": "rgb(11, 18, 32)",
+    "textToken": "#0b1220",
+    "rules": [
+      {
+        "selector": "body",
+        "color": "var(--text)"
+      }
+    ]
+  },
+  {
+    "tag": "HTML",
+    "classes": "",
+    "color": "rgb(0, 0, 0)",
+    "textToken": "#0b1220",
+    "rules": []
+  }
+]

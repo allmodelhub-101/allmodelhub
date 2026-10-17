@@ -24,7 +24,7 @@ function FileGlyph({ name }: { name: string }) {
   return <File weight="duotone" />;
 }
 
-export function FilesClient() {
+function useFilesClient() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<FileItem[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -85,6 +85,14 @@ export function FilesClient() {
     if (response.ok) await load();
   }
 
+
+ return {inputRef,files,projects,quota,selected,setSelected,projectId,setProjectId,query,setQuery,status,busy,dragging,setDragging,onFileChange,onDrop,upload,remove};
+}
+
+export type FilesClientViewProps = ReturnType<typeof useFilesClient>;
+export function FilesClient() { return <FilesClientView {...useFilesClient()} />; }
+
+export function FilesClientView({inputRef,files,projects,quota,selected,setSelected,projectId,setProjectId,query,setQuery,status,busy,dragging,setDragging,onFileChange,onDrop,upload,remove}: FilesClientViewProps) {
   const visibleFiles = files.filter((item) => item.name.toLowerCase().includes(query.trim().toLowerCase()));
 
   return <div className="files-console">
@@ -105,12 +113,13 @@ export function FilesClient() {
       <section className="files-upload-panel">
         <div className="files-section-head"><div><span>01 · Upload</span><h2>Add knowledge</h2><p>Private, encrypted source material for your AI workspace.</p></div><CloudArrowUp weight="duotone" /></div>
         <form onSubmit={upload} className="files-upload-form">
-          <input ref={inputRef} className="files-native-input" type="file" onChange={onFileChange} />
+          <input ref={inputRef} className="files-native-input" aria-label="Choose a knowledge file" type="file" onChange={onFileChange} />
           <button type="button" className={`files-dropzone ${dragging ? "is-dragging" : ""} ${selected ? "has-file" : ""}`} onClick={() => inputRef.current?.click()} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={onDrop}>
             <span className="files-drop-icon">{selected ? <CheckCircle weight="fill" /> : <CloudArrowUp weight="duotone" />}</span>
             <span><strong>{selected ? selected.name : "Drop a file here"}</strong><small>{selected ? `${formatBytes(selected.size)} · Ready to upload` : "or click to browse your device"}</small></span>
-            {selected && <span className="files-clear" role="button" aria-label="Clear selected file" onClick={(event) => { event.stopPropagation(); setSelected(null); if (inputRef.current) inputRef.current.value = ""; }}><X weight="bold" /></span>}
+
           </button>
+          {selected && <button type="button" className="files-clear-selection" onClick={()=>{setSelected(null);if(inputRef.current)inputRef.current.value=""}}><X aria-hidden="true"/>Clear selected file</button>}
           <div className="files-supported">PDF, DOCX, TXT, Markdown, CSV, spreadsheets, code and images <span>Up to {formatBytes(quota.maxFileBytes)}</span></div>
           <label className="label">Save to workspace<PremiumSelect value={projectId} onChange={setProjectId} options={[{ value: "", label: "General library" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
           <button className="btn btn-primary files-upload-button" disabled={!selected || busy}>{busy ? <><span className="files-spinner" />Preparing file…</> : <><CloudArrowUp weight="bold" />Upload to library</>}</button>
@@ -132,6 +141,7 @@ export function FilesClient() {
       </section>
     </div>
   </div>;
+
 }
 
 

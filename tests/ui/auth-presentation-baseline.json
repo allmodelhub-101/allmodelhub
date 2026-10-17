@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "5f5df2d092515cebe198fc4f30a3ca6589023d92",
+  "hashes": {
+    "getPasswordIssue": "92b3f02376275a47f8148f3f90dd4faf67b01ef47c44e7a4fea04ca0ea9f92c5",
+    "callbackErrorNotice": "0bcf51686578ed57f395104ca0bfdde8052a9147a503806a3db2b341ea950197",
+    "providerErrorNotice": "0917756ef83d188c3d759f1b33061d14181d42fd17240c073a66ecaf6d6c7ee4",
+    "changeMode": "df6ea33aabdecf117deb1095fc64fd086c387e8f9766e9771a00e0609cd89948",
+    "validate": "073daba6cb74a637bc7befaa791edecbe4ead243f380259cd72bed6664190e62",
+    "google": "2f159a0b7329745dbba2beea02d1e1f9ccc0bf5ca7314dfcf50b9234d547c573",
+    "submit": "72e073b3a6efaab1d0e738f44f9949b6723f34acef2b5216590d3c7963430175"
+  }
+}

@@ -1,0 +1,50 @@
+Production React component bundle ready C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\test-results\phase3-production-component
+chromium 320 attachments {
+  composer: { top: 108, bottom: 317, height: 209 },
+  input: { top: 186, bottom: 258, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+chromium 320 error {
+  composer: { top: 108, bottom: 337, height: 229 },
+  input: { top: 120, bottom: 192, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+chromium 844 attachments {
+  composer: { top: 108, bottom: 325, height: 217 },
+  input: { top: 190, bottom: 262, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+chromium 844 error {
+  composer: { top: 108, bottom: 313, height: 205 },
+  input: { top: 124, bottom: 196, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+webkit 320 attachments {
+  composer: { top: 108, bottom: 317, height: 209 },
+  input: { top: 186, bottom: 258, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+webkit 320 error {
+  composer: { top: 108, bottom: 337, height: 229 },
+  input: { top: 120, bottom: 192, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+webkit 844 attachments {
+  composer: { top: 108, bottom: 325, height: 217 },
+  input: { top: 190, bottom: 262, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+webkit 844 error {
+  composer: { top: 108, bottom: 313, height: 205 },
+  input: { top: 124, bottom: 196, height: 72 },
+  nav: { top: 321, bottom: 383, height: 62 },
+  body: { top: 108, bottom: 108, height: 0 }
+}
+8 production React component scenarios passed

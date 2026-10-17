@@ -1,14 +1,11 @@
 "use client";
 
-import { ArrowUp, CaretDown, ChartBar, ChatCircle, ImageSquare, MagicWand, Microphone, Paperclip, Plus, SlidersHorizontal, Sparkle, Stop, VideoCamera, X } from "@phosphor-icons/react";
-import Link from "next/link";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { ModelPicker, PickerModel } from "@/components/model-picker";
-import { ModelBrand } from "@/components/model-brand";
-import { PremiumSelect } from "@/components/premium-select";
+import { chatComposerKeyAction, chatPromptWithContext, pastedChatContext } from "@/lib/chat-composer-events";
+import { ChatWorkspace } from "./chat-workspace";
+
+import { PickerModel } from "@/components/model-picker";
 import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
 
 type Mode = "auto" | "budget" | "balanced" | "premium" | "flagship";
@@ -26,7 +23,6 @@ type VoiceRecognition = { continuous: boolean; interimResults: boolean; lang: st
 export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) {
   const qs = useSearchParams();
   const abortRef = useRef<AbortController | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const voiceRef = useRef<VoiceRecognition | null>(null);
@@ -53,7 +49,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   const [features, setFeatures] = useState<FeatureFlags>({ private_chat: true, prompt_enhancer: true });
   const [pickerOpen, setPickerOpen] = useState(false);
   const [dragActive, setDragActive] = useState(false);
-  const [showScrollButton, setShowScrollButton] = useState(false);
 
   async function pollPendingBilling(input: { pendingId: string; messageId?: string; quoteId?: string; model?: string }) {
     for (const delay of [2_000, 3_000, 5_000, 8_000, 13_000, 20_000]) {
@@ -123,18 +118,6 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   }, [draftKey, input, privateMode]);
 
   useEffect(() => {
-    const field = textareaRef.current;
-    if (!field) return;
-    field.style.height = "auto";
-    const sizing = window.getComputedStyle(field);
-    const minimum = Number.parseFloat(sizing.minHeight) || 44;
-    const maximum = Number.parseFloat(sizing.maxHeight) || 184;
-    const height = Math.min(Math.max(field.scrollHeight, minimum), maximum);
-    field.style.height = `${height}px`;
-    field.style.overflowY = field.scrollHeight > maximum ? "auto" : "hidden";
-  }, [input]);
-
-  useEffect(() => {
     if (!voiceActive) return;
     const timer = window.setInterval(() => setVoiceSeconds((value) => value + 1), 1000);
     return () => window.clearInterval(timer);
@@ -149,16 +132,12 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
   useEffect(() => () => voiceRef.current?.abort(), []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: busy ? "auto" : "smooth", block: "end" });
-  }, [messages, busy]);
-
-  useEffect(() => {
     function globalShortcut(event: globalThis.KeyboardEvent) {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setPickerOpen(true);
       }
-      if (event.key === "Escape" && busy) abortRef.current?.abort();
+      if (event.key === "Escape" && busy && !event.defaultPrevented && !(event.target instanceof Element && event.target.closest('[role="dialog"]'))) abortRef.current?.abort();
     }
     document.addEventListener("keydown", globalShortcut);
     return () => document.removeEventListener("keydown", globalShortcut);
@@ -349,16 +328,18 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
 
   function handlePaste(event: React.ClipboardEvent<HTMLTextAreaElement>) {
     const text = event.clipboardData.getData("text");
-    if (text.length > 1200) { event.preventDefault(); setPastedContext(text); }
+    const context = pastedChatContext(text);
+    if (context !== null) { event.preventDefault(); setPastedContext(context); }
   }
   function submit(event?: FormEvent) {
     event?.preventDefault();
-    const prompt = pastedContext ? `${input.trim() || "Use the attached context to help me."}\n\n[Pasted context]\n${pastedContext}` : input;
+    const prompt = chatPromptWithContext(input, pastedContext);
     void sendPrompt(prompt, messages, { input, pasted: pastedContext });
   }
   function handleComposerKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); }
-    if (event.key === "Escape" && busy) abortRef.current?.abort();
+    const action = chatComposerKeyAction({key:event.key,shiftKey:event.shiftKey,isComposing:event.nativeEvent.isComposing},busy);
+    if (action === "send") { event.preventDefault(); submit(); }
+    if (action === "stop") abortRef.current?.abort();
   }
   function branchAt(index: number) { setMessages(messages.slice(0, index + 1)); setConversationId(""); window.history.replaceState(null, "", "/chat"); }
   function editPrompt(index: number) {
@@ -379,71 +360,5 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     window.setTimeout(() => textareaRef.current?.focus(), 0);
   }
 
-  return <div className={`chat-page premium-chat-page ${messages.length > 0 ? "has-messages" : "is-welcome"} ${pickerOpen ? "picker-open" : ""} ${dragActive ? "is-dragging" : ""}`} onDragEnter={(event) => { event.preventDefault(); setDragActive(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { event.preventDefault(); setDragActive(false); void uploadFiles(event.dataTransfer.files); }}>
-    {dragActive && <div className="chat-drop-overlay"><strong>Drop files to add them</strong><span>Documents and images will stay with this prompt.</span></div>}
-
-    <div className="chat-layout-body" onScroll={(event) => { const element = event.currentTarget; setShowScrollButton(element.scrollHeight - element.scrollTop - element.clientHeight > 220); }}>
-      <div className="chat-messages premium-messages">
-        {messages.length === 0 ? <div className="chat-home">
-          <nav className="popular-models" aria-label="Popular AI models">
-            <span className="popular-models-label">Popular models</span>
-            <div className="popular-model-list"><div className="popular-model-track">
-              {[0, 1].map((copy) => <div className="popular-model-set" aria-hidden={copy === 1 ? "true" : undefined} key={copy}>
-                {popularModels.map((model) => <button type="button" tabIndex={copy === 1 ? -1 : undefined} className={modelId === model.id ? "active" : ""} key={model.id} onClick={() => { setModelId(model.id); setMode("auto"); focusComposer(); }} aria-pressed={modelId === model.id}>
-                  <ModelBrand modelName={model.name} provider={model.providerFamily} compact /><b>{model.name}</b>
-                </button>)}
-                <button type="button" tabIndex={copy === 1 ? -1 : undefined} className="popular-more" onClick={() => setPickerOpen(true)}><Plus size={15} weight="bold" aria-hidden="true" /><b>More</b></button>
-              </div>)}
-            </div></div>
-          </nav>
-          <section className="chat-home-hero" aria-labelledby="chat-home-title">
-            <span className="empty-kicker">One prompt. Endless possibilities.</span>
-            <h1 className="empty-title" id="chat-home-title">What will you <span>create</span> today?<i aria-hidden="true" /></h1>
-            <p className="empty-subtitle">Chat, create, analyze, and be more productive with the world&apos;s most advanced AI models.<br />All in one place.</p>
-            <div className="creation-paths">
-              <button type="button" className="creation-path answers" onClick={() => focusComposer()}><span><ChatCircle size={25} weight="fill" aria-hidden="true" /></span><strong>Get Answers</strong><small>Ask anything and get smart, reliable responses.</small></button>
-              <Link className="creation-path images" href="/images"><span><ImageSquare size={25} weight="fill" aria-hidden="true" /></span><strong>Create Images</strong><small>Turn your ideas into stunning visuals.</small></Link>
-              <Link className="creation-path videos" href="/video"><span><VideoCamera size={25} weight="fill" aria-hidden="true" /></span><strong>Make Videos</strong><small>Create videos from text in seconds.</small></Link>
-              <button type="button" className="creation-path analyze" onClick={() => focusComposer("Help me analyze and plan ")}><span><ChartBar size={25} weight="fill" aria-hidden="true" /></span><strong>Analyze &amp; Plan</strong><small>Summarize, analyze, and get insights.</small></button>
-            </div>
-          </section>
-        </div> : messages.map((message, index) => {
-          const key = message.id || `${message.role}-${index}`;
-          return <article className={`chat-row ${message.role}${message.interrupted ? " is-interrupted" : ""}`} key={key}><div className="avatar" aria-hidden="true">{message.role === "user" ? "You" : "AI"}</div><div className="chat-message-box"><div className="message-author">{message.role === "user" ? "You" : activeModelName || exact?.name || "Models Suite"}</div><div className="chat-content">{message.role === "assistant" ? <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown> : message.content}</div>{busy && message.id?.startsWith("pending-") && !message.content && <div className="thinking-state" role="status" aria-live="polite"><div className="thinking-orbit" aria-hidden="true"><Sparkle weight="fill" /><i /><i /></div><div className="thinking-copy"><strong>{processingSeconds < 2 ? "Understanding your request" : activeModelName ? `${activeModelName} is responding` : "Choosing the best model"}</strong><span>Working live · {processingSeconds}s</span><div className="thinking-progress" aria-hidden="true"><i /></div></div></div>}<div className="chat-actions"><button type="button" onClick={() => void copyMessage(message.content, key)} disabled={!message.content}>{copiedKey === key ? "Copied" : "Copy"}</button>{message.role === "user" && <button type="button" onClick={() => editPrompt(index)}>Edit prompt</button>}{message.role === "assistant" && <><button type="button" onClick={() => regenerate(index)}>Retry</button><button type="button" onClick={() => branchAt(index)}>Branch</button></>}{message.meta && <span className="chat-meta">{message.meta}</span>}</div></div></article>;
-        })}
-        <div ref={messagesEndRef} aria-hidden="true" />
-      </div>
-      {showScrollButton && <button type="button" className="scroll-latest" onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })}>Latest</button>}
-    </div>
-
-    <div className="composer-wrap premium-composer-wrap">
-      <form className="glass composer premium-composer" onSubmit={submit}>
-        {(pastedContext || attachmentIds.length > 0) && <div className="attachment-strip">
-          {pastedContext && <div className="attachment-card"><span className="attachment-type">TXT</span><div><strong>Pasted text</strong><small>{pastedContext.length.toLocaleString()} characters</small></div><button type="button" onClick={() => setPastedContext("")} aria-label="Remove pasted text"><X size={14} /></button></div>}
-          {attachmentIds.map((id) => { const file = files.find((item) => item.id === id); return file ? <div className="attachment-card" key={id}><span className="attachment-type">FILE</span><div><strong>{file.name}</strong><small>{Math.max(1, Math.round(file.size_bytes / 1024)).toLocaleString()} KB</small></div><button type="button" onClick={() => setAttachmentIds((current) => current.filter((item) => item !== id))} aria-label={`Remove ${file.name}`}><X size={14} /></button></div> : null; })}
-        </div>}
-        <textarea ref={textareaRef} className="textarea chat-input" value={input} rows={1} onPaste={handlePaste} onKeyDown={handleComposerKeyDown} onChange={(event) => setInput(event.target.value)} placeholder="Ask anything…" aria-label="Message" />
-        <div className="composer-footer"><div className="composer-tools">
-          <input ref={fileInputRef} type="file" multiple accept=".pdf,.txt,.doc,.docx,image/*" hidden onChange={(event) => void uploadFiles(event.target.files)} />
-            <button type="button" className="composer-icon-button" onClick={() => fileInputRef.current?.click()} aria-label="Attach files" title="Attach files"><Paperclip size={18} aria-hidden="true" /></button>
-            <button type="button" className={`composer-icon-button voice-input-button ${voiceActive ? "is-recording" : ""}`} onClick={startVoiceInput} aria-label={voiceActive ? "Stop voice typing" : "Start voice typing"} title={voiceActive ? "Stop voice typing" : "Voice typing"}><Microphone size={18} weight={voiceActive ? "fill" : "regular"} aria-hidden="true" /></button>
-            {voiceActive && <div className="voice-recording-status" role="status"><i/><span>Listening</span><time>{Math.floor(voiceSeconds / 60)}:{String(voiceSeconds % 60).padStart(2,"0")}</time><button type="button" onClick={cancelVoiceInput}>Cancel</button></div>}
-            <button type="button" className="composer-model-button model-selector-button" onClick={() => setPickerOpen(true)} aria-label={`Choose AI model. Current selection: ${exact?.name || "Auto-select best model"}`} title="Choose AI model">
-              <ModelBrand modelName={exact?.name || "Auto"} provider={exact?.providerFamily} compact /><span className="model-selector-copy"><small>Choose AI model</small><strong>{exact?.name || "Auto (best match)"}</strong></span><CaretDown size={13} weight="bold" aria-hidden="true" />
-            </button>
-          <details className="composer-settings"><summary title="Project, routing and privacy settings" aria-label="Chat controls: project, routing and privacy"><SlidersHorizontal size={16} aria-hidden="true" /><span>Controls</span></summary><div className="composer-settings-panel">
-            <label><span>Project</span><PremiumSelect aria-label="Project" value={projectId} onChange={setProjectId} options={[{ value: "", label: "No project" }, ...projects.map((project) => ({ value: project.id, label: project.name }))]} /></label>
-            <label><span>Routing tier</span><PremiumSelect aria-label="Routing tier" value={mode} onChange={(value) => { setMode(value as Mode); if (value !== "auto") setModelId(""); }} options={["auto", "budget", "balanced", "premium", "flagship"].map((value) => ({ value, label: value[0].toUpperCase() + value.slice(1) }))} /></label>
-            {supportsReasoning && <div className="setting-toggle-row"><span><strong>Reasoning</strong><small>Use a larger response budget</small></span><button type="button" role="switch" aria-checked={deepThink} className={deepThink ? "active" : ""} onClick={() => setDeepThink((value) => !value)}>{deepThink ? "On" : "Off"}</button></div>}
-            {exact && <div className="model-control-summary"><span>Model inputs</span><strong>{exact.uiSchema?.inputModes?.join(" · ") || "text"}</strong></div>}
-            {features.private_chat !== false && <div className="setting-toggle-row"><span><strong>Private chat</strong><small>Do not save this conversation</small></span><button type="button" role="switch" aria-checked={privateMode} className={privateMode ? "active" : ""} onClick={() => { setPrivateMode((value) => !value); setConversationId(""); }}>{privateMode ? "On" : "Off"}</button></div>}
-          </div></details>
-          {features.prompt_enhancer !== false && <button type="button" className="quiet-tool" onClick={enhancePrompt} disabled={enhancing || !input.trim()} title={enhancing ? "Improving prompt" : "Improve prompt"} aria-label={enhancing ? "Improving prompt" : "Improve prompt"}><MagicWand size={16} aria-hidden="true" /><span>{enhancing ? "Improving…" : "Improve prompt"}</span></button>}
-        </div><div className="composer-submit-area">{selectedProject && <span className="active-project" title={selectedProject.name}>{selectedProject.name}</span>}{busy ? <button type="button" className="composer-send stop" onClick={() => abortRef.current?.abort()} aria-label="Stop generation"><Stop size={14} weight="fill" /></button> : <button type="submit" className="composer-send" disabled={!input.trim() && !pastedContext} aria-label="Send message"><ArrowUp size={17} weight="bold" /></button>}</div></div>
-      </form>
-      <p className="composer-hint">Enter to send · Shift + Enter for a new line · Esc to stop</p>
-      {error && <div className="soft-card small error-box" role="alert"><strong>Request not completed.</strong> {error} <span>Your prompt is still here.</span></div>}
-    </div>
-    <ModelPicker models={models} value={modelId} onChange={(value) => { setModelId(value); if (value) setMode("auto"); }} open={pickerOpen} onOpenChange={setPickerOpen} />
-  </div>;
+  return <ChatWorkspace {...{messages,busy,activeModelName,exact,popularModels,modelId,setModelId,setMode,focusComposer,pickerOpen,setPickerOpen,dragActive,setDragActive,uploadFiles,input,setInput,pastedContext,setPastedContext,attachmentIds,setAttachmentIds,files,textareaRef,fileInputRef,submit,handlePaste,handleComposerKeyDown,voiceActive,voiceSeconds,startVoiceInput,cancelVoiceInput,projectId,setProjectId,projects,mode,supportsReasoning,deepThink,setDeepThink,features,privateMode,setPrivateMode,setConversationId,enhancePrompt,enhancing,selectedProject,error,processingSeconds,copiedKey,copyMessage,editPrompt,regenerate,branchAt,models}} stopGeneration={() => abortRef.current?.abort()} conversationKey={conversationId} />;
 }

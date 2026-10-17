@@ -1,0 +1,92 @@
+[
+  {
+    "name": "image-settings",
+    "width": 390,
+    "height": 844,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "image-viewer",
+    "width": 390,
+    "height": 844,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "video-viewer",
+    "width": 390,
+    "height": 844,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-music",
+    "width": 390,
+    "height": 844,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-sfx",
+    "width": 390,
+    "height": 844,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "image-settings",
+    "width": 844,
+    "height": 390,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "image-viewer",
+    "width": 844,
+    "height": 390,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "video-viewer",
+    "width": 844,
+    "height": 390,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-music",
+    "width": 844,
+    "height": 390,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-sfx",
+    "width": 844,
+    "height": 390,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "image-settings",
+    "width": 1366,
+    "height": 768,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "image-viewer",
+    "width": 1366,
+    "height": 768,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "video-viewer",
+    "width": 1366,
+    "height": 768,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-music",
+    "width": 1366,
+    "height": 768,
+    "status": "PASS: actual presentation screenshot"
+  },
+  {
+    "name": "audio-sfx",
+    "width": 1366,
+    "height": 768,
+    "status": "PASS: actual presentation screenshot"
+  }
+]

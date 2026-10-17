@@ -1,0 +1,2616 @@
+[
+  {
+    "engine": "chromium",
+    "width": 390,
+    "theme": "light",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 390,
+      "scroll": 390,
+      "heading": "rgb(11, 18, 32)",
+      "overline": "rgb(9, 106, 140)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-mobile",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "theme": "dark",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 390,
+      "scroll": 390,
+      "heading": "rgb(245, 248, 251)",
+      "overline": "rgb(117, 232, 255)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-mobile",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "theme": "light",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 1366,
+      "scroll": 1366,
+      "heading": "rgb(11, 18, 32)",
+      "overline": "rgb(9, 106, 140)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-scroll",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-hover",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "theme": "dark",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 1366,
+      "scroll": 1366,
+      "heading": "rgb(245, 248, 251)",
+      "overline": "rgb(117, 232, 255)",
+      "animations": [
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-scroll",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-hover",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "theme": "light",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 390,
+      "scroll": 390,
+      "heading": "rgb(11, 18, 32)",
+      "overline": "rgb(9, 106, 140)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-mobile",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "theme": "dark",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 390,
+      "scroll": 390,
+      "heading": "rgb(245, 248, 251)",
+      "overline": "rgb(117, 232, 255)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "running"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-mobile",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "theme": "light",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 1366,
+      "scroll": 1366,
+      "heading": "rgb(11, 18, 32)",
+      "overline": "rgb(9, 106, 140)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-scroll",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-hover",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "theme": "dark",
+    "status": "PASS: actual Next production, normal motion, theme interaction",
+    "measured": {
+      "width": 1366,
+      "scroll": 1366,
+      "heading": "rgb(245, 248, 251)",
+      "overline": "rgb(117, 232, 255)",
+      "animations": [
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "state": "running"
+        },
+        {
+          "name": "marketing-nav-sheen",
+          "state": "running"
+        },
+        {
+          "name": "marketing-cta-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-grid-drift",
+          "state": "running"
+        },
+        {
+          "name": "cin-hero-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-title-spectrum",
+          "state": "running"
+        },
+        {
+          "name": "cin-stage-arrive",
+          "state": "finished"
+        },
+        {
+          "name": "cin-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-core-echo",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-scroll",
+          "state": "running"
+        },
+        {
+          "name": "cin-marquee",
+          "state": "running"
+        },
+        {
+          "name": "cin-routing-breathe",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-signal",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-data-scan",
+          "state": "running"
+        },
+        {
+          "name": "cin-morph",
+          "state": "running"
+        },
+        {
+          "name": "cin-float",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-wallet-hover",
+          "state": "running"
+        },
+        {
+          "name": "cin-card-sheen",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-bar-rise",
+          "state": "finished"
+        },
+        {
+          "name": "cin-bar-pulse",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-answer-open",
+          "state": "finished"
+        },
+        {
+          "name": "cin-spin",
+          "state": "running"
+        },
+        {
+          "name": "cin-light-pass",
+          "state": "running"
+        },
+        {
+          "name": "cin-final-bloom",
+          "state": "running"
+        },
+        {
+          "name": "cin-cta-float",
+          "state": "running"
+        }
+      ]
+    }
+  }
+]

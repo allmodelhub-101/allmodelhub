@@ -1,0 +1,15 @@
+[WebServer] (node:6536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:7728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:21948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (20.8s)
+(node:27832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (20.3s)
+
+  2 passed (49.9s)

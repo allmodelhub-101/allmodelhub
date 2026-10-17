@@ -1,0 +1,59 @@
+{
+  "run": "https://github.com/allmodelhub-101/allmodelhub/actions/runs/39033532502",
+  "commit": "1df11bf9b7ea85114a73a1baea9a0c7b4d1eae1d",
+  "stats": {
+    "startTime": "2026-10-17T12:49:35.516Z",
+    "duration": 2262338.233,
+    "expected": 1203,
+    "skipped": 350,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "title": "hardening WCAG homepage light",
+      "project": "webkit-1366x768",
+      "errors": [
+        "Error: automated WCAG subset; incomplete checks still need manual review\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 28\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"id\": \"color-contrast\",\u001b[39m\n\u001b[31m+     \"nodes\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"summary\": \"Fix any of the following:\u001b[39m\n\u001b[31m+   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1\",\u001b[39m\n\u001b[31m+         \"target\": Array [\u001b[39m\n\u001b[31m+           \"li:nth-child(1) > strong\",\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"summary\": \"Fix any of the following:\u001b[39m\n\u001b[31m+   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1\",\u001b[39m\n\u001b[31m+         \"target\": Array [\u001b[39m\n\u001b[31m+           \"li:nth-child(2) > strong\",\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"summary\": \"Fix any of the following:\u001b[39m\n\u001b[31m+   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1\",\u001b[39m\n\u001b[31m+         \"target\": Array [\u001b[39m\n\u001b[31m+           \"li:nth-child(3) > strong\",\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+      ],
+      "renderedColors": {
+        "theme": "light",
+        "body": "rgb(11, 18, 32)",
+        "nodes": [
+          {
+            "selector": "li:nth-child(1) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          },
+          {
+            "selector": "li:nth-child(2) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          },
+          {
+            "selector": "li:nth-child(3) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          }
+        ]
+      }
+    },
+    {
+      "title": "hardening stress: 500 library records and admin rows remain searchable",
+      "project": "webkit-390x844",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.library-card-chat')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m500\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.library-card-chat') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.library-card-chat')\u001b[22m\n\u001b[2m    16 \u00d7 locator resolved to 500 elements\u001b[22m\n\u001b[2m       - unexpected value \"500\"\u001b[22m\n"
+      ]
+    },
+    {
+      "title": "hardening stress: 500 library records and admin rows remain searchable",
+      "project": "webkit-1366x768",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.library-card-chat')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m500\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.library-card-chat') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.library-card-chat')\u001b[22m\n\u001b[2m    23 \u00d7 locator resolved to 500 elements\u001b[22m\n\u001b[2m       - unexpected value \"500\"\u001b[22m\n"
+      ]
+    }
+  ]
+}

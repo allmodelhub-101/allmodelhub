@@ -1,0 +1,95 @@
+
+Running 18 tests using 1 worker
+
+(node:15664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\phase6-login.png, writing actual.
+  ok  1 [chromium-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (8.5s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\phase6-legal.png, writing actual.
+  ok  2 [chromium-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (4.4s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\phase6-video-fixture.png, writing actual.
+  ok  3 [chromium-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (5.7s)
+(node:5840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\phase6-login.png, writing actual.
+  ok  4 [chromium-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (6.1s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\phase6-legal.png, writing actual.
+  ok  5 [chromium-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (6.2s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\phase6-video-fixture.png, writing actual.
+  ok  6 [chromium-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (6.7s)
+(node:9556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\phase6-login.png, writing actual.
+  ok  7 [chromium-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (7.5s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\phase6-legal.png, writing actual.
+  ok  8 [chromium-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (8.9s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\phase6-video-fixture.png, writing actual.
+  ok  9 [chromium-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (19.3s)
+(node:9840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\phase6-login.png, writing actual.
+  ok 10 [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (32.6s)
+  x  11 [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (56.5s)
+(node:6344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\phase6-video-fixture.png, writing actual.
+  ok 12 [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (18.6s)
+(node:8668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-768x1024\phase6-login.png, writing actual.
+  ok 13 [webkit-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (12.8s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-768x1024\phase6-legal.png, writing actual.
+  ok 14 [webkit-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (19.3s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-768x1024\phase6-video-fixture.png, writing actual.
+  ok 15 [webkit-768x1024] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (21.5s)
+(node:14784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase6-login.png, writing actual.
+  ok 16 [webkit-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline login (24.9s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase6-legal.png, writing actual.
+  ok 17 [webkit-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (24.7s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase6-video-fixture.png, writing actual.
+  ok 18 [webkit-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (23.7s)
+
+
+  1) [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal ────────────────
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+    Timeout: 10000ms
+      Timeout 10000ms exceeded.
+
+      Snapshot: phase6-legal.png
+
+    Call log:
+      - Expect "toHaveScreenshot(phase6-legal.png)" with timeout 10000ms
+        - generating new stable screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - Timeout 10000ms exceeded.
+
+
+      22 |     }
+      23 |     await page.evaluate(()=>document.fonts.ready);
+    > 24 |     await expect(page).toHaveScreenshot(`phase6-${name}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
+         |                        ^
+      25 |   });
+      26 | }
+      27 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\visual.spec.ts:24:24
+
+    Error Context: test-results\phase6-reviewed-visual-candidates\visual-visual-baseline-legal-webkit-390x844\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-reviewed-visual-candidates\visual-visual-baseline-legal-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-reviewed-visual-candidates\visual-visual-baseline-legal-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal ─────────────────
+  17 passed (7.2m)

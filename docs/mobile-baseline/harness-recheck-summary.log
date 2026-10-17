@@ -1,0 +1,15 @@
+{
+  "label": "harness-recheck",
+  "stats": {
+    "startTime": "2026-10-16T10:40:06.443Z",
+    "duration": 15397.481,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "passed": 4
+  },
+  "failures": []
+}

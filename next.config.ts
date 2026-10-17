@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Hide development tooling only during explicitly enabled local UI testing.
+  devIndicators: process.env.LOCAL_RESPONSIVE_FIXTURES === "1" ? false : undefined,
   poweredByHeader: false,
   reactStrictMode: true,
   experimental: {

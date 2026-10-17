@@ -1,0 +1,152 @@
+{
+  "geometry": {
+    "viewport": 768,
+    "scroll": 768,
+    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "body": 768,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "legal-page-module__qLSGyG__heroGlow",
+        "left": -100,
+        "right": 413.125
+      }
+    ]
+  },
+  "controls": [
+    {
+      "tag": "A",
+      "label": "Models Suite",
+      "width": 156.265625,
+      "height": 38
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Switch to dark theme",
+      "width": 36,
+      "height": 42
+    },
+    {
+      "tag": "A",
+      "label": "Login",
+      "width": 67.765625,
+      "height": 42
+    },
+    {
+      "tag": "A",
+      "label": "Start Free",
+      "width": 100.125,
+      "height": 42
+    },
+    {
+      "tag": "A",
+      "label": "Terms of Service",
+      "width": 172.75,
+      "height": 48
+    },
+    {
+      "tag": "A",
+      "label": "Privacy Policy",
+      "width": 172.75,
+      "height": 48
+    },
+    {
+      "tag": "A",
+      "label": "Acceptable Use",
+      "width": 172.75,
+      "height": 48
+    },
+    {
+      "tag": "A",
+      "label": "Credits & Refunds",
+      "width": 172.75,
+      "height": 48
+    },
+    {
+      "tag": "A",
+      "label": "01Using Models Suite",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "02Credits and billing",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "03Reservations and generations",
+      "width": 180,
+      "height": 45.6875
+    },
+    {
+      "tag": "A",
+      "label": "04Third-party models",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "05Your content and rights",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "06Account security",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "07Changes and contact",
+      "width": 180,
+      "height": 30.84375
+    },
+    {
+      "tag": "A",
+      "label": "Contact Support",
+      "width": 123.328125,
+      "height": 17
+    },
+    {
+      "tag": "A",
+      "label": "Models Suite",
+      "width": 124.21875,
+      "height": 30
+    },
+    {
+      "tag": "A",
+      "label": "Terms of Service",
+      "width": 77.125,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Privacy Policy",
+      "width": 64.421875,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Acceptable Use",
+      "width": 71.78125,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Credits & Refunds",
+      "width": 85.15625,
+      "height": 14
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open Next.js Dev Tools",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "errors": [],
+  "resources": []
+}

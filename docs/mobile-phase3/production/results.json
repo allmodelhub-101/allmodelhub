@@ -1,0 +1,242 @@
+[
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "state": "welcome",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "state": "long",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "state": "attachments",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "state": "loading",
+    "status": "PASS",
+    "mode": "production React standalone component bundle; not authenticated Next E2E"
+  }
+]

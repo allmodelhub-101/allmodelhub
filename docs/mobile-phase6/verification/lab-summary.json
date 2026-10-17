@@ -1,0 +1,23 @@
+[
+  {
+    "label": "before",
+    "scenarios": 60,
+    "violationScenarios": 36,
+    "errors": 0,
+    "overflow": []
+  },
+  {
+    "label": "after",
+    "scenarios": 60,
+    "violationScenarios": 2,
+    "errors": 0,
+    "overflow": []
+  },
+  {
+    "label": "stress",
+    "scenarios": 40,
+    "violationScenarios": 0,
+    "errors": 0,
+    "overflow": []
+  }
+]

@@ -1,0 +1,286 @@
+{
+  "original": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+  "verified": 56,
+  "rows": [
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#load",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#patchConversation",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#removeConversation",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#removeFile",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#toggleFavorite",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/history-client.tsx#useHistoryClient#openFileDetail",
+      "originalFile": "src/components/history-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#load",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#choose",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#onFileChange",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#onDrop",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#upload",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/files-client.tsx#useFilesClient#remove",
+      "originalFile": "src/components/files-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/workspace-clients.tsx#useNotificationsClient#load",
+      "originalFile": "src/components/workspace-clients.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/workspace-clients.tsx#useNotificationsClient#markRead",
+      "originalFile": "src/components/workspace-clients.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useProjectsClient#load",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useProjectsClient#activate",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useProjectsClient#submit",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useProjectsClient#edit",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useProjectsClient#remove",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/model-battle.tsx#useModelBattle#submit",
+      "originalFile": "src/components/model-battle.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/model-battle.tsx#module#runModel",
+      "originalFile": "src/components/model-battle.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSettingsClient#save",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSettingsClient#deleteAccount",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSupportClient#load",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSupportClient#open",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSupportClient#submit",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/simple-forms.tsx#useSupportClient#sendReply",
+      "originalFile": "src/components/simple-forms.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/usage-workspace.tsx#module#transactionLabel",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/usage-workspace.tsx#module#usageSummary",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/usage-workspace.tsx#module#operationLabel",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/app/usage/page.tsx#module#karachiDayStart",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/app/usage/page.tsx#loadUsagePresentation#@prefix",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/usage-workspace.tsx#UsageWorkspace#@formatting",
+      "originalFile": "src/app/usage/page.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#loadMethods",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#moveTo",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#updateAmount",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#chooseProof",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#removeProof",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#copyValue",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#refresh",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#submit",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#useWalletClient#reset",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#money",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#configuredMethod",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#transactionLabel",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#transactionDate",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#transactionAmount",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/wallet-client.tsx#module#shortReference",
+      "originalFile": "src/components/wallet-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#paymentAction",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#updateModel",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#saveProviderRoute",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#createProviderRoute",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#addCredit",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#savePlatformSettings",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#replyTicket",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    },
+    {
+      "key": "src/components/admin-client.tsx#useAdminClient#reconcileJob",
+      "originalFile": "src/components/admin-client.tsx",
+      "matches": true
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "browser": "chromium",
+    "width": 390,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "path": "/auth/login",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "path": "/auth/signup",
+    "status": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "path": "/responsive-fixture",
+    "status": "PASS: production 404 with opt-in flag set"
+  }
+]

@@ -1,0 +1,21 @@
+
+Running 8 tests using 2 workers
+
+(node:20020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (11.7s)
+  ok 2 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (14.8s)
+  ok 3 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (9.0s)
+(node:2844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (12.1s)
+(node:8468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (20.0s)
+  ok 6 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (29.1s)
+  ok 7 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (15.2s)
+  ok 8 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (16.0s)
+
+  8 passed (1.3m)

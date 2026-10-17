@@ -1,0 +1,49 @@
+(node:11548) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/auth-confirmation.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ signup confirmation accepts only email verification OTP types (2.0903ms)
+(node:14404) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/security/request.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ safeInternalPath accepts local paths and rejects redirect bypasses (2.5032ms)
+✔ safeAuthenticatedPath defaults to chat and prevents auth redirect loops (1.1007ms)
+✔ mutation origin validation blocks cross-site requests (176.3702ms)
+✔ audio modes expose keyboard navigation and a labeled panel (3.0102ms)
+✔ decorative artwork cannot be confused with audio playback and motion is optional (26.277ms)
+✔ first-loaded Kling voice matches its provider and financial confirmation remains guarded (1.831ms)
+✔ music and sound effects cannot re-submit an active job or invent a final charge (1.525ms)
+(node:14928) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/image-clipboard.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ clipboard items preserve multiple images without double-counting FileList (6.4082ms)
+✔ FileList-only clipboard works, null items and ordinary text stay harmless (0.7678ms)
+✔ FLUX maps to an official mark and paste remains a user-triggered guarded action (3.7437ms)
+✔ image polish remains scoped and supports light/dark surfaces (2.1575ms)
+✔ decorative motion is gentle, pausable and disabled for reduced motion (0.5399ms)
+✔ model, reference and settings controls preserve authorization and accessible state (0.4618ms)
+✔ Library contains decorative overflow without restricting its content height (11.3565ms)
+✔ collapsed navigation keeps accessible labels and linked toggle state (5.0112ms)
+✔ account menu remains readable and keyboard operable in both sidebar states (1.4401ms)
+✔ sidebar motion and saved preferences have safe fallbacks (0.5766ms)
+✔ template launch preserves the exact encoded prompt and descriptive accessible action (2.1261ms)
+✔ search combines with category, announces results and supports reset (0.3894ms)
+✔ cards size to content and titles remain readable, with optional decorative motion (11.1222ms)
+(node:25400) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/video-studio-media.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all sixteen supplied samples have full-length, fast-start browser assets (335.3153ms)
+✔ model browsing and full-frame playback preserve generation protections (1.7783ms)
+✔ compact navigation and completed outputs expose clear, honest actions (1.2117ms)
+✔ verified provider marks exist locally and FlashVSR remains honestly labeled (16.1313ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4441.2633

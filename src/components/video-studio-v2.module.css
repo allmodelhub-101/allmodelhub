@@ -14,6 +14,49 @@
   background:radial-gradient(75% 38% at 91% 0,#d8f4ff 0,transparent 58%),linear-gradient(135deg,#fbfdff 0,#f2f8ff 53%,#f9fbff 100%);
   container-type:inline-size;
 }
+
+/* Studio-owned responsive composition: create first, preview second. */
+.page[data-studio=video] { padding:clamp(12px,2vw,28px); }
+.page[data-studio=video] .layout { display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px; }
+.page[data-studio=video] :is(.leftColumn,.rightColumn,.field,.referenceBox) { min-width:0; }
+.page[data-studio=video] .field textarea { font-size:16px;min-height:112px;line-height:1.6; }
+.page[data-studio=video] :is(.modeToggle button,.workspaceTabs button,.workspaceTabs a,.playerControls button,.reference button,.uploadButton,.generate,.railHeading button) { min-height:44px; }
+.page[data-studio=video] .playerControls button { min-width:44px; }
+.page[data-studio=video] .playerControls input { min-width:24px;width:100%; }
+.page[data-studio=video] .mainPoster[data-aspect="9:16"] { width:min(100%,29.25dvh);max-height:none;aspect-ratio:9/16;margin-inline:auto; }
+.page[data-studio=video] .mainPoster[data-aspect="1:1"] { width:min(100%,52dvh);max-height:none;aspect-ratio:1;margin-inline:auto; }
+.page[data-studio=video] .mainPoster>video { object-fit:contain; }
+.page[data-studio=video] .reference b { min-width:0;overflow-wrap:anywhere; }
+.page[data-studio=video] .result>video { object-fit:contain;background:#08111c;min-height:0;max-height:58dvh; }
+.page[data-studio=video] :is(button,a,input,textarea,[tabindex]):focus-visible { outline:2px solid var(--accent);outline-offset:3px; }
+.viewerBackdrop[role=presentation] { z-index:260; }
+.viewer .viewerControls button,.viewer .viewerClose,.viewer .viewerActions :is(button,a) { min-width:44px;min-height:44px; }
+.viewer :is(button,a,input,[tabindex]):focus-visible { outline:2px solid #72bdff;outline-offset:3px; }
+@container(max-width:900px) {
+ .page[data-studio=video] .layout { display:flex;flex-direction:column; }
+ .page[data-studio=video] .rightColumn { order:0;width:100%; }
+ .page[data-studio=video] .leftColumn { width:100%; }
+ .page[data-studio=video] .settings { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@container(max-width:600px) {
+ .page[data-studio=video] .studioToolbar { flex-wrap:wrap;gap:12px; }
+ .page[data-studio=video] .workspaceTabs { display:flex; }
+ .page[data-studio=video] .inspector { padding:14px; }
+ .page[data-studio=video] .field textarea { min-height:96px; }
+ .page[data-studio=video] .playerControls { flex-wrap:wrap;gap:4px; }
+ .page[data-studio=video] .playerControls input { flex:1; }
+ .page[data-studio=video] .playerControls span { display:none; }
+ .page[data-studio=video] .modelShowcase { margin-bottom:12px; }
+ .page[data-studio=video] .referenceBox input { width:100%;min-width:0;font-size:16px; }
+}
+@media(max-width:700px) {
+ .viewer { width:100%;max-height:calc(100dvh - 24px);overflow:auto; }
+ .viewerBackdrop { padding:12px; }
+ .viewerStage { min-height:0; }
+ .viewerStage video { max-height:42dvh;object-fit:contain; }
+ .viewerControls { flex-wrap:wrap; }
+ .viewerControls input { flex-basis:100%; }
+}
 .page * { box-sizing:border-box; }
 
 .studioToolbar { display:flex; align-items:center; justify-content:space-between; gap:18px; max-width:1540px; margin:0 auto 20px; padding:0 3px; }

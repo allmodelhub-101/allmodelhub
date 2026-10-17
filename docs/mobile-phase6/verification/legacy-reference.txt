@@ -1,0 +1,67 @@
+
+Running 3 tests using 1 worker
+
+(node:6724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.0s)
+Testing stopped early after 1 maximum allowed failures.
+
+
+  1) [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login ──────────────
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      23622 pixels (ratio 0.08 of all image pixels) are different.
+
+      Snapshot: phase2-login.png
+
+    Call log:
+      - Expect "toHaveScreenshot(phase2-login.png)" with timeout 10000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 23622 pixels (ratio 0.08 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 23622 pixels (ratio 0.08 of all image pixels) are different.
+
+
+      21 |     }
+      22 |     await page.evaluate(()=>document.fonts.ready);
+    > 23 |     await expect(page).toHaveScreenshot(`${name==='video-fixture'?name:`phase2-${name}`}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
+         |                        ^
+      24 |   });
+      25 | }
+      26 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\visual.spec.ts:23:24
+
+    attachment #1: phase2-login (image/png) ────────────────────────────────────────────────────────
+    Expected: tests\responsive\__screenshots__\win32\chromium-390x844\phase2-login.png
+    Received: test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\phase2-login-actual.png
+    Diff:     test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\phase2-login-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-legacy-visual\visual-visual-baseline-login-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login ───────────────
+  2 did not run
+  1 error was not a part of any test, see above for details

@@ -1,0 +1,12 @@
+/* The portal has its own owner; it is outside WorkspaceFrame. Keep result
+   rows content-sized even when the dialog fills a short viewport. */
+.model-picker-dialog .model-picker-list { min-height:0;align-content:start;grid-auto-rows:max-content;overscroll-behavior:contain; }
+.model-picker-dialog .model-picker-option { align-content:start; }
+.model-picker-dialog :is(.dialog-close,.model-filter-row button) { min-height:44px; }
+.model-picker-dialog .dialog-close { min-width:44px; }
+.model-picker-dialog .model-search input { font-size:16px;min-width:0; }
+.model-picker-dialog :is(button,input):focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+@media (max-width:600px) {
+  .model-picker-dialog .model-picker-option { min-height:88px; }
+  .model-picker-dialog .model-filter-row { min-height:48px;height:auto; }
+}

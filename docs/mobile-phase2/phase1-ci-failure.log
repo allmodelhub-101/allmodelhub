@@ -1,0 +1,175 @@
+Phase 1 historical CI, run 38889576324
+https://github.com/allmodelhub-101/allmodelhub/actions/runs/38889576324
+Selected failure/count lines from gh run view --log-failed; not a Phase 2 result.
+
+browser-baseline	UNKNOWN STEP	2026-10-16T10:49:20.5506088Z   ✘    1 [chromium-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (12.3s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:49:35.6747433Z   ✘   40 [chromium-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:49:44.2416061Z   ✘   70 [chromium-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.1s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:49:59.7506077Z   ✘   84 [chromium-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.6s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:50:02.6010022Z   ✘  109 [chromium-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:50:17.9262654Z   ✘  118 [chromium-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.7s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:50:26.3486780Z   ✘  148 [chromium-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:50:41.6106473Z   ✘  162 [chromium-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:50:44.4169403Z   ✘  187 [chromium-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:00.1510893Z   ✘  196 [chromium-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.8s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:08.4576003Z   ✘  226 [chromium-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.1s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:23.8032919Z   ✘  240 [chromium-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.8s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:27.0209755Z   ✘  265 [chromium-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.1s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:43.1933164Z   ✘  274 [chromium-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:51:52.7538874Z   ✘  304 [chromium-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.4s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:01.5739882Z   ✓  343 [chromium-1024x768] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (1.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:08.7737967Z   ✘  318 [chromium-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.7s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:16.0988316Z   ✘  346 [chromium-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (11.9s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:21.1719488Z   ✓  357 [chromium-1180x820] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (1.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:37.3033865Z   ✘  363 [chromium-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:42.2874738Z   ✓  400 [chromium-1366x768] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (1.6s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:52:58.2505156Z   ✘  430 [chromium-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:53:00.9219713Z   ✓  461 [chromium-1920x1080] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (1.8s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:53:16.9533495Z   ✘  468 [chromium-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.1s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:53:32.9478283Z   ✘  476 [webkit-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.7s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:53:51.2569214Z   ✘  513 [webkit-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.3s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:53:54.1490751Z   ✘  538 [webkit-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:54:13.3350447Z   ✘  547 [webkit-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.9s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:54:23.5225930Z   ✘  577 [webkit-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:54:42.8681354Z   ✘  591 [webkit-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:54:45.5513958Z   ✘  616 [webkit-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.6s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:55:05.1406606Z   ✘  625 [webkit-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.8s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:55:15.6810599Z   ✘  655 [webkit-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.6s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:55:35.7580104Z   ✘  669 [webkit-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.6s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:55:38.2786880Z   ✘  694 [webkit-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.5s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:55:57.2280637Z   ✘  703 [webkit-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (13.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:56:09.3228501Z   ✘  733 [webkit-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.7s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:56:29.9170807Z   ✘  748 [webkit-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.7s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:56:32.0581468Z   ✘  772 [webkit-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (11.4s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:56:51.7741897Z   ✘  780 [webkit-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (13.2s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:56:56.7465676Z   ✓  812 [webkit-1024x768] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (1.8s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:57:16.2856972Z   ✘  820 [webkit-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (13.1s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:57:19.9380122Z   ✓  851 [webkit-1180x820] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (2.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:57:39.8021464Z   ✘  858 [webkit-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (13.3s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:57:44.3639137Z   ✓  890 [webkit-1366x768] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (2.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:04.2742766Z   ✘  897 [webkit-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (13.4s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:12.1093429Z   ✓  907 [webkit-1920x1080] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (2.0s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:29.5509998Z   ✘  935 [webkit-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search (12.4s)
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0613044Z   1) [chromium-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0613923Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0630236Z   2) [chromium-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0630745Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0647588Z   3) [chromium-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0648393Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0663964Z   4) [chromium-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0664463Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0678023Z   5) [chromium-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0678841Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0693395Z   6) [chromium-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0693898Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0708522Z   7) [chromium-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0708999Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0721624Z   8) [chromium-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0722401Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0737156Z   9) [chromium-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0737653Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0749694Z   10) [chromium-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0750195Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0763496Z   11) [chromium-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0764100Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0790027Z   12) [chromium-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0790559Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0803894Z   13) [chromium-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0804386Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0816320Z   14) [chromium-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0816935Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0829982Z   15) [chromium-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0830575Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0842980Z   16) [chromium-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0843727Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0858498Z   17) [chromium-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0858990Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0872199Z   18) [chromium-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0872733Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0886026Z   19) [chromium-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0886524Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0899539Z   20) [chromium-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0900042Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0913386Z   21) [webkit-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0913861Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0926031Z   22) [webkit-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0926827Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0942327Z   23) [webkit-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0942799Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0954807Z   24) [webkit-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0955281Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0968210Z   25) [webkit-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0968702Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0980544Z   26) [webkit-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0981032Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0993975Z   27) [webkit-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.0994460Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1006137Z   28) [webkit-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1006618Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1019495Z   29) [webkit-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1019969Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1032422Z   30) [webkit-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1032920Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1046792Z   31) [webkit-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1047266Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1063043Z   32) [webkit-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1063552Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1076750Z   33) [webkit-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1077225Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1089220Z   34) [webkit-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1089889Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1116841Z   35) [webkit-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1117327Z     Error: expect(locator).toBeVisible() failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1128998Z   36) [webkit-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1129655Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1142709Z   37) [webkit-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1143197Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1152800Z   38) [webkit-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1152952Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1159442Z   39) [webkit-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1159594Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1166722Z   40) [webkit-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1166875Z     Error: expect(locator).toHaveAttribute(expected) failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1173158Z   40 failed
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1173595Z     [chromium-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1173994Z     [chromium-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1174393Z     [chromium-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1174760Z     [chromium-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1175256Z     [chromium-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1175622Z     [chromium-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1176006Z     [chromium-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1176373Z     [chromium-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1176768Z     [chromium-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1177138Z     [chromium-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1177529Z     [chromium-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1177902Z     [chromium-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1178293Z     [chromium-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1178657Z     [chromium-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1179069Z     [chromium-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1179553Z     [chromium-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1179930Z     [chromium-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1180312Z     [chromium-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1180684Z     [chromium-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1181064Z     [chromium-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1181453Z     [webkit-320x568] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1181924Z     [webkit-320x568] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1182326Z     [webkit-360x800] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1182689Z     [webkit-360x800] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1183179Z     [webkit-375x812] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1183541Z     [webkit-375x812] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1183916Z     [webkit-390x844] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1184280Z     [webkit-390x844] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1184669Z     [webkit-430x932] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1185030Z     [webkit-430x932] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1185408Z     [webkit-844x390] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1185949Z     [webkit-844x390] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1186342Z     [webkit-600x960] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1186701Z     [webkit-600x960] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1187105Z     [webkit-768x1024] › tests/responsive/interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1187487Z     [webkit-768x1024] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1187858Z     [webkit-1024x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1188224Z     [webkit-1180x820] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1188587Z     [webkit-1366x768] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1188964Z     [webkit-1920x1080] › tests/responsive/interactions.spec.ts:42:5 › safe video fixture model dropdown Escape from search 
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1189037Z   600 skipped
+browser-baseline	UNKNOWN STEP	2026-10-16T10:58:33.1189120Z   296 passed (9.5m)

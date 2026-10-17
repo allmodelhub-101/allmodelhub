@@ -1,0 +1,291 @@
+[WebServer] (node:12984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ⚠ Slow filesystem detected. The benchmark took 328ms. If \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\.next\dev is a network drive, consider moving it to a local folder.
+[WebServer] See more: https://nextjs.org/docs/app/guides/local-development
+
+Running 18 tests using 2 workers
+
+(node:8596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (13.3s)
+  ok  3 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (5.6s)
+(node:23808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (26.2s)
+  ok  4 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (6.7s)
+(node:14296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (9.6s)
+(node:18608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (8.9s)
+  x   6 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (25.6s)
+  ok  8 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (7.4s)
+(node:28004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12712) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (11.9s)
+  ok 11 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (7.7s)
+  x   9 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (21.9s)
+(node:848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 13 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (10.9s)
+  x  12 [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (22.6s)
+  ok 14 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (10.0s)
+(node:1276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (12.6s)
+  ok 17 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage dark (7.9s)
+  x  15 [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (23.2s)
+  x  18 [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (18.5s)
+
+
+  1) [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        3 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page})=>{
+      11 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+    > 12 |  await expect(page.locator('html')).toHaveAttribute('data-workspace-data-ready','history');
+         |                                     ^
+      13 |  await expect(page.locator('.library-card-chat')).toHaveCount(500);
+      14 |  await page.getByRole('textbox',{name:'Search library'}).fill('Product research 499 ');await expect(page.locator('.library-card-chat')).toHaveCount(1);
+      15 |  await page.goto('/responsive-fixture?surface=admin&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        2 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page})=>{
+      11 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+    > 12 |  await expect(page.locator('html')).toHaveAttribute('data-workspace-data-ready','history');
+         |                                     ^
+      13 |  await expect(page.locator('.library-card-chat')).toHaveCount(500);
+      14 |  await page.getByRole('textbox',{name:'Search library'}).fill('Product research 499 ');await expect(page.locator('.library-card-chat')).toHaveCount(1);
+      15 |  await page.goto('/responsive-fixture?surface=admin&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        3 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page})=>{
+      11 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+    > 12 |  await expect(page.locator('html')).toHaveAttribute('data-workspace-data-ready','history');
+         |                                     ^
+      13 |  await expect(page.locator('.library-card-chat')).toHaveCount(500);
+      14 |  await page.getByRole('textbox',{name:'Search library'}).fill('Product research 499 ');await expect(page.locator('.library-card-chat')).toHaveCount(1);
+      15 |  await page.goto('/responsive-fixture?surface=admin&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-390x844-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        4 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page},info)=>{
+      11 |  // Development hydration of thousands of SVG/DOM nodes can exceed the normal
+    > 12 |  // control timeout. Measure readiness separately; this is not a device speed SLA.
+         |                                     ^
+      13 |  test.setTimeout(120_000);
+      14 |  const started=Date.now();
+      15 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        4 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page},info)=>{
+      11 |  // Development hydration of thousands of SVG/DOM nodes can exceed the normal
+    > 12 |  // control timeout. Measure readiness separately; this is not a device speed SLA.
+         |                                     ^
+      13 |  test.setTimeout(120_000);
+      14 |  const started=Date.now();
+      15 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat1\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat1\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat1\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat1\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "history"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 10000ms
+      - waiting for locator('html')
+        3 × locator resolved to <html lang="en" data-theme="light">…</html>
+          - unexpected value "null"
+
+
+      10 | test('hardening stress: 500 library records and admin rows remain searchable',async({page},info)=>{
+      11 |  // Development hydration of thousands of SVG/DOM nodes can exceed the normal
+    > 12 |  // control timeout. Measure readiness separately; this is not a device speed SLA.
+         |                                     ^
+      13 |  test.setTimeout(120_000);
+      14 |  const started=Date.now();
+      15 |  await page.goto('/responsive-fixture?surface=history&state=stress',{waitUntil:'networkidle'});
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-stress.spec.ts:12:37
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat2\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat2\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat2\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-linux-failure-recheck\hardening-stress-hardening-4f82a-dmin-rows-remain-searchable-webkit-1366x768-repeat2\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+    [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+    [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+    [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+    [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+    [webkit-1366x768] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable 
+  12 passed (2.5m)

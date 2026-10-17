@@ -1,0 +1,107 @@
+[
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#load",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#patchConversation",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#removeConversation",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#removeFile",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#toggleFavorite",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/history-client.tsx#useHistoryClient#openFileDetail",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#load",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#choose",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#onFileChange",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#onDrop",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#upload",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/files-client.tsx#useFilesClient#remove",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/workspace-clients.tsx#useNotificationsClient#load",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/workspace-clients.tsx#useNotificationsClient#markRead",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/simple-forms.tsx#useProjectsClient#load",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/simple-forms.tsx#useProjectsClient#activate",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/simple-forms.tsx#useProjectsClient#submit",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/simple-forms.tsx#useProjectsClient#edit",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/simple-forms.tsx#useProjectsClient#remove",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/model-battle.tsx#useModelBattle#submit",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  },
+  {
+    "handler": "src/components/model-battle.tsx#module#runModel",
+    "originalCommit": "690745ad9ef38808bb797b9c62560d3505d6ba50",
+    "baselineMatchesOriginal": true
+  }
+]

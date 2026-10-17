@@ -1,0 +1,38 @@
+{
+  "label": "auth-control",
+  "stats": {
+    "startTime": "2026-10-16T10:43:17.767Z",
+    "duration": 35143.966,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "counts": {
+    "failed": 3,
+    "passed": 1
+  },
+  "failures": [
+    {
+      "title": "auth theme switch remains accessible at the current viewport",
+      "project": "chromium-390x844",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-nav-actions .theme-toggle')\nExpected: visible\nReceived: hidden\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-nav-actions .theme-toggle')\u001b[22m\n\u001b[2m    23 × locator resolved to <button class=\"theme-toggle\" title=\"Switch to dark theme\" aria-label=\"Switch to dark theme\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');\n  5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);\n> 6 |   await expect(theme).toBeVisible();\n    |                       ^\n  7 | });\n  8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{\n  9 |   await page.goto('/');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:6:23"
+      ]
+    },
+    {
+      "title": "auth theme switch remains accessible at the current viewport",
+      "project": "chromium-768x1024",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-nav-actions .theme-toggle')\nExpected: visible\nReceived: hidden\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-nav-actions .theme-toggle')\u001b[22m\n\u001b[2m    23 × locator resolved to <button class=\"theme-toggle\" title=\"Switch to dark theme\" aria-label=\"Switch to dark theme\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');\n  5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);\n> 6 |   await expect(theme).toBeVisible();\n    |                       ^\n  7 | });\n  8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{\n  9 |   await page.goto('/');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:6:23"
+      ]
+    },
+    {
+      "title": "auth theme switch remains accessible at the current viewport",
+      "project": "webkit-390x844",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.auth-nav-actions .theme-toggle')\nExpected: visible\nReceived: hidden\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.auth-nav-actions .theme-toggle')\u001b[22m\n\u001b[2m    23 × locator resolved to <button class=\"theme-toggle\" title=\"Switch to dark theme\" aria-label=\"Switch to dark theme\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n  4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');\n  5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);\n> 6 |   await expect(theme).toBeVisible();\n    |                       ^\n  7 | });\n  8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{\n  9 |   await page.goto('/');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:6:23"
+      ]
+    }
+  ]
+}

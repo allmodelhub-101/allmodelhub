@@ -30,9 +30,9 @@ export default async function VideoStudioFixture({
     : "idle";
 
   return (
-    <VideoStudio
+    <main><VideoStudio
       fixtureState={fixtureState}
       fixtureTheme={theme === "dark" ? "dark" : "light"}
-    />
+    /></main>
   );
 }

@@ -1,0 +1,165 @@
+
+Running 16 tests using 1 worker
+
+(node:2636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light (2.6s)
+  ok  2 [chromium-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light (2.1s)
+  ok  3 [chromium-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark (2.3s)
+  ok  4 [chromium-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark (2.2s)
+(node:18824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [chromium-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light (2.9s)
+  ok  6 [chromium-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light (3.0s)
+  ok  7 [chromium-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark (3.5s)
+  ok  8 [chromium-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark (3.6s)
+(node:9484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [webkit-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light (6.1s)
+  ok 10 [webkit-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light (6.1s)
+  ok 11 [webkit-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark (3.5s)
+  ok 12 [webkit-390x844] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark (3.4s)
+(node:19040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light (9.3s)
+(node:10272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light (7.7s)
+(node:7300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  15 [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark (10.1s)
+(node:6088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  16 [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark (7.6s)
+
+
+  1) [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light
+
+    Error: A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-login-light.png, writing actual.
+
+      1 | import {test,expect} from './safety';
+      2 | if(process.env.PW_PHASE5_PUBLIC_VISUAL==='1')for(const theme of ['light','dark'])for(const [name,path]of [['login','/auth/login'],['legal','/privacy']])test(`approved phase5 public ${name} ${theme}`,async({page})=>{
+    > 3 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(path,{waitUntil:'networkidle'});await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);await expect(page).toHaveScreenshot(`phase5-public-${name}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01});
+        |                                                                                                                                                                                                               ^
+      4 | });
+      5 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\public-visual.spec.ts:3:207
+
+    attachment #1: phase5-public-login-light (image/png) ───────────────────────────────────────────
+    Expected: tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-login-light.png
+    Received: test-results\phase6-public-visual\public-visual-approved-phase5-public-login-light-webkit-1366x768\phase5-public-login-light-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-login-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-public-visual\public-visual-approved-phase5-public-login-light-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-login-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-public-visual\public-visual-approved-phase5-public-login-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light
+
+    Error: A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-legal-light.png, writing actual.
+
+      1 | import {test,expect} from './safety';
+      2 | if(process.env.PW_PHASE5_PUBLIC_VISUAL==='1')for(const theme of ['light','dark'])for(const [name,path]of [['login','/auth/login'],['legal','/privacy']])test(`approved phase5 public ${name} ${theme}`,async({page})=>{
+    > 3 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(path,{waitUntil:'networkidle'});await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);await expect(page).toHaveScreenshot(`phase5-public-${name}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01});
+        |                                                                                                                                                                                                               ^
+      4 | });
+      5 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\public-visual.spec.ts:3:207
+
+    attachment #1: phase5-public-legal-light (image/png) ───────────────────────────────────────────
+    Expected: tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-legal-light.png
+    Received: test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-light-webkit-1366x768\phase5-public-legal-light-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-light-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark
+
+    Error: A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-login-dark.png, writing actual.
+
+      1 | import {test,expect} from './safety';
+      2 | if(process.env.PW_PHASE5_PUBLIC_VISUAL==='1')for(const theme of ['light','dark'])for(const [name,path]of [['login','/auth/login'],['legal','/privacy']])test(`approved phase5 public ${name} ${theme}`,async({page})=>{
+    > 3 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(path,{waitUntil:'networkidle'});await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);await expect(page).toHaveScreenshot(`phase5-public-${name}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01});
+        |                                                                                                                                                                                                               ^
+      4 | });
+      5 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\public-visual.spec.ts:3:207
+
+    attachment #1: phase5-public-login-dark (image/png) ────────────────────────────────────────────
+    Expected: tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-login-dark.png
+    Received: test-results\phase6-public-visual\public-visual-approved-phase5-public-login-dark-webkit-1366x768\phase5-public-login-dark-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-login-dark-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-public-visual\public-visual-approved-phase5-public-login-dark-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-login-dark-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-public-visual\public-visual-approved-phase5-public-login-dark-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark
+
+    Error: A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-legal-dark.png, writing actual.
+
+      1 | import {test,expect} from './safety';
+      2 | if(process.env.PW_PHASE5_PUBLIC_VISUAL==='1')for(const theme of ['light','dark'])for(const [name,path]of [['login','/auth/login'],['legal','/privacy']])test(`approved phase5 public ${name} ${theme}`,async({page})=>{
+    > 3 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(path,{waitUntil:'networkidle'});await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);await expect(page).toHaveScreenshot(`phase5-public-${name}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01});
+        |                                                                                                                                                                                                               ^
+      4 | });
+      5 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\public-visual.spec.ts:3:207
+
+    attachment #1: phase5-public-legal-dark (image/png) ────────────────────────────────────────────
+    Expected: tests\responsive\__screenshots__\win32\webkit-1366x768\phase5-public-legal-dark.png
+    Received: test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-dark-webkit-1366x768\phase5-public-legal-dark-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-dark-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-dark-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-dark-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-public-visual\public-visual-approved-phase5-public-legal-dark-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login light
+    [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal light
+    [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public login dark
+    [webkit-1366x768] › tests\responsive\public-visual.spec.ts:2:157 › approved phase5 public legal dark
+  12 passed (1.5m)

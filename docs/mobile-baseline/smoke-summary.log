@@ -1,0 +1,63 @@
+{
+  "label": "smoke",
+  "stats": {
+    "startTime": "2026-10-16T10:14:42.752Z",
+    "duration": 421693.069,
+    "expected": 46,
+    "skipped": 100,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "counts": {
+    "passed": 46,
+    "skipped": 100,
+    "timedOut": 2,
+    "failed": 4
+  },
+  "failures": [
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-390x844",
+      "errors": [
+        "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+        "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Login', exact: true }).first()\u001b[22m\n\n\n   9 |     await expect(menu).toHaveAttribute('aria-expanded','false');\n  10 |   }\n> 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();\n     |                                                                  ^\n  12 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n  13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  14 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:11:66"
+      ]
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-390x844",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ]
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-768x1024",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ]
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-1366x768",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ]
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "webkit-390x844",
+      "errors": [
+        "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+        "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Login', exact: true }).first()\u001b[22m\n\n\n   9 |     await expect(menu).toHaveAttribute('aria-expanded','false');\n  10 |   }\n> 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();\n     |                                                                  ^\n  12 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n  13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  14 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:11:66"
+      ]
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "webkit-390x844",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('listbox', { name: 'Available video models' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('listbox', { name: 'Available video models' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('listbox', { name: 'Available video models' })\u001b[22m\n\n\n  34 |   const picker=page.getByRole('button',{name:/Choose a video model:/});\n  35 |   await picker.click();\n> 36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n     |                                                                           ^\n  37 |   await page.keyboard.press('Escape');\n  38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n  39 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:36:75"
+      ]
+    }
+  ]
+}

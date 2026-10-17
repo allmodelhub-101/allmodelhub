@@ -1,0 +1,20 @@
+{
+  "viewport": 844,
+  "document": 844,
+  "content": 844,
+  "width": 844,
+  "grid": [
+    {
+      "class": "library-tools",
+      "width": 793.375,
+      "columns": "528.562px 164.812px 80px",
+      "overflow": "visible"
+    },
+    {
+      "class": "library-grid ",
+      "width": 793.375,
+      "columns": "188.594px 188.594px 188.594px 188.594px",
+      "overflow": "visible"
+    }
+  ]
+}

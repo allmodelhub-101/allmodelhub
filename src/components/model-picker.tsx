@@ -1,8 +1,11 @@
 "use client";
 
+import "./model-picker.css";
+
 import { modelAvailabilityMessage } from "@/lib/model-availability-message";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { createPortal } from "react-dom";
 import { ModelBrand } from "@/components/model-brand";
 import type { CatalogModel } from "@/lib/models";
@@ -74,20 +77,8 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
   const inputRef = useRef<HTMLInputElement | null>(null);
   const filters = modality === "image" ? imageFilters : modality === "video" ? videoFilters : textFilters;
 
-  useEffect(() => {
-    if (!open) return;
-    const timer = window.setTimeout(() => inputRef.current?.focus(), 0);
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onOpenChange(false);
-    }
-    document.addEventListener("keydown", onKeyDown);
-    document.body.classList.add("modal-open");
-    return () => {
-      window.clearTimeout(timer);
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.classList.remove("modal-open");
-    };
-  }, [open, onOpenChange]);
+  const dialogRef = useRef<HTMLElement | null>(null);
+  useWorkspaceOverlay(open, dialogRef, () => onOpenChange(false));
 
   const visibleModels = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -108,7 +99,7 @@ export function ModelPicker({ models, value, onChange, open, onOpenChange, modal
   return createPortal(<div className="model-picker-backdrop" role="presentation" onMouseDown={(event) => {
     if (event.target === event.currentTarget) onOpenChange(false);
   }}>
-    <section className="model-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="model-picker-title">
+    <section ref={dialogRef} tabIndex={-1} className="model-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="model-picker-title">
       <header className="model-picker-head">
         <div><span className="eyebrow">Model library</span><h2 id="model-picker-title">{modality === "image" ? "Choose an image model" : modality === "video" ? "Choose a video model" : "Choose the right intelligence"}</h2></div>
         <button className="dialog-close" type="button" onClick={() => onOpenChange(false)} aria-label="Close model picker">Close</button>

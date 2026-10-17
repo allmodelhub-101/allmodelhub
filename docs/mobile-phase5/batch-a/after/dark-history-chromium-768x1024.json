@@ -1,0 +1,191 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "A",
+      "name": "New creation",
+      "height": 43,
+      "fontSize": "12px"
+    },
+    {
+      "tag": "INPUT",
+      "name": "Search library",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "All",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Chat",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Image",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Video",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Audio",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "File",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "SELECT",
+      "name": "Sort library",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Grid view",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "List view",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Recent3 items",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Pinned0 items",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Images1 item",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Videos0 items",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Audio0 items",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Files1 item",
+      "height": 64,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "A",
+      "name": "Product research Research_Research_Research_Research_Research_Research_Research_",
+      "height": 172.53125,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Pin",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "A quiet mountain sunrise Research_Research_Research_Research_Research_Research_R",
+      "height": 128.15625,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Pin",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Details",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use again",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Research_Research_Research_Research_Research_Research_Research_Research_Research",
+      "height": 197.71875,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Pin",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use in Chat",
+      "height": 44,
+      "fontSize": "13px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "library-tools",
+      "width": 729.625,
+      "columns": "607.625px 98px 0px",
+      "overflow": "visible"
+    },
+    {
+      "class": "library-grid ",
+      "width": 729.625,
+      "columns": "356.812px 356.812px",
+      "overflow": "visible"
+    }
+  ]
+}

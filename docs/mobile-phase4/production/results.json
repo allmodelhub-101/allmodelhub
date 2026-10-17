@@ -1,0 +1,650 @@
+[
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 844,
+    "height": 390,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "image",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "video",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "idle",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "completed",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "queued",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "studio": "audio",
+    "state": "error",
+    "status": "PASS",
+    "mode": "production React component; synthetic actions, not authenticated Next E2E"
+  }
+]

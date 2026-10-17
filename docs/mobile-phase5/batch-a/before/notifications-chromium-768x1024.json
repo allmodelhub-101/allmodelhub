@@ -1,0 +1,14 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "grid": [
+    {
+      "class": "notification-tools",
+      "width": 721.9375,
+      "columns": "none",
+      "overflow": "visible"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+/* Wallet presentation only. All validation, values and payment callbacks stay in WalletClient. */
+.surface.surface{min-width:0;width:100%;gap:20px;overflow-wrap:anywhere}
+.surface :global(*){min-width:0}
+.surface :global(:is(button,a,input,summary,[tabindex]):focus-visible){outline:3px solid var(--accent);outline-offset:3px}
+.surface :global(:is(.btn,.wallet-copy-row button,.wallet-remove-proof,.wallet-back-link,.wallet-retry,.wallet-reference)){min-height:44px;font-size:13px;white-space:normal}
+.surface :global(.wallet-amount-chips button){min-height:44px}
+.surface :global(.wallet-step-layout){grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px}
+.surface :global(.wallet-topup-head){flex-wrap:wrap;gap:14px}
+.surface :global(.wallet-topup-head p),.surface :global(.wallet-form-title p){font-size:13px;line-height:1.6}
+.surface :global(.wallet-balance-card small){font-size:12px;line-height:1.5}
+.surface :global(.wallet-steps button){min-height:56px;gap:8px}
+.surface :global(.wallet-steps button i){display:block;font-size:12px;white-space:normal;line-height:1.4}
+.surface :global(.wallet-copy-row strong){font-size:15px;overflow-wrap:anywhere;white-space:normal}
+.surface :global(.wallet-copy-row){gap:12px}
+.surface :global(.wallet-copy-row button){flex:none;min-width:60px}
+.surface :global(.wallet-proof-drop){min-height:100px;grid-template-columns:40px minmax(0,1fr);gap:12px}
+.surface :global(.wallet-proof-drop small){white-space:normal;overflow:visible;overflow-wrap:anywhere;font-size:12px;line-height:1.5}
+.surface :global(.wallet-proof-drop>b){min-height:44px;display:inline-flex;align-items:center;padding:8px 14px;grid-column:2}
+.surface :global(.wallet-file-native:focus-visible + .wallet-proof-drop){outline:3px solid var(--accent);outline-offset:3px}
+.surface :global(.wallet-compact-summary span){min-width:0}
+.surface :global(.wallet-compact-summary b){font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.surface :global(.wallet-transaction-table){width:100%;overflow-x:auto;max-height:none;overscroll-behavior-inline:contain}
+.surface :global(.wallet-transaction-table table){min-width:760px}
+.surface :global(.wallet-transaction-table :is(th,td)){font-size:12px;line-height:1.6;min-width:110px}
+.surface :global(.wallet-transaction-amount){white-space:nowrap;font-variant-numeric:tabular-nums}
+.surface :global(.wallet-bonus-disclosure summary){min-height:44px}
+.surface :global(.wallet-status){font-size:14px;line-height:1.6}
+@media(max-width:1100px){.surface :global(.wallet-step-layout){grid-template-columns:minmax(0,1fr)}.surface :global(.wallet-step-side){padding:18px}.surface :global(.wallet-balance-grid){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.surface :global(.wallet-steps){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:12px}.surface :global(.wallet-steps button){display:flex;flex-direction:column;justify-content:flex-start;min-height:70px;padding:8px 3px}.surface :global(.wallet-steps button:after){display:none}.surface :global(.wallet-steps button i){font-size:11px}.surface :global(.wallet-wizard-panel){padding:8px 12px 16px}.surface :global(.wallet-step-main){padding:16px 12px}.surface :global(.wallet-step-side){padding:14px 12px}.surface :global(.wallet-actions){grid-template-columns:minmax(0,1fr)}.surface :global(input:not([type=file])){font-size:16px}.surface :global(.wallet-amount-field input){font-size:24px}.surface :global(.wallet-copy-row){align-items:flex-start}.surface :global(.wallet-success){padding:24px 14px}.surface :global(.wallet-success h3){font-size:26px}}
+@media(prefers-reduced-motion:reduce){.surface :global(.wallet-wizard-panel),.surface :global(.wallet-success),.surface :global(.wallet-value-summary .total strong){animation:none}}

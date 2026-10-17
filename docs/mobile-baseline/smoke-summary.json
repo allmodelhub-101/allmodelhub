@@ -1,0 +1,2822 @@
+{
+  "source": "test-results/results.json",
+  "label": "smoke",
+  "stats": {
+    "startTime": "2026-10-16T10:14:42.752Z",
+    "duration": 421693.069,
+    "expected": 46,
+    "skipped": 100,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "counts": {
+    "passed": 46,
+    "skipped": 100,
+    "timedOut": 2,
+    "failed": 4
+  },
+  "cases": [
+    {
+      "title": "/acceptable-use loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/login loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/ loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/privacy loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/refunds loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/terms loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/studio-fixture loads, controls, overflow and diagnostics",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/admin/models authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/payments authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/profits authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/settings authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/users authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/audio authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/auth/verified authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: confirmation session requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/battle authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/chat authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/files authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/history authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/images authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/models authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/notifications authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/projects authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/settings authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/support authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/templates authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/usage authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/video authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/wallet authenticated workflow BLOCKED",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/acceptable-use loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/login loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/ loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/privacy loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/refunds loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/terms loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/studio-fixture loads, controls, overflow and diagnostics",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/admin/models authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/payments authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/profits authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/settings authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/users authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/audio authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/auth/verified authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: confirmation session requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/battle authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/chat authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/files authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/history authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/images authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/models authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/notifications authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/projects authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/settings authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/support authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/templates authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/usage authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/video authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/wallet authenticated workflow BLOCKED",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/acceptable-use loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/login loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/ loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/privacy loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/refunds loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/terms loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/studio-fixture loads, controls, overflow and diagnostics",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/admin/models authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/payments authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/profits authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/settings authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/users authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/audio authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/auth/verified authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: confirmation session requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/battle authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/chat authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/files authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/history authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/images authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/models authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/notifications authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/projects authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/settings authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/support authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/templates authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/usage authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/video authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/wallet authenticated workflow BLOCKED",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/acceptable-use loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/login loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/ loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/privacy loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/refunds loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/terms loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/studio-fixture loads, controls, overflow and diagnostics",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/admin/models authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/payments authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/profits authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/settings authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/admin/users authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: admin requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/audio authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/auth/verified authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: confirmation session requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/battle authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/chat authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/files authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/history authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/images authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/models authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/notifications authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/projects authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/settings authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/support authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/templates authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/usage authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/video authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "/wallet authenticated workflow BLOCKED",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "BLOCKED: authenticated requires an authorized dedicated test session and isolated backend; none supplied. No bypass or synthetic session.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\baseline.spec.ts",
+            "line": 35,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-390x844",
+      "status": "timedOut",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+        "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Login', exact: true }).first()\u001b[22m\n\n\n   9 |     await expect(menu).toHaveAttribute('aria-expanded','false');\n  10 |   }\n> 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();\n     |                                                                  ^\n  12 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n  13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  14 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:11:66"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-390x844",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-768x1024",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "chromium-1366x768",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('button', { name: /Choose a video model:/ })\nExpected: \u001b[32m\"\u001b[7mfals\u001b[27me\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mtru\u001b[27me\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Choose a video model:/ })\u001b[22m\n\u001b[2m    23 × locator resolved to <button type=\"button\" aria-expanded=\"true\" aria-haspopup=\"listbox\" aria-controls=\"video-model-options\" aria-label=\"Choose a video model: MiniMax H3 Lite\" class=\"video-studio-v2-module__bOxVpW__modelTrigger\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"true\"\u001b[22m\n\n\n  36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n  37 |   await page.keyboard.press('Escape');\n> 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n     |                        ^\n  39 | });\n  40 | test('safe video fixture form and viewer modal',async({page})=>{\n  41 |   await page.goto('/studio-fixture');\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:38:24"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "chromium-1366x768",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "marketing navigation opens, closes with Escape and navigates",
+      "project": "webkit-390x844",
+      "status": "timedOut",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+        "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Login', exact: true }).first()\u001b[22m\n\n\n   9 |     await expect(menu).toHaveAttribute('aria-expanded','false');\n  10 |   }\n> 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();\n     |                                                                  ^\n  12 |   await expect(page).toHaveURL(/\\/auth\\/login/);\n  13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();\n  14 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:11:66"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "login form focus, typing, password visibility and reduced viewport",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "safe video fixture model dropdown Escape from search",
+      "project": "webkit-390x844",
+      "status": "failed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('listbox', { name: 'Available video models' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('listbox', { name: 'Available video models' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('listbox', { name: 'Available video models' })\u001b[22m\n\n\n  34 |   const picker=page.getByRole('button',{name:/Choose a video model:/});\n  35 |   await picker.click();\n> 36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();\n     |                                                                           ^\n  37 |   await page.keyboard.press('Escape');\n  38 |   await expect(picker).toHaveAttribute('aria-expanded','false');\n  39 | });\n    at C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\interactions.spec.ts:36:75"
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "contentType": "image/png",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "contentType": "text/markdown",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\error-context.md"
+        },
+        {
+          "name": "trace",
+          "contentType": "application/zip",
+          "path": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\test-results\\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\\trace.zip"
+        }
+      ]
+    },
+    {
+      "title": "safe video fixture form and viewer modal",
+      "project": "webkit-390x844",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline login",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline legal",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline video-fixture",
+      "project": "chromium-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline login",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline legal",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline video-fixture",
+      "project": "chromium-768x1024",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline login",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline legal",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline video-fixture",
+      "project": "chromium-1366x768",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline login",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline legal",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    },
+    {
+      "title": "visual baseline video-fixture",
+      "project": "webkit-390x844",
+      "status": "skipped",
+      "expectedStatus": "skipped",
+      "annotations": [
+        {
+          "type": "skip",
+          "description": "Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.",
+          "location": {
+            "file": "C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub\\tests\\responsive\\visual.spec.ts",
+            "line": 5,
+            "column": 10
+          }
+        }
+      ],
+      "errors": [],
+      "attachments": []
+    }
+  ]
+}

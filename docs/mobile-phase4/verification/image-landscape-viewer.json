@@ -1,0 +1,12 @@
+{
+  "runLabel": "phase4-viewer-final",
+  "stats": {
+    "startTime": "2026-10-16T16:49:19.675Z",
+    "duration": 26231.627,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": []
+}

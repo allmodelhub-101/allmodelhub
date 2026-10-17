@@ -1,0 +1,14 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "grid": [
+    {
+      "class": "project-card-grid ",
+      "width": 692,
+      "columns": "340px 340px",
+      "overflow": "visible"
+    }
+  ]
+}

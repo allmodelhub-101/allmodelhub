@@ -1,0 +1,19 @@
+
+Running 10 tests using 1 worker
+
+(node:10992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-390x844] › tests\responsive\hardening-stress.spec.ts:2:5 › hardening stress: long Chat keeps native scroll and composer access (12.1s)
+  ok  2 [chromium-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (19.2s)
+  ok  3 [chromium-390x844] › tests\responsive\hardening.spec.ts:3:5 › hardening: saved email hydration, route modes and local validation (7.4s)
+  ok  4 [chromium-390x844] › tests\responsive\hardening.spec.ts:35:5 › hardening: premium admin motion respects the browser preference (10.2s)
+  ok  5 [chromium-390x844] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion (7.6s)
+(node:23900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:2:5 › hardening stress: long Chat keeps native scroll and composer access (16.5s)
+  ok  7 [webkit-390x844] › tests\responsive\hardening-stress.spec.ts:10:5 › hardening stress: 500 library records and admin rows remain searchable (27.5s)
+  ok  8 [webkit-390x844] › tests\responsive\hardening.spec.ts:3:5 › hardening: saved email hydration, route modes and local validation (7.5s)
+  ok  9 [webkit-390x844] › tests\responsive\hardening.spec.ts:35:5 › hardening: premium admin motion respects the browser preference (3.5s)
+  ok 10 [webkit-390x844] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion (7.4s)
+
+  10 passed (2.3m)

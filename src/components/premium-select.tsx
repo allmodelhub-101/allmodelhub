@@ -33,6 +33,7 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
     if (option.disabled) return;
     onChange(option.value);
     setOpen(false);
+    rootRef.current?.querySelector<HTMLButtonElement>(".premium-select-trigger")?.focus();
   }
 
   function move(step: number) {
@@ -42,8 +43,9 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
     if (next) setActiveIndex(next.index);
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") { if (!open) return; event.preventDefault(); event.stopPropagation(); setOpen(false); rootRef.current?.querySelector<HTMLButtonElement>(".premium-select-trigger")?.focus(); return; }
+    if (event.key === "Home" || event.key === "End") { event.preventDefault(); setOpen(true); const item = event.key === "Home" ? available[0] : available.at(-1); if (item) setActiveIndex(item.index); return; }
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
       if (!open) setOpen(true);
@@ -58,12 +60,12 @@ export function PremiumSelect({ value, onChange, options, className = "", disabl
     }
   }
 
-  return <div ref={rootRef} className={`premium-select ${className}`}>
-    <button type="button" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={() => { if (!open) setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen((current) => !current); }} onKeyDown={handleKeyDown} {...props}>
+  return <div ref={rootRef} className={`premium-select ${className}`} onKeyDown={handleKeyDown}>
+    <button type="button" role="combobox" id={id} className="premium-select-trigger" aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={(event) => { event.currentTarget.focus(); if (!open) setActiveIndex(Math.max(0, options.findIndex((option) => option.value === value))); setOpen((current) => !current); }} aria-controls={open ? `${id}-options` : undefined} aria-activedescendant={open ? `${id}-option-${activeIndex}` : undefined} {...props}>
       <span className="premium-select-value">{selected?.label || "Select an option"}</span><span className="premium-select-chevron" aria-hidden="true">⌄</span>
     </button>
-    {open && <div className="premium-select-menu" role="listbox" aria-labelledby={id} tabIndex={-1}>
-      {options.map((option, index) => <button type="button" role="option" aria-selected={option.value === value} className={`premium-select-option ${option.value === value ? "selected" : ""} ${index === activeIndex ? "active" : ""}`} key={option.value} disabled={option.disabled} onMouseEnter={() => setActiveIndex(index)} onClick={() => choose(option)}>{option.label}{option.value === value && <span aria-hidden="true">✓</span>}</button>)}
+    {open && <div id={`${id}-options`} className="premium-select-menu" role="listbox" aria-labelledby={id} tabIndex={-1}>
+      {options.map((option, index) => <button id={`${id}-option-${index}`} tabIndex={-1} type="button" role="option" aria-selected={option.value === value} className={`premium-select-option ${option.value === value ? "selected" : ""} ${index === activeIndex ? "active" : ""}`} key={option.value} disabled={option.disabled} onMouseEnter={() => setActiveIndex(index)} onClick={() => choose(option)}>{option.label}{option.value === value && <span aria-hidden="true">✓</span>}</button>)}
     </div>}
   </div>;
 }

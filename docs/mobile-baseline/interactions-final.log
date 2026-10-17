@@ -1,0 +1,199 @@
+
+Running 16 tests using 2 workers
+
+(node:9420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-768x1024] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (9.9s)
+  ok  2 [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (9.9s)
+  ok  4 [chromium-390x844] › tests\responsive\interactions.spec.ts:19:5 › login form focus, typing, password visibility and reduced viewport (4.7s)
+  ok  3 [chromium-768x1024] › tests\responsive\interactions.spec.ts:19:5 › login form focus, typing, password visibility and reduced viewport (4.9s)
+  x   5 [chromium-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search (14.4s)
+  x   6 [chromium-768x1024] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search (15.5s)
+(node:10576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium-390x844] › tests\responsive\interactions.spec.ts:44:5 › safe video fixture form and viewer modal (4.0s)
+(node:12756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [chromium-768x1024] › tests\responsive\interactions.spec.ts:44:5 › safe video fixture form and viewer modal (4.8s)
+(node:27924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [chromium-1366x768] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (6.1s)
+  ok 11 [chromium-1366x768] › tests\responsive\interactions.spec.ts:19:5 › login form focus, typing, password visibility and reduced viewport (3.5s)
+  ok 10 [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (11.5s)
+  ok 13 [webkit-390x844] › tests\responsive\interactions.spec.ts:19:5 › login form focus, typing, password visibility and reduced viewport (2.7s)
+  x  12 [chromium-1366x768] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search (14.3s)
+(node:14748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [chromium-1366x768] › tests\responsive\interactions.spec.ts:44:5 › safe video fixture form and viewer modal (4.1s)
+  x  14 [webkit-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search (13.4s)
+(node:6820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit-390x844] › tests\responsive\interactions.spec.ts:44:5 › safe video fixture form and viewer modal (3.6s)
+
+
+  1) [chromium-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      40 |   // Browser emulation cannot reproduce a real iOS/Android software keyboard.
+      41 | });
+    > 42 | test('safe video fixture model dropdown Escape from search',async({page})=>{
+         |                        ^
+      43 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});
+      44 |   const picker=page.getByRole('button',{name:/Choose a video model:/});
+      45 |   await picker.click();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:42:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium-768x1024] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      40 |   // Browser emulation cannot reproduce a real iOS/Android software keyboard.
+      41 | });
+    > 42 | test('safe video fixture model dropdown Escape from search',async({page})=>{
+         |                        ^
+      43 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});
+      44 |   const picker=page.getByRole('button',{name:/Choose a video model:/});
+      45 |   await picker.click();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:42:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium-1366x768] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      40 |   // Browser emulation cannot reproduce a real iOS/Android software keyboard.
+      41 | });
+    > 42 | test('safe video fixture model dropdown Escape from search',async({page})=>{
+         |                        ^
+      43 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});
+      44 |   const picker=page.getByRole('button',{name:/Choose a video model:/});
+      45 |   await picker.click();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:42:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      40 |   // Browser emulation cannot reproduce a real iOS/Android software keyboard.
+      41 | });
+    > 42 | test('safe video fixture model dropdown Escape from search',async({page})=>{
+         |                        ^
+      43 |   await page.goto('/studio-fixture',{waitUntil:'networkidle'});
+      44 |   const picker=page.getByRole('button',{name:/Choose a video model:/});
+      45 |   await picker.click();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:42:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-final\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+    [chromium-768x1024] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+    [chromium-1366x768] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+    [webkit-390x844] › tests\responsive\interactions.spec.ts:36:5 › safe video fixture model dropdown Escape from search
+  12 passed (1.3m)

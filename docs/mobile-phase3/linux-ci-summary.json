@@ -1,0 +1,187 @@
+{
+  "run": "https://github.com/allmodelhub-101/allmodelhub/actions/runs/38913706025",
+  "commit": "37a7e2a94aaadd1bc8999ae717a95c5cb7ce7b18",
+  "stats": {
+    "startTime": "2026-10-16T14:13:10.107Z",
+    "duration": 867024.366,
+    "expected": 952,
+    "skipped": 700,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "projects": {
+    "chromium-320x568": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-360x800": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-375x812": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-390x844": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-430x932": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-844x390": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-600x960": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-768x1024": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-900x900": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-901x900": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-1024x768": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-1180x820": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-1366x768": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "chromium-1920x1080": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-320x568": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-360x800": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-375x812": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-390x844": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-430x932": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-844x390": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-600x960": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-768x1024": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-900x900": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-901x900": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-1024x768": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-1180x820": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-1366x768": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    },
+    "webkit-1920x1080": {
+      "passed": 34,
+      "skipped": 25,
+      "failed": 0,
+      "chatPassed": 10
+    }
+  },
+  "protectedRoutesBlocked": 22,
+  "productionReactScenariosPassed": 30,
+  "billing": 156,
+  "security": 4,
+  "ui": 39
+}
