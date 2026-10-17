@@ -701,7 +701,7 @@ export function VideoStudio({
     if(kind==="image")setMode("image");
   };
   return (
-    <main data-studio="video" className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
+    <section aria-label="Video Studio" data-studio="video" className={`${styles.page} ${workspaceTab === "explore" ? styles.exploring : ""}`}>
       <header className={styles.studioToolbar}>
         <div className={styles.studioToolbarTitle}>
           <span className={styles.studioMark}><Sparkle weight="fill" /></span>
@@ -1260,6 +1260,6 @@ export function VideoStudio({
           </section>
         </div>
       ,document.body)}
-    </main>
+    </section>
   );
 }
