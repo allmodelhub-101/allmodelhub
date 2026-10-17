@@ -4,6 +4,8 @@ Continues Phase 5 `5f5df2d092515cebe198fc4f30a3ca6589023d92` on `feat/mobile-fir
 
 ## Implemented changes
 
+- Final Linux hardening found that homepage proof labels could retain pale inherited text in light mode. The existing cinematic root declarations now explicitly own the text theme token; a full-page render and direct color/contrast regression check cover all three labels and hero/FAQ headings. The early gate also verifies that 500-record search waits for actual fixture hydration. See verification records for failed intermediate hypotheses and measured development startup costs.
+
 - LoginForm: hydration-safe session email snapshot and render-time route-prop synchronization replace cascading effects. Explicit email/password labels keep help text out of accessible names. Login, signup, recovery, password policy, redirects and API payload handlers remain byte-equivalent after LF normalization, guarded by seven hashes from the Phase 5 source.
 - Model availability indicators now use a permitted image role with their existing available/unavailable names. Image and Video Studio workspaces use named sections rather than second nested main landmarks; the shared shell owns the main landmark. The standalone Video development fixture supplies its own single main. Every audited scene now asserts one main.
 - Rendered contrast failures are repaired in shared shell, workspace projects, account/admin, Chat avatars and Audio tabs. Owning styles retain theme tokens and component-local overflow.

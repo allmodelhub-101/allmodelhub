@@ -1,5 +1,7 @@
 # Phase 6 continuation and release decision
 
+The subsequent early Linux gate on 3749996 passed both stress cases but exposed real pale homepage proof text in the full-page render. Same-document scanning did not solve that defect. The existing cinematic homepage root now declares the original text theme token explicitly, and direct computed-color plus default axe assertions guard it. Read the latest verification entry; do not treat either earlier run as automated acceptance.
+
 Final CI continuation: run 39033532502 on 1df11bf is diagnostic, not accepted: 2,409 passes/three failures/700 skips. The subsequent readiness fix awaits the history/admin hydration markers before stress interaction and runs the same strict axe subset in the fully rendered single document. See verification/README.md and linux-1df-diagnostics/; the next exact-head full CI must pass before automated acceptance.
 
 Independent responsive hardening is implemented on the existing feature branch and draft PR #149. Do not merge or deploy. Read README.md, route-acceptance.md, verification/README.md, visual-reference-migration.md and manual-acceptance.md first. The source inventory remains 32 routes/43 handlers/20 stylesheets; fixture routes and admin redirects are accounted separately.

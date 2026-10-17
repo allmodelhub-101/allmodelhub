@@ -464,6 +464,7 @@ html[data-theme="light"] .app-sidebar:where(:not(.premium-workstation-shell,.pre
 
 /* Cinematic marketing homepage */
 .cin-site {
+  color: var(--text);
   --cin-blue: #75e8ff;
   --cin-violet: #8f86ff;
   --cin-green: #65efb0;
@@ -1035,6 +1036,7 @@ html[data-theme="light"] .image-workspace{background:radial-gradient(circle at 7
 
 /* Cinematic marketing homepage */
 .cin-site {
+  color: var(--text);
   --cin-blue: #75e8ff;
   --cin-violet: #8f86ff;
   --cin-green: #65efb0;
