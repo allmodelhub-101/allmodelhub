@@ -1150,8 +1150,8 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 643402,
-      "lines": 2387,
+      "bytes": 643403,
+      "lines": 2388,
       "mediaQueries": 835,
       "important": 131,
       "viewportUnits": 69
