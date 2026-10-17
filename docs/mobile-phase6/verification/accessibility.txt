@@ -1,0 +1,537 @@
+
+Running 120 tests using 1 worker
+
+(node:18380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login light (2.8s)
+  ok   2 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal light (3.3s)
+  ok   3 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light (4.5s)
+  ok   4 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history light (4.2s)
+  ok   5 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects light (4.0s)
+  ok   6 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models light (4.9s)
+  ok   7 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files light (4.6s)
+  ok   8 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light (5.6s)
+  ok   9 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light (4.7s)
+  ok  10 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage light (5.8s)
+  ok  11 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light (5.8s)
+  ok  12 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (6.0s)
+  ok  13 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (6.4s)
+  ok  14 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (6.9s)
+  ok  15 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light (6.4s)
+  ok  16 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login dark (5.2s)
+  ok  17 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal dark (5.2s)
+  ok  18 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat dark (6.1s)
+  ok  19 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history dark (6.2s)
+  ok  20 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects dark (5.2s)
+  ok  21 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models dark (9.9s)
+  ok  22 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files dark (8.5s)
+  ok  23 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings dark (9.7s)
+  ok  24 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support dark (7.0s)
+  ok  25 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage dark (5.6s)
+  ok  26 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet dark (5.2s)
+  ok  27 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin dark (5.0s)
+  ok  28 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (5.4s)
+  ok  29 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (7.4s)
+  ok  30 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio dark (8.4s)
+(node:9292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  31 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login light (9.9s)
+  ok  32 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal light (8.3s)
+  ok  33 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light (10.8s)
+  ok  34 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history light (23.1s)
+  ok  35 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects light (19.0s)
+  ok  36 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models light (15.6s)
+  ok  37 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files light (12.6s)
+  ok  38 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light (19.2s)
+  ok  39 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light (16.5s)
+  ok  40 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage light (19.5s)
+  ok  41 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light (13.6s)
+  ok  42 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (9.5s)
+  ok  43 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (7.4s)
+  ok  44 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (9.5s)
+  x   45 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light (10.3s)
+(node:9944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  46 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login dark (8.5s)
+  ok  47 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal dark (7.7s)
+  ok  48 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat dark (8.1s)
+  ok  49 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history dark (7.9s)
+  ok  50 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects dark (9.9s)
+  ok  51 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models dark (9.3s)
+  ok  52 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files dark (10.8s)
+  ok  53 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings dark (9.8s)
+  ok  54 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support dark (8.8s)
+  ok  55 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage dark (10.7s)
+  ok  56 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet dark (6.8s)
+  ok  57 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin dark (5.4s)
+  ok  58 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (5.8s)
+  ok  59 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (7.2s)
+  ok  60 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio dark (6.0s)
+(node:27576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  61 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login light (4.8s)
+  ok  62 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal light (5.4s)
+  x   63 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light (8.6s)
+(node:4824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  64 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history light (7.1s)
+  ok  65 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects light (6.3s)
+  ok  66 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models light (8.3s)
+  ok  67 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files light (7.1s)
+  x   68 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light (7.3s)
+(node:16456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  69 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light (6.1s)
+  ok  70 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage light (7.2s)
+  x   71 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light (7.4s)
+(node:22936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  72 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (6.4s)
+  ok  73 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (5.8s)
+  ok  74 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (6.3s)
+  ok  75 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light (5.5s)
+  ok  76 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login dark (4.6s)
+  ok  77 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal dark (6.8s)
+  ok  78 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat dark (6.7s)
+  ok  79 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history dark (5.7s)
+  ok  80 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects dark (7.1s)
+  ok  81 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models dark (32.3s)
+  ok  82 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files dark (7.9s)
+  ok  83 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings dark (4.6s)
+  ok  84 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support dark (5.5s)
+  ok  85 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage dark (7.4s)
+  ok  86 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet dark (5.7s)
+  ok  87 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin dark (5.0s)
+  ok  88 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (5.3s)
+  ok  89 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (5.6s)
+  ok  90 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio dark (5.0s)
+(node:25912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  91 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login light (6.7s)
+  ok  92 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal light (6.7s)
+  x   93 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light (9.4s)
+(node:21620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  94 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history light (5.7s)
+  ok  95 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects light (4.7s)
+  ok  96 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models light (5.2s)
+  ok  97 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files light (4.3s)
+  x   98 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light (5.5s)
+(node:2772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   99 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light (7.0s)
+(node:23172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 100 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage light (5.5s)
+  ok 101 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light (4.6s)
+  ok 102 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (4.0s)
+  ok 103 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (4.8s)
+  ok 104 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (5.6s)
+  ok 105 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light (7.5s)
+  ok 106 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG login dark (9.3s)
+  ok 107 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG legal dark (10.4s)
+  ok 108 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat dark (19.0s)
+  ok 109 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG history dark (12.8s)
+  ok 110 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG projects dark (12.2s)
+  ok 111 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG models dark (11.8s)
+  ok 112 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG files dark (13.4s)
+  ok 113 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings dark (12.0s)
+  ok 114 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support dark (13.3s)
+  ok 115 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG usage dark (7.4s)
+  ok 116 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet dark (9.2s)
+  ok 117 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin dark (8.0s)
+  ok 118 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (12.4s)
+  ok 119 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (10.7s)
+  ok 120 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio dark (6.1s)
+
+
+  1) [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 3.54 (foreground color: #7f8997, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           "#audio-tab-music > span > small",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 3.54 (foreground color: #7f8997, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           "#audio-tab-sfx > span > small",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+       9 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+    > 10 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+         |                                                                                                                                                                                       ^
+      11 | });
+      12 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-audio-light-chromium-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-audio-light-chromium-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-audio-light-chromium-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-audio-light-chromium-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 35
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f0f5f9, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".user:nth-child(1) > .chat-message-box > .chat-content",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".assistant:nth-child(2) > .chat-message-box > .chat-content > p",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f0f5f9, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".user:nth-child(3) > .chat-message-box > .chat-content",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".assistant:nth-child(4) > .chat-message-box > .chat-content > p",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+       9 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+    > 10 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+         |                                                                                                                                                                                       ^
+      11 | });
+      12 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-390x844\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 23.3pt (31px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "h1",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+       9 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+    > 10 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+         |                                                                                                                                                                                       ^
+      11 | });
+      12 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-390x844\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 21.0pt (28px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "h1",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+       9 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+    > 10 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+         |                                                                                                                                                                                       ^
+      11 | });
+      12 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-wallet-light-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-wallet-light-webkit-390x844\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-wallet-light-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-wallet-light-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 35
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f0f5f9, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".user:nth-child(1) > .chat-message-box > .chat-content",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".assistant:nth-child(2) > .chat-message-box > .chat-content > p",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f0f5f9, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".user:nth-child(3) > .chat-message-box > .chat-content",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+    +         "target": Array [
+    +           ".assistant:nth-child(4) > .chat-message-box > .chat-content > p",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  await page.evaluate(()=>document.fonts.ready);
+       9 |  await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>a instanceof CSSTransition).map(a=>a.finished.catch(()=>{})))});
+    > 10 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+         |                                                                                                ^
+      11 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+      12 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+      13 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-chat-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f8fbff, font size: 34.5pt (46px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "h1",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  await page.evaluate(()=>document.fonts.ready);
+       9 |  await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>a instanceof CSSTransition).map(a=>a.finished.catch(()=>{})))});
+    > 10 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+         |                                                                                                ^
+      11 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+      12 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+      13 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-settings-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light 
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #f8fbff, font size: 34.5pt (46px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "h1",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+       8 |  await page.evaluate(()=>document.fonts.ready);
+       9 |  await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>a instanceof CSSTransition).map(a=>a.finished.catch(()=>{})))});
+    > 10 |  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+         |                                                                                                ^
+      11 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+      12 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+      13 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:10:183
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-support-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-support-light-webkit-1366x768\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-support-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-accessibility\hardening-accessibility-hardening-WCAG-support-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light 
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light 
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light 
+  113 passed (18.0m)

@@ -1,3 +1,7 @@
+# Phase 6 continuation
+
+Phase 6 now owns final hardening; see mobile-phase6/README.md, route-acceptance.md and manual-acceptance.md. Preserve prior milestones and immutable backend/auth contracts. Release requires isolated E2E, physical devices/AT and exact-head CI; no merge or production promotion.
+
 # Models Suite responsive transformation — implementation plan
 
 ## Phase 5 progress — Batch A

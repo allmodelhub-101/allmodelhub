@@ -215,3 +215,5 @@
 .assetOverlay :is(a,button,[tabindex]):focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
 .assetOverlay :global(.asset-metadata dt) { font-size:11px; line-height:1.5; }
 .assetOverlay :global(.asset-metadata dd),.assetOverlay :global(.asset-detail-panel>footer a) { font-size:13px; line-height:1.5; }
+
+:global(html[data-theme="light"]) .projects :global(.danger){color:#b42340}

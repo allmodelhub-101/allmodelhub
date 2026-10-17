@@ -1,3 +1,7 @@
+# Phase 6 continuation
+
+Phase 6 reproduces contrast/ARIA defects, offscreen Video rail work, live motion-preference handling and inherited LoginForm lint debt. Scoped fixes, exact duplicate admin CSS retirement, visual-reference migration and measured operation counts are in mobile-phase6/. Historical findings below remain provenance, not current defects.
+
 # Models Suite — Phase 1 responsive architecture audit
 
 ## Phase 5 progress — workspace/discovery

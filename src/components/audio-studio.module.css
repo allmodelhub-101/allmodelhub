@@ -97,3 +97,5 @@
  .page[data-studio=audio] .modeTabs small { display:none; }
 }
 :global(html:not([data-theme="light"])) .page .modeTabs button.active,:global(html:not([data-theme="light"])) .page .modeTabs button.active:hover { color:#fff;background:linear-gradient(115deg,#375a9c,#6557aa); }
+
+:global(html[data-theme="light"]) .page[data-studio=audio] .modeTabs button:not(.active) small{color:#5f6b7d;opacity:1}

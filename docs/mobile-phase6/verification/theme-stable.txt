@@ -1,0 +1,6 @@
+
+Running 8 tests using 1 worker
+
+(node:28052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light (26.2s)

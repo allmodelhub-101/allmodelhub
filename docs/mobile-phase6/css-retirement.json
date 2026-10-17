@@ -1,0 +1,14 @@
+[
+  {
+    "bytes": 6904,
+    "sha256": "962cc0a6bbb413b6469b104c99d9bc3424c093e513c065dbc0266393046d5086",
+    "owningFile": "src/app/admin/admin-premium.css",
+    "ownerLine": 1
+  },
+  {
+    "bytes": 897,
+    "sha256": "b21b37b77ca5e47acea25afe2e9dd6ca490cca239582041f2771626e3b849cc1",
+    "owningFile": "src/app/admin/admin-premium.css",
+    "ownerLine": 2
+  }
+]

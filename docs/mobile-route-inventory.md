@@ -94,13 +94,13 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/app/admin/admin-premium.css | 9376 | 11 | 6 | 0 | 0 |
 | src/app/auth/login/auth-premium.css | 23999 | 427 | 6 | 0 | 2 |
 | src/app/files/files.css | 16104 | 10 | 6 | 2 | 0 |
-| src/app/globals.css | 643403 | 2388 | 835 | 131 | 69 |
+| src/app/globals.css | 635600 | 2386 | 832 | 131 | 69 |
 | src/app/wallet/wallet-premium.css | 88 | 2 | 0 | 0 | 0 |
-| src/components/account-workspace.module.css | 5977 | 57 | 2 | 0 | 0 |
-| src/components/admin-workspace.module.css | 2862 | 26 | 2 | 0 | 0 |
+| src/components/account-workspace.module.css | 6018 | 59 | 3 | 0 | 0 |
+| src/components/admin-workspace.module.css | 3002 | 28 | 3 | 0 | 0 |
 | src/components/app-sidebar.css | 4316 | 37 | 3 | 1 | 1 |
-| src/components/audio-studio.module.css | 35369 | 100 | 9 | 4 | 0 |
-| src/components/chat-workspace.css | 17117 | 146 | 4 | 0 | 5 |
+| src/components/audio-studio.module.css | 35490 | 102 | 9 | 4 | 0 |
+| src/components/chat-workspace.css | 17209 | 148 | 4 | 0 | 5 |
 | src/components/image-studio.css | 34853 | 241 | 6 | 7 | 5 |
 | src/components/legal-page.module.css | 23055 | 43 | 10 | 5 | 1 |
 | src/components/marketing-nav.module.css | 1906 | 28 | 3 | 0 | 1 |
@@ -109,8 +109,8 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/components/video-studio-v2.module.css | 50844 | 223 | 4 | 12 | 12 |
 | src/components/video-studio.module.css | 23171 | 97 | 10 | 70 | 1 |
 | src/components/wallet-workspace.module.css | 3794 | 31 | 3 | 0 | 0 |
-| src/components/workspace-data.module.css | 18041 | 218 | 7 | 0 | 2 |
-| src/components/workspace-shell.css | 5783 | 63 | 4 | 0 | 4 |
+| src/components/workspace-data.module.css | 18118 | 220 | 7 | 0 | 2 |
+| src/components/workspace-shell.css | 6071 | 67 | 4 | 0 | 4 |
 
 ## Auxiliary routes and states
 

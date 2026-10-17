@@ -40,6 +40,7 @@ ${Array.from({length:5},(_,i)=>"| "+Array.from({length:9},(_,j)=>`Detailed sampl
 ${Array.from({length:12},(_,i)=>`### Finding ${i+1}\n\n${"A substantial answer paragraph. ".repeat(5)}`).join("\n\n")}`;
 function initialMessages(state:string):ChatMessage[]{
  if(state==="welcome")return [];
+ if(state==="stress")return Array.from({length:80},(_,i)=>[{id:`stress-user-${i}`,role:"user" as const,content:`Research question ${i+1}`},{id:`stress-answer-${i}`,role:"assistant" as const,content:i%8===0?markdown:"A concise synthetic answer with **clear next steps**.",meta:"Sample model · 0.1250 credits"}]).flat();
  if(state==="long"||state==="streaming")return Array.from({length:10},(_,i)=>[{id:`user-${i}`,role:"user" as const,content:`Research question ${i+1}`},{id:`answer-${i}`,role:"assistant" as const,content:i===9?markdown:"A clear, concise sample response.",meta:"Sample model · 0.1250 credits"}]).flat();
  return [{id:"user",role:"user",content:"Help me understand this research."},{id:state==="loading"?"pending-sample":"answer",role:"assistant",content:state==="loading"||state==="error"?"":state==="interrupted"?"This response ended before it was complete.":"A helpful answer with **clear next steps**.",interrupted:state==="interrupted"||state==="error",meta:state==="pending"?"Sample model · Billing pending":state==="interrupted"?"Response interrupted · Retry available":undefined}];
 }

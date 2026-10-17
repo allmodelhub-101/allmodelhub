@@ -15,7 +15,7 @@
 .surface :global(.admin-page-head p){font-size:14px;line-height:1.6}
 .surface :global(.admin-card-head small),.surface :global(.admin-activity-row small){font-size:11px;line-height:1.5}
 .surface :global(.admin-activity-row b),.surface :global(.admin-health-card>button span){font-size:13px}
-.surface :global(.admin-live i){animation:none}
+@media(prefers-reduced-motion:reduce){.surface :global(.admin-live i){animation:none}}
 .surface :global(.table-wrap){max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
 .surface :global(table){min-width:850px}
 .surface :global(:is(th,td)){font-size:12px;line-height:1.6;max-width:340px;overflow-wrap:anywhere}
@@ -23,3 +23,5 @@
 .surface :global(.admin-bars){overflow:hidden}
 @media(max-width:1100px){.surface :global(.admin-metric-grid){grid-template-columns:repeat(2,minmax(0,1fr))}.surface :global(.admin-dashboard-grid),.surface :global(.admin-dashboard-grid.lower){grid-template-columns:minmax(0,1fr)}.surface :global(.form-grid){grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.surface :global(.admin-tabs){display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.surface :global(.admin-tabs button){text-align:left}.surface :global(.admin-metric-grid),.surface :global(.form-grid){grid-template-columns:minmax(0,1fr)}.surface :global(section>div[style]){flex-wrap:wrap}.surface :global(.admin-profit-breakdown){grid-template-columns:minmax(0,1fr)}.surface :global(.admin-activity-row){flex-wrap:wrap}.surface :global(.admin-metric){min-height:140px}.surface :global(.admin-metric>strong){font-size:27px}}
+
+.surface :global(.admin-tabs button.active){color:color-mix(in srgb,var(--accent) 75%,var(--text))}

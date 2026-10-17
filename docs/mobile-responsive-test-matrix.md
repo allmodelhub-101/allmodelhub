@@ -1,3 +1,7 @@
+# Phase 6 continuation
+
+Phase 6 retains the full 14-size/two-engine matrix and adds auth-presentation, motion lifecycle, stress and selected WCAG A/AA checks. See mobile-phase6/verification/README.md and route-acceptance.md for boundaries and actual final logs/PR checks. Authenticated E2E and hardware acceptance remain separate BLOCKED/UNVERIFIED release gates.
+
 # Responsive baseline test matrix
 
 ## Phase 5 progress — Batch A

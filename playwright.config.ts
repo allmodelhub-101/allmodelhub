@@ -16,6 +16,7 @@ export default defineConfig({
   use: { baseURL, serviceWorkers:'block', reducedMotion:'reduce', colorScheme:'light',
     trace:'retain-on-failure', screenshot:'only-on-failure', video:'off' },
   projects: (['chromium','webkit'] as const).flatMap(browserName => sizes.map(([width,height]) => ({
+    testIgnore: [390,1366].includes(width) ? [] : ['**/hardening-accessibility.spec.ts','**/hardening-stress.spec.ts'],
     name:`${browserName}-${width}x${height}`, use:{browserName, viewport:{width,height},
       isMobile: width <= 844 && height !== 768, hasTouch: width <= 1024, deviceScaleFactor:1},
   }))),

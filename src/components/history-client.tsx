@@ -39,19 +39,20 @@ export function HistoryClient({crossModalityHandoffs=false}:{crossModalityHandof
 
 export function HistoryClientView({crossModalityHandoffs,conversations,jobs,files,favoriteJobs,favoriteFiles,q,setQ,view,setView,sort,setSort,layout,setLayout,loading,detail,setDetail,detailLoading,patchConversation,removeConversation,removeFile,toggleFavorite,openFileDetail}: HistoryClientViewProps) {
  const needle=q.trim().toLowerCase();
- const matches=(value:string)=>!needle||value.toLowerCase().includes(needle);
  const allItems=useMemo<LibraryEntry[]>(()=>[
   ...conversations.map(item=>({id:`chat-${item.id}`,type:"chat" as const,date:item.updated_at,pinned:item.pinned,item})),
   ...jobs.flatMap(item=>["image","video","audio"].includes(item.modality)?[{id:`job-${item.id}`,type:item.modality as "image"|"video"|"audio",date:item.created_at,pinned:favoriteJobs.includes(item.id),item}]:[]),
   ...files.map(item=>({id:`file-${item.id}`,type:"file" as const,date:item.created_at,pinned:favoriteFiles.includes(item.id),item}))
  ],[conversations,jobs,files,favoriteJobs,favoriteFiles]);
  const counts=useMemo(()=>({all:allItems.length,chat:conversations.length,image:jobs.filter(item=>item.modality==="image").length,video:jobs.filter(item=>item.modality==="video").length,audio:jobs.filter(item=>item.modality==="audio").length,file:files.length,pinned:conversations.filter(item=>item.pinned).length+favoriteJobs.length+favoriteFiles.length}),[allItems,conversations,jobs,files,favoriteJobs,favoriteFiles]);
- const visible=useMemo(()=>allItems.filter(entry=>{
+ const visible=useMemo(()=>{
+  const matches=(value:string)=>!needle||value.toLowerCase().includes(needle);
+  return allItems.filter(entry=>{
   if(view!=="all"&&entry.type!==view)return false;
   if(entry.type==="chat"){const item=entry.item as Conversation;return matches(`${item.title} ${item.preferred_model||""}`)}
   if(entry.type==="file"){const item=entry.item as FileRow;return matches(`${item.name} ${item.mime_type} ${item.extraction_status}`)}
   const item=entry.item as Job;return matches(`${item.prompt||""} ${item.model_id} ${item.status}`);
- }).sort((a,b)=>sort==="pinned"?(Number(b.pinned)-Number(a.pinned)||new Date(b.date).getTime()-new Date(a.date).getTime()):sort==="oldest"?new Date(a.date).getTime()-new Date(b.date).getTime():new Date(b.date).getTime()-new Date(a.date).getTime()),[allItems,view,needle,sort]);
+ }).sort((a,b)=>sort==="pinned"?(Number(b.pinned)-Number(a.pinned)||new Date(b.date).getTime()-new Date(a.date).getTime()):sort==="oldest"?new Date(a.date).getTime()-new Date(b.date).getTime():new Date(b.date).getTime()-new Date(a.date).getTime());},[allItems,view,needle,sort]);
  const quick=[{value:"all" as View,label:"Recent",count:counts.all,icon:ClockCounterClockwise,tone:"recent"},{value:"all" as View,label:"Pinned",count:counts.pinned,icon:PushPin,tone:"pinned",onClick:()=>setSort("pinned")},{value:"image" as View,label:"Images",count:counts.image,icon:ImageSquare,tone:"image"},{value:"video" as View,label:"Videos",count:counts.video,icon:VideoCamera,tone:"video"},{value:"audio" as View,label:"Audio",count:counts.audio,icon:SpeakerHigh,tone:"audio"},{value:"file" as View,label:"Files",count:counts.file,icon:File,tone:"file"}];
  const selectQuick=(entry:(typeof quick)[number])=>{setView(entry.value);setQ("");entry.onClick?.();if(!entry.onClick)setSort("recent")};
  return <section aria-label="Library workspace" className={`${styles.surface} ${styles.library} library-page premium-library-page library-redesign-page`}>

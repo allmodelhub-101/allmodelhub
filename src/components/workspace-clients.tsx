@@ -2,7 +2,7 @@
 
 import styles from "./workspace-data.module.css";
 import { useEffect, useMemo, useState } from "react";
-import { Bell, CaretRight, Check, DotsThree, FileText, FunnelSimple, Headphones, ImageSquare, MagnifyingGlass, ShieldCheck, Wallet, WarningCircle, Waveform } from "@phosphor-icons/react";
+import { Bell, CaretRight, Check, DotsThree, FileText, FunnelSimple, Headphones, ImageSquare, MagnifyingGlass, ShieldCheck, Wallet, WarningCircle } from "@phosphor-icons/react";
 
 type Notification={id:string;type?:string|null;title:string;body:string;href?:string|null;read_at?:string|null;created_at:string};
 type Filter="all"|"unread"|"payments"|"generations"|"wallet"|"support";

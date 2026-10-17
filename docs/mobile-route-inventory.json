@@ -1150,9 +1150,9 @@
     },
     {
       "file": "src/app/globals.css",
-      "bytes": 643403,
-      "lines": 2388,
-      "mediaQueries": 835,
+      "bytes": 635600,
+      "lines": 2386,
+      "mediaQueries": 832,
       "important": 131,
       "viewportUnits": 69
     },
@@ -1166,17 +1166,17 @@
     },
     {
       "file": "src/components/account-workspace.module.css",
-      "bytes": 5977,
-      "lines": 57,
-      "mediaQueries": 2,
+      "bytes": 6018,
+      "lines": 59,
+      "mediaQueries": 3,
       "important": 0,
       "viewportUnits": 0
     },
     {
       "file": "src/components/admin-workspace.module.css",
-      "bytes": 2862,
-      "lines": 26,
-      "mediaQueries": 2,
+      "bytes": 3002,
+      "lines": 28,
+      "mediaQueries": 3,
       "important": 0,
       "viewportUnits": 0
     },
@@ -1190,16 +1190,16 @@
     },
     {
       "file": "src/components/audio-studio.module.css",
-      "bytes": 35369,
-      "lines": 100,
+      "bytes": 35490,
+      "lines": 102,
       "mediaQueries": 9,
       "important": 4,
       "viewportUnits": 0
     },
     {
       "file": "src/components/chat-workspace.css",
-      "bytes": 17117,
-      "lines": 146,
+      "bytes": 17209,
+      "lines": 148,
       "mediaQueries": 4,
       "important": 0,
       "viewportUnits": 5
@@ -1270,16 +1270,16 @@
     },
     {
       "file": "src/components/workspace-data.module.css",
-      "bytes": 18041,
-      "lines": 218,
+      "bytes": 18118,
+      "lines": 220,
       "mediaQueries": 7,
       "important": 0,
       "viewportUnits": 2
     },
     {
       "file": "src/components/workspace-shell.css",
-      "bytes": 5783,
-      "lines": 63,
+      "bytes": 6071,
+      "lines": 67,
       "mediaQueries": 4,
       "important": 0,
       "viewportUnits": 4

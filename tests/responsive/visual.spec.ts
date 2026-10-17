@@ -1,5 +1,6 @@
 import {test,expect} from './safety';
-// Generate with --update-snapshots, review images, then run without that flag.
+// Historical Phase 1/2 files remain archived. Phase 6 references are explicitly reviewed;
+// see docs/mobile-phase6/visual-reference-migration.md. Never update approved files blindly.
 for(const [name,route] of [['login','/auth/login'],['legal','/privacy'],['video-fixture','/studio-fixture']]) {
   test(`visual baseline ${name}`,async({page})=>{
     test.skip(!process.env.PW_VISUAL,'Opt-in: PW_VISUAL=1; baselines are OS/browser/viewport specific.');
@@ -20,6 +21,6 @@ for(const [name,route] of [['login','/auth/login'],['legal','/privacy'],['video-
       await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
     }
     await page.evaluate(()=>document.fonts.ready);
-    await expect(page).toHaveScreenshot(`${name==='video-fixture'?name:`phase2-${name}`}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
+    await expect(page).toHaveScreenshot(`phase6-${name}.png`,{animations:'disabled',caret:'initial',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:0.01});
   });
 }

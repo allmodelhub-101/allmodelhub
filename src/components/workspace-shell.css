@@ -60,3 +60,7 @@
 @media (prefers-reduced-motion:reduce) {
   .responsive-workspace :is(.app-content > *,.command-list section,.project-popover,.mobile-nav-sheet) { animation:none; }
 }
+
+/* Contrast verified against the rendered light panels, including tinted heroes. */
+.responsive-workspace .workspace-topbar .command-trigger>span{color:color-mix(in srgb,var(--muted) 80%,var(--text))}
+.responsive-workspace .kicker{color:color-mix(in srgb,var(--accent) 75%,var(--text))}

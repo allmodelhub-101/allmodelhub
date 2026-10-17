@@ -27,7 +27,7 @@ export function WorkspaceDataFixture({surface,state='populated'}:{surface:string
 }
 function History({state}:{state:string}){
  const [q,setQ]=useState(''),[view,setView]=useState<HP['view']>('all'),[sort,setSort]=useState<HP['sort']>('recent'),[layout,setLayout]=useState<HP['layout']>('grid'),[detail,setDetail]=useState<HP['detail']>(null);
- const [conversations,setConversations]=useState<HP['conversations']>(state==='empty'?[]:[{id:'local-chat',title:'Product research '+long,mode:'chat',pinned:false,updated_at:date}]);
+ const [conversations,setConversations]=useState<HP['conversations']>(state==='empty'?[]:Array.from({length:state==='stress'?500:1},(_,i)=>({id:i===0?'local-chat':`local-chat-${i}`,title:(state==='stress'?`Product research ${i} `:'Product research ')+long,mode:'chat',pinned:false,updated_at:date})));
  const [favoriteJobs,setFavoriteJobs]=useState<string[]>([]),[favoriteFiles,setFavoriteFiles]=useState<string[]>([]);
  const files:HP['files']=state==='empty'?[]:[{id:'local-file',name:long+'.pdf',mime_type:'application/pdf',size_bytes:4096,extraction_status:'ready',created_at:date}];
  const jobs:HP['jobs']=state==='empty'?[]:[{id:'local-image',modality:'image',model_id:'Sample model',status:state==='error'?'failed':'completed',prompt:'A quiet mountain sunrise '+long,charged_credits:12.5,created_at:date,...(state==='media'?{result_urls:['/image-studio-inspiration-v2.webp']}:{})}];

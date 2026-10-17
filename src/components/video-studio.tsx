@@ -349,16 +349,21 @@ export function VideoStudio({
   }, []);
   useEffect(() => {
     const connection = navigator as Navigator & {
-      connection?: { saveData?: boolean };
+      connection?: EventTarget & { saveData?: boolean };
     };
-    setMotionAllowed(
-      !matchMedia("(prefers-reduced-motion: reduce)").matches &&
-        !connection.connection?.saveData,
-    );
+    const preference = matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => setMotionAllowed(!preference.matches && !connection.connection?.saveData);
+    updateMotion();
+    preference.addEventListener("change", updateMotion);
+    connection.connection?.addEventListener("change", updateMotion);
     const next = videoStudioClips.find((clip) => clip.orientation === "landscape") || videoStudioClips[0];
     if (next) {
       setDemoId(next.id);
     }
+    return () => {
+      preference.removeEventListener("change", updateMotion);
+      connection.connection?.removeEventListener("change", updateMotion);
+    };
   }, []);
   useEffect(() => {
     if (!stageRef.current) return;

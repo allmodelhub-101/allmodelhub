@@ -116,7 +116,7 @@ function ModelCard({ model, href }: { model: CatalogModel; href: string }) {
     <div className="model-card-heading">
       <ModelBrand modelName={model.name} provider={model.providerFamily} />
       <div className="model-card-badges"><span className={`category-badge category-${model.modality}`}>{titleCase(model.modality)}</span><span className={`tier tier-${model.tier}`}>{titleCase(model.tier)}</span></div>
-      <span className="model-signal" aria-label={model.available===false?"Unavailable":"Available"} title={model.available===false?"Temporarily unavailable":"Available"} />
+      <span role="img" className="model-signal" aria-label={model.available===false?"Unavailable":"Available"} title={model.available===false?"Temporarily unavailable":"Available"} />
     </div>
     <div className="model-card-title"><div><h2>{model.name}</h2><p>{model.providerFamily}</p></div></div>
     <div className="capability-chips">{model.capabilities.slice(0, 4).map((item) => <span key={item}>{item}</span>)}</div>

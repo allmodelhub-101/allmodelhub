@@ -3,7 +3,7 @@
 import styles from "./wallet-workspace.module.css";
 import Image from "next/image";
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowDownLeft, ArrowLeft, ArrowRight, ArrowUpRight, CaretDown, Check, CheckCircle, Clock, Copy, CreditCard, FileArrowUp, Info, Receipt, ShieldCheck, Sparkle, UploadSimple, Wallet, X } from "@phosphor-icons/react";
+import { ArrowDownLeft, ArrowLeft, ArrowRight, ArrowUpRight, CaretDown, Check, CheckCircle, Clock, Copy, CreditCard, FileArrowUp, Info, Receipt, ShieldCheck, Sparkle, UploadSimple, X } from "@phosphor-icons/react";
 import { calculateTopupBonus, isValidTopupAmount, TOPUP_BONUS_TIERS, TOPUP_MAX_PKR, TOPUP_MIN_PKR } from "@/lib/topup-bonus";
 
 type Method = { id: string; label: string; accountTitle: string; accountNumber: string; iban?: string; instructions: string };

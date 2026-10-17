@@ -6,7 +6,7 @@
 .surface :global(:is(.btn,.premium-select-trigger)){min-height:44px;white-space:normal}
 .surface :global(:is(.settings-hero,.support-hero)){gap:20px}
 .surface :global(:is(.settings-hero p,.support-hero p,.settings-panel-heading p,.support-panel-heading p)){font-size:13px;line-height:1.6}
-.surface :global(:is(.settings-hero-art,.support-hero-art) i){animation:none}
+
 .surface :global(.label){font-size:13px}
 .surface :global(.label>small){font-size:12px;line-height:1.5}
 .settings :global(.settings-grid){grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:start}
@@ -49,8 +49,10 @@
 .usage.usage :global(th),.usage.usage :global(td){font-size:12px;line-height:1.6;padding:12px 14px;min-width:120px;max-width:300px;overflow-wrap:anywhere}
 .usage.usage :global(td b){font-variant-numeric:tabular-nums}
 .usage.usage :global(.link-button){display:inline-flex;align-items:center;min-height:44px;padding:8px;white-space:nowrap}
-.usage.usage :global(.spending-meter i:after),.usage.usage :global(.cost-track i:after){animation:none}
+
 @media(max-width:1100px){.settings :global(.settings-grid),.support :global(.support-layout){grid-template-columns:minmax(0,1fr)}.surface :global(:is(.settings-hero-art,.support-hero-art)){display:none}.usage.usage :global(.usage-stats){grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.surface.surface{padding-top:16px}.surface :global(:is(.settings-hero-copy,.support-hero-copy)){gap:10px}.surface :global(:is(.settings-hero p,.support-hero p)){font-size:13px}.surface :global(.two-col){grid-template-columns:minmax(0,1fr)}.support :global(.support-shortcuts){grid-template-columns:minmax(0,1fr)}.support :global(.support-shortcuts button:last-child){grid-column:auto}.support :global(.support-shortcuts button){min-height:54px}.support :global(.support-ticket-row){grid-template-columns:28px minmax(0,1fr)}.support :global(.support-ticket-row .support-status){grid-column:2;justify-self:start}.support :global(.support-conversation){min-height:0}.usage.usage :global(.usage-hero-note){display:none}.usage.usage :global(.usage-metric){grid-template-columns:minmax(0,1fr);gap:8px;padding:12px}.usage.usage :global(.usage-metric>span){display:none}.usage.usage :global(.cost-row){grid-template-columns:minmax(0,1fr) auto}.usage.usage :global(.cost-track){grid-column:1/-1;grid-row:2}.usage.usage :global(.panel-block){content-visibility:visible}}
 
 .usage.usage :global(th){white-space:nowrap}
+
+@media(prefers-reduced-motion:reduce){.surface :global(:is(.settings-hero-art,.support-hero-art) i){animation:none}.usage.usage :global(.spending-meter i:after),.usage.usage :global(.cost-track i:after){animation:none}}
