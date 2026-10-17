@@ -103,3 +103,6 @@ Use [mobile-responsive-plan.md](mobile-responsive-plan.md) for ownership, safe s
 
 
 Phase 5 Batch B: settings/support/usage presentation implemented; see `mobile-phase5/batch-b/README.md` and per-route acceptance. Original account handlers, usage query/aggregation prefix and financial formatting are guarded against the Phase 4 source. Named table regions own horizontal scrolling; the shell retains navigation clearance. Safe local fixtures are separate from the 22 BLOCKED authenticated workflows. Final exact-head Phase 5 CI is still required.
+
+
+Phase 5 batches A-D are implemented on the existing feature branch. Evidence and local acceptance are in `mobile-phase5/README.md`, batch-a through batch-d, and route-acceptance.md. New scoped owners cover workspace, account, wallet and admin presentation; original handlers and usage calculations remain guarded by 56 Phase 4 source hashes. All 22 authenticated workflows remain BLOCKED; hardware/AT checks remain UNVERIFIED. Final production build, retained comparisons and exact-head Linux foundation/both shards are recorded separately; local fixture checks are never authenticated E2E claims. Phase 6 begins with isolated account provisioning, full protected workflows, real iOS/Android keyboard/IME and accessibility/performance acceptance.

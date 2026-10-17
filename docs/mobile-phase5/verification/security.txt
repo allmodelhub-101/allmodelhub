@@ -1,0 +1,5 @@
+
+> models-suite@1.0.0 check:security C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub
+> node scripts/security-check.mjs
+
+Security checks passed across 1551 tracked/unignored files.

@@ -73,3 +73,8 @@ Source-only evidence: `batch-a/original-contract-verification.json` independentl
 Next authorized batch: Settings, Support and Usage. Preserve their validation, requests, permissions and calculations; use the same gated presentation isolation. Then Wallet/payment presentation, Admin/public/auth, and the final comprehensive production/Linux regression. Overall Phase 5 remains IN PROGRESS.
 
 Batch B accepted locally: 30 functional checks plus 15 captures passed across Chromium 320/844/768/1366 and WebKit 390; nine additional dark capture cases passed. See batch-b/README.md. Final matrix remains pending.
+
+
+## Final validation in progress
+
+All four ordered implementation commits are present. Production React workspace/account/wallet/admin rendering passed 72 checks (12 surfaces, 3 dimensions, 2 engines) with API requests denied. Existing Chat/studio production checks and actual Next production fixture denial are retained. 56 immutable execution/query/formatting baselines independently match Phase 4 original source; provenance is in verification/contract-provenance.json. Final exact-head Linux foundation and both browser shards must pass before scoped presentation acceptance.
