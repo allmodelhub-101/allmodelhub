@@ -77,6 +77,15 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
+## src/components/account-workspace.module.css
+
+2 media/container conditions; 0 repeated exact selector + condition groups; 1 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
 ## src/components/app-sidebar.css
 
 3 media/container conditions; 0 repeated exact selector + condition groups; 1 dimension/overflow candidates; 0 small-control declarations.

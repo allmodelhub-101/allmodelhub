@@ -19,5 +19,17 @@
   "src/components/simple-forms.tsx#useProjectsClient#edit": "a651fe374f788126f17d16ff5eada819870b3abeed4ef850b0d56f3f241c3088",
   "src/components/simple-forms.tsx#useProjectsClient#remove": "9fa5b512dbd74b229bdd59ccf18cb83d8b74c8dddefa58e62d563e799480a819",
   "src/components/model-battle.tsx#useModelBattle#submit": "e84d6d1a7708254613804a6b4372b0be62a9e5184139910d661f30165f5ad669",
-  "src/components/model-battle.tsx#module#runModel": "afd34af77e720676b08fc04f30549d59090d6c083d9dff5223a4c472746c4a5c"
+  "src/components/model-battle.tsx#module#runModel": "afd34af77e720676b08fc04f30549d59090d6c083d9dff5223a4c472746c4a5c",
+  "src/components/simple-forms.tsx#useSettingsClient#save": "51023398d5bec3e3758d738ddf7e3a2cb28e8a8ece2db072677fee16e29bd9cb",
+  "src/components/simple-forms.tsx#useSettingsClient#deleteAccount": "be2c339e2824c54ed26202239b7e8229001057030eb8dac0894444ef45bfc6c0",
+  "src/components/simple-forms.tsx#useSupportClient#load": "a2b4c8189f62615bdae0db1f35821c48aef7ca8e2d6c9fe59862f8b7b59641d9",
+  "src/components/simple-forms.tsx#useSupportClient#open": "c5add2ea18c707a26d34f01f42e7a2797cdf317dc6e96c6878e651dd7eabbfa1",
+  "src/components/simple-forms.tsx#useSupportClient#submit": "06ae50acc545153a2f47c45ec4b096b7bb9e8d2c7aaaea35fb0a7ca1ff23d607",
+  "src/components/simple-forms.tsx#useSupportClient#sendReply": "274707214de09d7bf1724150e9ac5516530b2314cdcee0bfcf2c1f36ab1df236",
+  "src/components/usage-workspace.tsx#module#transactionLabel": "6d301c1e2dea70f7eaaf0821e25a534a294256a8cd23f73d5b01c2eaecf2ac50",
+  "src/components/usage-workspace.tsx#module#usageSummary": "aeb83dc45ae5b497d7228f24a247fa8c5ba6c4381f5cd5acc2ff9e39a2991019",
+  "src/components/usage-workspace.tsx#module#operationLabel": "6a8bacbaa3f82cc3eb8770bf785f093978cce881205d5ca2781c983b07b1287d",
+  "src/app/usage/page.tsx#module#karachiDayStart": "2f9d58e836af13c7497cdfd2f56acc7d5ac91ba1ad81b0780e7dd69122231f14",
+  "src/app/usage/page.tsx#loadUsagePresentation#@prefix": "78e4696075ea402983c5921a2524c7f89af67f2ca498395a3a35a84828d82b13",
+  "src/components/usage-workspace.tsx#UsageWorkspace#@formatting": "5827756c6f717450961bfa94aa722670ec4388e3daff0ac40f9667237cc94c91"
 }

@@ -1,0 +1,23 @@
+"use client";
+import {useState} from 'react';
+import {SettingsClientView,SupportClientView,type SettingsClientViewProps as SP,type SupportClientViewProps as TP} from './simple-forms';
+import {SettingsWorkspace} from './settings-workspace';
+import {SupportWorkspace} from './support-workspace';
+import {UsageWorkspace,type UsageWorkspaceProps as UP} from './usage-workspace';
+const date='2026-10-16T12:00:00Z',long='Research_'.repeat(18);
+export function AccountFixture({surface,state}:{surface:string;state:string}){return surface==='settings'?<SettingsWorkspace><Settings state={state}/></SettingsWorkspace>:surface==='support'?<SupportWorkspace><Support state={state}/></SupportWorkspace>:<UsageWorkspace {...usage(state)}/>}
+function Settings({state:fixtureState}:{state:string}){
+ const [state,setState]=useState<SP['state']>({displayName:'Workspace reviewer',theme:'system',defaultLanguage:'auto',defaultTier:'auto',lowBandwidth:false,dailySpendLimit:'',singleGenerationLimit:'',customInstructions:''});
+ const [status,setStatus]=useState(fixtureState==='error'?'Synthetic save failure. No account was changed.':''),[deleteText,setDeleteText]=useState('');
+ return <SettingsClientView {...{state,setState,status,deleteText,setDeleteText,save:async e=>{e.preventDefault();setStatus('Local preview only. No settings saved.')},deleteAccount:async()=>setStatus('Local preview only. No account deleted.')}}/>;
+}
+function Support({state}:{state:string}){
+ const tickets:TP['tickets']=state==='empty'?[]:[{id:'local-ticket',public_id:'DEMO-001',subject:'Synthetic support request '+long,status:'open',category:'technical',created_at:date}];
+ const [active,setActive]=useState<TP['active']>(null),[thread,setThread]=useState<TP['thread']>([]),[category,setCategory]=useState('technical'),[subject,setSubject]=useState(''),[message,setMessage]=useState(''),[reply,setReply]=useState(''),[status,setStatus]=useState(state==='error'?'Synthetic support failure. No request was sent.':'');
+ const open:TP['open']=async ticket=>{setActive(ticket);setThread(state==='loading'?[]:[{id:'local-message',author_role:'support',body:'Synthetic reply. '+long,created_at:date}])};
+ return <SupportClientView {...{tickets,active,thread,category,setCategory,subject,setSubject,message,setMessage,reply,setReply,status,submitting:state==='loading',sending:false,load:async()=>{},open,submit:async e=>{e.preventDefault();setStatus('Local preview only. No ticket created.')},sendReply:async e=>{e.preventDefault();setThread(v=>[...v,{id:'local-reply',author_role:'user',body:reply,created_at:date}]);setReply('')}}}/>;
+}
+function usage(state:string):UP{
+ const empty=state==='empty';const receipt={id:'demo-receipt-001',quote_id:'demo-quote',usage_event_id:'demo-usage',provider_key:'Synthetic provider',model_id:'Sample model '+long,pricing_version:'demo-2026',cost_status:'final',charge_credits:'12.3456',message_id:null,generation_job_id:null,metadata:{operation:'text_generation'},settled_at:date};
+ return {metrics:[{label:'AI spend',value:'12.35',note:'Credits',icon:'coins',tone:'cyan'},{label:'Billing receipts',value:empty?0:1,note:'Text, audio & media',icon:'file',tone:'violet'},{label:'Media jobs',value:empty?0:1,note:'Images, video & audio',icon:'image',tone:'green'},{label:'Credit value',value:'Rs1',note:'per Credit',icon:'wallet',tone:'amber'}],modelSpend:empty?[]:[{model:receipt.model_id,credits:12.3456,requests:1}],todaySpent:12.3456,dailyPercent:12.3456,dailyLimit:100,singleLimit:50,receipts:empty?[]:[receipt],quotes:empty?[]:[{id:'demo-quote',created_at:date,model_id:receipt.model_id,provider_key:'Synthetic provider',pricing_version:'demo-2026',pricing_status:'available',customer_quote_credits:'15.0000',reservation_credits:'15.0000',status:'settled',pricing_snapshot:{quoteKind:'variable'}},{id:'demo-pending',created_at:date,model_id:'Pending sample',provider_key:'Synthetic provider',pricing_version:'demo-2026',pricing_status:'available',customer_quote_credits:'2.0000',reservation_credits:'2.0000',status:'pending',pricing_snapshot:{}}],jobs:empty?[]:[{id:'demo-job',public_id:'DEMO-001',modality:'image',model_id:'Sample image model',status:'pending',charged_credits:null,reserved_credits:'3.5000',created_at:date}],legacyMessages:empty?[]:[{id:'demo-legacy',created_at:date,model_id:'Historical sample',provider_key:'Synthetic provider',input_tokens:100,output_tokens:200,credits_charged:'1.2500'}],tx:empty?[]:[{id:'demo-tx',type:'generation_capture',amount:'-12.3456',balance_after:'87.6544',reference_id:'DEMO-REFERENCE',created_at:date}],usageById:new Map([['demo-usage',{input_tokens:100,output_tokens:200}]]),receiptByQuote:new Map(empty?[]:[['demo-quote',receipt]])};
+}

@@ -28,11 +28,11 @@
 | /projects | A implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /refunds | Pending B/C/D | Phase 5 pending | Phase 5 pending | Public checks retained; D pending | See ordered milestone plan |
 | /responsive-fixture | Existing guarded fixture | Prior evidence | Prior cases retained | Not an authenticated claim | See ordered milestone plan |
-| /settings | Pending B/C/D | Phase 5 pending | Phase 5 pending | BLOCKED | See ordered milestone plan |
+| /settings | B implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /studio-fixture | Existing guarded fixture | Prior evidence | Prior cases retained | Not an authenticated claim | See ordered milestone plan |
-| /support | Pending B/C/D | Phase 5 pending | Phase 5 pending | BLOCKED | See ordered milestone plan |
+| /support | B implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /templates | A implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /terms | Pending B/C/D | Phase 5 pending | Phase 5 pending | Public checks retained; D pending | See ordered milestone plan |
-| /usage | Pending B/C/D | Phase 5 pending | Phase 5 pending | BLOCKED | See ordered milestone plan |
+| /usage | B implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /video | Prior milestone retained | Prior evidence | Prior cases retained | BLOCKED | See ordered milestone plan |
 | /wallet | Pending B/C/D | Phase 5 pending | Phase 5 pending | BLOCKED | See ordered milestone plan |

@@ -171,3 +171,6 @@ Using the Vercel verification guidance, the story here is **route → existing U
 Overall Phase 1 validation status: **PARTIAL**. Phase 2 is ready to begin as controlled shared-shell work using the plan, with MR-005 prioritized as a proven global-style ownership issue. Obtain a dedicated nonproduction account/backend and an authorized admin session before claiming authenticated acceptance. Physical iOS/Android keyboard testing and normal-motion performance profiling remain required later gates. Production release is not approved by this audit.
 
 Implementation references: [Playwright projects](https://playwright.dev/docs/test-projects) and [browser installation](https://playwright.dev/docs/browsers); Next.js bundled guides for routing, CSS order and Playwright were read as required by AGENTS.md.
+
+
+Phase 5 Batch B: settings/support/usage presentation implemented; see `mobile-phase5/batch-b/README.md` and per-route acceptance. Original account handlers, usage query/aggregation prefix and financial formatting are guarded against the Phase 4 source. Named table regions own horizontal scrolling; the shell retains navigation clearance. Safe local fixtures are separate from the 22 BLOCKED authenticated workflows. Final exact-head Phase 5 CI is still required.

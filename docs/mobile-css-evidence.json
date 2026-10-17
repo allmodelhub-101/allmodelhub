@@ -35874,6 +35874,32 @@
     "queries": []
   },
   {
+    "file": "src/components/account-workspace.module.css",
+    "repeated": [],
+    "dimensions": [
+      {
+        "selector": ".usage.usage :global(th),.usage.usage :global(td)",
+        "conditions": [],
+        "line": 49,
+        "property": "min-width",
+        "value": "120px"
+      }
+    ],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:1100px)",
+        "line": 53
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:620px)",
+        "line": 54
+      }
+    ]
+  },
+  {
     "file": "src/components/app-sidebar.css",
     "repeated": [],
     "dimensions": [

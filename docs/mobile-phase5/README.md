@@ -11,7 +11,7 @@ The source inventory contains 32 pages and 43 HTTP handlers. Open PR #106 change
 | Batch | Scope | Implementation | Acceptance |
 |---|---|---|---|
 | A | History, projects, files, templates, models, comparison, notifications | Implemented | Local checks and reviewed visual comparisons pass; Accepted locally; milestone committed before Batch B |
-| B | Settings, support, usage | Pending | Must follow accepted A |
+| B | Settings, support, usage | Implemented | 45/45 local browser checks/captures and 9/9 dark captures; reviewed before C |
 | C | Wallet/payment presentation | Pending | Must follow accepted B; financial behavior unchanged |
 | D | Admin tabs, public/auth/legal/recovery | Pending | Must follow accepted C; no authorization weakening |
 | Final | Entire retained matrix, production checks, contracts and exact-head CI | Pending | Both Linux shards and foundation required |
@@ -71,3 +71,5 @@ Evidence: `batch-a/before/` has 35 before-layout light captures. `batch-a/after/
 Source-only evidence: `batch-a/original-contract-verification.json` independently matches all 21 new baselines against verified Phase 4 source. `batch-a/findings.md` and `retired-css.json` describe reproduced defects and bounded CSS changes. Snapshot generation was followed by image review and comparison; no prior phase reference was regenerated.
 
 Next authorized batch: Settings, Support and Usage. Preserve their validation, requests, permissions and calculations; use the same gated presentation isolation. Then Wallet/payment presentation, Admin/public/auth, and the final comprehensive production/Linux regression. Overall Phase 5 remains IN PROGRESS.
+
+Batch B accepted locally: 30 functional checks plus 15 captures passed across Chromium 320/844/768/1366 and WebKit 390; nine additional dark capture cases passed. See batch-b/README.md. Final matrix remains pending.

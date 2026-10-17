@@ -126,7 +126,7 @@ test("pending V3 messages use nullable costs and never enter historical billing"
   assert.match(route, /internal_cost_pkr: null/);
   assert.match(route, /billingEngine: "v3_provider_authoritative"/);
   assert.match(usage, /metadata\.billingEngine!=="v3_provider_authoritative"/);
-  assert.match(usage, /released\?"No charge":"Billing pending"/);
+  assert.match(source("src/components/usage-workspace.tsx"), /released\?"No charge":"Billing pending"/);
 });
 
 test("traffic reconciliation uses the existing database claim function", () => {

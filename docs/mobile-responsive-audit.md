@@ -100,3 +100,6 @@ Source-audited routes include public marketing/legal/auth, workspace/studios, wa
 ## Continuation
 
 Use [mobile-responsive-plan.md](mobile-responsive-plan.md) for ownership, safe sequencing and acceptance gates. Review browser failures and screenshots before implementing Phase 2. Refresh inventory after new routes, rerun CSS analysis after stylesheet edits, and keep failure attribution tied to the baseline SHA.
+
+
+Phase 5 Batch B: settings/support/usage presentation implemented; see `mobile-phase5/batch-b/README.md` and per-route acceptance. Original account handlers, usage query/aggregation prefix and financial formatting are guarded against the Phase 4 source. Named table regions own horizontal scrolling; the shell retains navigation clearance. Safe local fixtures are separate from the 22 BLOCKED authenticated workflows. Final exact-head Phase 5 CI is still required.
