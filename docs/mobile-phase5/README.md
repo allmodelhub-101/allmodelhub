@@ -14,7 +14,7 @@ The source inventory contains 32 pages and 43 HTTP handlers. Open PR #106 change
 | B | Settings, support, usage | Implemented | 45/45 local browser checks/captures and 9/9 dark captures; reviewed before C |
 | C | Wallet/payment presentation | Implemented | 35/35 checks/captures +12/12 dark captures reviewed before D; financial behavior unchanged |
 | D | Admin tabs, public/auth/legal/recovery | Implemented | Nine tabs and public pages locally tested/reviewed; auth gate unchanged; final CI pending |
-| Final | Entire retained matrix, production checks, contracts and exact-head CI | Pending | Both Linux shards and foundation required |
+| Final | Entire retained matrix, production checks, contracts and exact-head CI | Implementation/local checks complete | Exact-head Linux foundation and both shards are required in PR149 Checks |
 
 ## Batch A boundaries and initial findings
 
@@ -75,8 +75,10 @@ Next authorized batch: Settings, Support and Usage. Preserve their validation, r
 Batch B accepted locally: 30 functional checks plus 15 captures passed across Chromium 320/844/768/1366 and WebKit 390; nine additional dark capture cases passed. See batch-b/README.md. Final matrix remains pending.
 
 
-## Final validation in progress
+## Final verification and delivery
 
 All four ordered implementation commits are present. Production React workspace/account/wallet/admin rendering passed 72 checks (12 surfaces, 3 dimensions, 2 engines) with API requests denied. Existing Chat/studio production checks and actual Next production fixture denial are retained. 56 immutable execution/query/formatting baselines independently match Phase 4 original source; provenance is in verification/contract-provenance.json. Final exact-head Linux foundation and both browser shards must pass before scoped presentation acceptance.
 
 Local production build and explicit TypeScript checks pass. Full-repository lint reproduces the historical two LoginForm errors and 14 warnings; no suppressions were added. Security checks pass across 1551 tracked/unignored files at execution. All 275 Node regressions pass, including 156 billing, four security and 115 UI checks. Public production-render testing uncovered navigation-lifecycle prefetch cancellation when one page was repeatedly navigated; the expanded harness now gives each public route its own page and retains strict runtime-error assertions, then checks all production fixture variants denied. Original exploratory errors are retained in the verification notes; no application security header was changed.
+
+See verification/README.md for actual local results, the historical Phase 1 reference mismatch, configured case counts, and final exact-head CI acceptance. Production Next public rendering and production fixture denial passed 156 checks; approved public references were explicitly reviewed and compared without overwriting earlier milestone images.
