@@ -145,7 +145,7 @@ Running 120 tests using 1 worker
   ok 120 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio dark (6.1s)
 
 
-  1) [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light 
+  1) [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -199,7 +199,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  2) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+  2) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -267,7 +267,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  3) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+  3) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -314,7 +314,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  4) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light 
+  4) [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -361,7 +361,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  5) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+  5) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -430,7 +430,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  6) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
+  6) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -478,7 +478,7 @@ Running 120 tests using 1 worker
 
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
-  7) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light 
+  7) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -527,11 +527,11 @@ Running 120 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   7 failed
-    [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light 
-    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
-    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
-    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light 
-    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
-    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light 
-    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light 
+    [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG audio light
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light
+    [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG settings light
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG support light
   113 passed (18.0m)

@@ -289,7 +289,7 @@ export function ImageStudioView({fileInputRef,promptInputRef,settingsRef,setting
   return <div className={`image-workspace image-studio-refined ${motionPaused ? "is-motion-paused" : ""} ${dragActive ? "is-dragging" : ""}`} onPaste={pasteReference} onDragEnter={(event) => { if (!event.dataTransfer.types.includes("Files")) return; event.preventDefault(); setDragActive(true); }} onDragOver={(event) => { if (event.dataTransfer.types.includes("Files")) event.preventDefault(); }} onDragLeave={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node)) setDragActive(false); }} onDrop={(event) => { if (!event.dataTransfer.files.length) return; event.preventDefault(); setDragActive(false); void addReferences(Array.from(event.dataTransfer.files)); }}>
     <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/webp" multiple={supportsMultipleReferences} hidden onChange={(event) => { void addReferences(Array.from(event.target.files || [])); event.currentTarget.value = ""; }} />
     {dragActive && <div className="image-drop-overlay"><strong>Drop an image to use as a reference</strong><span>PNG, JPEG or WebP · Your selected model must support references.</span></div>}
-    <main className="image-canvas-shell">
+    <section className="image-canvas-shell" aria-label="Image creation canvas">
       <section className={`image-canvas-stage aspect-${aspect.replace(":", "-")}`} aria-live="polite">
         {!job && <div className="image-stage-identity"><span>Image Studio</span><strong><i />{references.length ? "Edit an image" : "Create something original"}</strong><button type="button" className="image-motion-toggle" aria-pressed={motionPaused} onClick={() => setMotionPaused(value => !value)}>{motionPaused ? "Resume motion" : "Pause motion"}</button></div>}
         {!job && <div className="image-empty-state image-studio-hero"><div className="hero-art hero-art-left"><InspirationImage index={0} alt="Perfume product inspiration" /><em>From idea<br/>to stunning images</em></div><div className="hero-art hero-art-right"><InspirationImage index={4} alt="Mountain landscape inspiration" /><InspirationImage index={2} alt="Interior inspiration" /><em>Turn your ideas<br/>into amazing visuals</em></div><div className="hero-copy"><h1>Create an <span>image</span></h1><p>Describe your idea, customize the look, then create with the world’s<br className="desktop-only"/> most advanced AI models.</p><div className="image-creation-path" aria-label="How image creation works"><span><b>1</b>Describe</span><i/><span><b>2</b>Customize</span><i/><span><b>3</b>Create</span></div><div className="direction-starters" aria-label="Prompt ideas">{directionStarters.map((starter,index) => <button type="button" key={starter.label} onClick={() => setPrompt(starter.prompt)}>{index===0?<Cube/>:index===1?<UserCircle/>:<Lightbulb/>}<span><strong>{starter.label}</strong><small>Use direction</small></span></button>)}</div></div></div>}
@@ -299,7 +299,7 @@ export function ImageStudioView({fileInputRef,promptInputRef,settingsRef,setting
         {job?.status === "completed" && !resultUrl && <div className="image-failed-state"><h2>Generation completed</h2><p>The provider did not return a displayable image. You can find this job in Library.</p><Link href="/history">Open Library</Link></div>}
       </section>
 
-    </main>
+    </section>
 
     <div className="image-prompt-dock">
       <form onSubmit={submit}>

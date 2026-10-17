@@ -17,7 +17,7 @@ Running 8 tests using 1 worker
   ok 8 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG wallet light (6.1s)
 
 
-  1) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+  1) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
 
     Error: automated WCAG subset; incomplete checks still need manual review
 
@@ -86,5 +86,5 @@ Running 8 tests using 1 worker
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
   1 failed
-    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light 
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG chat light
   7 passed (43.7s)

@@ -9,13 +9,13 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
@@ -30,13 +30,13 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
@@ -53,13 +53,13 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
@@ -74,13 +74,13 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
@@ -97,31 +97,19 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       }
     ],
-    "violations": [
-      {
-        "id": "color-contrast",
-        "nodes": [
-          {
-            "target": [
-              ".global-project > span"
-            ],
-            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.43 (foreground color: #0b1220, background color: #757c84, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
-          }
-        ]
-      }
-    ],
+    "violations": [],
     "after": [
       {
         "selector": "body",
@@ -130,13 +118,57 @@
         "theme": "light"
       },
       {
-        "selector": ".chat-content",
+        "selector": "li strong",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"
       },
       {
-        "selector": ".chat-content p",
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ]
+  },
+  {
+    "i": 3,
+    "before": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ],
+    "violations": [],
+    "after": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
         "color": "rgb(11, 18, 32)",
         "fill": "rgb(11, 18, 32)",
         "theme": "light"

@@ -1,0 +1,79 @@
+
+Running 4 tests using 1 worker
+
+(node:22060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (6.9s)
+  ok 2 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (5.2s)
+(node:15072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  3 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light (14.9s)
+(node:5996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG admin light (8.5s)
+
+
+  1) [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light
+
+    Error: automated WCAG subset; incomplete checks still need manual review
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 28
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "nodes": Array [
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "li:nth-child(1) > strong",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "li:nth-child(2) > strong",
+    +         ],
+    +       },
+    +       Object {
+    +         "summary": "Fix any of the following:
+    +   Element has insufficient color contrast of 1.02 (foreground color: #f5f8fb, background color: #eaf7fc, font size: 15.0pt (20px), font weight: bold). Expected contrast ratio of 3:1",
+    +         "target": Array [
+    +           "li:nth-child(3) > strong",
+    +         ],
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      20 |  }
+      21 |  await info.attach('accessibility-summary',{body:JSON.stringify({path,theme,violations:result.violations,incomplete:result.incomplete.map(r=>({id:r.id,count:r.nodes.length})),passes:result.passes.length}),contentType:'application/json'});
+    > 22 |  expect(result.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),'automated WCAG subset; incomplete checks still need manual review').toEqual([]);
+         |                                                                                                                                                                                       ^
+      23 | });
+      24 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening-accessibility.spec.ts:22:183
+
+    attachment #4: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-homepage-contrast\hardening-accessibility-hardening-WCAG-homepage-light-webkit-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-homepage-contrast\hardening-accessibility-hardening-WCAG-homepage-light-webkit-1366x768\error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-homepage-contrast\hardening-accessibility-hardening-WCAG-homepage-light-webkit-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-homepage-contrast\hardening-accessibility-hardening-WCAG-homepage-light-webkit-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG homepage light
+  3 passed (51.3s)

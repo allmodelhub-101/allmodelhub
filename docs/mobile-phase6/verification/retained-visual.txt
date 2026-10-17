@@ -73,3 +73,111 @@ Running 96 tests using 1 worker
   ok 60 [webkit-390x844] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual history dark (15.4s)
   ok 61 [webkit-390x844] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual files dark (16.6s)
   ok 62 [webkit-390x844] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual battle dark (15.7s)
+  x  63 [webkit-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots (26.0s)
+(node:18008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 64 [webkit-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell dark: chrome, overflow, touch targets, screenshots (10.3s)
+(node:14848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 65 [webkit-768x1024] › tests\responsive\chat.spec.ts:24:37 › chat light: welcome, composer budget and real controls (21.6s)
+  ok 66 [webkit-768x1024] › tests\responsive\chat.spec.ts:24:37 › chat dark: welcome, composer budget and real controls (8.4s)
+  ok 67 [webkit-768x1024] › tests\responsive\studios.spec.ts:25:37 › image light: prompt, settings, model and local references (12.5s)
+  ok 68 [webkit-768x1024] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references (14.9s)
+  ok 69 [webkit-768x1024] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (12.6s)
+  ok 70 [webkit-768x1024] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (9.9s)
+  ok 71 [webkit-768x1024] › tests\responsive\studios.spec.ts:47:37 › audio light: all modes, models, voices and native playback (15.0s)
+  ok 72 [webkit-768x1024] › tests\responsive\studios.spec.ts:47:37 › audio dark: all modes, models, voices and native playback (12.7s)
+  ok 73 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual history light (7.5s)
+  ok 74 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual files light (7.3s)
+  ok 75 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual battle light (5.7s)
+  ok 76 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual history dark (5.3s)
+  ok 77 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual files dark (5.5s)
+  ok 78 [webkit-768x1024] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual battle dark (5.4s)
+  ok 79 [webkit-768x1024] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots (7.2s)
+  ok 80 [webkit-768x1024] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell dark: chrome, overflow, touch targets, screenshots (5.9s)
+(node:16792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 81 [webkit-1366x768] › tests\responsive\chat.spec.ts:24:37 › chat light: welcome, composer budget and real controls (6.6s)
+  ok 82 [webkit-1366x768] › tests\responsive\chat.spec.ts:24:37 › chat dark: welcome, composer budget and real controls (4.0s)
+  ok 83 [webkit-1366x768] › tests\responsive\studios.spec.ts:25:37 › image light: prompt, settings, model and local references (8.2s)
+  ok 84 [webkit-1366x768] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references (7.5s)
+  ok 85 [webkit-1366x768] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (11.4s)
+  ok 86 [webkit-1366x768] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (11.3s)
+  ok 87 [webkit-1366x768] › tests\responsive\studios.spec.ts:47:37 › audio light: all modes, models, voices and native playback (13.1s)
+  ok 88 [webkit-1366x768] › tests\responsive\studios.spec.ts:47:37 › audio dark: all modes, models, voices and native playback (14.7s)
+  ok 89 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual history light (7.7s)
+  ok 90 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual files light (7.1s)
+  ok 91 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual battle light (7.4s)
+  ok 92 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual history dark (8.0s)
+  ok 93 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual files dark (6.7s)
+  ok 94 [webkit-1366x768] › tests\responsive\workspace-visual.spec.ts:2:132 › approved workspace visual battle dark (7.1s)
+  ok 95 [webkit-1366x768] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots (5.6s)
+  ok 96 [webkit-1366x768] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell dark: chrome, overflow, touch targets, screenshots (3.7s)
+
+
+  1) [webkit-390x844] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references
+
+    Test timeout of 60000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-retained-visual\studios-image-dark-prompt--963b9--model-and-local-references-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: image-dark (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-retained-visual\studios-image-dark-prompt--963b9--model-and-local-references-webkit-390x844\attachments\image-dark-8f1d753eabe52af44c90db2d4ea1ba6de2ae997b.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-retained-visual\studios-image-dark-prompt--963b9--model-and-local-references-webkit-390x844\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-retained-visual\studios-image-dark-prompt--963b9--model-and-local-references-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-retained-visual\studios-image-dark-prompt--963b9--model-and-local-references-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.responsive-fixture')
+    Expected: "true"
+    Received: ""
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('.responsive-fixture') with timeout 10000ms
+      - waiting for locator('.responsive-fixture')
+        11 × locator resolved to <section dir="ltr" class="responsive-fixture ">…</section>
+           - unexpected value "null"
+
+
+      3 | async function openShell(page:Page, url='/responsive-fixture'){
+      4 |   await page.goto(url,{waitUntil:'networkidle'});
+    > 5 |   await expect(page.locator('.responsive-fixture')).toHaveAttribute('data-ready','true');
+        |                                                     ^
+      6 | }
+      7 |
+      8 | for (const theme of ['light','dark']) {
+        at openShell (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\workspace.spec.ts:5:53)
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\workspace.spec.ts:15:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase6-retained-visual\workspace-synthetic-shell--82e0f-w-touch-targets-screenshots-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase6-retained-visual\workspace-synthetic-shell--82e0f-w-touch-targets-screenshots-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase6-retained-visual\workspace-synthetic-shell--82e0f-w-touch-targets-screenshots-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase6-retained-visual\workspace-synthetic-shell--82e0f-w-touch-targets-screenshots-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [webkit-390x844] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references
+    [webkit-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots
+  94 passed (16.4m)

@@ -61,7 +61,7 @@ jobs:
         env:
           LOCAL_RESPONSIVE_FIXTURES: '1'
       - name: Next production public rendering and studio fixture denial
-        run: pnpm build && node scripts/mobile-studios-next-production-check.mjs && node scripts/mobile-workspace-next-production-check.mjs
+        run: pnpm build && node scripts/mobile-studios-next-production-check.mjs && node scripts/mobile-workspace-next-production-check.mjs && node scripts/mobile-homepage-production-check.mjs
         env:
           NEXT_TELEMETRY_DISABLED: '1'
       - name: All viewport projects / both browser engines
@@ -82,5 +82,6 @@ jobs:
             docs/mobile-phase5/next-production/
             docs/mobile-phase6/verification/
             docs/mobile-phase6/performance/
+            docs/mobile-phase6/homepage-production/
           retention-days: 7
           if-no-files-found: warn
