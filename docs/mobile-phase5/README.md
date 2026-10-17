@@ -12,7 +12,7 @@ The source inventory contains 32 pages and 43 HTTP handlers. Open PR #106 change
 |---|---|---|---|
 | A | History, projects, files, templates, models, comparison, notifications | Implemented | Local checks and reviewed visual comparisons pass; Accepted locally; milestone committed before Batch B |
 | B | Settings, support, usage | Implemented | 45/45 local browser checks/captures and 9/9 dark captures; reviewed before C |
-| C | Wallet/payment presentation | Pending | Must follow accepted B; financial behavior unchanged |
+| C | Wallet/payment presentation | Implemented | 35/35 checks/captures +12/12 dark captures reviewed before D; financial behavior unchanged |
 | D | Admin tabs, public/auth/legal/recovery | Pending | Must follow accepted C; no authorization weakening |
 | Final | Entire retained matrix, production checks, contracts and exact-head CI | Pending | Both Linux shards and foundation required |
 

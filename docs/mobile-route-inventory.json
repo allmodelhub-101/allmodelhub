@@ -532,6 +532,9 @@
         "src/components/video-model-rail.tsx",
         "src/components/video-studio-v2.module.css",
         "src/components/video-studio.tsx",
+        "src/components/wallet-client.tsx",
+        "src/components/wallet-fixture.tsx",
+        "src/components/wallet-workspace.module.css",
         "src/components/workspace-clients.tsx",
         "src/components/workspace-data-fixture.tsx",
         "src/components/workspace-data.module.css",
@@ -550,6 +553,7 @@
         "src/components/model-picker.css",
         "src/components/template-library.css",
         "src/components/video-studio-v2.module.css",
+        "src/components/wallet-workspace.module.css",
         "src/components/workspace-data.module.css",
         "src/components/workspace-shell.css"
       ]
@@ -751,6 +755,7 @@
         "src/components/theme-toggle.tsx",
         "src/components/use-workspace-overlay.ts",
         "src/components/wallet-client.tsx",
+        "src/components/wallet-workspace.module.css",
         "src/components/workspace-frame.tsx",
         "src/components/workspace-network-status.tsx",
         "src/components/workspace-onboarding.tsx",
@@ -761,6 +766,7 @@
         "src/app/globals.css",
         "src/app/wallet/wallet-premium.css",
         "src/components/app-sidebar.css",
+        "src/components/wallet-workspace.module.css",
         "src/components/workspace-shell.css"
       ]
     }
@@ -1238,6 +1244,14 @@
       "mediaQueries": 10,
       "important": 70,
       "viewportUnits": 1
+    },
+    {
+      "file": "src/components/wallet-workspace.module.css",
+      "bytes": 3794,
+      "lines": 31,
+      "mediaQueries": 3,
+      "important": 0,
+      "viewportUnits": 0
     },
     {
       "file": "src/components/workspace-data.module.css",

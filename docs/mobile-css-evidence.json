@@ -43746,6 +43746,51 @@
     ]
   },
   {
+    "file": "src/components/wallet-workspace.module.css",
+    "repeated": [],
+    "dimensions": [
+      {
+        "selector": ".surface :global(.wallet-proof-drop)",
+        "conditions": [],
+        "line": 16,
+        "property": "min-height",
+        "value": "100px"
+      },
+      {
+        "selector": ".surface :global(.wallet-transaction-table table)",
+        "conditions": [],
+        "line": 23,
+        "property": "min-width",
+        "value": "760px"
+      },
+      {
+        "selector": ".surface :global(.wallet-transaction-table :is(th,td))",
+        "conditions": [],
+        "line": 24,
+        "property": "min-width",
+        "value": "110px"
+      }
+    ],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:1100px)",
+        "line": 28
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:620px)",
+        "line": 29
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion:reduce)",
+        "line": 30
+      }
+    ]
+  },
+  {
     "file": "src/components/workspace-data.module.css",
     "repeated": [
       {

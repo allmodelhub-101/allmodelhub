@@ -35,4 +35,4 @@
 | /terms | Pending B/C/D | Phase 5 pending | Phase 5 pending | Public checks retained; D pending | See ordered milestone plan |
 | /usage | B implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |
 | /video | Prior milestone retained | Prior evidence | Prior cases retained | BLOCKED | See ordered milestone plan |
-| /wallet | Pending B/C/D | Phase 5 pending | Phase 5 pending | BLOCKED | See ordered milestone plan |
+| /wallet | C implemented | Yes, synthetic | Yes, scoped | BLOCKED | Physical/AT/backend checks remain |

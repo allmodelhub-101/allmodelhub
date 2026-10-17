@@ -13,6 +13,7 @@ import type {CatalogModel} from '@/lib/models';
 import {WorkspaceFrame} from './workspace-frame';
 import {WorkspaceTopbar} from './workspace-topbar';
 import {AppSidebar} from './app-sidebar';
+import {WalletFixture} from './wallet-fixture';
 import {AccountFixture} from './account-fixture';
 import {FilesWorkspace} from './files-workspace';
 const date='2026-10-16T12:00:00Z';
@@ -22,7 +23,7 @@ const models:CatalogModel[]=['text','image','video','audio'].map((modality,i)=>(
 const templates:PromptTemplate[]=['Research','Writing','Education'].map((category,i)=>({id:`template-${i}`,slug:`sample-${i}`,category,title:`Sample ${category} workflow`,description:'A useful starting point with a detailed brief. '+long,prompt:'Synthetic prompt',language:'en',pakistan_focused:false}));
 export function WorkspaceDataFixture({surface,state='populated'}:{surface:string;state?:string}){
  useEffect(()=>{document.documentElement.dataset.workspaceDataReady=surface;return()=>{delete document.documentElement.dataset.workspaceDataReady}},[surface]);
- return <WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Workspace reviewer" isAdmin={false} activePath={`/${surface}`}/>} topbar={<WorkspaceTopbar balance={1234.5} identity="Workspace reviewer" offline/>}>{['settings','support','usage'].includes(surface)?<AccountFixture surface={surface} state={state}/>:surface==='files'?<FilesWorkspace><Files state={state}/></FilesWorkspace>:surface==='history'?<History state={state}/>:surface==='projects'?<div className="projects-page"><Projects state={state}/></div>:surface==='notifications'?<Notifications state={state}/>:surface==='battle'?<Battle state={state}/>:surface==='models'?<div className="model-marketplace-page"><ModelsMarketplace models={state==='empty'?[]:models} fxRate={280}/></div>:<TemplateLibrary templates={state==='empty'?[]:templates}/>}</WorkspaceFrame>;
+ return <WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Workspace reviewer" isAdmin={false} activePath={`/${surface}`}/>} topbar={<WorkspaceTopbar balance={1234.5} identity="Workspace reviewer" offline/>}>{surface==='wallet'?<WalletFixture state={state}/>:['settings','support','usage'].includes(surface)?<AccountFixture surface={surface} state={state}/>:surface==='files'?<FilesWorkspace><Files state={state}/></FilesWorkspace>:surface==='history'?<History state={state}/>:surface==='projects'?<div className="projects-page"><Projects state={state}/></div>:surface==='notifications'?<Notifications state={state}/>:surface==='battle'?<Battle state={state}/>:surface==='models'?<div className="model-marketplace-page"><ModelsMarketplace models={state==='empty'?[]:models} fxRate={280}/></div>:<TemplateLibrary templates={state==='empty'?[]:templates}/>}</WorkspaceFrame>;
 }
 function History({state}:{state:string}){
  const [q,setQ]=useState(''),[view,setView]=useState<HP['view']>('all'),[sort,setSort]=useState<HP['sort']>('recent'),[layout,setLayout]=useState<HP['layout']>('grid'),[detail,setDetail]=useState<HP['detail']>(null);

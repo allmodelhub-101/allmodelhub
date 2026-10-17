@@ -291,6 +291,15 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
+## src/components/wallet-workspace.module.css
+
+3 media/container conditions; 0 repeated exact selector + condition groups; 3 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
 ## src/components/workspace-data.module.css
 
 7 media/container conditions; 7 repeated exact selector + condition groups; 10 dimension/overflow candidates; 3 small-control declarations.
