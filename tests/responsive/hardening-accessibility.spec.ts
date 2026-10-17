@@ -8,12 +8,20 @@ for(const theme of ['light','dark'])for(const [name,path]of scenes)test(`hardeni
  await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
  if(name!=='admin')await expect(page.locator('.theme-toggle').first()).toHaveAttribute('aria-label',theme==='light'?'Switch to dark theme':'Switch to light theme');
  await page.evaluate(()=>document.fonts.ready);
- // Capture the complete render, including proof labels below the initial fold.
- const rendered=await page.screenshot({fullPage:true});
  if(name==='homepage'){
   for(const label of await page.locator('#cin-hero-title,#cin-faq-title,.cin-proof strong').all())
    await expect(label).toHaveCSS('color',theme==='light'?'rgb(11, 18, 32)':'rgb(245, 248, 251)');
+ }
+ // Capture the complete render and an ordinary scrolled viewport: computed
+ // inherited colors alone did not expose WebKit's stale painted foreground.
+ const rendered=await page.screenshot({fullPage:true});
+ if(name==='homepage'){
   await info.attach('homepage-theme-render',{body:rendered,contentType:'image/png'});
+  await page.locator('.cin-proof').scrollIntoViewIfNeeded();
+  await info.attach('homepage-proof-viewport',{body:await page.screenshot(),contentType:'image/png'});
+  for(const label of await page.locator('.cin-proof strong').all())
+   await expect(label).toHaveCSS('color',theme==='light'?'rgb(11, 18, 32)':'rgb(245, 248, 251)');
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
  }
  const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
  if(result.violations.length){

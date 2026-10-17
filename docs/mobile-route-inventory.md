@@ -94,7 +94,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/app/admin/admin-premium.css | 9376 | 11 | 6 | 0 | 0 |
 | src/app/auth/login/auth-premium.css | 23999 | 427 | 6 | 0 | 2 |
 | src/app/files/files.css | 16104 | 10 | 6 | 2 | 0 |
-| src/app/globals.css | 635644 | 2388 | 832 | 131 | 69 |
+| src/app/globals.css | 635714 | 2386 | 832 | 131 | 69 |
 | src/app/wallet/wallet-premium.css | 88 | 2 | 0 | 0 | 0 |
 | src/components/account-workspace.module.css | 6018 | 59 | 3 | 0 | 0 |
 | src/components/admin-workspace.module.css | 3002 | 28 | 3 | 0 | 0 |
