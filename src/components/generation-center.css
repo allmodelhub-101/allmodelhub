@@ -1,0 +1,8 @@
+.generation-drawer .generation-refresh { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; color:var(--muted); font-size:12px; }
+.generation-drawer .generation-refresh button { padding:7px 12px; border:1px solid var(--line); border-radius:9px; background:var(--panel-solid); color:var(--text); font:inherit; cursor:pointer; }
+.generation-drawer .generation-refresh button:disabled { opacity:.6; cursor:default; }
+.generation-drawer .generation-group>h3 { margin:18px 0 5px; color:var(--text); font-size:14px; }
+.generation-drawer .generation-group>p,.generation-drawer .generation-idle { margin:6px 0 12px; color:var(--muted); font-size:12px; line-height:1.5; }
+.generation-drawer .generation-refresh-error { margin:8px 0 14px; color:var(--danger); font-size:12px; line-height:1.5; }
+.generation-drawer .generation-row-content>small { display:block; margin-top:5px; color:var(--muted); font-size:11px; line-height:1.5; }
+.generation-drawer .generation-row-content>.generation-error { color:var(--danger); }

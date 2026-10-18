@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireUser } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   const user = await requireUser();
   const admin = createAdminClient();
@@ -16,6 +18,6 @@ export async function GET(request: NextRequest) {
   if (activeOnly) query = query.in("status", ["queued", "submitted", "processing", "settling"]);
   const { data, error } = await query;
   if (error) return NextResponse.json({ error: "Unable to load generations." }, { status: 500 });
-  return NextResponse.json({ jobs: data || [] });
+  return NextResponse.json({ jobs: data || [] }, { headers: { "Cache-Control": "private, no-store" } });
 }
 

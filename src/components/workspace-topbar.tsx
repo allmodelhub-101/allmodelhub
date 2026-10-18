@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useGenerationCenter } from "./use-generation-center";
+import { generationChargeLabel, isActiveGeneration, type GenerationCenterJob as Job } from "@/lib/generation-center";
+import "./generation-center.css";
 
 type Project = { id: string; name: string };
-type Job = { id: string; public_id: string; project_id?: string | null; modality: string; model_id: string; status: string; prompt?: string; result_urls?: string[]; error_message?: string; charged_credits?: number; estimated_credits?: number };
 type Model = { id: string; name: string; providerFamily?: string; modality: "text" | "image" | "video" | "audio"; capabilities?: string[] };
 type Notification = { id:string; title:string; body:string; read_at?:string|null; created_at:string };
 type SearchResult={id:string;kind:"chat"|"generation"|"file";label:string;detail:string;href:string};
@@ -36,8 +38,8 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
   const [projects, setProjects] = useState<Project[]>([]);
   const [models, setModels] = useState<Model[]>([]);
   const [projectId, setProjectId] = useState("");
-  const [jobs, setJobs] = useState<Job[]>([]);
   const [open, setOpen] = useState(false);
+  const { jobs, refreshing: jobsRefreshing, refreshError: jobsRefreshError, checkedAt: jobsCheckedAt, refresh: loadJobs } = useGenerationCenter(open, offline);
   const [palette, setPalette] = useState(false);
   const [query, setQuery] = useState("");
   const [notifications,setNotifications]=useState<Notification[]>([]);
@@ -58,11 +60,6 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
   useWorkspaceOverlay(projectOpen, projectRef, () => setProjectOpen(false), false);
 
 
-  const loadJobs = useCallback(async () => {
-    if (offline) return;
-    const response = await fetch("/api/jobs?limit=20", { cache: "no-store" });
-    if (response.ok) setJobs((await response.json()).jobs || []);
-  }, [offline]);
   const loadNotifications = useCallback(async () => {if(offline)return;const response=await fetch("/api/notifications",{cache:"no-store"});if(response.ok)setNotifications((await response.json()).notifications||[])}, [offline]);
   const refreshWallet = useCallback(async () => {
     if (offline) return;
@@ -77,8 +74,7 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
     window.setTimeout(()=>setProjectId(saved),0);
     if (!offline) fetch("/api/projects").then((response) => response.json()).then((data) => setProjects(data.projects || [])).catch(() => undefined);
     if (!offline) fetch("/api/models", { cache: "no-store" }).then((response) => response.json()).then((data) => setModels(data.models || [])).catch(() => undefined);
-    const initialLoad=window.setTimeout(()=>{void loadJobs();void loadNotifications();void refreshWallet()},0);
-    const timer = window.setInterval(() => void loadJobs(), 12000);
+    const initialLoad=window.setTimeout(()=>{void loadNotifications();void refreshWallet()},0);
     const walletTimer = window.setInterval(() => void refreshWallet(), 30000);
     const shortcut = (event: KeyboardEvent) => {
       if (!event.defaultPrevented && (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setPalette(true); }
@@ -88,10 +84,10 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
     window.addEventListener("keydown", shortcut);
     const walletRefresh = () => void refreshWallet();
     window.addEventListener("amh-wallet-refresh", walletRefresh);
-    return () => { window.clearTimeout(initialLoad);window.clearInterval(timer);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); window.removeEventListener("amh-wallet-refresh", walletRefresh); };
-  }, [offline, loadJobs, loadNotifications, refreshWallet]);
+    return () => { window.clearTimeout(initialLoad);window.clearInterval(walletTimer); window.removeEventListener("keydown", shortcut); window.removeEventListener("amh-wallet-refresh", walletRefresh); };
+  }, [offline, loadNotifications, refreshWallet]);
 
-  const activeCount = jobs.filter((job) => ["queued", "submitted", "processing", "settling"].includes(job.status)).length;
+  const activeCount = jobs.filter(isActiveGeneration).length;
   const activeProjectName=projects.find(project=>project.id===projectId)?.name||"Personal";
   const unreadCount=notifications.filter(item=>!item.read_at).length;
   const normalizedQuery = query.trim().toLowerCase();
@@ -130,11 +126,16 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
         <Link href="/settings" className="topbar-profile" aria-label="Open account settings"><span>{identity.slice(0, 1).toUpperCase()}</span><CaretDown size={12} weight="bold" aria-hidden="true" /></Link>
       </div>
     </header>
-    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside ref={generationRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{jobs.length ? jobs.map((job) => {
+    {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside ref={generationRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll">
+      <div className="generation-refresh"><span role="status">{offline ? "Offline · showing last loaded status" : jobsRefreshing ? "Refreshing statuses…" : jobsCheckedAt ? `Updated ${jobsCheckedAt.toLocaleTimeString()}` : "Waiting for first update"}</span><button type="button" disabled={offline || jobsRefreshing} onClick={() => void loadJobs()}>Refresh</button></div>
+      {jobsRefreshError && <p className="generation-refresh-error" role="alert">{jobsRefreshError}</p>}
+      {!activeCount && jobsCheckedAt && !jobsRefreshError && <p className="generation-idle">No generations currently in progress.</p>}
+      {jobs.length ? [{ label: "In progress", items: jobs.filter(isActiveGeneration) }, { label: "Recent history", items: jobs.filter(job => !isActiveGeneration(job)) }].filter(group => group.items.length).map(group => <section className="generation-group" key={group.label} aria-label={group.label}><h3>{group.label}</h3>{group.label === "Recent history" && <p>Past results, not current model availability. Full history is in Library.</p>}{group.items.map((job) => {
       const terminalFailure = ["failed", "cancelled", "expired"].includes(job.status);
       const active = ["queued", "submitted", "processing", "settling"].includes(job.status);
-      return <article className="generation-row" key={job.id}><span className={`job-state ${job.status}`} /><span className="generation-row-content"><Link href={workspaceHref(job)} onClick={() => setOpen(false)}><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {Number(job.charged_credits || job.estimated_credits || 0).toFixed(2)} credits</small></Link>{job.error_message && terminalFailure && <small className="generation-error">{job.error_message}</small>}<span className="generation-row-actions">{terminalFailure && <button type="button" onClick={() => retryJob(job)}>Retry with settings</button>}<Link href="/usage" onClick={() => setOpen(false)}>Cost details</Link>{active && <small>Cancellation becomes available only when the provider supports it safely.</small>}</span></span></article>;
-    }) : <div className="drawer-empty">Your active and recent generations will appear here.</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts <CaretRight size={14} /></Link></aside></>}
+      const timestamp = active ? job.updated_at || job.created_at : job.completed_at || job.updated_at || job.created_at;
+      return <article className="generation-row" key={job.id}><span className={`job-state ${job.status}`} /><span className="generation-row-content"><Link href={workspaceHref(job)} onClick={() => setOpen(false)}><b>{job.prompt?.slice(0, 58) || job.model_id}</b><small>{job.modality} · {job.status} · {generationChargeLabel(job)}</small></Link><small>{job.model_id}{timestamp && <time dateTime={timestamp}> · {new Date(timestamp).toLocaleString()}</time>}</small>{job.error_message && terminalFailure && <small className="generation-error">Recorded failure: {job.error_message}</small>}<span className="generation-row-actions">{terminalFailure && <button type="button" onClick={() => retryJob(job)}>Retry with settings</button>}<Link href="/usage" onClick={() => setOpen(false)}>Cost details</Link>{active && <small>Cancellation becomes available only when the provider supports it safely.</small>}</span></span></article>;
+    })}</section>) : <div className="drawer-empty">{jobsRefreshing ? "Loading generations…" : jobsRefreshError ? "Generations are temporarily unavailable. Please refresh." : "Your active and recent generations will appear here."}</div>}</div><Link className="drawer-footer" href="/usage">Open usage & receipts <CaretRight size={14} /></Link></aside></>}
     {notificationsOpen&&<><button className="workspace-scrim" aria-label="Close notifications" onClick={()=>setNotificationsOpen(false)}/><aside ref={notificationsRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer notification-drawer" aria-label="Notifications"><div className="drawer-head"><div><div className="kicker">Updates</div><h2>Notifications</h2></div><button className="icon-button" onClick={()=>setNotificationsOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll" aria-live="polite">{notifications.length?notifications.map(item=><button type="button" className={`drawer-notification ${item.read_at?"":"unread"}`} key={item.id} onClick={()=>void markNotificationsRead(item.id)}><span><b>{item.title}</b><small>{item.body}</small></span><time>{new Date(item.created_at).toLocaleString()}</time></button>):<div className="drawer-empty">You’re all caught up.</div>}</div><div className="drawer-footer drawer-footer-actions"><button type="button" disabled={!unreadCount} onClick={()=>void markNotificationsRead()}>Mark all read</button><Link href="/notifications" onClick={()=>setNotificationsOpen(false)}>Open all <CaretRight size={14} /></Link></div></aside></>}
     {keyboardHelp&&<div ref={helpRef} tabIndex={-1} className="command-overlay keyboard-overlay" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><button className="workspace-scrim" aria-label="Close keyboard shortcuts" onClick={()=>setKeyboardHelp(false)}/><div className="keyboard-panel"><div className="drawer-head"><div><div className="kicker">Work faster</div><h2>Keyboard shortcuts</h2></div><button className="icon-button" onClick={()=>setKeyboardHelp(false)} aria-label="Close"><X size={18} /></button></div><div className="shortcut-list"><span><b>Search and jump</b><kbd>Ctrl/⌘ K</kbd></span><span><b>Close an open panel</b><kbd>Esc</kbd></span><span><b>Open this help</b><kbd>?</kbd></span><span><b>Send a chat message</b><kbd>Enter</kbd></span><span><b>New line in chat</b><kbd>Shift Enter</kbd></span></div></div></div>}
     {palette && <div ref={paletteRef} tabIndex={-1} className="command-overlay" role="dialog" aria-modal="true" aria-label="Command palette"><button className="workspace-scrim" aria-label="Close command palette" onClick={() => setPalette(false)} /><div className="command-panel"><label className="command-input"><MagnifyingGlass size={19} aria-hidden="true" /><input aria-label="Search workspace" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search chats, generations, files, projects, or models…" /><kbd>Esc</kbd></label><div className="command-list">

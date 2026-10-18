@@ -147,10 +147,16 @@ export async function GET(_: Request, context: { params: Promise<{ id: string }>
 
     const normalized = task.state === "processing" ? "processing" : "submitted";
     const checkedAt = new Date();
-    const { data: updated } = await admin.from("generation_jobs").update({ status: normalized, result_json: summary,
+    const { data: updated, error: statusError } = await admin.from("generation_jobs").update({ status: normalized, result_json: summary,
       last_provider_check_at: checkedAt.toISOString(), next_reconcile_at: new Date(checkedAt.getTime() + 5 * 60_000).toISOString(),
-      reconciliation_state: "processing", updated_at: checkedAt.toISOString() }).eq("id", job.id).select(jobFields).single();
-    return NextResponse.json({ job: await clientJob(updated as GenerationJob) });
+      reconciliation_state: "processing", updated_at: checkedAt.toISOString() }).eq("id", job.id).eq("user_id", user.id)
+      .in("status", ["queued", "submitted", "processing"]).select(jobFields).maybeSingle();
+    if (statusError) throw statusError;
+    if (updated) return NextResponse.json({ job: await clientJob(updated as GenerationJob) });
+    // Another poll/callback may have finalized this job while the provider request was in flight.
+    const { data: latest, error: latestError } = await admin.from("generation_jobs").select(jobFields).eq("id", job.id).eq("user_id", user.id).single();
+    if (latestError || !latest) throw latestError || new Error("Job status unavailable");
+    return NextResponse.json({ job: await clientJob(latest as GenerationJob) });
   } catch (pollError) {
     logServerError("job-poll-provider", pollError, { jobId: job.id });
     return NextResponse.json({ job: await clientJob(job), warning: "Could not refresh provider status." });
