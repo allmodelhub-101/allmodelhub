@@ -17,15 +17,13 @@ export function AuthPage({ mode, nextPath, authError }: { mode: EntryMode; nextP
     </nav>
     <section className="auth-stage">
       <aside className="auth-story">
-        <span className="auth-kicker">One intelligent workspace</span>
-        <h2>Everything you create.<br /><em>One powerful place.</em></h2>
-        <p>Chat, images, video, audio and projects in one intelligent workspace.</p>
+        <h2>Your ideas.<br /><em>All in one place.</em></h2>
+        <p>Chat, images, video and audio. Create with your favorite AI models.</p>
         <div className="auth-model-orbit" aria-hidden="true">
           <span className="auth-capability chat">Chat</span><span className="auth-capability image">Image</span><span className="auth-capability video">Video</span><span className="auth-capability audio">Audio</span>
           <i className="auth-orbit auth-orbit-one" /><i className="auth-orbit auth-orbit-two" />
-          <b>MS<small>Creative OS</small></b>
+          <b><Image src={BRAND.logoPath} alt="" width={58} height={58} /></b>
         </div>
-        <ul><li><i>✓</i>Private creative workspace</li><li><i>✓</i>Transparent PKR credits</li></ul>
       </aside>
       <LoginForm nextPath={nextPath} initialMode={mode} authError={authError} />
     </section>

@@ -13,8 +13,8 @@ for(const route of [...publicRoutes,'/studio-fixture']) {
     await expect(page.locator('h1').first()).toBeVisible();
     if(route!=='/studio-fixture') await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
     if(route==='/') await expect(page.getByRole('link',{name:'Start Free',exact:true}).first()).toBeVisible();
-    if(route==='/auth/login') await expect(page.getByRole('button',{name:'Sign in to workspace',exact:true})).toBeVisible();
-    if(route==='/auth/signup') await expect(page.getByRole('button',{name:'Create my account',exact:true})).toBeVisible();
+    if(route==='/auth/login') await expect(page.locator('.auth-form').getByRole('button',{name:'Sign in',exact:true})).toBeVisible();
+    if(route==='/auth/signup') await expect(page.locator('.auth-form').getByRole('button',{name:'Create account',exact:true})).toBeVisible();
     if(route==='/studio-fixture') await expect(page.getByRole('button',{name:/Choose a video model:/})).toBeVisible();
     await page.evaluate(()=>document.fonts.ready);
     const controls=await page.locator('a,button,input,textarea,select').evaluateAll(nodes=>nodes.filter(n=>{

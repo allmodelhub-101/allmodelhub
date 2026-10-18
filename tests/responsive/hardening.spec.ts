@@ -6,14 +6,14 @@ test('hardening: saved email hydration, route modes and local validation',async(
  await context.route('**/api/**',async route=>{requests.push(route.request().url());await route.abort()});
  await page.addInitScript(()=>sessionStorage.setItem('models-suite-auth-email','synthetic@example.invalid'));
  await page.goto('/auth/login',{waitUntil:'networkidle'});
- const email=page.getByRole('textbox',{name:'Email address'});
+ const email=page.getByRole('textbox',{name:'Email',exact:true});
  await expect(email).toHaveValue('synthetic@example.invalid');
  await email.fill('edited@example.invalid');
  await page.getByLabel('Password',{exact:true}).fill('Synthetic1!');
- await page.getByRole('tab',{name:'Create account',exact:true}).click();
+ await page.getByRole('group',{name:'Account access mode'}).getByRole('button',{name:'Create account',exact:true}).click();
  await expect(page.getByRole('heading',{name:'Create your account',exact:true})).toBeVisible();
  await expect(email).toHaveValue('edited@example.invalid');
- await expect(page.getByLabel('New password',{exact:true})).toHaveValue('');
+ await expect(page.getByLabel('Password',{exact:true})).toHaveValue('');
  await expect(page).toHaveURL(/\/auth\/signup/);
  await page.goBack();
  await expect(page.getByRole('heading',{name:'Welcome back'})).toBeVisible();
@@ -21,15 +21,32 @@ test('hardening: saved email hydration, route modes and local validation',async(
  await page.getByRole('button',{name:'Forgot password?'}).click();
  await expect(page.getByRole('heading',{name:'Reset your password'})).toBeVisible();
  await email.fill('invalid');
- await page.getByRole('button',{name:'Email me a recovery link'}).click();
+ await page.getByRole('button',{name:'Send reset link'}).click();
  await expect(email).toHaveAttribute('aria-invalid','true');
- await expect(page.locator('.auth-form-panel').getByRole('alert')).toContainText('Please review');
+ await expect(page.locator('.auth-form-panel').getByRole('alert')).toHaveCount(1);
  await expect(page.locator('#email-error')).toContainText('Enter a valid email');
  await page.getByRole('button',{name:'Back to sign in'}).click();
  await expect(page.getByLabel('Password',{exact:true})).toHaveAttribute('type','password');
  await page.getByRole('button',{name:'Show password'}).click();
  await expect(page.getByLabel('Password',{exact:true})).toHaveAttribute('type','text');
  expect(errors).toEqual([]);expect(requests,'invalid local form must not reach auth APIs').toEqual([]);
+});
+
+test('hardening: auth uses a loaded Google mark and one credential error',async({page})=>{
+ await page.route('**/api/auth/login',route=>route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({code:'INVALID_CREDENTIALS'})}));
+ await page.goto('/auth/login',{waitUntil:'networkidle'});
+ const logo=page.locator('.auth-google img');
+ await expect(logo).toHaveAttribute('src','/google-g.png');
+ expect(await logo.evaluate(el=>(el as HTMLImageElement).complete&&(el as HTMLImageElement).naturalWidth>0)).toBe(true);
+ await page.getByLabel('Email',{exact:true}).fill('synthetic@example.invalid');
+ await page.getByLabel('Password',{exact:true}).fill('Synthetic1!');
+ await page.locator('.auth-form').getByRole('button',{name:'Sign in',exact:true}).click();
+ await expect(page.locator('.auth-form-panel').getByRole('alert')).toHaveCount(1);
+ await expect(page.locator('.auth-form-panel').getByRole('alert')).toHaveText('Email or password is incorrect. Please try again.');
+ await expect(page.locator('.auth-field-error')).toHaveCount(0);
+ await page.getByLabel('Email',{exact:true}).fill('edited@example.invalid');
+ await expect(page.locator('.auth-form-panel').getByRole('alert')).toHaveCount(0);
+ await expect(page.locator('.auth-field-error')).toHaveCount(0);
 });
 
 test('hardening: premium admin motion respects the browser preference',async({page})=>{
