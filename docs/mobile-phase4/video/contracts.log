@@ -1,0 +1,28 @@
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#uploadReference (208.8332ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#addReferences (54.1946ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteReference (33.3762ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteFromClipboard (87.2284ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#poll (66.255ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#submit (94.3228ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#removeReference (25.4752ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#ensureResultReference (117.2014ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#resetResult (139.0772ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#applyAsReference (36.3853ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#animateInVideo (26.4704ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#copySettings (46.187ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#shareResult (18.4408ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#upload (90.9361ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#poll (50.1224ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#submit (40.9366ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#poll (9.0483ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#submit (10.1434ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#pollAsyncJob (10.673ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#submit (11.1424ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3784.3618

@@ -1,0 +1,515 @@
+2026-10-16T10:14:42.757Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:42.770Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:42.771Z pw:webserver Starting WebServer process node node_modules/next/dist/bin/next dev --hostname 127.0.0.1 --port 3100...
+2026-10-16T10:14:42.793Z pw:webserver Process started
+2026-10-16T10:14:42.793Z pw:webserver Waiting for availability...
+2026-10-16T10:14:42.794Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:42.799Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:42.799Z pw:webserver Waiting 100ms
+2026-10-16T10:14:42.907Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:42.909Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:42.909Z pw:webserver Waiting 250ms
+2026-10-16T10:14:43.166Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:43.169Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:43.169Z pw:webserver Waiting 500ms
+[WebServer] (node:19660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+2026-10-16T10:14:43.682Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:43.685Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:43.685Z pw:webserver Waiting 1000ms
+2026-10-16T10:14:44.698Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+2026-10-16T10:14:44.700Z pw:webserver Error while checking if http://127.0.0.1:3100/ is available: connect ECONNREFUSED 127.0.0.1:3100
+2026-10-16T10:14:44.701Z pw:webserver Waiting 1000ms
+[WebServer] (node:12828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ▲ Next.js 16.3.3 (Turbopack)
+[WebServer] - Local:         http://127.0.0.1:3100
+[WebServer] - Network:       http://127.0.0.1:3100
+[WebServer] ✓ Ready in 2.2s
+2026-10-16T10:14:45.712Z pw:webserver HTTP GET: http://127.0.0.1:3100/
+[WebServer] ✓ Running next.config.ts took 345ms
+[WebServer] Creating turbopack project {
+[WebServer]   dir: 'C:\\Users\\The Perfect Point\\Documents\\Codex\\2026-10-16\\models-suite-mobile-first-transformation-phase\\work\\allmodelhub',
+[WebServer]   testMode: true
+[WebServer] }
+[WebServer] - Experiments (use with caution):
+[WebServer]   · serverActions
+[WebServer]
+[WebServer] ○ Compiling / ...
+2026-10-16T10:15:07.532Z pw:webserver HTTP Status: 200
+2026-10-16T10:15:07.533Z pw:webserver WebServer available
+
+Running 152 tests using 1 worker
+
+[WebServer]  GET / 200 in 12.4s (next.js: 11.3s, application-code: 1039ms)
+(node:1732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /acceptable-use 200 in 3.4s (next.js: 2.5s, application-code: 891ms)
+  ok   1 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (8.4s)
+[WebServer] ○ Compiling /auth/login ...
+[WebServer]  GET /auth/login 200 in 4.1s (next.js: 3.7s, application-code: 441ms)
+  ok   2 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (7.0s)
+[WebServer]  GET /auth/signup 200 in 1270ms (next.js: 1033ms, application-code: 237ms)
+  ok   3 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (4.1s)
+[WebServer]  GET /auth/update-password 200 in 1615ms (next.js: 1287ms, application-code: 328ms)
+  ok   4 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (4.3s)
+[WebServer]  GET / 200 in 354ms (next.js: 20ms, application-code: 335ms)
+  ok   5 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.1s)
+[WebServer]  GET /privacy 200 in 1210ms (next.js: 804ms, application-code: 406ms)
+  ok   6 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.1s)
+[WebServer]  GET /refunds 200 in 1124ms (next.js: 783ms, application-code: 341ms)
+  ok   7 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.6s)
+[WebServer]  GET /terms 200 in 1081ms (next.js: 736ms, application-code: 345ms)
+  ok   8 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.6s)
+[WebServer]  GET /studio-fixture 200 in 1953ms (next.js: 1498ms, application-code: 456ms)
+  ok   9 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (5.2s)
+  -   10 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/models authenticated workflow BLOCKED
+  -   11 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin authenticated workflow BLOCKED
+  -   12 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/payments authenticated workflow BLOCKED
+  -   13 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/profits authenticated workflow BLOCKED
+  -   14 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/settings authenticated workflow BLOCKED
+  -   15 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/users authenticated workflow BLOCKED
+  -   16 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /audio authenticated workflow BLOCKED
+  -   17 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /auth/verified authenticated workflow BLOCKED
+  -   18 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /battle authenticated workflow BLOCKED
+  -   19 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /chat authenticated workflow BLOCKED
+  -   20 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /files authenticated workflow BLOCKED
+  -   21 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /history authenticated workflow BLOCKED
+  -   22 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /images authenticated workflow BLOCKED
+  -   23 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /models authenticated workflow BLOCKED
+  -   24 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /notifications authenticated workflow BLOCKED
+  -   25 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /projects authenticated workflow BLOCKED
+  -   26 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /settings authenticated workflow BLOCKED
+  -   27 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /support authenticated workflow BLOCKED
+  -   28 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /templates authenticated workflow BLOCKED
+  -   29 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /usage authenticated workflow BLOCKED
+  -   30 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /video authenticated workflow BLOCKED
+  -   31 [chromium-390x844] › tests\responsive\baseline.spec.ts:34:7 › /wallet authenticated workflow BLOCKED
+[WebServer]  GET / 200 in 1090ms (next.js: 487ms, application-code: 604ms)
+  x   32 [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (1.0m)
+(node:22192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /auth/login 200 in 288ms (next.js: 35ms, application-code: 253ms)
+  ok  33 [chromium-390x844] › tests\responsive\interactions.spec.ts:15:5 › login form focus, typing, password visibility and reduced viewport (2.7s)
+[WebServer]  GET /studio-fixture 200 in 175ms (next.js: 15ms, application-code: 160ms)
+  x   34 [chromium-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search (12.6s)
+(node:7692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /studio-fixture 200 in 224ms (next.js: 15ms, application-code: 209ms)
+  ok  35 [chromium-390x844] › tests\responsive\interactions.spec.ts:40:5 › safe video fixture form and viewer modal (3.5s)
+  -   36 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login
+  -   37 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal
+  -   38 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture
+(node:1060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /acceptable-use 200 in 457ms (next.js: 24ms, application-code: 433ms)
+  ok  39 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.6s)
+[WebServer]  GET /auth/login 200 in 250ms (next.js: 20ms, application-code: 229ms)
+  ok  40 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.7s)
+[WebServer]  GET /auth/signup 200 in 235ms (next.js: 27ms, application-code: 208ms)
+  ok  41 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.7s)
+[WebServer]  GET /auth/update-password 200 in 147ms (next.js: 33ms, application-code: 114ms)
+  ok  42 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.1s)
+[WebServer]  GET / 200 in 372ms (next.js: 12ms, application-code: 361ms)
+  ok  43 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.4s)
+[WebServer]  GET /privacy 200 in 428ms (next.js: 16ms, application-code: 412ms)
+  ok  44 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.0s)
+[WebServer]  GET /refunds 200 in 320ms (next.js: 18ms, application-code: 303ms)
+  ok  45 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (2.8s)
+[WebServer]  GET /terms 200 in 402ms (next.js: 18ms, application-code: 384ms)
+  ok  46 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.3s)
+[WebServer]  GET /studio-fixture 200 in 200ms (next.js: 18ms, application-code: 183ms)
+  ok  47 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.8s)
+  -   48 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin/models authenticated workflow BLOCKED
+  -   49 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin authenticated workflow BLOCKED
+  -   50 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin/payments authenticated workflow BLOCKED
+  -   51 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin/profits authenticated workflow BLOCKED
+  -   52 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin/settings authenticated workflow BLOCKED
+  -   53 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /admin/users authenticated workflow BLOCKED
+  -   54 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /audio authenticated workflow BLOCKED
+  -   55 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /auth/verified authenticated workflow BLOCKED
+  -   56 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /battle authenticated workflow BLOCKED
+  -   57 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /chat authenticated workflow BLOCKED
+  -   58 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /files authenticated workflow BLOCKED
+  -   59 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /history authenticated workflow BLOCKED
+  -   60 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /images authenticated workflow BLOCKED
+  -   61 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /models authenticated workflow BLOCKED
+  -   62 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /notifications authenticated workflow BLOCKED
+  -   63 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /projects authenticated workflow BLOCKED
+  -   64 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /settings authenticated workflow BLOCKED
+  -   65 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /support authenticated workflow BLOCKED
+  -   66 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /templates authenticated workflow BLOCKED
+  -   67 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /usage authenticated workflow BLOCKED
+  -   68 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /video authenticated workflow BLOCKED
+  -   69 [chromium-768x1024] › tests\responsive\baseline.spec.ts:34:7 › /wallet authenticated workflow BLOCKED
+[WebServer]  GET / 200 in 923ms (next.js: 93ms, application-code: 829ms)
+[WebServer]  GET /auth/login 200 in 377ms (next.js: 78ms, application-code: 299ms)
+  ok  70 [chromium-768x1024] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (6.3s)
+[WebServer]  GET /auth/login 200 in 464ms (next.js: 41ms, application-code: 424ms)
+  ok  71 [chromium-768x1024] › tests\responsive\interactions.spec.ts:15:5 › login form focus, typing, password visibility and reduced viewport (3.5s)
+[WebServer]  GET /studio-fixture 200 in 245ms (next.js: 25ms, application-code: 219ms)
+  x   72 [chromium-768x1024] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search (14.4s)
+(node:14132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /studio-fixture 200 in 251ms (next.js: 12ms, application-code: 239ms)
+  ok  73 [chromium-768x1024] › tests\responsive\interactions.spec.ts:40:5 › safe video fixture form and viewer modal (4.1s)
+  -   74 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline login
+  -   75 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal
+  -   76 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture
+(node:28420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /acceptable-use 200 in 345ms (next.js: 22ms, application-code: 323ms)
+  ok  77 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.5s)
+[WebServer]  GET /auth/login 200 in 257ms (next.js: 20ms, application-code: 237ms)
+  ok  78 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.7s)
+[WebServer]  GET /auth/signup 200 in 344ms (next.js: 20ms, application-code: 324ms)
+  ok  79 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.8s)
+[WebServer]  GET /auth/update-password 200 in 269ms (next.js: 29ms, application-code: 240ms)
+  ok  80 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.4s)
+[WebServer]  GET / 200 in 346ms (next.js: 18ms, application-code: 328ms)
+  ok  81 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.1s)
+[WebServer]  GET /privacy 200 in 442ms (next.js: 21ms, application-code: 421ms)
+  ok  82 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.0s)
+[WebServer]  GET /refunds 200 in 331ms (next.js: 39ms, application-code: 292ms)
+  ok  83 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.2s)
+[WebServer]  GET /terms 200 in 270ms (next.js: 17ms, application-code: 253ms)
+  ok  84 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.9s)
+[WebServer]  GET /studio-fixture 200 in 307ms (next.js: 19ms, application-code: 287ms)
+  ok  85 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.0s)
+  -   86 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin/models authenticated workflow BLOCKED
+  -   87 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin authenticated workflow BLOCKED
+  -   88 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin/payments authenticated workflow BLOCKED
+  -   89 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin/profits authenticated workflow BLOCKED
+  -   90 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin/settings authenticated workflow BLOCKED
+  -   91 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /admin/users authenticated workflow BLOCKED
+  -   92 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /audio authenticated workflow BLOCKED
+  -   93 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /auth/verified authenticated workflow BLOCKED
+  -   94 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /battle authenticated workflow BLOCKED
+  -   95 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /chat authenticated workflow BLOCKED
+  -   96 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /files authenticated workflow BLOCKED
+  -   97 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /history authenticated workflow BLOCKED
+  -   98 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /images authenticated workflow BLOCKED
+  -   99 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /models authenticated workflow BLOCKED
+  -  100 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /notifications authenticated workflow BLOCKED
+  -  101 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /projects authenticated workflow BLOCKED
+  -  102 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /settings authenticated workflow BLOCKED
+  -  103 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /support authenticated workflow BLOCKED
+  -  104 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /templates authenticated workflow BLOCKED
+  -  105 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /usage authenticated workflow BLOCKED
+  -  106 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /video authenticated workflow BLOCKED
+  -  107 [chromium-1366x768] › tests\responsive\baseline.spec.ts:34:7 › /wallet authenticated workflow BLOCKED
+[WebServer]  GET / 200 in 379ms (next.js: 13ms, application-code: 367ms)
+[WebServer]  GET /auth/login 200 in 278ms (next.js: 34ms, application-code: 243ms)
+  ok 108 [chromium-1366x768] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (6.3s)
+[WebServer]  GET /auth/login 200 in 351ms (next.js: 13ms, application-code: 338ms)
+  ok 109 [chromium-1366x768] › tests\responsive\interactions.spec.ts:15:5 › login form focus, typing, password visibility and reduced viewport (2.9s)
+[WebServer]  GET /studio-fixture 200 in 191ms (next.js: 15ms, application-code: 176ms)
+  x  110 [chromium-1366x768] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search (14.0s)
+(node:19984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /studio-fixture 200 in 194ms (next.js: 16ms, application-code: 178ms)
+  ok 111 [chromium-1366x768] › tests\responsive\interactions.spec.ts:40:5 › safe video fixture form and viewer modal (3.5s)
+  -  112 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline login
+  -  113 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal
+  -  114 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture
+(node:1860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /acceptable-use 200 in 442ms (next.js: 10ms, application-code: 432ms)
+[WebServer]  GET /manifest.webmanifest 200 in 1683ms (next.js: 1554ms, application-code: 129ms)
+  ok 115 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.4s)
+[WebServer]  GET /auth/login 200 in 298ms (next.js: 17ms, application-code: 282ms)
+[WebServer]  GET /manifest.webmanifest 200 in 50ms (next.js: 18ms, application-code: 32ms)
+  ok 116 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.9s)
+[WebServer]  GET /auth/signup 200 in 270ms (next.js: 16ms, application-code: 253ms)
+[WebServer]  GET /manifest.webmanifest 200 in 28ms (next.js: 14ms, application-code: 14ms)
+  ok 117 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.9s)
+[WebServer]  GET /auth/update-password 200 in 176ms (next.js: 11ms, application-code: 166ms)
+[WebServer]  GET /manifest.webmanifest 200 in 63ms (next.js: 36ms, application-code: 27ms)
+  ok 118 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.2s)
+[WebServer]  GET / 200 in 321ms (next.js: 13ms, application-code: 308ms)
+[WebServer]  GET /manifest.webmanifest 200 in 28ms (next.js: 12ms, application-code: 16ms)
+  ok 119 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.2s)
+[WebServer]  GET /privacy 200 in 410ms (next.js: 12ms, application-code: 398ms)
+[WebServer]  GET /manifest.webmanifest 200 in 26ms (next.js: 10ms, application-code: 16ms)
+  ok 120 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.9s)
+[WebServer]  GET /refunds 200 in 358ms (next.js: 9ms, application-code: 349ms)
+[WebServer]  GET /manifest.webmanifest 200 in 30ms (next.js: 16ms, application-code: 15ms)
+  ok 121 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.7s)
+[WebServer]  GET /terms 200 in 384ms (next.js: 13ms, application-code: 371ms)
+[WebServer]  GET /manifest.webmanifest 200 in 32ms (next.js: 15ms, application-code: 16ms)
+  ok 122 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.3s)
+[WebServer]  GET /studio-fixture 200 in 266ms (next.js: 16ms, application-code: 250ms)
+[WebServer]  GET /manifest.webmanifest 200 in 127ms (next.js: 51ms, application-code: 77ms)
+  ok 123 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.5s)
+  -  124 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/models authenticated workflow BLOCKED
+  -  125 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin authenticated workflow BLOCKED
+  -  126 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/payments authenticated workflow BLOCKED
+  -  127 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/profits authenticated workflow BLOCKED
+  -  128 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/settings authenticated workflow BLOCKED
+  -  129 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /admin/users authenticated workflow BLOCKED
+  -  130 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /audio authenticated workflow BLOCKED
+  -  131 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /auth/verified authenticated workflow BLOCKED
+  -  132 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /battle authenticated workflow BLOCKED
+  -  133 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /chat authenticated workflow BLOCKED
+  -  134 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /files authenticated workflow BLOCKED
+  -  135 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /history authenticated workflow BLOCKED
+  -  136 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /images authenticated workflow BLOCKED
+  -  137 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /models authenticated workflow BLOCKED
+  -  138 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /notifications authenticated workflow BLOCKED
+  -  139 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /projects authenticated workflow BLOCKED
+  -  140 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /settings authenticated workflow BLOCKED
+  -  141 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /support authenticated workflow BLOCKED
+  -  142 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /templates authenticated workflow BLOCKED
+  -  143 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /usage authenticated workflow BLOCKED
+  -  144 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /video authenticated workflow BLOCKED
+  -  145 [webkit-390x844] › tests\responsive\baseline.spec.ts:34:7 › /wallet authenticated workflow BLOCKED
+[WebServer]  GET / 200 in 353ms (next.js: 40ms, application-code: 312ms)
+[WebServer]  GET /manifest.webmanifest 200 in 47ms (next.js: 24ms, application-code: 23ms)
+  x  146 [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates (1.0m)
+(node:19380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /auth/login 200 in 228ms (next.js: 21ms, application-code: 207ms)
+[WebServer]  GET /manifest.webmanifest 200 in 62ms (next.js: 43ms, application-code: 19ms)
+  ok 147 [webkit-390x844] › tests\responsive\interactions.spec.ts:15:5 › login form focus, typing, password visibility and reduced viewport (3.6s)
+[WebServer]  GET /studio-fixture 200 in 226ms (next.js: 30ms, application-code: 196ms)
+[WebServer]  GET /manifest.webmanifest 200 in 180ms (next.js: 107ms, application-code: 73ms)
+  x  148 [webkit-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search (13.6s)
+(node:20548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  GET /studio-fixture 200 in 246ms (next.js: 12ms, application-code: 234ms)
+[WebServer]  GET /manifest.webmanifest 200 in 64ms (next.js: 42ms, application-code: 22ms)
+  ok 149 [webkit-390x844] › tests\responsive\interactions.spec.ts:40:5 › safe video fixture form and viewer modal (4.3s)
+  -  150 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login
+  -  151 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal
+  -  152 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture
+2026-10-16T10:21:44.047Z pw:webserver Terminating the WebServer
+2026-10-16T10:21:44.442Z pw:webserver Terminated the WebServer
+
+
+  1) [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'Login', exact: true }).first()
+
+
+       9 |     await expect(menu).toHaveAttribute('aria-expanded','false');
+      10 |   }
+    > 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();
+         |                                                                  ^
+      12 |   await expect(page).toHaveURL(/\/auth\/login/);
+      13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();
+      14 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:11:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();
+      37 |   await page.keyboard.press('Escape');
+    > 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');
+         |                        ^
+      39 | });
+      40 | test('safe video fixture form and viewer modal',async({page})=>{
+      41 |   await page.goto('/studio-fixture');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:38:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium-768x1024] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();
+      37 |   await page.keyboard.press('Escape');
+    > 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');
+         |                        ^
+      39 | });
+      40 | test('safe video fixture form and viewer modal',async({page})=>{
+      41 |   await page.goto('/studio-fixture');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:38:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-768x1024\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium-1366x768] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('button', { name: /Choose a video model:/ })
+    Expected: "false"
+    Received: "true"
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByRole('button', { name: /Choose a video model:/ }) with timeout 10000ms
+      - waiting for getByRole('button', { name: /Choose a video model:/ })
+        23 × locator resolved to <button type="button" aria-expanded="true" aria-haspopup="listbox" aria-controls="video-model-options" aria-label="Choose a video model: MiniMax H3 Lite" class="video-studio-v2-module__bOxVpW__modelTrigger">…</button>
+           - unexpected value "true"
+
+
+      36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();
+      37 |   await page.keyboard.press('Escape');
+    > 38 |   await expect(picker).toHaveAttribute('aria-expanded','false');
+         |                        ^
+      39 | });
+      40 | test('safe video fixture form and viewer modal',async({page})=>{
+      41 |   await page.goto('/studio-fixture');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:38:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-chromium-1366x768\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'Login', exact: true }).first()
+
+
+       9 |     await expect(menu).toHaveAttribute('aria-expanded','false');
+      10 |   }
+    > 11 |   await page.getByRole('link',{name:'Login',exact:true}).first().click();
+         |                                                                  ^
+      12 |   await expect(page).toHaveURL(/\/auth\/login/);
+      13 |   await expect(page.getByRole('textbox',{name:/email/i})).toBeVisible();
+      14 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:11:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-marketing-nav-b76c6-s-with-Escape-and-navigates-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [webkit-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('listbox', { name: 'Available video models' })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('listbox', { name: 'Available video models' }) with timeout 10000ms
+      - waiting for getByRole('listbox', { name: 'Available video models' })
+
+
+      34 |   const picker=page.getByRole('button',{name:/Choose a video model:/});
+      35 |   await picker.click();
+    > 36 |   await expect(page.getByRole('listbox',{name:'Available video models'})).toBeVisible();
+         |                                                                           ^
+      37 |   await page.keyboard.press('Escape');
+      38 |   await expect(picker).toHaveAttribute('aria-expanded','false');
+      39 | });
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:36:75
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\interactions-safe-video-fi-bab45-dropdown-Escape-from-search-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates
+    [chromium-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+    [chromium-768x1024] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+    [chromium-1366x768] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+    [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › marketing navigation opens, closes with Escape and navigates
+    [webkit-390x844] › tests\responsive\interactions.spec.ts:32:5 › safe video fixture model dropdown Escape from search
+  100 skipped
+  46 passed (7.0m)

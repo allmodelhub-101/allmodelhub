@@ -1,0 +1,14 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "grid": [
+    {
+      "class": "template-grid",
+      "width": 673.9375,
+      "columns": "329.969px 329.969px",
+      "overflow": "visible"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+ExpectError: Next production runtime errors
+
+expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 3
+
+- Array []
++ Array [
++   "/127.0.0.1:3101/?_rsc=gNcX-1QlWVHQ1vq5 due to access control checks.",
++ ]
+    at captureRawStack (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\node_modules\.pnpm\playwright-core@1.64.1\node_modules\playwright-core\lib\coreBundle.js:9282:17)
+    at callMatcherAsStep (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\node_modules\.pnpm\playwright@1.64.1\node_modules\playwright\lib\matchers\expect.js:13316:57)
+    at Object.toEqual (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\node_modules\.pnpm\playwright@1.64.1\node_modules\playwright\lib\matchers\expect.js:13308:23)
+    at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\scripts\mobile-studios-next-production-check.mjs:33:52 {
+  matcherResult: {
+    actual: [
+      '/127.0.0.1:3101/?_rsc=gNcX-1QlWVHQ1vq5 due to access control checks.'
+    ],
+    expected: [],
+    message: 'expect(received).toEqual(expected) // deep equality\n' +
+      '\n' +
+      '- Expected  - 1\n' +
+      '+ Received  + 3\n' +
+      '\n' +
+      '- Array []\n' +
+      '+ Array [\n' +
+      '+   "/127.0.0.1:3101/?_rsc=gNcX-1QlWVHQ1vq5 due to access control checks.",\n' +
+      '+ ]',
+    name: 'toEqual',
+    pass: false
+  }
+}
+
+Node.js v24.21.0

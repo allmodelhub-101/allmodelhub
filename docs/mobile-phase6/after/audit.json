@@ -1,0 +1,5875 @@
+[
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        271,
+        99
+      ],
+      "frames": [
+        3.8999999523161932,
+        66.59999999999991,
+        83.40000000000009,
+        66.59999999999991,
+        83.30000000000018,
+        83.30000000000018,
+        66.80000000000018,
+        83.19999999999982,
+        66.69999999999982,
+        83.30000000000018,
+        66.69999999999982
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 816.3000000715256,
+          "duration": 1382
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 21
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        262,
+        63,
+        121
+      ],
+      "frames": [
+        15,
+        50,
+        50,
+        33.30000000000018,
+        50,
+        33.30000000000018,
+        50.099999999999454,
+        33.30000000000018,
+        50,
+        33.19999999999982,
+        50.100000000000364,
+        33.399999999999636,
+        49.900000000000546,
+        33.399999999999636,
+        49.899999999999636,
+        50,
+        33.400000000000546,
+        50,
+        33.30000000000018
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1079.8000000715256,
+          "duration": 1511.1000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 60
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        259,
+        74,
+        153,
+        69,
+        233
+      ],
+      "frames": [
+        6.699999976158324,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 933.3999999761581,
+          "duration": 2155.100000023842
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        275,
+        121,
+        173
+      ],
+      "frames": [
+        2.199999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 673.2000000476837,
+          "duration": 1958.6000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 27
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        251,
+        124,
+        66,
+        129
+      ],
+      "frames": [
+        3.299999952316284,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.5,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1116.5,
+          "duration": 2226.899999976158
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 13
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        247,
+        126,
+        209
+      ],
+      "frames": [
+        13.90000002384204,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        33.400000000000546,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 633.6000000238419,
+          "duration": 1936.7999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        257,
+        185,
+        136
+      ],
+      "frames": [
+        9.699999976158324,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 659.3999999761581,
+          "duration": 1327.2999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 20
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        61,
+        256,
+        144,
+        134
+      ],
+      "frames": [
+        9.499999928474608,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1107.1000000238419,
+          "duration": 1641.1000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        259,
+        150,
+        51,
+        125
+      ],
+      "frames": [
+        10.499999976158506,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1342,
+          "duration": 1880.4000000953674
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        80,
+        289,
+        139,
+        78,
+        153
+      ],
+      "frames": [
+        4.79999992847479,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1394,
+          "duration": 1925.7000000476837
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 26
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        276,
+        196,
+        91,
+        175
+      ],
+      "frames": [
+        10.40000002384204,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 963.5999999046326,
+          "duration": 3413.1999999284744
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        324,
+        84,
+        51,
+        69,
+        117
+      ],
+      "frames": [
+        0.8999999999996362,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "admin-pulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1928.3000000715256,
+          "duration": 4139.900000095367
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        289,
+        53,
+        82,
+        164
+      ],
+      "frames": [
+        11.099999952315557,
+        16.600000000000364,
+        16.700000000000728,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.600000000000364,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        16.700000000000728,
+        16.69999999999891,
+        16.600000000000364,
+        16.600000000000364,
+        16.700000000000728,
+        16.799999999999272,
+        16.600000000000364,
+        16.69999999999891,
+        16.600000000000364,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.600000000000364,
+        16.700000000000728,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        33.30000000000109
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1771.5,
+          "duration": 6364.5
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 11
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0.00045613738028553517,
+      "longTasks": [
+        275,
+        94,
+        62,
+        65,
+        248
+      ],
+      "frames": [
+        1.7999999761577783,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1563.8999999761581,
+          "duration": 3285.600000023842
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 30
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        254,
+        101,
+        171
+      ],
+      "frames": [
+        7.399999952316648,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.800000000000182,
+        16.5,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 909.2000000476837,
+          "duration": 2200.600000023842
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        284,
+        103
+      ],
+      "frames": [
+        84.49999997615805,
+        216.70000000000027,
+        233.29999999999973,
+        199.9000000000001,
+        216.69999999999982
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-float",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 985.2999999523163,
+          "duration": 1487.2999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 36
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        260,
+        65,
+        143
+      ],
+      "frames": [
+        40.69999995231592,
+        100,
+        16.600000000000364,
+        100,
+        100,
+        100.10000000000036,
+        99.89999999999964,
+        100,
+        100
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 913.4000000953674,
+          "duration": 1785.1000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 88
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        260,
+        85,
+        67,
+        122,
+        82,
+        289
+      ],
+      "frames": [
+        12.600000023841858,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999272,
+        16.700000000000728,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999272,
+        16.600000000000364,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1149,
+          "duration": 1705.5
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 25
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        258,
+        144,
+        225
+      ],
+      "frames": [
+        28.499999952316102,
+        49.900000000000546,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50.099999999999454,
+        49.900000000000546,
+        50,
+        50,
+        50,
+        50,
+        99.89999999999964
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 771.5,
+          "duration": 1643.3000000715256
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 59
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        256,
+        66,
+        54,
+        194,
+        72,
+        248
+      ],
+      "frames": [
+        1.6000000715257556,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1249.6999999284744,
+          "duration": 1973.5
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 48
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0.0000023676703791514914,
+      "longTasks": [
+        263,
+        148,
+        164,
+        365,
+        55
+      ],
+      "frames": [
+        31.199999999999818,
+        83.30000000000018,
+        66.69999999999982,
+        66.69999999999982,
+        83.20000000000073,
+        66.69999999999982,
+        66.69999999999982,
+        83.39999999999964,
+        66.60000000000036,
+        83.30000000000018,
+        83.30000000000018
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 798.5,
+          "duration": 1713.8000000715256
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 83
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        262,
+        72,
+        143,
+        186
+      ],
+      "frames": [
+        -0.5,
+        83.39999999999964,
+        33.400000000000546,
+        33.30000000000018,
+        16.599999999999454,
+        33.30000000000018,
+        33.399999999999636,
+        16.700000000000728,
+        49.899999999999636,
+        16.699999999999818,
+        33.400000000000546,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        33.30000000000018,
+        33.400000000000546,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        33.30000000000018,
+        33.30000000000018,
+        33.399999999999636,
+        33.30000000000018,
+        16.699999999999818,
+        33.20000000000073
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 811.8000000715256,
+          "duration": 1617.6000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 56
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        249,
+        148,
+        210
+      ],
+      "frames": [
+        11.299999904632386,
+        16.699999999999818,
+        16.800000000000182,
+        33.30000000000018,
+        16.600000000000364,
+        33.29999999999927,
+        16.700000000000728,
+        33.399999999999636,
+        16.600000000000364,
+        16.699999999999818,
+        33.30000000000018,
+        33.29999999999927,
+        16.700000000000728,
+        33.399999999999636,
+        16.600000000000364,
+        50,
+        33.399999999999636,
+        16.600000000000364,
+        33.399999999999636,
+        16.600000000000364,
+        33.29999999999927,
+        16.700000000000728,
+        33.399999999999636,
+        16.600000000000364,
+        33.29999999999927,
+        16.700000000000728,
+        16.599999999999454,
+        33.400000000000546,
+        16.699999999999818,
+        16.699999999999818,
+        33.30000000000018
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 894.2000000476837,
+          "duration": 1695.2000000476837
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 50
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        91,
+        303,
+        70,
+        69,
+        165,
+        61,
+        104,
+        212
+      ],
+      "frames": [
+        6.899999976158142,
+        16.699999999999818,
+        16.699999999999818,
+        33.20000000000073,
+        33.399999999999636,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.19999999999982,
+        16.800000000000182,
+        33.30000000000018,
+        16.600000000000364,
+        33.29999999999927,
+        16.800000000000182,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.699999999999818,
+        33.30000000000018
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 922.7999999523163,
+          "duration": 2144
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 40
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        120,
+        303,
+        54,
+        257,
+        145,
+        153,
+        110,
+        194
+      ],
+      "frames": [
+        5.299999904633296,
+        33.29999999999927,
+        33.29999999999927,
+        16.700000000000728,
+        33.399999999999636,
+        16.600000000000364,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        16.599999999998545,
+        33.400000000001455,
+        16.599999999998545,
+        16.700000000000728,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        16.69999999999891,
+        33.30000000000109,
+        16.599999999998545,
+        16.700000000000728,
+        16.700000000000728,
+        16.69999999999891,
+        16.600000000000364,
+        16.700000000000728,
+        16.69999999999891,
+        16.600000000000364,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        50
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1817.1000000238419,
+          "duration": 3951.4000000953674
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 61
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        285,
+        63,
+        139,
+        69,
+        258
+      ],
+      "frames": [
+        11.399999952316648,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1166.4000000953674,
+          "duration": 2843.4000000953674
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 54
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        272,
+        109,
+        57,
+        74,
+        125
+      ],
+      "frames": [
+        6.200000023842222,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.600000000000364,
+        16.800000000000182,
+        16.5,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "admin-pulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2429.7999999523163,
+          "duration": 3792.2999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 62
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        282,
+        136,
+        1256,
+        133,
+        52,
+        204
+      ],
+      "frames": [
+        -0.39999992847515387,
+        33.400000000001455,
+        33.29999999999927,
+        33.400000000001455,
+        16.599999999998545,
+        33.29999999999927,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        33.400000000001455,
+        16.700000000000728,
+        33.29999999999927,
+        33.29999999999927,
+        16.700000000000728,
+        33.29999999999927,
+        33.400000000001455,
+        16.599999999998545,
+        33.29999999999927,
+        33.400000000001455,
+        33.29999999999927,
+        16.700000000000728,
+        16.599999999998545,
+        16.700000000000728,
+        33.400000000001455,
+        33.29999999999927,
+        33.29999999999927,
+        16.700000000000728,
+        50
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1893.1999999284744,
+          "duration": 6717.699999928474
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 29
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0.016850120362386877,
+      "longTasks": [
+        257,
+        57,
+        86,
+        65,
+        164,
+        166,
+        108,
+        163,
+        173,
+        117,
+        270,
+        211,
+        295,
+        60,
+        113,
+        76,
+        176,
+        84,
+        198,
+        281,
+        96,
+        56,
+        265,
+        118,
+        122,
+        112,
+        181,
+        74,
+        104,
+        196,
+        133,
+        136,
+        77,
+        116,
+        122,
+        86,
+        54,
+        252,
+        129,
+        54,
+        174,
+        162,
+        108,
+        54,
+        51,
+        58
+      ],
+      "frames": [
+        20.40000002384113,
+        50,
+        33.400000000001455,
+        33.20000000000073,
+        16.69999999999709,
+        66.70000000000073,
+        50,
+        50,
+        50,
+        50,
+        33.400000000001455,
+        50,
+        83.20000000000073,
+        33.29999999999927,
+        66.70000000000073,
+        33.39999999999782,
+        66.60000000000218
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2095.2000000476837,
+          "duration": 8153.300000071526
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 63
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        282,
+        81,
+        438,
+        100,
+        86,
+        86,
+        249
+      ],
+      "frames": [
+        2.300000095367068,
+        33.20000000000073,
+        16.69999999999891,
+        16.600000000000364,
+        16.700000000000728,
+        16.799999999999272,
+        16.600000000000364,
+        16.700000000000728,
+        16.599999999998545,
+        16.700000000000728,
+        50,
+        16.700000000000728,
+        16.599999999998545,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        16.600000000000364,
+        16.69999999999891,
+        33.30000000000109,
+        16.69999999999891,
+        16.600000000000364,
+        16.700000000000728,
+        33.29999999999927,
+        16.80000000000109,
+        16.599999999998545,
+        33.30000000000109,
+        16.69999999999891,
+        16.700000000000728,
+        16.700000000000728,
+        33.19999999999891,
+        16.80000000000109,
+        16.599999999998545,
+        16.700000000000728,
+        33.29999999999927,
+        16.700000000000728,
+        16.700000000000728,
+        16.599999999998545
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1889,
+          "duration": 8064.199999928474
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              "#audio-tab-music > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.54 (foreground color: #7f8997, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "#audio-tab-sfx > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.54 (foreground color: #7f8997, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 32
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        1048
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 8302,
+          "duration": 15076
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 21
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        147,
+        357,
+        400
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 5388,
+          "duration": 9274
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 60
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        18,
+        26,
+        39,
+        46,
+        85,
+        16,
+        53,
+        144,
+        47,
+        75,
+        81,
+        111,
+        165
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2262,
+          "duration": 4386
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        19,
+        59,
+        63,
+        138,
+        137,
+        109,
+        479
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryButtonSheen",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2948,
+          "duration": 3982
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 27
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        154,
+        76,
+        54,
+        61,
+        47,
+        22,
+        113,
+        56,
+        54,
+        19,
+        10,
+        15,
+        15,
+        30,
+        15,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2050,
+          "duration": 3894
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 13
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        97,
+        109,
+        77,
+        177,
+        152,
+        16,
+        35,
+        67,
+        43
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        },
+        {
+          "name": "sortSpark",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 6527,
+          "duration": 8280
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        0,
+        124,
+        238,
+        36,
+        48,
+        26,
+        30,
+        29,
+        25,
+        24,
+        22,
+        26,
+        26,
+        26,
+        27,
+        26,
+        15,
+        17
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 3091,
+          "duration": 5047
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 20
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        55,
+        206,
+        137,
+        68,
+        90,
+        68,
+        63,
+        57,
+        50
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2333,
+          "duration": 4354
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        91,
+        158,
+        87,
+        49,
+        45,
+        32,
+        34,
+        46,
+        40,
+        35,
+        20,
+        46,
+        88
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1656,
+          "duration": 7583
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        71,
+        384,
+        337
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2278,
+          "duration": 8139
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 26
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        21,
+        19,
+        10,
+        17,
+        18,
+        40,
+        22,
+        16,
+        25,
+        44,
+        27,
+        43,
+        29,
+        30,
+        18,
+        26,
+        8,
+        15,
+        25,
+        15,
+        21,
+        37,
+        24,
+        25,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        18,
+        14,
+        16,
+        16,
+        33
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 9799,
+          "duration": 11471
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        6,
+        10,
+        26,
+        5,
+        24,
+        8,
+        24,
+        9,
+        21,
+        25,
+        17,
+        14,
+        16,
+        24,
+        15,
+        15,
+        23,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        17,
+        15,
+        16,
+        16,
+        17,
+        15,
+        17,
+        16,
+        13,
+        17,
+        15,
+        18,
+        19,
+        11,
+        68,
+        165
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "admin-pulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2190,
+          "duration": 2937
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        4,
+        16,
+        70,
+        29,
+        7,
+        21,
+        11,
+        28,
+        28,
+        10,
+        21,
+        7,
+        26,
+        7,
+        47,
+        63,
+        47,
+        18,
+        12,
+        22,
+        10,
+        16,
+        17,
+        17,
+        16,
+        16,
+        14,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        33,
+        25
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageCanvasSheen",
+          "state": "running"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 2328,
+          "duration": 3301
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 11
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        31,
+        27,
+        14,
+        15,
+        18,
+        13,
+        15,
+        17,
+        15,
+        16,
+        17,
+        17,
+        13,
+        13530
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1469,
+          "duration": 4322
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 29
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        67,
+        64,
+        60,
+        35,
+        53,
+        7,
+        16,
+        18,
+        28,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        17,
+        16,
+        30,
+        15,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1093,
+          "duration": 1932
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        276,
+        756
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-float",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 747,
+          "duration": 1383
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 36
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        48,
+        331,
+        328,
+        326
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 807,
+          "duration": 1438
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 88
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        13,
+        21,
+        10,
+        21,
+        43,
+        21,
+        12,
+        20,
+        11,
+        21,
+        11,
+        46,
+        155,
+        76,
+        67,
+        11,
+        15,
+        17,
+        16,
+        15,
+        16,
+        17,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        20
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1080,
+          "duration": 2018
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 23
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        183,
+        336,
+        319
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryButtonSheen",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1313,
+          "duration": 2394
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 59
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        7,
+        70,
+        22,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        30,
+        16,
+        27,
+        13,
+        10,
+        13,
+        15,
+        17,
+        22,
+        10,
+        16,
+        16,
+        16,
+        16,
+        16,
+        20,
+        11,
+        15,
+        16,
+        15,
+        30,
+        16,
+        29,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 930,
+          "duration": 1726
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 48
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        205,
+        171,
+        255,
+        252
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        },
+        {
+          "name": "sortSpark",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1053,
+          "duration": 2128
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".global-project > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.09 (foreground color: #0b1220, background color: #111c2b, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 83
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        31,
+        87,
+        86,
+        98,
+        83,
+        150,
+        100,
+        76,
+        90
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1267,
+          "duration": 2591
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 56
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        32,
+        103,
+        43,
+        43,
+        33,
+        31,
+        30,
+        25,
+        28,
+        35,
+        24,
+        25,
+        28,
+        30,
+        24,
+        24,
+        25,
+        29,
+        27,
+        43,
+        32,
+        25,
+        26
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        },
+        {
+          "name": "settingsOrbit",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 899,
+          "duration": 1796
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 50
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        24,
+        64,
+        32,
+        32,
+        48,
+        53,
+        44,
+        45,
+        34,
+        28,
+        30,
+        27,
+        27,
+        29,
+        28,
+        28,
+        29,
+        28,
+        27,
+        32,
+        30,
+        31
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        },
+        {
+          "name": "supportWave",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1110,
+          "duration": 1817
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 40
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        5,
+        26,
+        16,
+        17,
+        14,
+        16,
+        46,
+        17,
+        16,
+        16,
+        16,
+        16,
+        22,
+        13,
+        13,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        17,
+        24,
+        14,
+        25,
+        16,
+        21,
+        11,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 889,
+          "duration": 2225
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 61
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        48,
+        48,
+        158,
+        54,
+        110,
+        50,
+        37,
+        32,
+        35,
+        36,
+        35,
+        36,
+        39,
+        36
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1832,
+          "duration": 2547
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 54
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        8,
+        16,
+        15,
+        15,
+        16,
+        16,
+        17,
+        15,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        17,
+        15,
+        16,
+        16,
+        14,
+        15,
+        17,
+        15,
+        16,
+        39,
+        36,
+        4,
+        15,
+        17,
+        14,
+        16,
+        15,
+        24,
+        14,
+        8,
+        16,
+        15,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "admin-pulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 836,
+          "duration": 1938
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 62
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        28,
+        35,
+        19,
+        12,
+        65,
+        68,
+        66,
+        24,
+        22,
+        27,
+        36,
+        21,
+        11,
+        12,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageCanvasSheen",
+          "state": "running"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 637,
+          "duration": 1590
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 29
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        7,
+        249,
+        114,
+        82,
+        73,
+        80,
+        88,
+        119
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1546,
+          "duration": 2791
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 56
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        10,
+        47,
+        18,
+        12,
+        21,
+        28,
+        12,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        30,
+        46,
+        44,
+        39,
+        12,
+        16,
+        15,
+        16,
+        16,
+        18,
+        14,
+        19,
+        13,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1259,
+          "duration": 2065
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 32
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "runLabel": "phase4-compact-error-final",
+  "stats": {
+    "startTime": "2026-10-16T19:05:46.293Z",
+    "duration": 189468.921,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "assertions": "24px history minimum, Send/input visibility, navigation clearance and error keyboard focus unchanged"
+}

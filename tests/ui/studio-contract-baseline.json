@@ -1,0 +1,22 @@
+{
+  "src/components/image-studio.tsx#uploadReference": "f9b221237f7c1080a4ee136622a968d9a1564b107160660f48c5f9f9be112e1e",
+  "src/components/image-studio.tsx#addReferences": "c0a1f7490a0227f48676bb8985b256995a0e647fd243d0a02ce8c73c26af7e12",
+  "src/components/image-studio.tsx#pasteReference": "a9a461ceaa8a0afa50b253d8c2414a174b7af0a50b78ec26a6387fb3d8a76be9",
+  "src/components/image-studio.tsx#pasteFromClipboard": "383a4663cec8c7a171656511a79e3765e5256206c2c89f25a07b4b7fccb6681f",
+  "src/components/image-studio.tsx#poll": "20a14b9278347bad086cfd1cdcc612887a7a8cbcf58b9da2ede89b160219b81e",
+  "src/components/image-studio.tsx#submit": "8215ffa2d8483e2c7219ea4397c8ffd3e9b336da140235149c57033f9a0d063b",
+  "src/components/image-studio.tsx#removeReference": "7060aaaef4f3ab968ca9ee62f5002e543b8aa07d0d3459aa959d90befb4ce4b1",
+  "src/components/image-studio.tsx#ensureResultReference": "02b5b2bda604b15ca63137b413e3be67008485baf7ff5085268cf1582fc6220f",
+  "src/components/image-studio.tsx#resetResult": "eb9b346bc8bf39553027101fdd0154747631ced7ca98d585ab50635fa88a814b",
+  "src/components/image-studio.tsx#applyAsReference": "3be347eb5b0d03823e0b34d4819417ff8724f1a5b5ee304ebf73387b6cd1f64c",
+  "src/components/image-studio.tsx#animateInVideo": "0660175941ee89b8c3d8ea1e41d20a66e4b1274c3bfba980a322e5a0ffe4af47",
+  "src/components/image-studio.tsx#copySettings": "b3fe67bcc3300bbd4fa84586e795e40bbb8b99621ed89e85888e7c68a299a095",
+  "src/components/image-studio.tsx#shareResult": "d3d37121b4dc2bd1823ad03c73030a24f87931004154541807483eb8dc29b9e7",
+  "src/components/video-studio.tsx#upload": "b2dd14ae750784d305fd1bb0031c3bbe93f7a5a44e1de78a268afdcef8cf2ab3",
+  "src/components/video-studio.tsx#poll": "3f660750f8f5053c6ae54caecd50b3ee2b4a44bdc47f7c6a0c789172eb44ed97",
+  "src/components/video-studio.tsx#submit": "1fd9e69f13bdfff2a08855227243cdb988c131504548af599a928fad8df41119",
+  "src/components/audio-generation-client.tsx#poll": "d11806062363feca0efba43cd2edf52b700a36edbad8d0989901c658c0083865",
+  "src/components/audio-generation-client.tsx#submit": "76c23da64ee290cf426767c32b310ebe50f72dfd5d74efe4d22783d7ed699ccb",
+  "src/components/tts-client.tsx#pollAsyncJob": "e79f189e50e214aaab35646abbda9b1521d5e681df2dc30c6719862d632a0a82",
+  "src/components/tts-client.tsx#submit": "93e158538fcef46d93ab21e67dadd12b61533f0cf8b2ee458db248f1baa3899a"
+}

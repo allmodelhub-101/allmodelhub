@@ -1,0 +1,56 @@
+[
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "PASS"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "not applicable"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "PASS"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "keyboardHelp": "PASS",
+    "generationDrawer": "PASS",
+    "modelPicker": "PASS",
+    "more": "not applicable"
+  }
+]

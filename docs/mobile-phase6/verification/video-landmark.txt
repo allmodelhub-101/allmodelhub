@@ -1,0 +1,33 @@
+
+Running 20 tests using 1 worker
+
+(node:15268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (4.7s)
+  ok  2 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (3.5s)
+  ok  3 [chromium-390x844] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (4.1s)
+  ok  4 [chromium-390x844] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (4.1s)
+  ok  5 [chromium-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (2.8s)
+(node:17840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (4.6s)
+  ok  7 [chromium-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (4.2s)
+  ok  8 [chromium-1366x768] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (4.7s)
+  ok  9 [chromium-1366x768] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (4.2s)
+  ok 10 [chromium-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (3.6s)
+(node:12204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 11 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (5.7s)
+  ok 12 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (4.6s)
+  ok 13 [webkit-390x844] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (6.5s)
+  ok 14 [webkit-390x844] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (6.7s)
+  ok 15 [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (3.2s)
+(node:20452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 16 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video light (6.7s)
+  ok 17 [webkit-1366x768] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG video dark (4.9s)
+  ok 18 [webkit-1366x768] › tests\responsive\studios.spec.ts:36:37 › video light: model, settings, reference and portrait preview (7.1s)
+  ok 19 [webkit-1366x768] › tests\responsive\studios.spec.ts:36:37 › video dark: model, settings, reference and portrait preview (7.7s)
+  ok 20 [webkit-1366x768] › tests\responsive\visual.spec.ts:5:7 › visual baseline video-fixture (3.8s)
+
+  20 passed (1.7m)

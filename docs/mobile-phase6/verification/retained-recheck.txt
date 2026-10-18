@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+(node:20820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [webkit-390x844] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references (11.0s)
+  ok 2 [webkit-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots (7.4s)
+
+  2 passed (20.9s)

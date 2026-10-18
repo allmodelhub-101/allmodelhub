@@ -1,0 +1,2 @@
+/* Hide only Next.js development tooling; preserve all product UI. */
+nextjs-portal { visibility: hidden !important; }

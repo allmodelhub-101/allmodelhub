@@ -1,0 +1,48 @@
+{
+  width: 390,
+  display: 'none',
+  visibility: 'visible',
+  rect: {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  },
+  rules: []
+}
+{
+  width: 768,
+  display: 'none',
+  visibility: 'visible',
+  rect: {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  },
+  rules: []
+}
+{
+  width: 1366,
+  display: 'grid',
+  visibility: 'visible',
+  rect: {
+    x: 1178.984375,
+    y: 15.5,
+    width: 36,
+    height: 44,
+    top: 15.5,
+    right: 1214.984375,
+    bottom: 59.5,
+    left: 1178.984375
+  },
+  rules: []
+}

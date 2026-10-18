@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "NEXT_PUBLIC_SUPABASE_URL",
+    "Present": false
+  },
+  {
+    "Name": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+    "Present": false
+  },
+  {
+    "Name": "SUPABASE_SERVICE_ROLE_KEY",
+    "Present": false
+  },
+  {
+    "Name": "APIMODELS_API_KEY",
+    "Present": false
+  },
+  {
+    "Name": "HAIMAKER_API_KEY",
+    "Present": false
+  },
+  {
+    "Name": "UPSTASH_REDIS_REST_URL",
+    "Present": false
+  },
+  {
+    "Name": "UPSTASH_REDIS_REST_TOKEN",
+    "Present": false
+  }
+]

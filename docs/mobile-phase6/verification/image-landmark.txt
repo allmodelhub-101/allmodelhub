@@ -1,0 +1,17 @@
+
+Running 8 tests using 1 worker
+
+(node:15160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (4.2s)
+  ok 2 [chromium-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (3.5s)
+  ok 3 [chromium-390x844] › tests\responsive\studios.spec.ts:25:37 › image light: prompt, settings, model and local references (4.1s)
+  ok 4 [chromium-390x844] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references (4.4s)
+(node:25580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 5 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image light (4.2s)
+  ok 6 [webkit-390x844] › tests\responsive\hardening-accessibility.spec.ts:4:72 › hardening WCAG image dark (4.3s)
+  ok 7 [webkit-390x844] › tests\responsive\studios.spec.ts:25:37 › image light: prompt, settings, model and local references (7.3s)
+  ok 8 [webkit-390x844] › tests\responsive\studios.spec.ts:25:37 › image dark: prompt, settings, model and local references (5.5s)
+
+  8 passed (41.6s)

@@ -1,0 +1,62 @@
+{
+  "scope": "Production React createRoot presentation only; not Next SSR hydration, backend E2E, Web Vitals or hardware acceptance",
+  "normalMotion": true,
+  "samples": [
+    {
+      "engine": "chromium",
+      "width": 390,
+      "height": 844,
+      "rows": 500,
+      "readyMs": 3554,
+      "searchMs": 193,
+      "dateFormatterConstructions": 1,
+      "initialMeta": "Auto Best•Oct 16, 2026",
+      "filteredMeta": "Auto Best•Oct 16, 2026",
+      "status": "PASS",
+      "errors": [],
+      "apis": []
+    },
+    {
+      "engine": "chromium",
+      "width": 1366,
+      "height": 768,
+      "rows": 500,
+      "readyMs": 3643,
+      "searchMs": 203,
+      "dateFormatterConstructions": 1,
+      "initialMeta": "Auto Best•Oct 16, 2026",
+      "filteredMeta": "Auto Best•Oct 16, 2026",
+      "status": "PASS",
+      "errors": [],
+      "apis": []
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "height": 844,
+      "rows": 500,
+      "readyMs": 16103,
+      "searchMs": 339,
+      "dateFormatterConstructions": 1,
+      "initialMeta": "Auto Best•Oct 16, 2026",
+      "filteredMeta": "Auto Best•Oct 16, 2026",
+      "status": "PASS",
+      "errors": [],
+      "apis": []
+    },
+    {
+      "engine": "webkit",
+      "width": 1366,
+      "height": 768,
+      "rows": 500,
+      "readyMs": 7959,
+      "searchMs": 396,
+      "dateFormatterConstructions": 1,
+      "initialMeta": "Auto Best•Oct 16, 2026",
+      "filteredMeta": "Auto Best•Oct 16, 2026",
+      "status": "PASS",
+      "errors": [],
+      "apis": []
+    }
+  ]
+}

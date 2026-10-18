@@ -1,0 +1,107 @@
+{
+  "viewport": 844,
+  "document": 844,
+  "content": 844,
+  "width": 844,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "BUTTON",
+      "name": "1Unread notifications",
+      "height": 78,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "1Payment updates",
+      "height": 78,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "0Generation completions",
+      "height": 78,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "1Support messages",
+      "height": 78,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "All",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Unread (1)",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Payments",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Generations",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Wallet",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Support",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "INPUT",
+      "name": "Search notifications",
+      "height": 23,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Notification filter options",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Mark all read",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Support replied Research_Research_Research_Research_Research_Research_Research_R",
+      "height": 234.890625,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Payment updateSynthetic payment status only.10/16/2026, 5:00:00 PM",
+      "height": 117.296875,
+      "fontSize": "16px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "notification-tools",
+      "width": 793.375,
+      "columns": "none",
+      "overflow": "visible"
+    }
+  ]
+}

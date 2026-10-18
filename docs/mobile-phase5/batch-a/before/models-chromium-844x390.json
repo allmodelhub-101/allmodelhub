@@ -1,0 +1,20 @@
+{
+  "viewport": 844,
+  "document": 844,
+  "content": 844,
+  "width": 844,
+  "grid": [
+    {
+      "class": "hero-tile-grid",
+      "width": 242.8543701171875,
+      "columns": "112px 112px",
+      "overflow": "visible"
+    },
+    {
+      "class": "model-grid",
+      "width": 816,
+      "columns": "401px 401px",
+      "overflow": "visible"
+    }
+  ]
+}

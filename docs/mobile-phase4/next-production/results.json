@@ -1,0 +1,380 @@
+[
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "chromium",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 390,
+    "height": 844,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 768,
+    "height": 1024,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/auth/login",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/auth/signup",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/privacy",
+    "status": "PASS: production public rendering"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?chat=welcome",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=image",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=video",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture?studio=audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  },
+  {
+    "browser": "webkit",
+    "width": 1366,
+    "height": 768,
+    "path": "/responsive-fixture/audio",
+    "status": "PASS: production fixture disabled despite opt-in flag"
+  }
+]

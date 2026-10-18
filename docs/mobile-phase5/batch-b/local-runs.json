@@ -1,0 +1,38 @@
+[
+  {
+    "label": "phase5-b-before",
+    "stats": {
+      "startTime": "2026-10-17T09:14:26.981Z",
+      "duration": 29695.565,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-b-accepted",
+    "stats": {
+      "startTime": "2026-10-17T09:17:51.900Z",
+      "duration": 354085.765,
+      "expected": 45,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-b-dark",
+    "stats": {
+      "startTime": "2026-10-17T09:22:59.481Z",
+      "duration": 97287.857,
+      "expected": 9,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  }
+]

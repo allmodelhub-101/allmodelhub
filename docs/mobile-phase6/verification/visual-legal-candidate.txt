@@ -1,0 +1,9 @@
+
+Running 1 test using 1 worker
+
+(node:24788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\phase6-legal.png, writing actual.
+  ok 1 [webkit-390x844] › tests\responsive\visual.spec.ts:5:7 › visual baseline legal (22.5s)
+
+  1 passed (28.8s)

@@ -1,0 +1,100 @@
+
+Running 9 tests using 1 worker
+
+(node:16084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-320x568] › tests\responsive\hardening.spec.ts:3:5 › hardening: saved email hydration, route modes and local validation (6.4s)
+  ok 2 [chromium-320x568] › tests\responsive\hardening.spec.ts:35:5 › hardening: premium admin motion respects the browser preference (5.7s)
+  x  3 [chromium-320x568] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion (22.4s)
+(node:24392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [chromium-1920x1080] › tests\responsive\hardening.spec.ts:3:5 › hardening: saved email hydration, route modes and local validation (27.1s)
+  ok 5 [chromium-1920x1080] › tests\responsive\hardening.spec.ts:35:5 › hardening: premium admin motion respects the browser preference (8.5s)
+  x  6 [chromium-1920x1080] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion (1.2m)
+(node:19636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 7 [webkit-844x390] › tests\responsive\hardening.spec.ts:3:5 › hardening: saved email hydration, route modes and local validation (24.8s)
+  ok 8 [webkit-844x390] › tests\responsive\hardening.spec.ts:35:5 › hardening: premium admin motion respects the browser preference (10.9s)
+  ok 9 [webkit-844x390] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion (30.9s)
+
+
+  1) [chromium-320x568] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('button', { name: 'Resume model scrolling' })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('button', { name: 'Resume model scrolling' }) with timeout 10000ms
+      - waiting for getByRole('button', { name: 'Resume model scrolling' })
+        21 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      60 |  await rail.scrollIntoViewIfNeeded();await expect.poll(async()=>Number(await rail.getAttribute('data-writes'))).toBeGreaterThan(0);
+      61 |  const pause=page.getByRole('button',{name:'Pause model scrolling'});await pause.click();await expect(page.getByRole('button',{name:'Resume model scrolling'})).toBeVisible();
+    > 62 |  await page.emulateMedia({reducedMotion:'reduce'});await expect(page.getByRole('button',{name:'Resume model scrolling'})).toHaveCount(0);
+         |                                                                                                                           ^
+      63 | });
+      64 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening.spec.ts:62:123
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-320x568\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-320x568\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-320x568\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-320x568\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium-1920x1080] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('button', { name: 'Resume model scrolling' })
+    Expected: 0
+    Received: 1
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('button', { name: 'Resume model scrolling' }) with timeout 10000ms
+      - waiting for getByRole('button', { name: 'Resume model scrolling' })
+        16 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      60 |  await rail.scrollIntoViewIfNeeded();await expect.poll(async()=>Number(await rail.getAttribute('data-writes'))).toBeGreaterThan(0);
+      61 |  const pause=page.getByRole('button',{name:'Pause model scrolling'});await pause.click();await expect(page.getByRole('button',{name:'Resume model scrolling'})).toBeVisible();
+    > 62 |  await page.emulateMedia({reducedMotion:'reduce'});await expect(page.getByRole('button',{name:'Resume model scrolling'})).toHaveCount(0);
+         |                                                                                                                           ^
+      63 | });
+      64 |
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\hardening.spec.ts:62:123
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-1920x1080\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-1920x1080\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-1920x1080\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\baseline\hardening-hardening-video--9c77f--and-resumes-visible-motion-chromium-1920x1080\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium-320x568] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion
+    [chromium-1920x1080] › tests\responsive\hardening.spec.ts:44:5 › hardening: video rail stops offscreen work and resumes visible motion
+  7 passed (5.0m)

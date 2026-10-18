@@ -1,0 +1,89 @@
+{
+  "source": "test-results/harness-recheck/results.json",
+  "label": "harness-recheck",
+  "stats": {
+    "startTime": "2026-10-16T10:40:06.443Z",
+    "duration": 15397.481,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "passed": 4
+  },
+  "cases": [
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "webkit-600x960",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "webkit-600x960",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/signup loads, controls, overflow and diagnostics",
+      "project": "webkit-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    },
+    {
+      "title": "/auth/update-password loads, controls, overflow and diagnostics",
+      "project": "webkit-768x1024",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "annotations": [],
+      "errors": [],
+      "attachments": [
+        {
+          "name": "geometry-and-controls",
+          "contentType": "application/json"
+        },
+        {
+          "name": "responsive-viewport",
+          "contentType": "image/png"
+        }
+      ]
+    }
+  ]
+}

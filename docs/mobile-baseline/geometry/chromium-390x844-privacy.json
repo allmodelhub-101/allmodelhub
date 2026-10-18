@@ -1,0 +1,182 @@
+{
+  "geometry": {
+    "viewport": 390,
+    "scroll": 390,
+    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "body": 390,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "class": "legal-page-module__qLSGyG__heroGlow",
+        "left": -106,
+        "right": 209.484375
+      },
+      {
+        "tag": "A",
+        "class": "",
+        "left": 345,
+        "right": 505
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 392.84375,
+        "right": 486.15625
+      },
+      {
+        "tag": "A",
+        "class": "",
+        "left": 512,
+        "right": 672
+      },
+      {
+        "tag": "svg",
+        "class": {},
+        "left": 525,
+        "right": 544.125
+      },
+      {
+        "tag": "path",
+        "class": {},
+        "left": 526.79296875,
+        "right": 541.729736328125
+      },
+      {
+        "tag": "SPAN",
+        "class": "",
+        "left": 553.125,
+        "right": 659
+      }
+    ]
+  },
+  "controls": [
+    {
+      "tag": "A",
+      "label": "Models Suite",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Switch to dark theme",
+      "width": 36,
+      "height": 40
+    },
+    {
+      "tag": "A",
+      "label": "Start Free",
+      "width": 85.34375,
+      "height": 40
+    },
+    {
+      "tag": "A",
+      "label": "Terms of Service",
+      "width": 160,
+      "height": 54
+    },
+    {
+      "tag": "A",
+      "label": "Privacy Policy",
+      "width": 160,
+      "height": 54
+    },
+    {
+      "tag": "A",
+      "label": "Acceptable Use",
+      "width": 160,
+      "height": 54
+    },
+    {
+      "tag": "A",
+      "label": "Credits & Refunds",
+      "width": 160,
+      "height": 54
+    },
+    {
+      "tag": "A",
+      "label": "01Information we process",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "02How we use information",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "03AI processing and providers",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "04Payments and wallet records",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "05Security and retention",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "06Your controls",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "07Changes and contact",
+      "width": 342,
+      "height": 31.5
+    },
+    {
+      "tag": "A",
+      "label": "Contact Support",
+      "width": 316,
+      "height": 17
+    },
+    {
+      "tag": "A",
+      "label": "Models Suite",
+      "width": 124.21875,
+      "height": 30
+    },
+    {
+      "tag": "A",
+      "label": "Terms of Service",
+      "width": 77.125,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Privacy Policy",
+      "width": 64.421875,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Acceptable Use",
+      "width": 71.78125,
+      "height": 14
+    },
+    {
+      "tag": "A",
+      "label": "Credits & Refunds",
+      "width": 85.15625,
+      "height": 14
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open Next.js Dev Tools",
+      "width": 32,
+      "height": 32
+    }
+  ],
+  "errors": [],
+  "resources": []
+}

@@ -1,0 +1,65 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "A",
+      "name": "Increase storage ",
+      "height": 39,
+      "fontSize": "10px"
+    },
+    {
+      "tag": "INPUT",
+      "name": "Choose a knowledge file",
+      "height": 1,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Drop a file hereor click to browse your device",
+      "height": 192,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "General library⌄",
+      "height": 47,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Upload to library",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "INPUT",
+      "name": "Search files",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_Research_.pdf",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Delete Reference-notes.txt",
+      "height": 44,
+      "fontSize": "16px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "files-grid",
+      "width": 721.9375,
+      "columns": "721.938px",
+      "overflow": "visible"
+    }
+  ]
+}

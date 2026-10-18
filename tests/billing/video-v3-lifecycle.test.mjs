@@ -189,7 +189,7 @@ test("definitive HTTP 429 releases its hold and retries a later route", async ()
   });
   // The mock provider throws the structured error so the route exercises its
   // definitive-rejection branch without treating it as an ambiguous timeout.
-  f.dependencies["@/lib/providers"].providerCreateTaskExact = async (_route, _modality, _body) => {
+  f.dependencies["@/lib/providers"].providerCreateTaskExact = async () => {
     const count = state.bump();
     if (count === 1) throw { name: "ProviderRequestError", kind: "definitive_rejection" };
     return { task: { taskId: "accepted-after-429", state: "processing" } };

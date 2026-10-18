@@ -1,0 +1,100 @@
+▲ Next.js 16.3.3 (Turbopack)
+✓ Running next.config.ts took 212ms
+- Experiments (use with caution):
+  · serverActions
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 49s
+  Running TypeScript ...
+  Finished TypeScript in 40s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/29) ...
+  Generating static pages using 3 workers (7/29) 
+  Generating static pages using 3 workers (14/29) 
+  Generating static pages using 3 workers (21/29) 
+✓ Generating static pages using 3 workers (29/29) in 755ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /acceptable-use
+├ ƒ /admin
+├ ƒ /admin/models
+├ ƒ /admin/payments
+├ ƒ /admin/profits
+├ ƒ /admin/settings
+├ ƒ /admin/users
+├ ƒ /api/account/delete
+├ ƒ /api/account/export
+├ ƒ /api/admin/jobs/[id]/reconcile
+├ ƒ /api/admin/models/[id]
+├ ƒ /api/admin/payments/[id]/approve
+├ ƒ /api/admin/payments/[id]/reject
+├ ƒ /api/admin/providers
+├ ƒ /api/admin/settings
+├ ƒ /api/admin/support/[id]/reply
+├ ƒ /api/admin/users/[id]/credit
+├ ƒ /api/auth/login
+├ ƒ /api/auth/provision
+├ ƒ /api/billing/settle-pending
+├ ƒ /api/chat
+├ ƒ /api/conversations
+├ ƒ /api/conversations/[id]
+├ ƒ /api/favorites
+├ ƒ /api/files
+├ ƒ /api/files/[id]
+├ ƒ /api/files/media
+├ ƒ /api/generations/[modality]
+├ ƒ /api/generations/preflight
+├ ƒ /api/internal/billing/reconcile
+├ ƒ /api/jobs
+├ ƒ /api/jobs/[id]
+├ ƒ /api/models
+├ ƒ /api/notifications
+├ ƒ /api/payments/manual
+├ ƒ /api/projects
+├ ƒ /api/projects/[id]
+├ ƒ /api/prompt-enhance
+├ ƒ /api/provider-assets/[token]
+├ ƒ /api/provider-callback/apimodels/[secret]
+├ ƒ /api/search
+├ ƒ /api/settings
+├ ƒ /api/support
+├ ƒ /api/support/[id]
+├ ƒ /api/tts
+├ ƒ /api/wallet
+├ ƒ /audio
+├ ƒ /auth/callback
+├ ƒ /auth/confirm
+├ ƒ /auth/login
+├ ƒ /auth/logout
+├ ƒ /auth/signup
+├ ○ /auth/update-password
+├ ƒ /auth/verified
+├ ƒ /battle
+├ ƒ /chat
+├ ƒ /files
+├ ƒ /history
+├ ○ /icon.png
+├ ƒ /images
+├ ○ /manifest.webmanifest
+├ ƒ /models
+├ ƒ /notifications
+├ ○ /privacy
+├ ƒ /projects
+├ ○ /refunds
+├ ƒ /responsive-fixture
+├ ƒ /settings
+├ ○ /studio-fixture
+├ ƒ /support
+├ ƒ /templates
+├ ○ /terms
+├ ƒ /usage
+├ ƒ /video
+└ ƒ /wallet
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,30 @@
+/* Responsive stabilization: shared authenticated shell only. */
+@media (max-width:900px) {
+  html,body { max-width:100%;overflow-x:hidden;overflow-x:clip; }
+  .premium-workstation-shell,.premium-workstation-shell .app-main,.premium-workstation-shell .app-content { min-width:0;max-width:100%; }
+  .premium-workstation-shell .app-main { padding-bottom:calc(70px + env(safe-area-inset-bottom)); }
+  .premium-workstation-shell .app-content { scroll-padding-bottom:calc(78px + env(safe-area-inset-bottom)); }
+  .premium-workstation-shell .app-content > * { min-width:0;max-width:100%; }
+  .premium-workstation-shell .table-wrap { max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch; }
+  .premium-workstation-shell .table-wrap > table { min-width:max-content; }
+
+  .premium-workstation-shell .mobile-nav { left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(7px,env(safe-area-inset-bottom));height:58px;padding:4px; }
+  .premium-workstation-shell .mobile-nav button.active { color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--panel)); }
+
+  .premium-workstation-shell .mobile-nav-layer { position:fixed;inset:0;z-index:190;display:block;isolation:isolate; }
+  .premium-workstation-shell .mobile-nav-layer .nav-backdrop { position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;pointer-events:auto; }
+  .premium-workstation-shell .mobile-nav-layer .mobile-nav-sheet { position:absolute;inset:auto 0 0;z-index:1;display:block;max-height:min(78dvh,620px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(22px,env(safe-area-inset-bottom)); }
+
+  .premium-workstation-shell .app-topbar { grid-template-columns:minmax(120px,1fr) auto;gap:6px;padding-right:max(8px,env(safe-area-inset-right)); }
+  .premium-workstation-shell .topbar-actions { gap:4px;min-width:0; }
+  .premium-workstation-shell .topbar-icon-trigger,.premium-workstation-shell .topbar-actions .theme-toggle,.premium-workstation-shell .topbar-profile { display:grid;flex:0 0 36px; }
+  .premium-workstation-shell .topbar-profile { place-items:center;padding:0; }
+}
+@media (max-width:620px) {
+  .premium-workstation-shell .app-topbar { grid-template-columns:minmax(96px,1fr) auto;gap:4px;padding-right:max(7px,env(safe-area-inset-right)); }
+  .premium-workstation-shell .global-project { min-width:0; }
+  .premium-workstation-shell .wallet-chip { width:40px;min-width:40px;justify-content:center;padding:0; }
+  .premium-workstation-shell .wallet-chip > span:not(.wallet-live-signal),.premium-workstation-shell .wallet-live-signal { display:none; }
+  .premium-workstation-shell .wallet-chip > svg { display:block; }
+}
+

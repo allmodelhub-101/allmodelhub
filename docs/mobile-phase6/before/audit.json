@@ -1,0 +1,7018 @@
+[
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        230,
+        55
+      ],
+      "frames": [
+        37.29999997615823,
+        33.40000000000009,
+        50,
+        33.29999999999973,
+        33.30000000000018,
+        50,
+        33.40000000000009,
+        33.29999999999973,
+        50,
+        33.30000000000018,
+        33.40000000000009,
+        33.29999999999973,
+        50,
+        33.30000000000018,
+        33.40000000000009,
+        33.29999999999973,
+        33.30000000000018,
+        50,
+        33.40000000000009,
+        33.29999999999973
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 422.5,
+          "duration": 991
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 21
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        167,
+        77
+      ],
+      "frames": [
+        17.90000000000009,
+        16.59999999999991,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        33.40000000000009,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        33.40000000000009,
+        16.59999999999991,
+        16.600000000000364,
+        33.399999999999636,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.700000000000273,
+        33.29999999999973,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        33.30000000000018
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 535.6999999284744,
+          "duration": 844.7999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 60
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        249,
+        68,
+        75,
+        101
+      ],
+      "frames": [
+        10.899999976158142,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 743.3999999761581,
+          "duration": 1663
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 4
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        56,
+        220,
+        87,
+        58,
+        75
+      ],
+      "frames": [
+        13.500000023841949,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999727,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.799999999999727,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 470.5,
+          "duration": 866.5
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 27
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        225,
+        65,
+        57
+      ],
+      "frames": [
+        11.999999928474608,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 479.60000002384186,
+          "duration": 916.7000000476837
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 13
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        170,
+        76,
+        172
+      ],
+      "frames": [
+        10.100000023841858,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.799999999999727,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.5,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 539,
+          "duration": 841.1000000238419
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "help": "Elements must only use permitted ARIA attributes",
+        "nodes": [
+          {
+            "target": [
+              "span[aria-label=\"Unavailable\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(3) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(4) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        54,
+        226,
+        90,
+        137
+      ],
+      "frames": [
+        2.9999999523161023,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.700000000000273,
+        16.699999999999818,
+        16.599999999999454,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 776.3000000715256,
+          "duration": 1222.7000000476837
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 20
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        71,
+        251,
+        138,
+        66
+      ],
+      "frames": [
+        -0.4999999523161023,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 638.5,
+          "duration": 1078.3999999761581
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".settings-hero-copy > div > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        225,
+        128,
+        61
+      ],
+      "frames": [
+        6.09999997615796,
+        16.700000000000273,
+        16.799999999999727,
+        16.600000000000364,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 573.1000000238419,
+          "duration": 1136.2000000476837
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        237,
+        70,
+        69
+      ],
+      "frames": [
+        12.900000071525483,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 478.39999997615814,
+          "duration": 873.1999999284744
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 26
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        235,
+        127,
+        72,
+        122
+      ],
+      "frames": [
+        11.000000023841949,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 591.7000000476837,
+          "duration": 1031.8999999761581
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              "header > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        239,
+        61
+      ],
+      "frames": [
+        -11.899999976158142,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 729.6000000238419,
+          "duration": 1539
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".active"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.14 (foreground color: #087ea4, background color: #e1f6fc, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        245,
+        102,
+        59
+      ],
+      "frames": [
+        3.0000000476838977,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.5,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 695.1999999284744,
+          "duration": 1134.7999999523163
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 11
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0.00045613738028553517,
+      "longTasks": [
+        176,
+        50,
+        132
+      ],
+      "frames": [
+        0.09999995231646608,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999727,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 701.2000000476837,
+          "duration": 1041.1000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 30
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 390,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [
+        295,
+        236,
+        70,
+        71
+      ],
+      "frames": [
+        7.000000023841949,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 239.80000007152557,
+          "duration": 1200.5
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        220,
+        85
+      ],
+      "frames": [
+        153.79999995231628,
+        100,
+        100,
+        100,
+        116.69999999999982,
+        133.30000000000018,
+        150
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-float",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 262.8000000715256,
+          "duration": 802.6000000238419
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 36
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        233,
+        101
+      ],
+      "frames": [
+        17.09999999999991,
+        16.700000000000273,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        50,
+        49.899999999999636,
+        50,
+        50.100000000000364,
+        50,
+        49.899999999999636
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 668.3000000715256,
+          "duration": 1323
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 88
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        232,
+        57,
+        102,
+        50,
+        136
+      ],
+      "frames": [
+        9.199999976158324,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 673.8000000715256,
+          "duration": 1101.1000000238419
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 25
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        225,
+        132,
+        220
+      ],
+      "frames": [
+        14.400000000000091,
+        33.29999999999973,
+        33.30000000000018,
+        33.40000000000009,
+        33.29999999999973,
+        16.700000000000273,
+        33.19999999999982,
+        33.40000000000009,
+        33.30000000000018,
+        33.399999999999636,
+        33.30000000000018,
+        33.40000000000009,
+        33.29999999999973,
+        33.30000000000018,
+        100,
+        33.30000000000018,
+        33.30000000000018,
+        50.099999999999454,
+        16.600000000000364,
+        33.399999999999636,
+        49.900000000000546,
+        33.399999999999636
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 664.6999999284744,
+          "duration": 1147
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 59
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        259,
+        151,
+        157
+      ],
+      "frames": [
+        2.40000002384204,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 660.7000000476837,
+          "duration": 1534.8000000715256
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "div:nth-child(1) > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .project-secondary-actions > .danger[type=\"button\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.42 (foreground color: #ff7e92, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 48
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        238,
+        129,
+        173
+      ],
+      "frames": [
+        11.700000071525665,
+        33.40000000000009,
+        50,
+        33.399999999999636,
+        83.30000000000018,
+        33.30000000000018,
+        33.29999999999973,
+        33.40000000000009,
+        50,
+        33.30000000000018,
+        50,
+        33.29999999999973,
+        50,
+        33.40000000000009,
+        49.90000000000009,
+        33.40000000000009,
+        50,
+        33.29999999999973,
+        33.40000000000009
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 605.2999999523163,
+          "duration": 1190.6000000238419
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "help": "Elements must only use permitted ARIA attributes",
+        "nodes": [
+          {
+            "target": [
+              "span[aria-label=\"Unavailable\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(3) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(4) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 83
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        233,
+        137,
+        176
+      ],
+      "frames": [
+        1.300000000000182,
+        33.399999999999636,
+        16.600000000000364,
+        16.799999999999727,
+        16.700000000000273,
+        16.59999999999991,
+        16.59999999999991,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.700000000000273,
+        33.40000000000009,
+        16.5,
+        16.799999999999727,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        33.40000000000009,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 768.5,
+          "duration": 1280.3999999761581
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 56
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        243,
+        102,
+        148
+      ],
+      "frames": [
+        2.3000000715255737,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.800000000000182,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.599999999999454,
+        16.700000000000728,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.599999999999454,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 625.8999999761581,
+          "duration": 1090.1000000238419
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".settings-hero-copy > div > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 50
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        242,
+        54,
+        140,
+        50,
+        139
+      ],
+      "frames": [
+        14.600000023841858,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 626.5,
+          "duration": 1263.2999999523163
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 40
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        76,
+        257,
+        233,
+        140,
+        87,
+        199
+      ],
+      "frames": [
+        18.899999952316648,
+        33.399999999999636,
+        16.600000000000364,
+        33.29999999999927,
+        33.400000000000546,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.399999999999636,
+        33.30000000000018,
+        16.600000000000364,
+        33.29999999999927,
+        33.400000000000546,
+        16.699999999999818,
+        33.30000000000018,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        33.399999999999636,
+        33.30000000000018,
+        16.599999999999454,
+        33.400000000000546,
+        33.30000000000018,
+        33.399999999999636,
+        33.19999999999982,
+        66.80000000000018
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1106.5,
+          "duration": 2106.2000000476837
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 61
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        248,
+        62,
+        130,
+        60,
+        177
+      ],
+      "frames": [
+        12.800000071525574,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        33.30000000000018,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000728,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.800000000000182,
+        16.599999999999454,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 861.3999999761581,
+          "duration": 1434.0999999046326
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "header > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 54
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        207,
+        77,
+        112
+      ],
+      "frames": [
+        -8.299999976158233,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.799999999999727,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 507.5,
+          "duration": 1029.7999999523163
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".active"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.14 (foreground color: #087ea4, background color: #e1f6fc, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 62
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        237,
+        93,
+        64,
+        81
+      ],
+      "frames": [
+        16.499999952316102,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.799999999999727,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 512.5,
+          "duration": 1081.3999999761581
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 29
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0.0030901772419204953,
+      "longTasks": [
+        202,
+        95,
+        59,
+        67,
+        257
+      ],
+      "frames": [
+        4.500000023841494,
+        33.30000000000018,
+        16.600000000000364,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.699999999999818,
+        33.399999999999636,
+        16.600000000000364,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.600000000000364,
+        33.399999999999636,
+        16.600000000000364,
+        16.599999999999454,
+        16.700000000000728,
+        33.399999999999636,
+        16.699999999999818,
+        33.30000000000018,
+        16.699999999999818,
+        16.600000000000364,
+        33.399999999999636,
+        16.600000000000364,
+        33.30000000000018,
+        16.799999999999272,
+        16.5,
+        33.400000000000546
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 696.8999999761581,
+          "duration": 1037.6999999284744
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 63
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "chromium",
+    "width": 1366,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [
+        240,
+        68,
+        110
+      ],
+      "frames": [
+        -0.5000000476838977,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.700000000000273,
+        16.699999999999818,
+        16.59999999999991,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273,
+        16.59999999999991,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.699999999999818,
+        16.600000000000364,
+        16.699999999999818,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.800000000000182,
+        16.59999999999991,
+        16.59999999999991,
+        16.700000000000273,
+        16.699999999999818,
+        16.699999999999818,
+        16.700000000000273
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 644.1000000238419,
+          "duration": 1253.4000000953674
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "#audio-tab-music > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.64 (foreground color: #7b8799, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "#audio-tab-sfx > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.64 (foreground color: #7b8799, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 32
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        53,
+        109,
+        103,
+        209,
+        333
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 398,
+          "duration": 705
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 21
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        53,
+        68,
+        71,
+        74,
+        69,
+        70,
+        73,
+        70,
+        72,
+        75,
+        66
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 482,
+          "duration": 808
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 60
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        9,
+        16,
+        15,
+        14,
+        15,
+        16,
+        15,
+        15,
+        15,
+        15,
+        16,
+        30,
+        15,
+        15,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        14,
+        16,
+        17,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        30,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 528,
+          "duration": 1004
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        28,
+        68,
+        134,
+        71,
+        36,
+        26,
+        39,
+        68,
+        73,
+        26,
+        22,
+        12,
+        15,
+        18,
+        26,
+        3,
+        25,
+        9,
+        14,
+        48
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryButtonSheen",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 450,
+          "duration": 1184
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 27
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        9,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        30,
+        15,
+        16,
+        15,
+        15,
+        15,
+        15,
+        16,
+        16,
+        16,
+        15,
+        16,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        30,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 719,
+          "duration": 1262
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 13
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        7,
+        19,
+        11,
+        30,
+        2,
+        30,
+        3,
+        33,
+        13,
+        18,
+        13,
+        19,
+        11,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        30,
+        15,
+        16,
+        14,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        30,
+        16,
+        15,
+        15,
+        16,
+        15,
+        14,
+        17,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        },
+        {
+          "name": "sortSpark",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 895,
+          "duration": 1566
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "help": "Elements must only use permitted ARIA attributes",
+        "nodes": [
+          {
+            "target": [
+              "span[aria-label=\"Unavailable\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(3) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(4) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        18,
+        14,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        15,
+        17,
+        15,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        17,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 609,
+          "duration": 1182
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 20
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        0,
+        14,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        16,
+        16,
+        31,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        30,
+        16,
+        14,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 490,
+          "duration": 908
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".settings-hero-copy > div > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        7,
+        15,
+        15,
+        15,
+        30,
+        15,
+        16,
+        14,
+        16,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        15,
+        30,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        15,
+        15,
+        16,
+        14,
+        16,
+        15,
+        15,
+        30
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 634,
+          "duration": 1019
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 6.8pt (9px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        4,
+        30,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        17,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        14,
+        16,
+        16,
+        15,
+        15,
+        16,
+        30,
+        16,
+        15,
+        16,
+        15,
+        17,
+        15,
+        17,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 399,
+          "duration": 895
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 26
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        4,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        30,
+        15,
+        16,
+        16,
+        14,
+        16,
+        15,
+        16,
+        14,
+        16,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        14,
+        16,
+        16,
+        16,
+        16,
+        16,
+        29,
+        16,
+        15,
+        16,
+        16,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 564,
+          "duration": 978
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              "header > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.23 (foreground color: #087ea4, background color: #eaf7fc, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 17
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        21,
+        16,
+        29,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        15,
+        14,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        31,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        14,
+        16,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        31,
+        15,
+        14,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 493,
+          "duration": 845
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".active"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.14 (foreground color: #087ea4, background color: #e1f6fc, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        11,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15,
+        17,
+        15,
+        15,
+        16,
+        30,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        30,
+        14,
+        15,
+        16,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageCanvasSheen",
+          "state": "running"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 452,
+          "duration": 972
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 11
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        13,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        31,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        17,
+        15,
+        16,
+        15,
+        30
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 884,
+          "duration": 1593
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 29
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 390,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 390,
+      "scrollWidth": 390,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        12,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        17,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        17,
+        15,
+        17,
+        15,
+        22,
+        10,
+        17,
+        33,
+        51,
+        25,
+        25,
+        19,
+        10,
+        14,
+        29,
+        16,
+        15,
+        18,
+        13,
+        15,
+        15,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 888,
+          "duration": 1463
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 6
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "login",
+    "path": "/auth/login",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        149,
+        326,
+        534
+      ],
+      "animations": [
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-drift",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-orbit",
+          "state": "running"
+        },
+        {
+          "name": "auth-float",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 714,
+          "duration": 1091
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 36
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "legal",
+    "path": "/privacy",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        28,
+        230,
+        339,
+        287
+      ],
+      "animations": [
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__ambientDrift",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__headerSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__glowBreathe",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__titleShimmer",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__heroFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__panelReveal",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__rowFloat",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__navSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__sectionReveal",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__cardSheen",
+          "state": "running"
+        },
+        {
+          "name": "legal-page-module__qLSGyG__riseIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 744,
+          "duration": 1680
+        }
+      ]
+    },
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 88
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "chat",
+    "path": "/responsive-fixture?chat=long",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        76,
+        66,
+        12,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        15,
+        15,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 682,
+          "duration": 1178
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".assistant:nth-child(2) > .avatar[aria-hidden=\"true\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #087ea4, background color: #e2f6fc, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".assistant:nth-child(4) > .avatar[aria-hidden=\"true\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.15 (foreground color: #087ea4, background color: #e2f6fc, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 23
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "history",
+    "path": "/responsive-fixture?surface=history&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        131,
+        241,
+        246,
+        236
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryAura",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryButtonSheen",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryTileFloat",
+          "state": "running"
+        },
+        {
+          "name": "libraryReveal",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        },
+        {
+          "name": "libraryCardIn",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1086,
+          "duration": 1885
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "color-contrast",
+        "count": 59
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "projects",
+    "path": "/responsive-fixture?surface=projects&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        9,
+        18,
+        14,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 553,
+          "duration": 1284
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "div:nth-child(1) > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .project-secondary-actions > .danger[type=\"button\"]"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.42 (foreground color: #ff7e92, background color: #ffffff, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 48
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "models",
+    "path": "/responsive-fixture?surface=models&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        24,
+        70,
+        80,
+        66,
+        68,
+        74,
+        69,
+        69,
+        63,
+        64,
+        66,
+        63
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "spin",
+          "state": "running"
+        },
+        {
+          "name": "marketReveal",
+          "state": "finished"
+        },
+        {
+          "name": "sortSpark",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 850,
+          "duration": 874
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "help": "Elements must only use permitted ARIA attributes",
+        "nodes": [
+          {
+            "target": [
+              "span[aria-label=\"Unavailable\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(2) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(3) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          },
+          {
+            "target": [
+              "article:nth-child(4) > .model-card-heading > .model-signal[aria-label=\"Available\"][title=\"Available\"]"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on a span with no valid role attribute."
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 83
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "files",
+    "path": "/responsive-fixture?surface=files&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        50,
+        40,
+        40,
+        41,
+        44,
+        54,
+        44,
+        40,
+        44,
+        42,
+        41,
+        38,
+        40,
+        41,
+        39,
+        41,
+        42,
+        39
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-hero-float",
+          "state": "running"
+        },
+        {
+          "name": "files-float",
+          "state": "running"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        },
+        {
+          "name": "files-rise",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 419,
+          "duration": 939
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 56
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "settings",
+    "path": "/responsive-fixture?surface=settings&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        39,
+        32,
+        14,
+        20,
+        11,
+        19,
+        13,
+        22,
+        10,
+        16,
+        14,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        17,
+        15,
+        45,
+        28,
+        19,
+        17,
+        15,
+        17,
+        15,
+        16,
+        15,
+        15,
+        15
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 526,
+          "duration": 1536
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".settings-hero-copy > div > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 50
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "support",
+    "path": "/responsive-fixture?surface=support&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        11,
+        15,
+        16,
+        16,
+        17,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1023,
+          "duration": 1963
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              ".kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 40
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "usage",
+    "path": "/responsive-fixture?surface=usage&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        6,
+        11,
+        48,
+        48,
+        30,
+        16,
+        19,
+        13,
+        21,
+        11,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        },
+        {
+          "name": "premiumBarShine",
+          "state": "running"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1414,
+          "duration": 2123
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 61
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "wallet",
+    "path": "/responsive-fixture?surface=wallet&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        18,
+        26,
+        16,
+        16,
+        30,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        17,
+        30,
+        15,
+        16,
+        24,
+        24,
+        18,
+        30,
+        16,
+        17,
+        17,
+        29,
+        16,
+        17,
+        30,
+        16,
+        30,
+        16,
+        15,
+        16,
+        30,
+        17,
+        30,
+        15,
+        30,
+        17
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "walletPanelIn",
+          "state": "finished"
+        },
+        {
+          "name": "walletValuePop",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 576,
+          "duration": 1274
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "header > .kicker"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.46 (foreground color: #087ea4, background color: #f8fbff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 2
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 54
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "admin",
+    "path": "/responsive-fixture?surface=admin&state=populated",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        21,
+        16,
+        30,
+        15,
+        15,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        14,
+        16,
+        15,
+        16,
+        15,
+        15,
+        30,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        14,
+        16,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        30,
+        15,
+        16,
+        15,
+        15,
+        15,
+        16,
+        16,
+        15
+      ],
+      "animations": [
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 411,
+          "duration": 706
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".active"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.14 (foreground color: #087ea4, background color: #e1f6fc, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 62
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "image",
+    "path": "/responsive-fixture?studio=image&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        1,
+        15,
+        16,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "imageCanvasSheen",
+          "state": "running"
+        },
+        {
+          "name": "imageResultReveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 473,
+          "duration": 914
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 29
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "video",
+    "path": "/responsive-fixture?studio=video&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        53,
+        44,
+        39,
+        43,
+        47,
+        41,
+        47,
+        45,
+        38,
+        48,
+        45,
+        54,
+        36,
+        39,
+        49,
+        54,
+        56
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 1069,
+          "duration": 1946
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "count": 1
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "count": 1
+      },
+      {
+        "id": "color-contrast",
+        "count": 56
+      },
+      {
+        "id": "video-caption",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "engine": "webkit",
+    "width": 1366,
+    "name": "audio",
+    "path": "/responsive-fixture?studio=audio&state=completed",
+    "errors": [],
+    "metrics": {
+      "width": 1366,
+      "scrollWidth": 1366,
+      "shifts": 0,
+      "longTasks": [],
+      "frames": [
+        17,
+        102,
+        11,
+        16,
+        16,
+        15,
+        15,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        17,
+        15,
+        16,
+        15,
+        17,
+        16,
+        16,
+        16,
+        15,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16,
+        15,
+        16,
+        16,
+        14,
+        16,
+        15,
+        16,
+        16,
+        16,
+        16,
+        15,
+        16,
+        15,
+        16
+      ],
+      "animations": [
+        {
+          "name": "walletRefreshSheen",
+          "state": "running"
+        },
+        {
+          "name": "walletLivePulse",
+          "state": "running"
+        },
+        {
+          "name": "page-reveal",
+          "state": "finished"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioOrbit",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioFloat",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        },
+        {
+          "name": "audio-studio-module__3VZhKa__audioBreathe",
+          "state": "paused"
+        }
+      ],
+      "navigation": [
+        {
+          "domContentLoaded": 697,
+          "duration": 1148
+        }
+      ]
+    },
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": [
+          {
+            "target": [
+              ".command-trigger > span"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.25 (foreground color: #6c7890, background color: #f8faff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "#audio-tab-music > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.64 (foreground color: #7b8799, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "target": [
+              "#audio-tab-sfx > span > small"
+            ],
+            "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.64 (foreground color: #7b8799, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "count": 32
+      }
+    ]
+  }
+]

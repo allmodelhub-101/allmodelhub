@@ -1,0 +1,13 @@
+{
+  "runLabel": "phase4-rotation-stress",
+  "stats": {
+    "startTime": "2026-10-16T17:09:09.883Z",
+    "duration": 82233.108,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "scope": "WebKit phone light/dark Audio mode/playback/rotation, five repetitions each; suite retry count remains zero"
+}

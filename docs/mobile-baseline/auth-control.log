@@ -1,0 +1,139 @@
+
+Running 4 tests using 2 workers
+
+(node:27576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium-768x1024] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (13.6s)
+  x  2 [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (13.8s)
+(node:25464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [chromium-1366x768] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (4.1s)
+  x  4 [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport (16.2s)
+
+
+  1) [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.auth-nav-actions .theme-toggle')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toBeVisible" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms
+      - waiting for locator('.auth-nav-actions .theme-toggle')
+        23 × locator resolved to <button class="theme-toggle" title="Switch to dark theme" aria-label="Switch to dark theme">…</button>
+           - unexpected value "hidden"
+
+
+      4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');
+      5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);
+    > 6 |   await expect(theme).toBeVisible();
+        |                       ^
+      7 | });
+      8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{
+      9 |   await page.goto('/');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:6:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium-768x1024] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.auth-nav-actions .theme-toggle')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toBeVisible" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms
+      - waiting for locator('.auth-nav-actions .theme-toggle')
+        23 × locator resolved to <button class="theme-toggle" title="Switch to dark theme" aria-label="Switch to dark theme">…</button>
+           - unexpected value "hidden"
+
+
+      4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');
+      5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);
+    > 6 |   await expect(theme).toBeVisible();
+        |                       ^
+      7 | });
+      8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{
+      9 |   await page.goto('/');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:6:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-768x1024\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-768x1024\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-768x1024\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-chromium-768x1024\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.auth-nav-actions .theme-toggle')
+    Expected: visible
+    Received: hidden
+    Timeout:  10000ms
+
+    Call log:
+      - Expect "toBeVisible" locator('.auth-nav-actions .theme-toggle') with timeout 10000ms
+      - waiting for locator('.auth-nav-actions .theme-toggle')
+        23 × locator resolved to <button class="theme-toggle" title="Switch to dark theme" aria-label="Switch to dark theme">…</button>
+           - unexpected value "hidden"
+
+
+      4 |   const theme=page.locator('.auth-nav-actions .theme-toggle');
+      5 |   await expect(theme).toHaveAttribute('aria-label',/Switch to/);
+    > 6 |   await expect(theme).toBeVisible();
+        |                       ^
+      7 | });
+      8 | test('marketing navigation opens, closes with Escape and navigates',async({page})=>{
+      9 |   await page.goto('/');
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\interactions.spec.ts:6:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\auth-control\interactions-auth-theme-sw-7de64-ble-at-the-current-viewport-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+    [chromium-768x1024] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+    [webkit-390x844] › tests\responsive\interactions.spec.ts:2:5 › auth theme switch remains accessible at the current viewport
+  1 passed (35.1s)

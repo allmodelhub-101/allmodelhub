@@ -1,0 +1,51 @@
+[
+  {
+    "file": "src/app/globals.css",
+    "selector": "body .library-redesign-page",
+    "before": "overflow:clip",
+    "after": "overflow:visible",
+    "evidence": "320px library tools were 393px wide while the document reported 320px. Content sizing is now owned by workspace-data.module.css; only the aria-hidden hero art contains its oversized orbit."
+  },
+  {
+    "file": "src/app/globals.css",
+    "selector": ".library-redesign-page .library-meta",
+    "removed": "font-size:9px!important;",
+    "replacement": "Owned readable font-size in workspace-data.module.css",
+    "evidence": "Computed 9px/10px text remained tiny in actual phone content screenshots."
+  },
+  {
+    "file": "src/app/globals.css",
+    "selector": ".library-redesign-page .library-excerpt",
+    "removed": "font-size:10px!important;",
+    "replacement": "Owned readable font-size in workspace-data.module.css",
+    "evidence": "Computed 9px/10px text remained tiny in actual phone content screenshots."
+  },
+  {
+    "file": "src/app/globals.css",
+    "selector": ".model-marketplace-page",
+    "before": "padding-bottom:64px!important",
+    "after": "padding-bottom:24px",
+    "evidence": "Shared shell already reserves --workspace-nav-clearance."
+  },
+  {
+    "file": "src/app/globals.css",
+    "selector": ".model-marketplace-page",
+    "before": "padding:0 0 86px!important",
+    "after": "padding:0 0 24px",
+    "evidence": "Shared shell already reserves --workspace-nav-clearance."
+  },
+  {
+    "file": "src/app/files/files.css",
+    "selector": ".files-redesign-page",
+    "before": "padding:22px clamp(18px,3vw,48px) 58px!important",
+    "after": "padding:22px clamp(18px,3vw,48px) 24px",
+    "evidence": "Actual file content screenshot and shell-owned navigation clearance; avoid reserving the same space twice."
+  },
+  {
+    "file": "src/app/files/files.css",
+    "selector": ".files-redesign-page",
+    "before": "padding:18px 12px max(88px,calc(env(safe-area-inset-bottom) + 72px))!important",
+    "after": "padding:18px 12px 24px",
+    "evidence": "Actual file content screenshot and shell-owned navigation clearance; avoid reserving the same space twice."
+  }
+]

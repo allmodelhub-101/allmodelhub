@@ -1,0 +1,13 @@
+{
+  "runLabel": "phase4-visual-verified",
+  "stats": {
+    "startTime": "2026-10-16T16:44:51.866Z",
+    "duration": 253827.693,
+    "expected": 36,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "references": "36 reviewed Windows studio light/dark references; no references overwritten during comparison"
+}

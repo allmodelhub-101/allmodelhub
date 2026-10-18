@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./video-studio-v2.module.css";
 
@@ -8,7 +9,7 @@ type RailModel = { id: string; name: string; providerFamily?: string; tier: stri
 export function VideoModelBrand({ name, provider = "" }: { name: string; provider?: string }) {
   const value = `${name} ${provider}`.toLowerCase();
   const brand = value.includes("ltx") ? "ltx.png" : value.includes("minimax") ? "minimax.ico" : value.includes("seedance") ? "seedance.ico" : value.includes("kling") ? "kling.png" : value.includes("wan") ? "wan.ico" : value.includes("grok") ? "grok.ico" : value.includes("google") ? "google.png" : null;
-  return <span className={styles.videoBrand} aria-hidden="true">{brand ? <img src={`/video-studio/brands/${brand}`} alt="" width={28} height={28} /> : <span>{value.includes("flashvsr") ? "VSR" : "AI"}</span>}</span>;
+  return <span className={styles.videoBrand} aria-hidden="true">{brand ? <Image src={`/video-studio/brands/${brand}`} alt="" width={28} height={28} unoptimized /> : <span>{value.includes("flashvsr") ? "VSR" : "AI"}</span>}</span>;
 }
 
 export function VideoModelRail({ models, selected, onSelect, motionAllowed }: { models: RailModel[]; selected: string; onSelect: (id: string) => void; motionAllowed: boolean }) {
@@ -21,7 +22,18 @@ export function VideoModelRail({ models, selected, onSelect, motionAllowed }: { 
     let frame = 0;
     let previous = 0;
     let position = rail.current?.scrollLeft || 0;
+    let visible = true;
+    const stop = () => {
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+      previous = 0;
+    };
+    const start = () => {
+      if (visible && !document.hidden && !frame) frame = window.requestAnimationFrame(animate);
+    };
     const animate = (time: number) => {
+      frame = 0;
+      if (!visible || document.hidden) return;
       const el = rail.current;
       const width = group.current?.offsetWidth || 0;
       if (el && width && !document.hidden && previous) {
@@ -29,10 +41,21 @@ export function VideoModelRail({ models, selected, onSelect, motionAllowed }: { 
         el.scrollLeft = position;
       }
       previous = time;
-      frame = window.requestAnimationFrame(animate);
+      start();
     };
-    frame = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(frame);
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) start(); else stop();
+    });
+    if (rail.current) observer.observe(rail.current);
+    const visibilityChanged = () => { if (document.hidden) stop(); else start(); };
+    document.addEventListener("visibilitychange", visibilityChanged);
+    start();
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", visibilityChanged);
+    };
   }, [motionAllowed, paused, interacting]);
   const move = (direction: number) => {
     setPaused(true);

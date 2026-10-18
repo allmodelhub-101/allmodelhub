@@ -1,0 +1,178 @@
+[
+  {
+    "i": 0,
+    "before": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ],
+    "violations": [],
+    "after": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ]
+  },
+  {
+    "i": 1,
+    "before": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ],
+    "violations": [],
+    "after": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ]
+  },
+  {
+    "i": 2,
+    "before": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ],
+    "violations": [],
+    "after": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ]
+  },
+  {
+    "i": 3,
+    "before": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ],
+    "violations": [],
+    "after": [
+      {
+        "selector": "body",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "li strong",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      },
+      {
+        "selector": "#cin-hero-title",
+        "color": "rgb(11, 18, 32)",
+        "fill": "rgb(11, 18, 32)",
+        "theme": "light"
+      }
+    ]
+  }
+]

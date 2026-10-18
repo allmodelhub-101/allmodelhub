@@ -1,0 +1,41 @@
+[WebServer] (node:9916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:24116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:27004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\login.png, writing actual.
+  ok  1 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.2s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\login.png, writing actual.
+  ok  2 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.9s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\legal.png, writing actual.
+  ok  3 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (5.0s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\legal.png, writing actual.
+  ok  4 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (5.8s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-390x844\video-fixture.png, writing actual.
+  ok  5 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (3.7s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-768x1024\video-fixture.png, writing actual.
+  ok  6 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (4.1s)
+(node:13032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\login.png, writing actual.
+  ok  8 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (5.7s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\login.png, writing actual.
+  ok  7 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (7.4s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\legal.png, writing actual.
+  ok  9 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (5.4s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\legal.png, writing actual.
+  ok 10 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (6.4s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\chromium-1366x768\video-fixture.png, writing actual.
+  ok 11 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (4.8s)
+A snapshot doesn't exist at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\__screenshots__\win32\webkit-390x844\video-fixture.png, writing actual.
+  ok 12 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (6.0s)
+
+  12 passed (51.3s)

@@ -419,3 +419,8 @@ html[data-theme="dark"] .auth-portal input:-webkit-autofill { -webkit-text-fill-
   .auth-nav-actions .theme-toggle:hover { transform: none; }
   .auth-nav-actions .theme-toggle:hover::after { transform: none; }
 }
+/* Phase 5 public forms: retain native editing and all authentication callbacks. */
+.auth-portal :is(input:not([type=checkbox]),textarea){font-size:16px}
+.auth-portal :is(button,.auth-nav-actions>a,.auth-page-foot a){min-height:44px}
+.auth-portal :is(button,a,input):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(max-width:620px){.auth-portal .auth-nav-actions{flex-wrap:wrap}.auth-portal .auth-page-foot{flex-wrap:wrap;gap:12px}}

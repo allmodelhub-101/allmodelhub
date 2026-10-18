@@ -1,0 +1,615 @@
+[WebServer] (node:22300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:17440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 216 tests using 2 workers
+
+(node:18876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok   1 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.7s)
+  ok   2 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.0s)
+  ok   3 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.3s)
+  ok   4 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.6s)
+  ok   5 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.0s)
+  ok   6 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.6s)
+  ok   7 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (2.9s)
+  ok   8 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.0s)
+  ok   9 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (2.8s)
+  ok  10 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.8s)
+  ok  11 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.4s)
+  ok  12 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.7s)
+  ok  13 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.5s)
+  ok  14 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.1s)
+  ok  15 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.1s)
+  ok  16 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.2s)
+  ok  17 [chromium-320x568] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.9s)
+  ok  18 [chromium-360x800] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.5s)
+(node:13184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  19 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.1s)
+  ok  20 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.6s)
+  ok  21 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.7s)
+  ok  22 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.6s)
+  ok  23 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.5s)
+  ok  24 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (2.9s)
+  ok  25 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (2.8s)
+  ok  26 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (2.6s)
+  ok  27 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.7s)
+  ok  28 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.8s)
+  ok  29 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.8s)
+  ok  30 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.4s)
+  ok  31 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.1s)
+  ok  32 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.3s)
+  ok  33 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.0s)
+  ok  34 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.2s)
+  ok  35 [chromium-375x812] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.0s)
+  ok  36 [chromium-390x844] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.4s)
+(node:14432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:14308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  38 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.5s)
+  ok  37 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.4s)
+  ok  39 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.2s)
+  ok  40 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.9s)
+  ok  41 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.9s)
+  ok  42 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.9s)
+  ok  43 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.0s)
+  ok  44 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.7s)
+  ok  45 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (3.8s)
+  ok  46 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.3s)
+  ok  47 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.2s)
+  ok  48 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.2s)
+  ok  49 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.8s)
+  ok  50 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.8s)
+  ok  51 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.7s)
+  ok  52 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.8s)
+  ok  53 [chromium-844x390] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.5s)
+  ok  54 [chromium-430x932] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.5s)
+(node:10164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  55 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.8s)
+  ok  56 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.4s)
+  ok  57 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.8s)
+  ok  58 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.3s)
+  ok  59 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.8s)
+  ok  60 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.8s)
+  ok  61 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (4.0s)
+  ok  62 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.6s)
+  ok  63 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.7s)
+  ok  64 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (5.1s)
+  ok  65 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.6s)
+  ok  66 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.1s)
+  ok  67 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.7s)
+  ok  68 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (4.5s)
+  ok  69 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.3s)
+  ok  70 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.8s)
+  ok  71 [chromium-600x960] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.3s)
+  ok  72 [chromium-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.0s)
+(node:19484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  73 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.9s)
+  ok  74 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.5s)
+  ok  75 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.2s)
+  ok  76 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.2s)
+  ok  77 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (5.2s)
+  ok  78 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (5.0s)
+  ok  79 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.8s)
+  ok  80 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.8s)
+  ok  81 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.5s)
+  ok  82 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (5.6s)
+  ok  83 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.4s)
+  ok  85 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (4.3s)
+  ok  84 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.9s)
+  ok  87 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.9s)
+  ok  86 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.3s)
+  ok  88 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.2s)
+  ok  89 [chromium-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.9s)
+(node:27400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  90 [chromium-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (3.6s)
+(node:27980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  91 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (3.9s)
+  ok  93 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.7s)
+  ok  92 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (6.4s)
+  ok  94 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (4.2s)
+  ok  95 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (5.6s)
+  ok  96 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.5s)
+  ok  97 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (5.5s)
+  ok  98 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.5s)
+  ok 100 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.5s)
+  ok  99 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (4.6s)
+  ok 101 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (5.5s)
+  ok 102 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (7.5s)
+  ok 103 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.9s)
+  ok 104 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (6.8s)
+  ok 105 [chromium-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.1s)
+(node:11804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 106 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.7s)
+  ok 107 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.6s)
+  ok 108 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (6.0s)
+  ok 109 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (5.8s)
+  ok 110 [chromium-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (5.6s)
+  ok 111 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (4.0s)
+(node:15696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 112 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.8s)
+  ok 113 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.2s)
+  ok 114 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (4.9s)
+  ok 115 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (3.8s)
+  ok 116 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.7s)
+  ok 117 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (4.5s)
+  ok 118 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (3.6s)
+  ok 119 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (4.6s)
+  ok 120 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.1s)
+  ok 121 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (5.6s)
+  ok 122 [webkit-320x568] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.3s)
+(node:16608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 123 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (3.7s)
+  ok 124 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.2s)
+  ok 125 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (4.5s)
+  ok 127 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (3.8s)
+  ok 126 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.6s)
+  ok 129 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (3.9s)
+  ok 128 [webkit-360x800] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (4.9s)
+(node:28452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 130 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (3.6s)
+  ok 131 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (4.1s)
+  ok 132 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (5.5s)
+  ok 133 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (4.7s)
+  ok 134 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.7s)
+  ok 135 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (4.5s)
+  ok 136 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (5.3s)
+  ok 137 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (4.5s)
+  ok 138 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.4s)
+  ok 139 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (6.4s)
+  ok 140 [webkit-375x812] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (5.9s)
+  ok 141 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (4.7s)
+(node:2680) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 142 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (4.8s)
+  ok 143 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.9s)
+  ok 144 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (5.5s)
+  ok 145 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (5.5s)
+  ok 146 [webkit-390x844] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (5.8s)
+  ok 147 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (5.8s)
+(node:22896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 148 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (5.3s)
+  ok 149 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.9s)
+  ok 150 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (6.9s)
+  ok 151 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (6.6s)
+  ok 152 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (5.7s)
+  ok 153 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (6.2s)
+  ok 154 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (5.8s)
+  ok 155 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (6.0s)
+  ok 156 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (6.8s)
+  ok 157 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (8.2s)
+  ok 158 [webkit-430x932] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (6.9s)
+  ok 159 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (5.4s)
+(node:26788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 160 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (5.2s)
+  ok 161 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (5.7s)
+  ok 162 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (5.7s)
+  ok 163 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (5.7s)
+  ok 164 [webkit-844x390] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (14.3s)
+  ok 165 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (15.2s)
+(node:8672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+[WebServer]       <LoadingBoundary name="update-pas..." loading={null}>
+[WebServer]         <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+[WebServer]           <RedirectBoundary>
+[WebServer]             <RedirectErrorBoundary router={{...}}>
+[WebServer]               <InnerLayoutRouter url="/auth/upda..." tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]                 <SegmentViewNode type="page" pagePath="auth/updat...">
+[WebServer]                   <SegmentTrieNode>
+[WebServer]                   <UpdatePasswordPage>
+[WebServer]                     <main className="auth-portal">
+[WebServer]                       <div>
+[WebServer]                       <div>
+[WebServer]                       <div>
+[WebServer]                       <nav>
+[WebServer]                       <section className="auth-stage...">
+[WebServer]                         <aside>
+[WebServer]                         <UpdatePasswordForm>
+[WebServer]                           <section className="auth-form-...">
+[WebServer]                             <header>
+[WebServer]                             <form className="auth-form" onSubmit={function submit}>
+[WebServer]                               <label>
+[WebServer]                                 <span>
+[WebServer]                                 <div className="auth-password">
+[WebServer]                                   <input
+[WebServer]                                     type="password"
+[WebServer]                                     minLength={8}
+[WebServer]                                     value=""
+[WebServer]                                     onChange={function onChange}
+[WebServer]                                     required={true}
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                                   ...
+[WebServer]                               <label>
+[WebServer]                                 <span>
+[WebServer]                                 <input
+[WebServer]                                   type="password"
+[WebServer]                                   minLength={8}
+[WebServer]                                   value=""
+[WebServer]                                   onChange={function onChange}
+[WebServer]                                   required={true}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                               ...
+[WebServer]                       ...
+[WebServer]                 ...
+[WebServer]               ...
+[WebServer]
+  x  166 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (21.1s)
+  ok 167 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (22.0s)
+(node:10760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 168 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (9.1s)
+  ok 169 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (7.5s)
+  ok 171 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (12.2s)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <LoadingBoundary name="signup/" loading={null}>
+[WebServer]       <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+[WebServer]         <RedirectBoundary>
+[WebServer]           <RedirectErrorBoundary router={{...}}>
+[WebServer]             <InnerLayoutRouter url="/auth/signup" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]               <SegmentViewNode type="page" pagePath="auth/signu...">
+[WebServer]                 <SegmentTrieNode>
+[WebServer]                 <SignupPage>
+[WebServer]                   <AuthPage>
+[WebServer]                     <main className="auth-portal">
+[WebServer]                       <div>
+[WebServer]                       <div>
+[WebServer]                       <div>
+[WebServer]                       <nav>
+[WebServer]                       <section className="auth-stage">
+[WebServer]                         <aside>
+[WebServer]                         <LoginForm nextPath="/chat" initialMode="signup">
+[WebServer]                           <section className="auth-form-..." aria-labelledby="auth-title">
+[WebServer]                             <div>
+[WebServer]                             <div id="auth-form-..." role="tabpanel">
+[WebServer]                               <header>
+[WebServer]                               <button>
+[WebServer]                               <div>
+[WebServer]                               <form className="auth-form" onSubmit={function submit} noValidate={true}>
+[WebServer]                                 <label className="">
+[WebServer]                                   <span>
+[WebServer]                                   <input
+[WebServer]                                     type="email"
+[WebServer]                                     autoComplete="email"
+[WebServer]                                     value=""
+[WebServer]                                     onChange={function onChange}
+[WebServer]                                     placeholder="you@example.com"
+[WebServer]                                     aria-invalid={false}
+[WebServer]                                     aria-describedby="email-help"
+[WebServer] -                                   style={{caret-color:"transparent"}}
+[WebServer]                                   >
+[WebServer]                                   ...
+[WebServer]                                 <label className="">
+[WebServer]                                   <span>
+[WebServer]                                   <div className="auth-password">
+[WebServer]                                     <input
+[WebServer]                                       type="password"
+[WebServer]                                       autoComplete="new-password"
+[WebServer]                                       value=""
+[WebServer]                                       onChange={function onChange}
+[WebServer]                                       placeholder="Create a strong password"
+[WebServer]                                       aria-invalid={false}
+[WebServer]                                       aria-describedby="password-help password-policy"
+[WebServer] -                                     style={{caret-color:"transparent"}}
+[WebServer]                                     >
+[WebServer]                                     ...
+[WebServer]                                   ...
+[WebServer]                                 ...
+[WebServer]                               ...
+[WebServer]                       ...
+[WebServer]               ...
+[WebServer]             ...
+[WebServer]
+  x  170 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (17.8s)
+(node:14856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 172 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (21.2s)
+  ok 173 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (14.9s)
+  ok 174 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (9.5s)
+  ok 175 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (8.3s)
+  ok 176 [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (7.1s)
+(node:7084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 177 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (10.0s)
+  ok 178 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (12.2s)
+  ok 179 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (13.9s)
+  ok 180 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (16.0s)
+  ok 181 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (14.8s)
+  ok 182 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (6.9s)
+  ok 183 [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (6.4s)
+(node:2580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 184 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (5.1s)
+  ok 185 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (6.1s)
+  ok 186 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (7.0s)
+  ok 187 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (10.2s)
+  ok 188 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (11.4s)
+  ok 190 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (11.6s)
+  ok 189 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (13.5s)
+  ok 191 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (11.7s)
+  ok 192 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (14.0s)
+  ok 193 [webkit-1024x768] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (11.1s)
+(node:17088) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 194 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (11.7s)
+  ok 195 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (8.6s)
+  ok 196 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (11.7s)
+  ok 197 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (7.8s)
+  ok 198 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (12.7s)
+  ok 199 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (11.3s)
+  ok 200 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (15.2s)
+  ok 201 [webkit-1180x820] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (14.4s)
+(node:21360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 202 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (12.9s)
+  ok 203 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /acceptable-use loads, controls, overflow and diagnostics (17.6s)
+  ok 204 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (15.5s)
+  ok 205 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/login loads, controls, overflow and diagnostics (16.3s)
+  ok 206 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (13.6s)
+  ok 208 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (13.5s)
+  ok 207 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics (17.6s)
+  ok 209 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (7.1s)
+  ok 210 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics (8.8s)
+  ok 211 [webkit-1366x768] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (6.3s)
+  ok 212 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › / loads, controls, overflow and diagnostics (8.3s)
+  ok 213 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /privacy loads, controls, overflow and diagnostics (5.3s)
+  ok 214 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /refunds loads, controls, overflow and diagnostics (5.2s)
+  ok 215 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /terms loads, controls, overflow and diagnostics (4.2s)
+  ok 216 [webkit-1920x1080] › tests\responsive\baseline.spec.ts:6:7 › /studio-fixture loads, controls, overflow and diagnostics (5.3s)
+
+
+  1) [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+
+    Error: console and runtime errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   "A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+    +
+    + - A server/client branch `if (typeof window !== 'undefined')`.
+    + - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+    + - Date formatting in a user's locale which doesn't match the server.
+    + - External changing data without sending a snapshot of it along with the HTML.
+    + - Invalid HTML tag nesting.
+    +
+    + It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+    +
+    + %s%s https://react.dev/link/hydration-mismatch
+    +
+    +   ...
+    +     <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+    +       <LoadingBoundary name=\"update-pas...\" loading={null}>
+    +         <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+    +           <RedirectBoundary>
+    +             <RedirectErrorBoundary router={{...}}>
+    +               <InnerLayoutRouter url=\"/auth/upda...\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+    +                 <SegmentViewNode type=\"page\" pagePath=\"auth/updat...\">
+    +                   <SegmentTrieNode>
+    +                   <UpdatePasswordPage>
+    +                     <main className=\"auth-portal\">
+    +                       <div>
+    +                       <div>
+    +                       <div>
+    +                       <nav>
+    +                       <section className=\"auth-stage...\">
+    +                         <aside>
+    +                         <UpdatePasswordForm>
+    +                           <section className=\"auth-form-...\">
+    +                             <header>
+    +                             <form className=\"auth-form\" onSubmit={function submit}>
+    +                               <label>
+    +                                 <span>
+    +                                 <div className=\"auth-password\">
+    +                                   <input
+    +                                     type=\"password\"
+    +                                     minLength={8}
+    +                                     value=\"\"
+    +                                     onChange={function onChange}
+    +                                     required={true}
+    + -                                   style={{caret-color:\"transparent\"}}
+    +                                   >
+    +                                   ...
+    +                               <label>
+    +                                 <span>
+    +                                 <input
+    +                                   type=\"password\"
+    +                                   minLength={8}
+    +                                   value=\"\"
+    +                                   onChange={function onChange}
+    +                                   required={true}
+    + -                                 style={{caret-color:\"transparent\"}}
+    +                                 >
+    +                               ...
+    +                       ...
+    +                 ...
+    +               ...
+    + ",
+    + ]
+
+      27 |     expect.soft(geometry.scroll,'document horizontal overflow').toBeLessThanOrEqual(geometry.viewport+1);
+      28 |     expect.soft(controls.length,'visible interactive controls').toBeGreaterThan(0);
+    > 29 |     expect.soft(errors,'console and runtime errors').toEqual([]);
+         |                                                      ^
+      30 |     expect.soft(resources,'failed resources; external resources intentionally blocked are reported').toEqual([]);
+      31 |   });
+      32 | }
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\baseline.spec.ts:29:54
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\all-viewports\baseline--auth-update-pass-f458c-ls-overflow-and-diagnostics-webkit-600x960\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\all-viewports\baseline--auth-update-pass-f458c-ls-overflow-and-diagnostics-webkit-600x960\error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\all-viewports\baseline--auth-update-pass-f458c-ls-overflow-and-diagnostics-webkit-600x960\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\all-viewports\baseline--auth-update-pass-f458c-ls-overflow-and-diagnostics-webkit-600x960\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+
+    Error: console and runtime errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 73
+
+    - Array []
+    + Array [
+    +   "A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+    +
+    + - A server/client branch `if (typeof window !== 'undefined')`.
+    + - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+    + - Date formatting in a user's locale which doesn't match the server.
+    + - External changing data without sending a snapshot of it along with the HTML.
+    + - Invalid HTML tag nesting.
+    +
+    + It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+    +
+    + %s%s https://react.dev/link/hydration-mismatch
+    +
+    +   ...
+    +     <LoadingBoundary name=\"signup/\" loading={null}>
+    +       <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+    +         <RedirectBoundary>
+    +           <RedirectErrorBoundary router={{...}}>
+    +             <InnerLayoutRouter url=\"/auth/signup\" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+    +               <SegmentViewNode type=\"page\" pagePath=\"auth/signu...\">
+    +                 <SegmentTrieNode>
+    +                 <SignupPage>
+    +                   <AuthPage>
+    +                     <main className=\"auth-portal\">
+    +                       <div>
+    +                       <div>
+    +                       <div>
+    +                       <nav>
+    +                       <section className=\"auth-stage\">
+    +                         <aside>
+    +                         <LoginForm nextPath=\"/chat\" initialMode=\"signup\">
+    +                           <section className=\"auth-form-...\" aria-labelledby=\"auth-title\">
+    +                             <div>
+    +                             <div id=\"auth-form-...\" role=\"tabpanel\">
+    +                               <header>
+    +                               <button>
+    +                               <div>
+    +                               <form className=\"auth-form\" onSubmit={function submit} noValidate={true}>
+    +                                 <label className=\"\">
+    +                                   <span>
+    +                                   <input
+    +                                     type=\"email\"
+    +                                     autoComplete=\"email\"
+    +                                     value=\"\"
+    +                                     onChange={function onChange}
+    +                                     placeholder=\"you@example.com\"
+    +                                     aria-invalid={false}
+    +                                     aria-describedby=\"email-help\"
+    + -                                   style={{caret-color:\"transparent\"}}
+    +                                   >
+    +                                   ...
+    +                                 <label className=\"\">
+    +                                   <span>
+    +                                   <div className=\"auth-password\">
+    +                                     <input
+    +                                       type=\"password\"
+    +                                       autoComplete=\"new-password\"
+    +                                       value=\"\"
+    +                                       onChange={function onChange}
+    +                                       placeholder=\"Create a strong password\"
+    +                                       aria-invalid={false}
+    +                                       aria-describedby=\"password-help password-policy\"
+    + -                                     style={{caret-color:\"transparent\"}}
+    +                                     >
+    +                                     ...
+    +                                   ...
+    +                                 ...
+    +                               ...
+    +                       ...
+    +               ...
+    +             ...
+    + ",
+    + ]
+
+      27 |     expect.soft(geometry.scroll,'document horizontal overflow').toBeLessThanOrEqual(geometry.viewport+1);
+      28 |     expect.soft(controls.length,'visible interactive controls').toBeGreaterThan(0);
+    > 29 |     expect.soft(errors,'console and runtime errors').toEqual([]);
+         |                                                      ^
+      30 |     expect.soft(resources,'failed resources; external resources intentionally blocked are reported').toEqual([]);
+      31 |   });
+      32 | }
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\baseline.spec.ts:29:54
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\all-viewports\baseline--auth-signup-load-37953-ls-overflow-and-diagnostics-webkit-768x1024\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\all-viewports\baseline--auth-signup-load-37953-ls-overflow-and-diagnostics-webkit-768x1024\error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\all-viewports\baseline--auth-signup-load-37953-ls-overflow-and-diagnostics-webkit-768x1024\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\all-viewports\baseline--auth-signup-load-37953-ls-overflow-and-diagnostics-webkit-768x1024\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [webkit-600x960] › tests\responsive\baseline.spec.ts:6:7 › /auth/update-password loads, controls, overflow and diagnostics
+    [webkit-768x1024] › tests\responsive\baseline.spec.ts:6:7 › /auth/signup loads, controls, overflow and diagnostics
+  214 passed (12.4m)

@@ -1,0 +1,147 @@
+[WebServer] (node:13684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 2 workers
+
+(node:16276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (5.6s)
+  ok  2 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.2s)
+  ok  3 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (4.5s)
+  ok  4 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (4.5s)
+  ok  5 [chromium-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (5.6s)
+  ok  6 [chromium-768x1024] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (5.7s)
+(node:14200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (5.2s)
+  ok  8 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline login (6.1s)
+  ok  9 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (4.7s)
+  ok 10 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline legal (5.3s)
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+[WebServer]       <LoadingBoundary name="studio-fix..." loading={null}>
+[WebServer]         <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+[WebServer]           <RedirectBoundary>
+[WebServer]             <RedirectErrorBoundary router={{...}}>
+[WebServer]               <InnerLayoutRouter url="/studio-fi..." tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]                 <SegmentViewNode type="page" pagePath="studio-fix...">
+[WebServer]                   <SegmentTrieNode>
+[WebServer]                   <VideoStudioFixture>
+[WebServer]                     <VideoStudio fixtureState="idle" fixtureTheme="light">
+[WebServer]                       <main className={"video-st..."}>
+[WebServer]                         <header>
+[WebServer]                         <VideoModelRail>
+[WebServer]                         <div className="video-stud...">
+[WebServer]                           <section className="video-stud..." ref={{current:null}}>
+[WebServer]                             <form className="video-stud..." onSubmit={function submit}>
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <div className="video-stud...">
+[WebServer]                                 <div>
+[WebServer]                                 <textarea
+[WebServer]                                   id="video-scene-prompt"
+[WebServer]                                   aria-label="Scene direction"
+[WebServer]                                   value=""
+[WebServer]                                   onChange={function onChange}
+[WebServer]                                   placeholder="A slow camera glide through a rain-lit city. Neon reflections shimmer a..."
+[WebServer]                                   maxLength={20000}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                                 ...
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <label className="video-stud...">
+[WebServer]                                 <input
+[WebServer]                                   type="checkbox"
+[WebServer]                                   checked={false}
+[WebServer]                                   onChange={function onChange}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                                 ...
+[WebServer]                               ...
+[WebServer]                           ...
+[WebServer]                 ...
+[WebServer]               ...
+[WebServer]
+[WebServer] [browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[WebServer]
+[WebServer] - A server/client branch `if (typeof window !== 'undefined')`.
+[WebServer] - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+[WebServer] - Date formatting in a user's locale which doesn't match the server.
+[WebServer] - External changing data without sending a snapshot of it along with the HTML.
+[WebServer] - Invalid HTML tag nesting.
+[WebServer]
+[WebServer] It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+[WebServer]
+[WebServer] https://react.dev/link/hydration-mismatch
+[WebServer]
+[WebServer]   ...
+[WebServer]     <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+[WebServer]       <LoadingBoundary name="studio-fix..." loading={null}>
+[WebServer]         <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+[WebServer]           <RedirectBoundary>
+[WebServer]             <RedirectErrorBoundary router={{...}}>
+[WebServer]               <InnerLayoutRouter url="/studio-fi..." tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+[WebServer]                 <SegmentViewNode type="page" pagePath="studio-fix...">
+[WebServer]                   <SegmentTrieNode>
+[WebServer]                   <VideoStudioFixture>
+[WebServer]                     <VideoStudio fixtureState="idle" fixtureTheme="light">
+[WebServer]                       <main className={"video-st..."}>
+[WebServer]                         <header>
+[WebServer]                         <VideoModelRail>
+[WebServer]                         <div className="video-stud...">
+[WebServer]                           <section className="video-stud..." ref={{current:null}}>
+[WebServer]                             <form className="video-stud..." onSubmit={function submit}>
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <div className="video-stud...">
+[WebServer]                                 <div>
+[WebServer]                                 <textarea
+[WebServer]                                   id="video-scene-prompt"
+[WebServer]                                   aria-label="Scene direction"
+[WebServer]                                   value=""
+[WebServer]                                   onChange={function onChange}
+[WebServer]                                   placeholder="A slow camera glide through a rain-lit city. Neon reflections shimmer a..."
+[WebServer]                                   maxLength={20000}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                                 ...
+[WebServer]                               <div>
+[WebServer]                               <div>
+[WebServer]                               <label className="video-stud...">
+[WebServer]                                 <input
+[WebServer]                                   type="checkbox"
+[WebServer]                                   checked={false}
+[WebServer]                                   onChange={function onChange}
+[WebServer] -                                 style={{caret-color:"transparent"}}
+[WebServer]                                 >
+[WebServer]                                 ...
+[WebServer]                               ...
+[WebServer]                           ...
+[WebServer]                 ...
+[WebServer]               ...
+[WebServer]
+  ok 11 [chromium-1366x768] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (9.6s)
+  ok 12 [webkit-390x844] › tests\responsive\visual.spec.ts:4:7 › visual baseline video-fixture (8.4s)
+
+  12 passed (53.9s)

@@ -1,0 +1,65 @@
+{
+  "viewport": 320,
+  "document": 320,
+  "content": 320,
+  "width": 320,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "INPUT",
+      "name": "Search templates",
+      "height": 44,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " All",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Research",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Writing",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": " Education",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use Sample Research workflow template",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use Sample Writing workflow template",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use Sample Education workflow template",
+      "height": 44,
+      "fontSize": "13px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "template-grid",
+      "width": 266,
+      "columns": "266px",
+      "overflow": "visible"
+    }
+  ]
+}

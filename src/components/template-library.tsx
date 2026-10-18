@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./workspace-data.module.css";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Briefcase, GraduationCap, MagnifyingGlass, Megaphone, ShoppingCart, Sparkle, Storefront, VideoCamera } from "@phosphor-icons/react";
@@ -26,7 +27,7 @@ export function TemplateLibrary({ templates }: { templates: PromptTemplate[] }) 
     return templates.filter((template) => (category === "all" || template.category === category) && (!needle || `${template.title} ${template.description} ${template.category} ${template.language || ""}`.toLowerCase().includes(needle)));
   }, [category, query, templates]);
 
-  return <div className="template-library-page template-refined">
+  return <div className={`${styles.surface} ${styles.templates} template-library-page template-refined`}>
     <section className="template-hero">
       <div className="template-hero-copy"><div className="kicker">Your next idea starts here</div><h1>Prompt <span>Templates</span></h1><p>A better starting point. Choose a workflow and make it yours in Chat.</p></div>
       <div className="template-refined-art" aria-hidden="true"><Sparkle weight="duotone" /><i /><i /></div>

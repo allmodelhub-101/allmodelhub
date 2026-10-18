@@ -1,0 +1,54 @@
+[
+  {
+    "label": "phase5-d-before",
+    "stats": {
+      "startTime": "2026-10-17T09:59:31.732Z",
+      "duration": 44933.164,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "errors": [
+      {
+        "message": "\u001b[31mTesting stopped early after 2 maximum allowed failures.\u001b[39m"
+      }
+    ]
+  },
+  {
+    "label": "phase5-d-admin",
+    "stats": {
+      "startTime": "2026-10-17T10:00:35.475Z",
+      "duration": 147765.98299999998,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-d-admin-final",
+    "stats": {
+      "startTime": "2026-10-17T10:03:59.777Z",
+      "duration": 119526.808,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-d-public",
+    "stats": {
+      "startTime": "2026-10-17T10:00:58.765Z",
+      "duration": 229960.539,
+      "expected": 28,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  }
+]

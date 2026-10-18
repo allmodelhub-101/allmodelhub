@@ -1,0 +1,119 @@
+{
+  "viewport": 768,
+  "document": 768,
+  "content": 768,
+  "width": 768,
+  "shellClearance": "78px",
+  "controls": [
+    {
+      "tag": "INPUT",
+      "name": "Search models",
+      "height": 42,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "SELECT",
+      "name": "Sort models",
+      "height": 46,
+      "fontSize": "16px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "All",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Text",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Image",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Video",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Audio",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "All",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Budget",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Balanced",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Premium",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "BUTTON",
+      "name": "Flagship",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Open studio↗",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Open studio↗",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Use model↗",
+      "height": 44,
+      "fontSize": "13px"
+    },
+    {
+      "tag": "A",
+      "name": "Open studio↗",
+      "height": 44,
+      "fontSize": "13px"
+    }
+  ],
+  "grid": [
+    {
+      "class": "hero-tile-grid",
+      "width": 242.8543701171875,
+      "columns": "112px 112px",
+      "overflow": "visible"
+    },
+    {
+      "class": "model-grid",
+      "width": 740,
+      "columns": "363px 363px",
+      "overflow": "visible"
+    }
+  ]
+}

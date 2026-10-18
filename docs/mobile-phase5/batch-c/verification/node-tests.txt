@@ -1,0 +1,375 @@
+✔ historical September migration recorded all 57 pricing decisions (12.4279ms)
+✔ unverified routes are explicit fail-closed registry state (0.5276ms)
+✔ historical V2 migration removed unverified routes before V3 replacement (45.9713ms)
+✔ verified rules preserve all distinct media strategies (1.5095ms)
+✔ Qwen 3.8 text routes use current authoritative per-token prices (0.7299ms)
+✔ async media settlement reloads authoritative quote numerics as exact strings (0.7839ms)
+(node:1564) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ TTS transports are provider-model specific (45.4911ms)
+✔ direct response-header settlement is allowed only for complete exact USD evidence (58.3701ms)
+✔ successful direct audio is not failed by post-stream settlement work (75.3191ms)
+✔ audio usage omits visual fields instead of sending zero-valued dimensions (88.2825ms)
+✔ definitive rejection releases while ambiguous TTS transport retains its hold (26.304ms)
+✔ Kling async payload uses Kling voice fields and never Eleven streaming (36.73ms)
+(node:24172) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ minimax-speech-2-8-turbo: async audio retains model, task ID, output, and exact records cost (3396.6998ms)
+✔ minimax-speech-2-8-hd: async audio retains model, task ID, output, and exact records cost (410.2662ms)
+✔ kling-tts: async audio retains model, task ID, output, and exact records cost (225.491ms)
+✔ suno-v5: async audio retains model, task ID, output, and exact records cost (215.9331ms)
+✔ kling-sound-effects: async audio retains model, task ID, output, and exact records cost (599.0133ms)
+✔ eleven-tts-flash: real stream adapter preserves voice, body, request ID, and exact response cost (585.3298ms)
+✔ eleven-tts-multilingual: real stream adapter preserves voice, body, request ID, and exact response cost (231.4927ms)
+✔ eleven-tts-v3: real stream adapter preserves voice, body, request ID, and exact response cost (206.1221ms)
+(node:28572) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ golden exact TTS character charges for 1, 6, 100, 1000, 5000 and 10000 characters (15.0054ms)
+✔ submitted character counting is Unicode code-point exact (0.4781ms)
+✔ fixed and duration audio use their validated provider-specific strategies (1.3644ms)
+(node:27728) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/legacy-shadow-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ golden pricing fixtures cover every distinct active billing strategy exactly (87.4461ms)
+✔ shadow comparison preserves micro-costs and flags only meaningful mismatches (13.9114ms)
+✔ legacy shadow calculator remains comparison-only across text, TTS, media and failure (9.419ms)
+✔ provider fallback remains provider-priced and unavailable or stale rules fail closed (4.327ms)
+✔ failure, duplicate callback, and reservation shortfall outcomes remain financially safe (4.0139ms)
+✔ database contracts enforce duplicate request, concurrent capture, shadow idempotency and wallet reconciliation (1904.6216ms)
+(node:19120) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ image workflow state is translated to documented reference fields (6.1136ms)
+✔ image contracts reject unsupported editing and require explicit priced resolution (7.1177ms)
+✔ advertised UI options stay inside the executable adapter contract (3.5525ms)
+✔ quality-bound image contracts reject unsupported provider options (0.6722ms)
+(node:10900) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ FLUX editing includes every reference-image surcharge (69.963ms)
+✔ image resolution rules select distinct validated prices (1.4034ms)
+✔ video duration, resolution, and native audio produce different costs (1.7725ms)
+✔ fixed-price media stays deterministic (1.8005ms)
+✔ provider usage overrides requested media dimensions where reported (14.7924ms)
+✔ async failure settles once and duplicate callbacks are no-ops (0.555ms)
+(node:8184) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ every advertised media execution contract has all source-controlled runtime layers (45.0737ms)
+✔ runtime availability fails closed on missing adapter, pricing, or UI agreement (115.5047ms)
+✔ media authorization is request-bounded while settlement remains provider-authoritative (120.0012ms)
+✔ known media failures produce safe, accurate public categories (10.4667ms)
+(node:27948) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/money.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ uses exact decimal arithmetic for familiar binary floating-point edge cases (26.0639ms)
+✔ preserves very tiny provider costs (1.3414ms)
+✔ preserves large values without IEEE-754 precision loss (0.7254ms)
+✔ keeps one Credit equal to one PKR exactly (0.4863ms)
+✔ round-trips USD through PKR and Credits at the configured internal rate (49.959ms)
+✔ rejects non-decimal inputs and non-positive conversion rates (23.7188ms)
+(node:16136) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ selects the exact provider and never reuses the primary provider price for fallback (11.449ms)
+✔ selects and snapshots the requested pricing version and exact FX rate (3.3372ms)
+✔ fails closed for unavailable, stale, blocked, pending, inactive, future, and expired rules (1.6835ms)
+✔ a newer blocked rule fails closed instead of falling back to an older verified price (0.8523ms)
+✔ calculates token, cached-token, and cache-write pricing exactly (6.8034ms)
+✔ calculates character and TTS pricing proportionally per 1,000 characters (2.1891ms)
+✔ supports fixed, per-image, reference-image, and duration pricing (5.5649ms)
+✔ requires and applies validated resolution and mode-specific pricing (6.6534ms)
+✔ supports safe extensible formulas and blocks unknown formula kinds (4.7818ms)
+✔ option-matrix authorization pricing uses the exact resolution and quality (10.4329ms)
+✔ rejects missing billable usage and invalid financial configuration (1.2718ms)
+✔ fails closed when providers report cache usage without validated cache rates (0.9435ms)
+✔ Qwen normal mode explicitly disables provider-default thinking (5.6098ms)
+✔ V3 text authorization uses a policy-versioned request ceiling (3.6726ms)
+✔ chat never resubmits empty failed assistant placeholders (4.4144ms)
+✔ text availability requires the same complete policy metadata as authorization (8.213ms)
+✔ request-bounded migration matches Production schema and switches policies atomically (3.5329ms)
+✔ successful provider output gets bounded background settlement retries (5.6197ms)
+✔ pending billing is not presented as a zero charge (2.8729ms)
+✔ the full catalog stays visible while unavailable routes remain disabled (13.0798ms)
+✔ wallet distinguishes spendable credits from temporary reservations (5.3891ms)
+✔ user-owned settlement polling is safe, bounded, and provider-authoritative (5.6316ms)
+✔ pending V3 messages use nullable costs and never enter historical billing (5.9554ms)
+✔ traffic reconciliation uses the existing database claim function (4.7452ms)
+(node:19608) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ normalizes a settled APIMODELS USD billing record without losing tiny decimals (11.0023ms)
+✔ keeps unsettled records pending and rejects invented or malformed final costs (1.9859ms)
+✔ requires USD and authoritative failed records to have exactly zero cost (1.1267ms)
+✔ extracts APIMODELS headers in provider-preferred order and exact callback credits (87.5976ms)
+✔ calculates exact customer charge from provider USD times frozen FX and markup (8.204ms)
+✔ authorization constraints fail closed and shortfalls never become capped charges (2.8704ms)
+✔ text authorization uses the exact request token ceiling without floating-point loss (1.3892ms)
+✔ model availability uses authorization policy under V3, not detailed final pricing (1.3037ms)
+✔ incomplete text authorization policies never become executable (1.0009ms)
+✔ public settlement summaries never expose supplier cost (2.8243ms)
+✔ database contract enforces provider idempotency, authorization ceiling, pending reconciliation and zero-cost failure (16.7413ms)
+✔ streaming and callback paths retain successful output while provider billing reconciles (10.84ms)
+✔ new request entry points use Billing V3 only (16.0873ms)
+✔ consolidation migration makes V3 permanent and adds exactly 20 defensible policies (2.7387ms)
+(node:3320) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/stream-normalizer.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ normalizes OpenAI exact usage without double-charging cached input (8.8821ms)
+✔ normalizes Anthropic cache reads, cache writes and thinking usage (0.7319ms)
+✔ normalizes Gemini cached and reasoning tokens and merges partial events (0.6707ms)
+✔ rejects fractional or negative token counts instead of coercing them (0.4871ms)
+(node:14548) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/pricing-registry-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ resolves an exact database route and keeps fallback providers financially separate (3.8878ms)
+✔ fixed-price calls quote and reserve deterministically with exact snapshots (19.4941ms)
+✔ variable calls reserve the server-derived maximum, not the estimated final charge (4.3374ms)
+✔ profitability validation fails closed before reservation (1.2791ms)
+✔ tiny real prices are preserved unless an explicit product minimum is configured (1.7898ms)
+✔ reservation shortfalls surface a critical anomaly for fail-closed settlement (0.975ms)
+(node:16932) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/reconciliation-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ reconciliation backoff starts conservatively and caps at six hours (10.2814ms)
+✔ confirmed success settles and processing retains the reservation (0.5308ms)
+✔ only contract-confirmed non-billable failures release (0.7593ms)
+✔ provider terminal state preserves cancelled and expired outcomes (0.56ms)
+(node:27032) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/audio-execution.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ real media preparation binds MiniMax text, voice, and billed characters without dropping options (2139.2285ms)
+✔ all 57 audited routes preserve readiness and only the two repaired MiniMax routes become ready (183.6191ms)
+✔ MiniMax uses its own async speech contract and rejects foreign voices/options (7.6517ms)
+✔ record costs preserve exponent notation, large decimals, and correct envelope field (2.2299ms)
+✔ documented pending records remain pending and Unix milliseconds become durable timestamps (3.4628ms)
+✔ provider-controlled exponents are bounded before expansion across every cost ingress (110.622ms)
+✔ availability labels distinguish adapter support from authorization problems (0.8635ms)
+✔ MiniMax authorization prices submitted Unicode characters with policy data, never output duration (18.528ms)
+✔ all model-list clients explicitly bypass stale HTTP cache (79.4976ms)
+(node:26136) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/providers/apimodels-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ text: missing credentials cause no submission, anomaly, or retained hold (2165.0972ms)
+✔ text: local unsupported-provider releases before safe configured fallback (401.9033ms)
+✔ text: local missing-first-key releases before safe configured fallback (213.9086ms)
+✔ text: request construction failure happens before the submission marker (235.3382ms)
+✔ text: network timeout retains one hold, forbids fallback, and blocks replay (267.1355ms)
+✔ text: received 503 remains ambiguous and cannot trigger another paid attempt (581.5768ms)
+✔ text: definitive 429 releases before trying the next configured route (219.0387ms)
+✔ text: failed release stops fallback and blocks replay (431.24ms)
+✔ text: acceptance followed by malformed billing evidence preserves task ID and hold (385.7132ms)
+✔ text: successful Haimaker adapter forwards the actual submission boundary (472.2433ms)
+✔ tts: missing credentials cause no submission, anomaly, or retained hold (478.9933ms)
+✔ tts: local unsupported-provider releases before safe configured fallback (462.2112ms)
+✔ tts: local missing-first-key releases before safe configured fallback (419.2651ms)
+✔ tts: request construction failure happens before the submission marker (359.7105ms)
+✔ tts: network timeout retains one hold, forbids fallback, and blocks replay (700.9491ms)
+✔ tts: received 503 remains ambiguous and cannot trigger another paid attempt (1372.9012ms)
+✔ tts: definitive 429 releases before trying the next configured route (903.7312ms)
+✔ tts: failed release stops fallback and blocks replay (603.7197ms)
+✔ tts: acceptance followed by malformed billing evidence preserves task ID and hold (406.7799ms)
+✔ tts: successful Haimaker adapter forwards the actual submission boundary (274.4788ms)
+✔ TTS: unsupported stream adapter releases before the valid Eleven stream fallback (445.6692ms)
+✔ text: local failure does not bypass explicit fallback prohibition (485.7487ms)
+✔ actual speech refresh effect clears only its recovered loading error and ignores unmounted results (300.0835ms)
+(node:19556) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/media-execution-contract.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Kling V3 maps AMH options to exact provider fields (44.7121ms)
+✔ VEO keeps fixed duration and resolution out of the provider request (0.5925ms)
+✔ MiniMax H3 and Lite enforce only safely priced request subsets (0.9609ms)
+✔ video migration has exact request-bounded maxima and current evidence (29.5016ms)
+(node:28480) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/billing/media-job-billing-core.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ actual video callback ignores callback price and duplicate completion settles once (1887.217ms)
+✔ actual video callback retains settling status while records are unavailable (275.0025ms)
+✔ actual polling completes V3 video and retries pending records without legacy settlement (378.1359ms)
+✔ actual scheduled reconciliation restores output and confirms records settlement (527.9281ms)
+✔ actual failed callback releases only after authoritative zero-cost records (617.4805ms)
+✔ actual submission retry never resubmits an accepted task after ledger write failure (387.4377ms)
+✔ definitive HTTP 429 releases its hold and retries a later route (566.4512ms)
+✔ ambiguous provider timeout retains the hold and does not retry submission (284.6659ms)
+(node:2544) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ forward migration and real V3 RPCs preserve exact wallet/receipt invariants (10453.9814ms)
+(node:4464) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/models.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all fifteen video catalog entries have deterministic canonical readiness (28.6355ms)
+✔ verified native definitions become ready without any V2 lookup or frozen policy FX (107.7517ms)
+✔ request duration, resolution and current economics change exact V3 estimates (1.4515ms)
+✔ existing six contracts still validate and generate their verified provider options (2.0165ms)
+✔ new adapters enforce positional frames, reference limits and upscale-only sources (1.4625ms)
+✔ Seedance contracts enforce documented generation subsets and native-audio payloads (2.9489ms)
+✔ formula authorization requires exact verified rates, not approximate seconds prices (1.9977ms)
+✔ uploaded MP4 duration is parsed from server bytes and corrupt input fails closed (2.1435ms)
+✔ Seedance reference MP4 metadata enforces provider media limits (6.4165ms)
+✔ video callback, polling and reconciliation only enter V3 records authority (76.2428ms)
+(node:24288) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/auth-confirmation.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ signup confirmation accepts only email verification OTP types (2.2555ms)
+(node:15340) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/security/request.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ safeInternalPath accepts local paths and rejects redirect bypasses (2.7108ms)
+✔ safeAuthenticatedPath defaults to chat and prevents auth redirect loops (3.6852ms)
+✔ mutation origin validation blocks cross-site requests (120.2861ms)
+✔ audio modes expose keyboard navigation and a labeled panel (20.0262ms)
+✔ decorative artwork cannot be confused with audio playback and motion is optional (23.5348ms)
+✔ first-loaded Kling voice matches its provider and financial confirmation remains guarded (3.7606ms)
+✔ music and sound effects cannot re-submit an active job or invent a final charge (4.0184ms)
+(node:27668) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/chat-composer-events.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ Enter sends, Shift Enter and IME preserve native editing (2.5056ms)
+✔ Escape stops only an active request and unrelated keys remain native (0.4123ms)
+✔ context threshold and exact submitted prompt formatting are unchanged (0.5264ms)
+✔ Phase 2 transport/persistence boundary unchanged: pollPendingBilling (2.7292ms)
+✔ Phase 2 transport/persistence boundary unchanged: enhancePrompt (0.3476ms)
+✔ Phase 2 transport/persistence boundary unchanged: startVoiceInput (0.868ms)
+✔ Phase 2 transport/persistence boundary unchanged: stopVoiceInput (0.3753ms)
+✔ Phase 2 transport/persistence boundary unchanged: cancelVoiceInput (0.3142ms)
+✔ Phase 2 transport/persistence boundary unchanged: sendPrompt (0.2964ms)
+✔ Phase 2 transport/persistence boundary unchanged: uploadFiles (0.2976ms)
+✔ Phase 2 transport/persistence boundary unchanged: branchAt (0.2787ms)
+✔ Phase 2 transport/persistence boundary unchanged: editPrompt (5.618ms)
+✔ Phase 2 transport/persistence boundary unchanged: regenerate (0.8754ms)
+(node:24976) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/image-clipboard.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ clipboard items preserve multiple images without double-counting FileList (6.8673ms)
+✔ FileList-only clipboard works, null items and ordinary text stay harmless (0.872ms)
+✔ FLUX maps to an official mark and paste remains a user-triggered guarded action (6.9711ms)
+✔ image polish remains scoped and supports light/dark surfaces (2.1731ms)
+✔ decorative motion is gentle, pausable and disabled for reduced motion (0.5092ms)
+✔ model, reference and settings controls preserve authorization and accessible state (0.4594ms)
+✔ Library contains decorative overflow without restricting its content height (11.2217ms)
+(node:22824) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/responsive-fixture-access.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ explicit development opt-in accepts only loopback hosts (7.6921ms)
+✔ fixture fails closed in production and test even with the flag (7.9685ms)
+✔ fixture fails closed without exact explicit opt-in (2.8435ms)
+✔ fixture fails closed whenever Vercel is present (1.6069ms)
+✔ fixture rejects remote hosts and loopback lookalikes (1.6292ms)
+✔ collapsed navigation keeps accessible labels and linked toggle state (2.911ms)
+✔ account menu remains readable and keyboard operable in both sidebar states (0.5276ms)
+✔ sidebar motion and saved preferences have safe fallbacks (0.5761ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#uploadReference (302.3905ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#addReferences (72.6297ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteReference (104.9591ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#pasteFromClipboard (51.3199ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#poll (73.9995ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#submit (52.1938ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#removeReference (70.2728ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#ensureResultReference (32.0532ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#resetResult (42.2835ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#applyAsReference (57.1726ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#animateInVideo (66.3883ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#copySettings (40.9265ms)
+✔ Phase 3 studio execution contract unchanged: src/components/image-studio.tsx#shareResult (24.1652ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#upload (126.9559ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#poll (222.5368ms)
+✔ Phase 3 studio execution contract unchanged: src/components/video-studio.tsx#submit (110.0576ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#poll (29.8244ms)
+✔ Phase 3 studio execution contract unchanged: src/components/audio-generation-client.tsx#submit (17.7393ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#pollAsyncJob (43.3228ms)
+✔ Phase 3 studio execution contract unchanged: src/components/tts-client.tsx#submit (47.1387ms)
+✔ template launch preserves the exact encoded prompt and descriptive accessible action (2.7908ms)
+✔ search combines with category, announces results and supports reset (0.4719ms)
+✔ cards size to content and titles remain readable, with optional decorative motion (6.5988ms)
+(node:20780) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/The%20Perfect%20Point/Documents/Codex/2026-10-16/models-suite-mobile-first-transformation-phase/work/allmodelhub/src/lib/video-studio-media.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ all sixteen supplied samples have full-length, fast-start browser assets (369.2295ms)
+✔ model browsing and full-frame playback preserve generation protections (5.8951ms)
+✔ compact navigation and completed outputs expose clear, honest actions (3.1951ms)
+✔ verified provider marks exist locally and FlashVSR remains honestly labeled (19.1304ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#load (370.6189ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#patchConversation (97.7509ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeConversation (90.2793ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#removeFile (118.7657ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#toggleFavorite (36.7603ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/history-client.tsx#useHistoryClient#openFileDetail (88.936ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#load (66.1463ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#choose (19.4976ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onFileChange (49.2759ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#onDrop (30.0458ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#upload (18.8941ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/files-client.tsx#useFilesClient#remove (46.6148ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#load (22.1479ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/workspace-clients.tsx#useNotificationsClient#markRead (14.7045ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#load (108.445ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#activate (87.4977ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#submit (44.368ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#edit (28.4359ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useProjectsClient#remove (66.5007ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#useModelBattle#submit (72.9251ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/model-battle.tsx#module#runModel (32.9693ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSettingsClient#save (54.1868ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSettingsClient#deleteAccount (37.5597ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSupportClient#load (67.2486ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSupportClient#open (52.0466ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSupportClient#submit (55.878ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/simple-forms.tsx#useSupportClient#sendReply (33.611ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/usage-workspace.tsx#module#transactionLabel (21.158ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/usage-workspace.tsx#module#usageSummary (24.4424ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/usage-workspace.tsx#module#operationLabel (31.4812ms)
+✔ Phase 4 workspace execution contract unchanged: src/app/usage/page.tsx#module#karachiDayStart (15.9887ms)
+✔ Phase 4 workspace execution contract unchanged: src/app/usage/page.tsx#loadUsagePresentation#@prefix (6.168ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/usage-workspace.tsx#UsageWorkspace#@formatting (21.7809ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#loadMethods (32.6653ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#moveTo (63.5101ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#updateAmount (50.6258ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#chooseProof (70.6387ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#removeProof (33.7706ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#copyValue (25.3789ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#refresh (49.9745ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#submit (24.1102ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#useWalletClient#reset (24.7542ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#money (17.9598ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#configuredMethod (19.2165ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#transactionLabel (16.9619ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#transactionDate (18.4411ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#transactionAmount (20.4619ms)
+✔ Phase 4 workspace execution contract unchanged: src/components/wallet-client.tsx#module#shortReference (27.8758ms)
+ℹ tests 267
+ℹ suites 0
+ℹ pass 267
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34254.4441

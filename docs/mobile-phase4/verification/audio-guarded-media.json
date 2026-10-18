@@ -1,0 +1,12 @@
+{
+  "runLabel": "phase4-audio-guarded",
+  "stats": {
+    "startTime": "2026-10-16T16:55:43.903Z",
+    "duration": 59344.406,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": []
+}

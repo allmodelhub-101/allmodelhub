@@ -1,0 +1,66 @@
+[
+  {
+    "label": "phase5-retained-visual",
+    "stats": {
+      "startTime": "2026-10-17T10:11:41.319Z",
+      "duration": 294203.29600000003,
+      "expected": 60,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-public-reference-review",
+    "stats": {
+      "startTime": "2026-10-17T10:13:11.726Z",
+      "duration": 178411.892,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-public-visual-final",
+    "stats": {
+      "startTime": "2026-10-17T10:16:47.595Z",
+      "duration": 69606.221,
+      "expected": 16,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-studios-visual",
+    "stats": {
+      "startTime": "2026-10-17T10:13:40.840Z",
+      "duration": 363879.69600000005,
+      "expected": 36,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "errors": []
+  },
+  {
+    "label": "phase5-video-retained-visual",
+    "stats": {
+      "startTime": "2026-10-17T10:17:18.244Z",
+      "duration": 13604.558,
+      "expected": 0,
+      "skipped": 3,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "errors": [
+      {
+        "message": "\u001b[31mTesting stopped early after 1 maximum allowed failures.\u001b[39m"
+      }
+    ]
+  }
+]

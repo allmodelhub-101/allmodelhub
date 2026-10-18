@@ -1,0 +1,98 @@
+name: Responsive foundation
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: responsive-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  foundation-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - run: npm install --global pnpm@10.34.3
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:homepage && pnpm check:security
+      - run: pnpm test:billing && pnpm test:security && pnpm test:ui
+      - name: Lint scoped responsive components
+        run: pnpm exec eslint src/components/admin-client.tsx src/components/admin-fixture.tsx src/app/admin/components/AdminHeader.tsx src/components/wallet-client.tsx src/components/wallet-fixture.tsx src/components/account-fixture.tsx src/components/settings-workspace.tsx src/components/support-workspace.tsx src/components/usage-workspace.tsx src/app/usage/page.tsx src/app/settings/page.tsx src/app/support/page.tsx src/components/history-client.tsx src/components/files-client.tsx src/components/files-workspace.tsx src/components/simple-forms.tsx src/components/model-battle.tsx src/components/models-marketplace.tsx src/components/template-library.tsx src/components/workspace-clients.tsx src/components/workspace-data-fixture.tsx src/components/chat-client.tsx src/components/chat-workspace.tsx src/components/chat-fixture.tsx src/lib/chat-composer-events.ts src/components/app-shell.tsx src/components/app-sidebar.tsx src/components/model-picker.tsx src/components/premium-select.tsx src/components/video-studio.tsx src/components/image-studio.tsx src/components/audio-studio.tsx src/components/tts-client.tsx src/components/audio-generation-client.tsx src/components/audio-fixture.tsx src/components/studio-fixtures.tsx src/components/workspace-topbar.tsx src/components/workspace-frame.tsx src/components/responsive-fixture.tsx src/components/use-workspace-overlay.ts src/app/responsive-fixture/page.tsx src/app/responsive-fixture/audio/route.ts src/lib/responsive-fixture-access.ts next.config.ts tests/responsive/*.ts
+      - name: Full repository lint
+        run: pnpm lint
+      - run: pnpm build && pnpm typecheck
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+  browser-baseline:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - run: npm install --global pnpm@10.34.3
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit:routes && pnpm audit:css
+      - run: git diff --exit-code -- docs/mobile-route-inventory.json docs/mobile-route-inventory.md docs/mobile-css-evidence.json docs/mobile-css-evidence.md
+      - run: pnpm exec playwright install --with-deps chromium webkit
+      - name: WebKit hydration and accessibility readiness regressions
+        if: matrix.shard == 2
+        run: pnpm exec playwright test tests/responsive/hardening-accessibility.spec.ts tests/responsive/hardening-stress.spec.ts --project=webkit-390x844 --project=webkit-1366x768 --grep 'homepage|500 library' --workers=2
+        env:
+          CI: 'true'
+          PW_RUN_LABEL: hardening-readiness
+      - name: Production React Chat components (local synthetic data only)
+        run: node scripts/mobile-chat-production-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Production React studio components (local synthetic data only)
+        run: node scripts/mobile-studios-production-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Production React workspace/account/wallet/admin presentations
+        run: node scripts/mobile-workspace-production-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Production React 500-record library/search lab
+        run: node scripts/mobile-library-performance-check.mjs
+        env:
+          LOCAL_RESPONSIVE_FIXTURES: '1'
+      - name: Next production public rendering and studio fixture denial
+        run: pnpm build && node scripts/mobile-studios-next-production-check.mjs && node scripts/mobile-workspace-next-production-check.mjs && node scripts/mobile-homepage-production-check.mjs
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+      - name: All viewport projects / both browser engines
+        run: pnpm test:responsive --shard=${{ matrix.shard }}/2
+        env:
+          CI: 'true'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: responsive-foundation-${{ matrix.shard }}
+          path: |
+            playwright-report/
+            test-results/**/results.json
+            test-results/phase6-production-library/
+            docs/mobile-phase3/production/
+            docs/mobile-phase4/production/
+            docs/mobile-phase4/next-production/
+            docs/mobile-phase5/production/
+            docs/mobile-phase5/next-production/
+            docs/mobile-phase6/verification/
+            docs/mobile-phase6/performance/
+            docs/mobile-phase6/homepage-production/
+          retention-days: 7
+          if-no-files-found: warn

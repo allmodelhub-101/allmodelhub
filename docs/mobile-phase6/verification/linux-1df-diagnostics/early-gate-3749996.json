@@ -1,0 +1,103 @@
+{
+  "run": "https://github.com/allmodelhub-101/allmodelhub/actions/runs/39037205899",
+  "stats": {
+    "startTime": "2026-10-17T13:36:52.580Z",
+    "duration": 44752.172,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "hardening WCAG homepage light",
+      "project": "webkit-390x844",
+      "status": "unexpected",
+      "rendered-color-evidence": {
+        "theme": "light",
+        "body": "rgb(11, 18, 32)",
+        "nodes": [
+          {
+            "selector": "li:nth-child(1) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          },
+          {
+            "selector": "li:nth-child(2) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          },
+          {
+            "selector": "li:nth-child(3) > strong",
+            "color": "rgb(11, 18, 32)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(11, 18, 32)"
+          }
+        ]
+      }
+    },
+    {
+      "title": "hardening WCAG homepage dark",
+      "project": "webkit-390x844",
+      "status": "expected"
+    },
+    {
+      "title": "hardening WCAG homepage light",
+      "project": "webkit-1366x768",
+      "status": "unexpected",
+      "rendered-color-evidence": {
+        "theme": "light",
+        "body": "rgb(11, 18, 32)",
+        "nodes": [
+          {
+            "selector": "li:nth-child(1) > strong",
+            "color": "rgb(245, 248, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(245, 248, 251)"
+          },
+          {
+            "selector": "li:nth-child(2) > strong",
+            "color": "rgb(245, 248, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(245, 248, 251)"
+          },
+          {
+            "selector": "li:nth-child(3) > strong",
+            "color": "rgb(245, 248, 251)",
+            "background": "rgba(0, 0, 0, 0)",
+            "fill": "rgb(245, 248, 251)"
+          }
+        ]
+      }
+    },
+    {
+      "title": "hardening WCAG homepage dark",
+      "project": "webkit-1366x768",
+      "status": "expected"
+    },
+    {
+      "title": "hardening stress: 500 library records and admin rows remain searchable",
+      "project": "webkit-390x844",
+      "status": "expected",
+      "stress-readiness": {
+        "historyReadyMs": 14734,
+        "totalMs": 17458,
+        "rows": 500,
+        "environment": "development browser emulation; not hardware performance acceptance"
+      }
+    },
+    {
+      "title": "hardening stress: 500 library records and admin rows remain searchable",
+      "project": "webkit-1366x768",
+      "status": "expected",
+      "stress-readiness": {
+        "historyReadyMs": 11412,
+        "totalMs": 14514,
+        "rows": 500,
+        "environment": "development browser emulation; not hardware performance acceptance"
+      }
+    }
+  ]
+}

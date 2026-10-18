@@ -1,0 +1,57 @@
+import {test as safeTest,expect} from './safety';
+import type {Locator,Page} from '@playwright/test';
+const test=safeTest.extend<{studioDiagnostics:void}>({studioDiagnostics:[async({page},use)=>{const errors:string[]=[],apis:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('response',r=>{if(r.status()>=400)errors.push(`HTTP ${r.status()}: ${new URL(r.url()).pathname}`)});page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});await use();expect(errors).toEqual([]);expect(apis,'local studio must not contact application APIs').toEqual([])},{auto:true}]});
+async function open(page:Page,studio:string,state='idle',theme='light'){
+ await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(`/responsive-fixture?studio=${studio}&state=${state}`,{waitUntil:'networkidle'});
+ await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
+}
+async function fits(page:Page){expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)}
+async function reachable(page:Page,control:Locator){
+ await control.scrollIntoViewIfNeeded();
+ await control.evaluate(el=>el.scrollIntoView({block:'center'}));
+ await expect(control).toBeInViewport();
+ const box=await control.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(44);
+ const clearance=await page.locator('.mobile-nav').evaluate(el=>el.getClientRects().length?el.getBoundingClientRect().top:innerHeight);
+ expect(box!.y+box!.height).toBeLessThanOrEqual(clearance+1);
+}
+async function rotate(page:Page,control:Locator){
+ const original=page.viewportSize()!;if(original.width>430)return;
+ await page.setViewportSize({width:844,height:390});
+ // WebKit can acknowledge a resize before its new layout/scroll position settles.
+ await page.evaluate(()=>new Promise<void>(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve()))));
+ await fits(page);await reachable(page,control);await page.setViewportSize(original);
+}
+async function visual(page:Page,studio:string,theme:string){if(process.env.PW_STUDIO_VISUAL==='1'&&[390,768,1366].includes(page.viewportSize()!.width))await expect(page).toHaveScreenshot(`phase4-${studio}-${theme}.png`,{animations:'disabled',stylePath:'tests/responsive/screenshot.css',maxDiffPixelRatio:.01})}
+for(const theme of ['light','dark'])test(`image ${theme}: prompt, settings, model and local references`,async({page},info)=>{
+ await open(page,'image','idle',theme);await visual(page,'image',theme);await expect(page.getByRole('heading',{name:'Create an image'})).toBeVisible();const input=page.getByRole('textbox',{name:'Image prompt'});await input.fill('A thoughtful composition\n'.repeat(12));await input.scrollIntoViewIfNeeded();await expect(input).toBeInViewport();
+ const model=page.locator('.model-tool');await model.click();const dialog=page.getByRole('dialog',{name:'Choose an image model'});await expect(dialog).toBeVisible();await page.keyboard.press('Escape');await expect(model).toBeFocused();
+ const settings=page.locator('.settings-tool');await settings.click();await page.getByRole('button',{name:/9:16 Portrait/}).click();await expect(page.getByRole('button',{name:/9:16 Portrait/})).toHaveAttribute('aria-pressed','true');await page.keyboard.press('Escape');await expect(settings).toBeFocused();
+ await page.locator('input[type=file]').setInputFiles({name:'synthetic-long-reference-name_'.repeat(6)+'.png',mimeType:'image/png',buffer:Buffer.from('local synthetic metadata')});await expect(page.locator('.image-reference-chip')).toHaveCount(1);await page.getByRole('button',{name:/Remove synthetic/}).click();await expect(page.locator('.image-reference-chip')).toHaveCount(0);await fits(page);await reachable(page,page.getByRole('button',{name:'Create image',exact:true}));await rotate(page,page.getByRole('button',{name:'Create image',exact:true}));await page.locator('input[type=file]').setInputFiles([1,2,3].map(i=>({name:`synthetic-reference-${i}-`+'long-name_'.repeat(8)+'.png',mimeType:'image/png',buffer:Buffer.from('local metadata')})));await expect(page.locator('.image-reference-chip')).toHaveCount(3);await page.getByRole('region',{name:'Attached reference images'}).focus();await fits(page);
+ if([390,768,1366].includes(page.viewportSize()!.width)){const path=info.outputPath(`image-${theme}.png`);await page.screenshot({path,fullPage:true,animations:'disabled'});await info.attach(`image-${theme}`,{path,contentType:'image/png'})}
+});
+test('image result viewer and queued/failure states',async({page})=>{
+ await open(page,'image','completed');const trigger=page.getByRole('button',{name:'View full image'});await trigger.click();const dialog=page.getByRole('dialog',{name:'Image viewer'});await expect(dialog).toBeVisible();await expect(dialog.getByRole('link',{name:'Download image'})).toBeInViewport();const img=dialog.locator('img');expect(await img.evaluate(el=>getComputedStyle(el).objectFit)).toBe('contain');await page.keyboard.press('Escape');await expect(trigger).toBeFocused();await fits(page);
+ await open(page,'image','queued');await expect(page.getByRole('heading',{name:'Your request is in line'})).toBeVisible();await open(page,'image','error');await page.getByRole('button',{name:'Try again'}).click();await expect(page.getByRole('textbox',{name:'Image prompt'})).toBeVisible();
+});
+for(const theme of ['light','dark'])test(`video ${theme}: model, settings, reference and portrait preview`,async({page},info)=>{
+ await open(page,'video','idle',theme);await visual(page,'video',theme);const input=page.getByRole('textbox',{name:'Scene direction'});await input.fill('A quiet mountain sunrise.\n'.repeat(15));await input.scrollIntoViewIfNeeded();await expect(input).toBeInViewport();
+ const picker=page.getByRole('button',{name:/Choose a video model/});await picker.click();await page.getByPlaceholder('Search live video models').fill('MiniMax');await page.keyboard.press('Escape');await expect(picker).toBeFocused();
+ const aspect=page.getByRole('combobox',{name:/Video aspect ratio/});await aspect.click();await page.getByRole('option',{name:'9:16',exact:true}).click();const poster=page.locator('[data-aspect="9:16"]');await poster.scrollIntoViewIfNeeded();const box=await poster.boundingBox();expect(Math.abs(box!.width/box!.height-9/16)).toBeLessThan(.03);
+ await page.getByRole('button',{name:'Image to Video',exact:true}).click();await page.locator('input[type=file]').first().setInputFiles({name:'A-long-reference_'.repeat(8)+'.png',mimeType:'image/png',buffer:Buffer.from('synthetic metadata')});await expect(page.getByText(/A-long-reference_/).first()).toBeVisible();await fits(page);await reachable(page,page.getByRole('button',{name:/Generate Video/}));await rotate(page,page.getByRole('button',{name:/Generate Video/}));
+ if([390,768,1366].includes(page.viewportSize()!.width)){const path=info.outputPath(`video-${theme}.png`);await page.screenshot({path,fullPage:true,animations:'disabled'});await info.attach(`video-${theme}`,{path,contentType:'image/png'})}
+});
+test('video viewer focus, playback and synthetic job states',async({page})=>{
+ await open(page,'video');const trigger=page.getByRole('button',{name:'Open player ↗'});await trigger.click();const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();await expect(dialog.getByRole('button',{name:'Fullscreen video'})).toBeVisible();await dialog.getByRole('button',{name:'Play',exact:true}).click();await expect(dialog.getByRole('button',{name:'Pause',exact:true})).toBeVisible();await dialog.getByRole('button',{name:'Pause',exact:true}).click();await page.keyboard.press('Escape');await expect(trigger).toBeFocused();
+ await open(page,'video','completed');await expect(page.getByRole('heading',{name:'Your scene is ready.'})).toBeVisible();await page.locator('video[controls]').evaluate(async(el:HTMLVideoElement)=>{el.muted=true;await el.play();el.pause()});await expect(page.getByRole('link',{name:/Download/}).first()).toBeVisible();await fits(page);await open(page,'video','queued');await expect(page.getByRole('progressbar')).toBeVisible();await open(page,'video','error');await expect(page.getByRole('heading',{name:'Your video was not completed.'})).toBeVisible();
+});
+for(const theme of ['light','dark'])test(`audio ${theme}: all modes, models, voices and native playback`,async({page},info)=>{
+ await open(page,'audio','completed',theme);await visual(page,'audio',theme);await page.getByRole('textbox',{name:'Script',exact:true}).fill('An expressive script.\n'.repeat(100));const voice=page.getByRole('combobox',{name:'Voice',exact:true});await voice.click();await page.getByRole('option',{name:/Alternate/}).click();await expect(voice).toContainText('Alternate');await page.getByRole('button',{name:'Model details',exact:true}).click();await expect(page.getByRole('button',{name:'Hide model details'})).toBeVisible();
+ for(const [tab,label]of[['Speech','Generated speech playback'],['Music','Generated audio playback'],['Sound effects','Generated audio playback']]){await page.getByRole('tab',{name:new RegExp(tab)}).click();const player=page.locator(`audio[aria-label="${label}"]`);await player.scrollIntoViewIfNeeded();expect(await player.evaluate(el=>el.getBoundingClientRect().width<=el.parentElement!.clientWidth+1)).toBe(true);await player.evaluate(async(el:HTMLAudioElement)=>{await el.play();el.pause()});await fits(page);await reachable(page,page.getByRole('button',{name:tab==='Speech'?'Generate Speech':tab==='Music'?'Generate Music':'Generate Sound Effect',exact:true}))}
+ await page.getByRole('tab',{name:/Speech/}).focus();await page.keyboard.press('ArrowRight');await expect(page.getByRole('tab',{name:/Music/})).toBeFocused();await expect(page.getByRole('tabpanel')).toHaveAttribute('aria-labelledby','audio-tab-music');await rotate(page,page.getByRole('button',{name:'Generate Music',exact:true}));
+ if([390,768,1366].includes(page.viewportSize()!.width)){const path=info.outputPath(`audio-${theme}.png`);await page.screenshot({path,animations:'disabled'});await info.attach(`audio-${theme}`,{path,contentType:'image/png'})}
+});
+test('audio empty, queued, failure, prompt starters and availability',async({page})=>{
+ await open(page,'audio');const model=page.getByRole('combobox',{name:'Speech model',exact:true});await model.click();await expect(page.getByRole('option',{name:/Sample unavailable/})).toBeDisabled();await page.keyboard.press('Escape');await expect(model).toBeFocused();await page.getByRole('button',{name:/Product explainer/}).click();await expect(page.getByRole('textbox',{name:'Script',exact:true})).not.toBeEmpty();
+ await page.getByRole('tab',{name:/Music/}).click();await page.getByRole('button',{name:'Focus flow',exact:true}).click();await expect(page.getByRole('textbox',{name:'Music direction'})).not.toBeEmpty();await page.getByRole('button',{name:'Generate Music',exact:true}).click();await expect(page.getByText('Creating your audio.',{exact:false})).toBeVisible();
+ await open(page,'audio','error');await expect(page.getByRole('alert').filter({hasText:'Synthetic speech failure'})).toBeVisible();await page.getByRole('tab',{name:/Sound effects/}).click();await expect(page.getByText('Generation could not complete',{exact:true})).toBeVisible();await fits(page);
+});
