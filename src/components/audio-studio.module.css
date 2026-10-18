@@ -76,7 +76,6 @@
 .page[data-studio=audio] .previewHead { flex-wrap:wrap;gap:8px; }
 .page[data-studio=audio] .previewHead small { overflow-wrap:anywhere; }
 .page[data-studio=audio] .soundStage { height:210px; }
-.page[data-studio=audio] .soundStage:not(.rendering) * { animation-play-state:paused; }
 .page[data-studio=audio] :is(button,a,input,textarea,[tabindex]):focus-visible { outline:2px solid var(--audio-blue);outline-offset:3px; }
 @container(max-width:850px) {
  .page[data-studio=audio] .workspace { grid-template-columns:minmax(0,1fr); }
@@ -99,3 +98,27 @@
 :global(html:not([data-theme="light"])) .page .modeTabs button.active,:global(html:not([data-theme="light"])) .page .modeTabs button.active:hover { color:#fff;background:linear-gradient(115deg,#375a9c,#6557aa); }
 
 :global(html[data-theme="light"]) .page[data-studio=audio] .modeTabs button:not(.active) small{color:#5f6b7d;opacity:1}
+
+/* Keep the studio alive while idle; the page pause and reduced-motion rules still take precedence. */
+.soundDisc::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:linear-gradient(115deg,transparent 28%,#ffffff16 49%,transparent 65%); opacity:.65; animation:audioGleam 6s ease-in-out infinite; }
+.soundDisc { overflow:hidden; }
+@keyframes audioGleam { 0%,55% { transform:translateX(-125%); } 85%,100% { transform:translateX(125%); } }
+.page[data-studio=audio] .scriptEditor { gap:8px; }
+.scriptHeading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.scriptHeading label { font-size:13px; font-weight:650; color:var(--text); }
+.scriptHeading>span { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.scriptSurface { overflow:hidden; border:1px solid var(--line); border-radius:16px; background:var(--panel-solid); transition:border-color .18s ease,box-shadow .18s ease; }
+.scriptSurface:focus-within { border-color:var(--audio-blue); box-shadow:0 0 0 3px color-mix(in srgb,var(--audio-blue) 14%,transparent); }
+.page[data-studio=audio] .scriptSurface textarea { display:block; width:100%; min-height:160px; padding:16px; border:0; border-radius:0; background:transparent; box-shadow:none; outline:none; font-family:inherit; font-weight:400; }
+.page[data-studio=audio] .scriptSurface textarea:focus-visible { outline:none; }
+.scriptToolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:5px 12px; padding:7px 9px; border-top:1px solid var(--line); background:var(--panel-2); }
+.scriptToolbar>span { padding-left:5px; color:var(--muted); font-size:11px; }
+.scriptToolbar>div { display:flex; flex-wrap:wrap; gap:3px; }
+.scriptToolbar button { display:inline-flex; align-items:center; justify-content:center; gap:5px; min-height:36px; padding:7px 9px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--text); font-family:inherit; font-size:11px; cursor:pointer; }
+.scriptToolbar button:hover:not(:disabled) { background:var(--panel-solid); border-color:var(--line); }
+.scriptToolbar button:disabled { opacity:.45; cursor:default; }
+.scriptToolbar button svg { width:15px; height:15px; flex:none; }
+.scriptHelp,.scriptNotice { color:var(--muted); font-size:10px; line-height:1.5; }
+.scriptNotice { color:var(--text); }
+@media(max-width:600px) { .scriptToolbar { align-items:flex-start; flex-direction:column; }.scriptToolbar>div { width:100%;justify-content:flex-end; }.scriptToolbar button { min-height:44px; }.page[data-studio=audio] .scriptSurface textarea { min-height:150px;padding:12px; } }
+@media(prefers-reduced-motion:reduce) { .page[data-studio=audio] .headerActions button { display:none; } }

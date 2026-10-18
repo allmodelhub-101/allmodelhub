@@ -5,6 +5,7 @@ import { DownloadSimple, GearSix, Microphone, Play, Sparkle, UsersThree, Wavefor
 import { PremiumSelect } from "@/components/premium-select";
 import styles from "@/components/audio-studio.module.css";
 import { AudioStage } from "@/components/audio-stage";
+import { SpeechScriptEditor } from "@/components/speech-script-editor";
 import { isMinimaxSpeech, minimaxVoices } from "@/lib/audio-execution";
 import { modelAvailabilityMessage } from "@/lib/model-availability-message";
 
@@ -146,7 +147,7 @@ return <div className={styles.workspace}>
     <form className={styles.controls} onSubmit={submit}>
       <div className={styles.cardHead}><span className={styles.headIcon}><Microphone weight="fill" /></span><div><h2>Bring your words to life</h2><p>A voice for every story.</p></div></div>
       <label className={styles.field}><span>Speech model</span><PremiumSelect className={styles.select} value={modelId} onChange={(value) => { setModelId(value); setVoice(isMinimaxSpeech(value) ? minimaxVoices[0].value : value === "kling-tts" ? klingVoices[0]?.value ?? "" : elevenVoices[0]?.value ?? ""); setConfirmed(false); }} options={models.map((model) => ({ value: model.id, label: `${model.name} · ${model.tier}${model.available === false ? ` · ${modelAvailabilityMessage(model.availabilityReason)}` : ""}`, disabled: model.available === false }))} aria-label="Speech model" /></label>
-      <label className={styles.field}><span>Script <small>{text.length.toLocaleString()} / {scriptLimit.toLocaleString()}</small></span><textarea aria-label="Script" value={text} onChange={(event) => { setText(event.target.value); setConfirmed(false); }} maxLength={scriptLimit} required placeholder="Write the words you want to hear…" /></label>
+      <SpeechScriptEditor value={text} onChange={value => { setText(value); setConfirmed(false); }} limit={scriptLimit} busy={busy} />
       <div className={styles.settingsGrid}>
       <label className={styles.field}><span>Voice</span><PremiumSelect className={styles.select} value={selectedVoice} onChange={setVoice} options={[...voices]} aria-label="Voice" /></label>
       {asyncKling && <><label className={styles.field}><span>Language</span><PremiumSelect className={styles.select} value={languageCode} onChange={setLanguageCode} options={[{ value: "en", label: "English" }, { value: "zh", label: "Chinese" }]} aria-label="Language" /></label><label className={styles.field}><span>Speed</span><PremiumSelect className={styles.select} value={voiceSpeed} onChange={setVoiceSpeed} options={[{ value: "0.8", label: "0.8×" }, { value: "1", label: "1.0×" }, { value: "1.2", label: "1.2×" }, { value: "1.5", label: "1.5×" }, { value: "2", label: "2.0×" }]} aria-label="Voice speed" /></label></>}
