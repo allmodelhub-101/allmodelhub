@@ -1,0 +1,33 @@
+{
+  "base": "75258ac",
+  "files": {
+    "src/components/chat-workspace.tsx": "f3784f2cfea84e2394b784be25c7f4f67ec20c0e72a3b6c4e6d8ff60225bb3e9",
+    "src/components/chat-workspace.css": "d99673ca5e7c1f938ccab6ecceb97ed57a7574bb54b1d0e1002e159a1f32fc4f",
+    "src/components/chat-client.tsx": "dce83b77565579e6b0b0fcc7492b75d4df401e900daf41f4eb529982b2c78eb3",
+    "src/components/image-studio.tsx": "95ca006e8497cc7054803fc03b8049589075fe811fa3b61be6c7c97a078fb014",
+    "src/components/video-studio.tsx": "9ab3d3fe990f9ee085cf2cc3c462ba83ad8457b785881fff6c672a20799fb99b",
+    "src/components/audio-studio.tsx": "4db5dd4740563dbb140ffc23f8ed0c11d47fba69c8e5c5eabd3fe06805db4b7b",
+    "src/components/audio-stage.tsx": "163c36f698db1e94dc782b611763af1879033674716539e4b8262a0dbe5d329c",
+    "src/components/tts-client.tsx": "62dfe645ee8acec39a4ae7488c6194d7b0b2c45616ab9a35173e319a21767762",
+    "src/components/audio-generation-client.tsx": "2ccbb8d5eeb24a3e265eb05423008be365f49166c3a07b5a268656f905413116",
+    "src/components/wallet-client.tsx": "88deb8b331315c97001a330df78ef7ea5922a9eb7b6db8dc7985dac0266b1ee7",
+    "src/components/use-generation-center.ts": "5be07c809110d904353c6381f29f915b6281ac0d780d3db3234330d8e9749b6d",
+    "src/lib/generation-center.ts": "3602a58036382dfc11311e5e94b5b5924f41d33a74b07a5ad5f9ffe591ce842c",
+    "src/lib/chat-generation-activity.ts": "410def3249bb85dc818686d50473bcd56eb11012efa6606e231ca75ee8a7acd1",
+    "src/components/theme-toggle.tsx": "eda354cb29079a4e6d14021f87de809c4f4cf1bae5b7189b270e685626aec7b6",
+    "src/components/use-workspace-overlay.ts": "2abc81858b286a2cf3726a2b0328855f435a133f63415240aac43252511875b3",
+    "src/components/app-sidebar.css": "23586ae3fa29dfadb8b1209aa6e9618fb7f9ad5b501be8a51014267bd5e8bd5f",
+    "src/app/globals.css": "d6dc7559fc5ab0e85b9d10ec070fed697167b0325da5a0b6309234f47eb2899b",
+    "src/components/login-form.tsx": "2ed42b086cf9189ecd05800e71e4456674eb123401910191b1a2f0004508e3d6",
+    "src/app/page.tsx": "9b1f0c6657febef0a27e540644a8ba8977025d5b5d581896c8e68e5739c25d4d"
+  },
+  "topbarHandlers": {
+    "loadNotifications": "94ed1fab091c2fe2b0ad2b6aa321e1ff8b821bf8501a5d733bd8407fc7fd8afb",
+    "refreshWallet": "ddf296fb361b0f7b7e97838aaf75a492eabd80cdad98386ffb9793c72334f8a4",
+    "markNotificationsRead": "54818bc098465ec5d0e5473aceabea513d186c646fd1f5cbe3785a14b0ed874d",
+    "modelHref": "2af583fac5640c67db964f8af0db3188b12bf8dcfd98aa3c2928bf69389a000e",
+    "selectProject": "d65b5b29e4d2162812bcbc8aee68eeefcfe47a1933318debb834ca14833d2b64",
+    "workspaceHref": "d4d08b0b484a4ca4c4819b12fd55a9bd5707ec0e59361c7c1bc45d44c0fba992",
+    "retryJob": "2ff8158df4b9e5c01853a5cad091f7f7c7271401938d0943820d3a5d18c7c738"
+  }
+}

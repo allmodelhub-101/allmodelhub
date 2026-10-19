@@ -1,0 +1,15 @@
+
+Running 6 tests using 1 worker
+
+(node:288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (8.3s)
+  ok 2 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (6.3s)
+  ok 3 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:53:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.2s)
+(node:17164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (10.3s)
+  ok 5 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (9.6s)
+  ok 6 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:53:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (8.6s)
+
+  6 passed (54.2s)

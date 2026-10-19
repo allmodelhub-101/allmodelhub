@@ -20,8 +20,8 @@ for (const theme of ['light','dark']) {
     const sidebar=page.getByRole('complementary',{name:'Workspace navigation'});
     if(width<=900) { await expect(mobile).toBeVisible(); await expect(sidebar).toBeHidden(); await expect(mobile.locator('a,button')).toHaveCount(5); }
     else { await expect(sidebar).toBeVisible(); await expect(mobile).toBeHidden(); }
-    for(const control of ['Open generation center','Notifications','Open account settings']) await expect(page.getByRole(control==='Open account settings'?'link':'button',{name:control,exact:true})).toBeInViewport();
-    await expect(page.locator('.app-topbar .theme-toggle')).toBeVisible();
+    for(const control of (width<=600?['Notifications']:['Open generation center','Notifications','Open account settings'])) await expect(page.getByRole(control==='Open account settings'?'link':'button',{name:control,exact:true})).toBeInViewport();
+    if(page.viewportSize()!.width<=600){await page.getByRole('button',{name:'Open mobile account menu'}).click();await expect(page.getByRole('dialog',{name:'Account',exact:true}).locator('.theme-toggle')).toBeVisible();await page.keyboard.press('Escape');}else await expect(page.locator('.app-topbar .theme-toggle')).toBeVisible();
     await expect(page.locator('.command-trigger')).toBeInViewport();
     const geometry=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,chrome:[...document.querySelectorAll('.app-topbar button,.app-topbar a,.mobile-nav a,.mobile-nav button')].filter(e=>e.getClientRects().length).map(e=>({name:e.getAttribute('aria-label')||e.textContent,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))}));
     expect(geometry.scroll).toBeLessThanOrEqual(width+1);
@@ -41,12 +41,12 @@ test('workspace overlays trap focus, dismiss and restore scroll/focus',async({pa
   await openShell(page);
   for(const [trigger,label] of [['Open generation center','Generation center'],['Notifications','Notifications'],['Search or jump to','Command palette']] as const){
     const button=trigger==='Search or jump to'?page.locator('.command-trigger'):page.getByRole('button',{name:trigger,exact:true});
-    await button.click(); const dialog=page.getByRole('dialog',{name:label,exact:true}); await expect(dialog).toBeVisible();
+    if(trigger==='Open generation center'&&page.viewportSize()!.width<=600){await page.getByRole('button',{name:'Open more navigation'}).click();await page.getByRole('button',{name:/Generation Center/}).click();}else await button.click(); const dialog=page.getByRole('dialog',{name:label,exact:true}); await expect(dialog).toBeVisible();
     if(page.viewportSize()!.width<=900) expect(await page.locator('.mobile-nav').evaluate(el=>{const r=el.getBoundingClientRect();const hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return !!hit?.closest('.mobile-nav');}),'modal/scrim must paint above bottom navigation').toBe(false);
     await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).toBe('hidden');
     for(let i=0;i<20;i++) await page.keyboard.press('Tab');
     expect(await dialog.evaluate(el=>el.contains(document.activeElement))).toBe(true);
-    await page.keyboard.press('Escape'); await expect(dialog).toHaveCount(0);await expect(button).toBeFocused();
+    await page.keyboard.press('Escape'); await expect(dialog).toHaveCount(0);await expect(trigger==='Open generation center'&&page.viewportSize()!.width<=600?page.getByRole('button',{name:'Open more navigation'}):button).toBeFocused();
     await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).not.toBe('hidden');
   }
   const project=page.locator('.global-project'); await project.click(); await expect(page.getByRole('dialog',{name:'Select project'})).toBeVisible(); await page.keyboard.press('Escape');await expect(project).toBeFocused();
@@ -99,12 +99,12 @@ test('shell fixture rejects non-loopback host',async({request})=>{
 
 test('shared chrome also fits with legacy chat ancestor selectors',async({page})=>{
   await openShell(page,'/responsive-fixture?chrome=chat');
-  await expect(page.locator('.app-topbar .theme-toggle')).toBeVisible();
+  if(page.viewportSize()!.width<=600){await page.getByRole('button',{name:'Open mobile account menu'}).click();await expect(page.getByRole('dialog',{name:'Account',exact:true}).locator('.theme-toggle')).toBeVisible();await page.keyboard.press('Escape');}else await expect(page.locator('.app-topbar .theme-toggle')).toBeVisible();
   await expect(page.locator('.command-trigger')).toBeVisible();
-  await expect(page.getByRole('button',{name:'Open generation center'})).toBeVisible();
+  if(page.viewportSize()!.width<=600){await page.getByRole('button',{name:'Open more navigation'}).click();await expect(page.getByRole('button',{name:/Generation Center/})).toBeVisible();await page.keyboard.press('Escape');}else await expect(page.getByRole('button',{name:'Open generation center'})).toBeVisible();
   const width=page.viewportSize()!.width;
   const geometry=await page.locator('.app-topbar').evaluate(el=>({height:el.getBoundingClientRect().height,controls:[...el.querySelectorAll('a,button')].filter(e=>e.getClientRects().length).map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,height:e.getBoundingClientRect().height}))}));
-  if(width<=1180) expect(geometry.height).toBe(108);
+  if(width<=600)expect(geometry.height).toBe(56);else if(width<=1180) expect(geometry.height).toBe(108);
   for(const control of geometry.controls){expect(control.left).toBeGreaterThanOrEqual(0);expect(control.right).toBeLessThanOrEqual(width+1);if(width<=1180)expect(control.height).toBeGreaterThanOrEqual(44);}
 });
 

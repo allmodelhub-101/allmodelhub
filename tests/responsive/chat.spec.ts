@@ -10,7 +10,8 @@ async function openChat(page:Page,state='welcome',theme='light'){
  await page.addInitScript(theme=>localStorage.setItem('amh-theme',theme),theme);
  await page.goto(`/responsive-fixture?chat=${state}`,{waitUntil:'networkidle'});
  await expect(page.locator('.chat-workspace')).toHaveAttribute('data-ready','true');
- await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
+ await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
+ await expect(page.locator('.workspace-topbar')).toHaveAttribute('data-workspace-ready','true');
 }
 async function compactDraftBudget(page:Page,info:TestInfo,state:string){
  const input=page.getByRole('textbox',{name:'Message',exact:true});await input.fill(Array(12).fill('A long draft in a short viewport').join('\n'));

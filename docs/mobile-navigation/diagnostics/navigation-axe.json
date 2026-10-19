@@ -1,0 +1,50 @@
+[
+  {
+    "engine": "chromium",
+    "theme": "light",
+    "label": "Workspace navigation",
+    "violations": []
+  },
+  {
+    "engine": "chromium",
+    "theme": "light",
+    "label": "Account",
+    "violations": []
+  },
+  {
+    "engine": "chromium",
+    "theme": "dark",
+    "label": "Workspace navigation",
+    "violations": []
+  },
+  {
+    "engine": "chromium",
+    "theme": "dark",
+    "label": "Account",
+    "violations": []
+  },
+  {
+    "engine": "webkit",
+    "theme": "light",
+    "label": "Workspace navigation",
+    "violations": []
+  },
+  {
+    "engine": "webkit",
+    "theme": "light",
+    "label": "Account",
+    "violations": []
+  },
+  {
+    "engine": "webkit",
+    "theme": "dark",
+    "label": "Workspace navigation",
+    "violations": []
+  },
+  {
+    "engine": "webkit",
+    "theme": "dark",
+    "label": "Account",
+    "violations": []
+  }
+]

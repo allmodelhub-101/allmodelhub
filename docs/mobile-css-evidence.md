@@ -108,7 +108,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/audio-studio.module.css
 
-11 media/container conditions; 87 repeated exact selector + condition groups; 44 dimension/overflow candidates; 7 small-control declarations.
+13 media/container conditions; 88 repeated exact selector + condition groups; 46 dimension/overflow candidates; 10 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -147,7 +147,22 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/chat-workspace.css
 
-4 media/container conditions; 0 repeated exact selector + condition groups; 6 dimension/overflow candidates; 1 small-control declarations.
+7 media/container conditions; 6 repeated exact selector + condition groups; 12 dimension/overflow candidates; 3 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+| .responsive-workspace .chat-workspace | base | 6, 152 |
+| .responsive-workspace .chat-workspace .empty-title | base | 24, 153 |
+| .responsive-workspace .chat-workspace .creation-path | base | 28, 155 |
+| .responsive-workspace .chat-workspace .composer | base | 57, 165 |
+| .responsive-workspace .chat-workspace .composer-send | base | 62, 167 |
+| .responsive-workspace .chat-workspace .composer-send.stop | base | 64, 168 |
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/generation-center.css
+
+0 media/container conditions; 0 repeated exact selector + condition groups; 0 dimension/overflow candidates; 0 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -335,9 +350,11 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/components/workspace-shell.css
 
-4 media/container conditions; 0 repeated exact selector + condition groups; 6 dimension/overflow candidates; 0 small-control declarations.
+7 media/container conditions; 2 repeated exact selector + condition groups; 8 dimension/overflow candidates; 2 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
+| .responsive-workspace .mobile-nav | @media (max-width:900px) | 51, 88 |
+| .responsive-workspace .mobile-nav :is(a,button) | @media (max-width:900px) | 52, 89 |
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.

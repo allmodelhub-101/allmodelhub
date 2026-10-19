@@ -1,0 +1,1118 @@
+[
+  {
+    "label": "integration-base",
+    "round": 0,
+    "scene": "projects",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Build a persistent workspace",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Continue creating",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Campaign Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research notes",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "integration-base",
+    "round": 0,
+    "scene": "history",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Everything you create.",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Quick access",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Product research Research_Research_Research_Resear",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "A quiet mountain sunrise Research_Research_Researc",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research_Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "integration-base",
+    "round": 0,
+    "scene": "audio",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Studio reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Audio Studio",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Bring your words to life",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Ready when you are.",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Voice palette",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Script starters",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "integration-base",
+    "round": 1,
+    "scene": "projects",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Build a persistent workspace",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Continue creating",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Campaign Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research notes",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "integration-base",
+    "round": 1,
+    "scene": "history",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Everything you create.",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Quick access",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Product research Research_Research_Research_Resear",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "A quiet mountain sunrise Research_Research_Researc",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research_Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "integration-base",
+    "round": 1,
+    "scene": "audio",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Studio reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Audio Studio",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Bring your words to life",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Ready when you are.",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Voice palette",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Script starters",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 0,
+    "scene": "projects",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Build a persistent workspace",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Continue creating",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Campaign Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research notes",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 0,
+    "scene": "history",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Everything you create.",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Quick access",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Product research Research_Research_Research_Resear",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "A quiet mountain sunrise Research_Research_Researc",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research_Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 0,
+    "scene": "audio",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Studio reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Audio Studio",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Bring your words to life",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Ready when you are.",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Voice palette",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Script starters",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 1,
+    "scene": "projects",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Build a persistent workspace",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Continue creating",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Campaign Research_Research_Research_Research_Resea",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Research notes",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 1,
+    "scene": "history",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(9, 107, 232)",
+          "fill": "rgb(9, 107, 232)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(95, 109, 124)",
+          "fill": "rgb(95, 109, 124)"
+        },
+        {
+          "text": "Workspace reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Everything you create.",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Quick access",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Product research Research_Research_Research_Resear",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "A quiet mountain sunrise Research_Research_Researc",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Research_Research_Research_Research_Research_Resea",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  },
+  {
+    "label": "navigation",
+    "round": 1,
+    "scene": "audio",
+    "styles": {
+      "theme": "light",
+      "text": "#0b1220",
+      "nodes": [
+        {
+          "text": "Chat",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Image",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Video",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Audio",
+          "color": "rgb(245, 248, 251)",
+          "fill": "rgb(245, 248, 251)"
+        },
+        {
+          "text": "Projects",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Library",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Files",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Models",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Compare",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Templates",
+          "color": "rgb(152, 166, 183)",
+          "fill": "rgb(152, 166, 183)"
+        },
+        {
+          "text": "Studio reviewer",
+          "color": "rgb(11, 18, 32)",
+          "fill": "rgb(11, 18, 32)"
+        },
+        {
+          "text": "Audio Studio",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Bring your words to life",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Ready when you are.",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Voice palette",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        },
+        {
+          "text": "Script starters",
+          "color": "rgb(23, 36, 59)",
+          "fill": "rgb(23, 36, 59)"
+        }
+      ]
+    },
+    "errors": [],
+    "violations": []
+  }
+]

@@ -1,0 +1,301 @@
+[
+  {
+    "image": "chromium-1366-dark-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-chat.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-image.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-library.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-projects.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-settings.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-wallet.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-light-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-light-chat.png",
+    "changedPixels": 2,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00019,
+    "boundingBox": [
+      773,
+      630,
+      774,
+      632
+    ]
+  },
+  {
+    "image": "chromium-1366-light-image.png",
+    "changedPixels": 36,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00343,
+    "boundingBox": [
+      189,
+      18,
+      1280,
+      570
+    ]
+  },
+  {
+    "image": "chromium-1366-light-library.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-light-projects.png",
+    "changedPixels": 20,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00191,
+    "boundingBox": [
+      930,
+      18,
+      1280,
+      52
+    ]
+  },
+  {
+    "image": "chromium-1366-light-settings.png",
+    "changedPixels": 40,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00381,
+    "boundingBox": [
+      851,
+      18,
+      1280,
+      721
+    ]
+  },
+  {
+    "image": "chromium-1366-light-video.png",
+    "changedPixels": 40,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00381,
+    "boundingBox": [
+      772,
+      18,
+      1305,
+      678
+    ]
+  },
+  {
+    "image": "chromium-1366-light-wallet.png",
+    "changedPixels": 81,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00772,
+    "boundingBox": [
+      291,
+      18,
+      1280,
+      583
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-chat.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-image.png",
+    "changedPixels": 2,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00019,
+    "boundingBox": [
+      738,
+      286,
+      885,
+      287
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-library.png",
+    "changedPixels": 8629,
+    "totalPixels": 1049088,
+    "changedPercent": 0.82252,
+    "boundingBox": [
+      264,
+      99,
+      1334,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-projects.png",
+    "changedPixels": 3351,
+    "totalPixels": 1049088,
+    "changedPercent": 0.31942,
+    "boundingBox": [
+      308,
+      174,
+      1309,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-settings.png",
+    "changedPixels": 30523,
+    "totalPixels": 1049088,
+    "changedPercent": 2.90948,
+    "boundingBox": [
+      292,
+      114,
+      1287,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-wallet.png",
+    "changedPixels": 9638,
+    "totalPixels": 1049088,
+    "changedPercent": 0.9187,
+    "boundingBox": [
+      256,
+      340,
+      1342,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-light-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-chat.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-image.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-library.png",
+    "changedPixels": 19653,
+    "totalPixels": 1049088,
+    "changedPercent": 1.87334,
+    "boundingBox": [
+      264,
+      99,
+      1334,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-light-projects.png",
+    "changedPixels": 10550,
+    "totalPixels": 1049088,
+    "changedPercent": 1.00564,
+    "boundingBox": [
+      312,
+      174,
+      1309,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-light-settings.png",
+    "changedPixels": 58509,
+    "totalPixels": 1049088,
+    "changedPercent": 5.57713,
+    "boundingBox": [
+      292,
+      114,
+      1287,
+      768
+    ]
+  },
+  {
+    "image": "webkit-1366-light-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-wallet.png",
+    "changedPixels": 53490,
+    "totalPixels": 1049088,
+    "changedPercent": 5.09871,
+    "boundingBox": [
+      256,
+      340,
+      1342,
+      768
+    ]
+  }
+]

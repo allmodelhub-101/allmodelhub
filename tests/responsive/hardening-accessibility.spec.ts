@@ -6,7 +6,9 @@ for(const theme of ['light','dark'])for(const [name,path]of scenes)test(`hardeni
  await page.goto(path,{waitUntil:'networkidle'});
  await expect(page.getByRole('main'),'each rendered page has one main landmark').toHaveCount(1);
  await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
- if(name!=='admin')await expect(page.locator('.theme-toggle').first()).toHaveAttribute('aria-label',theme==='light'?'Switch to dark theme':'Switch to light theme');
+ if(name==='admin')await expect(page.locator('html')).toHaveAttribute('data-admin-fixture-ready','true');
+ else if(path.startsWith('/responsive-fixture'))await expect(page.locator('.workspace-topbar')).toHaveAttribute('data-workspace-ready','true');
+ else await expect(page.locator('.theme-toggle').first()).toHaveAttribute('aria-label',theme==='light'?'Switch to dark theme':'Switch to light theme');
  await page.evaluate(()=>document.fonts.ready);
  if(name==='homepage'){
   for(const label of await page.locator('#cin-hero-title,#cin-faq-title,.cin-proof strong').all())

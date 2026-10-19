@@ -1,0 +1,296 @@
+[
+  {
+    "image": "chromium-1366-dark-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-chat.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-image.png",
+    "changedPixels": 83,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00791,
+    "boundingBox": [
+      1163,
+      274,
+      1267,
+      382
+    ]
+  },
+  {
+    "image": "chromium-1366-dark-library.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-projects.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-settings.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-dark-wallet.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-light-audio.png",
+    "changedPixels": 144,
+    "totalPixels": 1049088,
+    "changedPercent": 0.01373,
+    "boundingBox": [
+      426,
+      21,
+      1271,
+      40
+    ]
+  },
+  {
+    "image": "chromium-1366-light-chat.png",
+    "changedPixels": 34,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00324,
+    "boundingBox": [
+      189,
+      18,
+      1280,
+      98
+    ]
+  },
+  {
+    "image": "chromium-1366-light-image.png",
+    "changedPixels": 141,
+    "totalPixels": 1049088,
+    "changedPercent": 0.01344,
+    "boundingBox": [
+      1254,
+      23,
+      1271,
+      40
+    ]
+  },
+  {
+    "image": "chromium-1366-light-library.png",
+    "changedPixels": 188,
+    "totalPixels": 1049088,
+    "changedPercent": 0.01792,
+    "boundingBox": [
+      281,
+      23,
+      1271,
+      382
+    ]
+  },
+  {
+    "image": "chromium-1366-light-projects.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "chromium-1366-light-settings.png",
+    "changedPixels": 20,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00191,
+    "boundingBox": [
+      930,
+      18,
+      1280,
+      52
+    ]
+  },
+  {
+    "image": "chromium-1366-light-video.png",
+    "changedPixels": 285922,
+    "totalPixels": 1049088,
+    "changedPercent": 27.25434,
+    "boundingBox": [
+      256,
+      23,
+      1358,
+      768
+    ]
+  },
+  {
+    "image": "chromium-1366-light-wallet.png",
+    "changedPixels": 147,
+    "totalPixels": 1049088,
+    "changedPercent": 0.01401,
+    "boundingBox": [
+      189,
+      22,
+      1271,
+      47
+    ]
+  },
+  {
+    "image": "webkit-1366-dark-audio.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-chat.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-image.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-library.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-projects.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-settings.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-dark-wallet.png",
+    "changedPixels": 30,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00286,
+    "boundingBox": [
+      1215,
+      208,
+      1341,
+      580
+    ]
+  },
+  {
+    "image": "webkit-1366-light-audio.png",
+    "changedPixels": 1305,
+    "totalPixels": 1049088,
+    "changedPercent": 0.12439,
+    "boundingBox": [
+      23,
+      24,
+      1338,
+      517
+    ]
+  },
+  {
+    "image": "webkit-1366-light-chat.png",
+    "changedPixels": 58,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00553,
+    "boundingBox": [
+      861,
+      27,
+      870,
+      36
+    ]
+  },
+  {
+    "image": "webkit-1366-light-image.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-library.png",
+    "changedPixels": 7459,
+    "totalPixels": 1049088,
+    "changedPercent": 0.711,
+    "boundingBox": [
+      23,
+      24,
+      1338,
+      517
+    ]
+  },
+  {
+    "image": "webkit-1366-light-projects.png",
+    "changedPixels": 19334,
+    "totalPixels": 1049088,
+    "changedPercent": 1.84293,
+    "boundingBox": [
+      23,
+      24,
+      1338,
+      673
+    ]
+  },
+  {
+    "image": "webkit-1366-light-settings.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-video.png",
+    "changedPixels": 0,
+    "totalPixels": 1049088,
+    "changedPercent": 0.0,
+    "boundingBox": null
+  },
+  {
+    "image": "webkit-1366-light-wallet.png",
+    "changedPixels": 58,
+    "totalPixels": 1049088,
+    "changedPercent": 0.00553,
+    "boundingBox": [
+      861,
+      27,
+      870,
+      36
+    ]
+  }
+]

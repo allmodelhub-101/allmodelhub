@@ -217,61 +217,61 @@
         "conditions": [],
         "line": 103,
         "property": "grid-template-columns",
-        "value": "minmax(0, 1fr) minmax(500px, 620px)"
+        "value": "minmax(0, 1fr) minmax(420px, 480px)"
       },
       {
         "selector": ".auth-stage",
         "conditions": [],
         "line": 103,
         "property": "width",
-        "value": "min(1500px, calc(100% - 96px))"
+        "value": "min(1180px, calc(100% - 96px))"
       },
       {
         "selector": ".auth-model-orbit",
         "conditions": [],
-        "line": 142,
+        "line": 144,
         "property": "width",
         "value": "390px"
       },
       {
         "selector": ".auth-model-orbit",
         "conditions": [],
-        "line": 142,
+        "line": 144,
         "property": "height",
         "value": "180px"
       },
       {
         "selector": ".auth-model-orbit>b",
         "conditions": [],
-        "line": 146,
+        "line": 148,
         "property": "width",
         "value": "102px"
       },
       {
         "selector": ".auth-model-orbit>b",
         "conditions": [],
-        "line": 146,
+        "line": 148,
         "property": "height",
         "value": "102px"
       },
       {
         "selector": ".auth-recovery-stage",
         "conditions": [],
-        "line": 263,
+        "line": 267,
         "property": "grid-template-columns",
         "value": "minmax(0, 1fr) minmax(440px, 560px)"
       },
       {
         "selector": ".verified-page",
         "conditions": [],
-        "line": 268,
+        "line": 272,
         "property": "min-height",
         "value": "100dvh"
       },
       {
         "selector": ".verified-card",
         "conditions": [],
-        "line": 269,
+        "line": 273,
         "property": "width",
         "value": "min(500px, 100%)"
       },
@@ -280,16 +280,16 @@
         "conditions": [
           "@media (max-width: 1100px)"
         ],
-        "line": 335,
+        "line": 342,
         "property": "grid-template-columns",
-        "value": "minmax(0, 1fr) minmax(430px, 520px)"
+        "value": "minmax(0, 1fr) minmax(390px, 460px)"
       },
       {
         "selector": ".auth-stage",
         "conditions": [
           "@media (max-width: 1100px)"
         ],
-        "line": 335,
+        "line": 342,
         "property": "width",
         "value": "min(1180px, calc(100% - 56px))"
       },
@@ -298,7 +298,7 @@
         "conditions": [
           "@media (max-height: 700px) and (min-width: 821px)"
         ],
-        "line": 346,
+        "line": 353,
         "property": "width",
         "value": "min(1240px, calc(100% - 50px))"
       },
@@ -307,7 +307,7 @@
         "conditions": [
           "@media (max-height: 700px) and (min-width: 821px)"
         ],
-        "line": 349,
+        "line": 356,
         "property": "height",
         "value": "116px"
       },
@@ -316,7 +316,7 @@
         "conditions": [
           "@media (max-width: 820px)"
         ],
-        "line": 373,
+        "line": 380,
         "property": "width",
         "value": "min(540px, calc(100% - 30px))"
       }
@@ -325,21 +325,21 @@
       {
         "selector": ".auth-mode-toggle button",
         "conditions": [],
-        "line": 194,
+        "line": 196,
         "property": "min-height",
         "value": "42px"
       },
       {
         "selector": ".auth-password button",
         "conditions": [],
-        "line": 223,
+        "line": 227,
         "property": "width",
         "value": "37px"
       },
       {
         "selector": ".auth-password button",
         "conditions": [],
-        "line": 223,
+        "line": 227,
         "property": "height",
         "value": "37px"
       },
@@ -348,7 +348,7 @@
         "conditions": [
           "@media (max-height: 700px) and (min-width: 821px)"
         ],
-        "line": 361,
+        "line": 368,
         "property": "height",
         "value": "42px"
       },
@@ -357,7 +357,7 @@
         "conditions": [
           "@media (max-width: 820px)"
         ],
-        "line": 379,
+        "line": 386,
         "property": "width",
         "value": "40px"
       },
@@ -366,7 +366,7 @@
         "conditions": [
           "@media (max-width: 820px)"
         ],
-        "line": 379,
+        "line": 386,
         "property": "height",
         "value": "40px"
       },
@@ -375,7 +375,7 @@
         "conditions": [
           "@media (max-width: 820px)"
         ],
-        "line": 379,
+        "line": 386,
         "property": "min-height",
         "value": "40px"
       },
@@ -384,7 +384,7 @@
         "conditions": [
           "@media (max-width: 540px)"
         ],
-        "line": 392,
+        "line": 399,
         "property": "min-height",
         "value": "40px"
       }
@@ -393,32 +393,32 @@
       {
         "type": "media",
         "condition": "(max-width: 1100px)",
-        "line": 334
+        "line": 341
       },
       {
         "type": "media",
         "condition": "(max-height: 700px) and (min-width: 821px)",
-        "line": 344
+        "line": 351
       },
       {
         "type": "media",
         "condition": "(max-width: 820px)",
-        "line": 368
+        "line": 375
       },
       {
         "type": "media",
         "condition": "(max-width: 540px)",
-        "line": 382
+        "line": 389
       },
       {
         "type": "media",
         "condition": "(prefers-reduced-motion: reduce)",
-        "line": 406
+        "line": 413
       },
       {
         "type": "media",
         "condition": "(max-width:620px)",
-        "line": 426
+        "line": 433
       }
     ]
   },
@@ -38760,6 +38760,37 @@
             }
           }
         ]
+      },
+      {
+        "selector": ".soundDisc",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".soundDisc",
+            "conditions": [],
+            "line": 44,
+            "declarations": {
+              "display": "grid",
+              "place-items": "center",
+              "position": "relative",
+              "width": "142px",
+              "height": "142px",
+              "border": "1px solid #ffffff30",
+              "border-radius": "50%",
+              "background": "repeating-radial-gradient(circle,#1d2137 0 2px,#0c1325 3px 5px)",
+              "box-shadow": "0 15px 40px #0005,inset 0 1px #fff3",
+              "animation": "audioFloat 7s ease-in-out infinite"
+            }
+          },
+          {
+            "selector": ".soundDisc",
+            "conditions": [],
+            "line": 104,
+            "declarations": {
+              "overflow": "hidden"
+            }
+          }
+        ]
       }
     ],
     "dimensions": [
@@ -39099,9 +39130,25 @@
         "conditions": [
           "@media (max-width:600px)"
         ],
-        "line": 95,
+        "line": 94,
         "property": "height",
         "value": "170px"
+      },
+      {
+        "selector": ".page[data-studio=audio] .scriptSurface textarea",
+        "conditions": [],
+        "line": 112,
+        "property": "min-height",
+        "value": "160px"
+      },
+      {
+        "selector": ".page[data-studio=audio] .scriptSurface textarea",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 123,
+        "property": "min-height",
+        "value": "150px"
       }
     ],
     "smallTargets": [
@@ -39157,6 +39204,27 @@
         "line": 58,
         "property": "height",
         "value": "16px"
+      },
+      {
+        "selector": ".scriptToolbar button",
+        "conditions": [],
+        "line": 117,
+        "property": "min-height",
+        "value": "36px"
+      },
+      {
+        "selector": ".scriptToolbar button svg",
+        "conditions": [],
+        "line": 120,
+        "property": "width",
+        "value": "15px"
+      },
+      {
+        "selector": ".scriptToolbar button svg",
+        "conditions": [],
+        "line": 120,
+        "property": "height",
+        "value": "15px"
       }
     ],
     "queries": [
@@ -39208,18 +39276,209 @@
       {
         "type": "container",
         "condition": "(max-width:850px)",
-        "line": 81
+        "line": 80
       },
       {
         "type": "media",
         "condition": "(max-width:600px)",
-        "line": 86
+        "line": 85
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 123
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion:reduce)",
+        "line": 124
       }
     ]
   },
   {
     "file": "src/components/chat-workspace.css",
-    "repeated": [],
+    "repeated": [
+      {
+        "selector": ".responsive-workspace .chat-workspace",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace",
+            "conditions": [],
+            "line": 6,
+            "declarations": {
+              "--chat-gutter": "clamp(12px,2.4vw,32px)",
+              "position": "relative",
+              "display": "grid",
+              "grid-template-rows": "minmax(0,1fr) auto",
+              "gap": "0",
+              "height": "100%",
+              "min-height": "0",
+              "min-width": "0",
+              "max-width": "100%",
+              "padding": "0",
+              "color": "var(--text)",
+              "background": "var(--bg)",
+              "animation": "none"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace",
+            "conditions": [],
+            "line": 152,
+            "declarations": {
+              "isolation": "isolate"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .empty-title",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace .empty-title",
+            "conditions": [],
+            "line": 24,
+            "declarations": {
+              "margin": "0",
+              "font-size": "clamp(30px,4.4vw,56px)",
+              "line-height": "1.08",
+              "letter-spacing": "-.045em"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace .empty-title",
+            "conditions": [],
+            "line": 153,
+            "declarations": {
+              "color": "var(--text)",
+              "font-weight": "850",
+              "letter-spacing": "-.055em"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .creation-path",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace .creation-path",
+            "conditions": [],
+            "line": 28,
+            "declarations": {
+              "display": "grid",
+              "align-content": "start",
+              "justify-items": "start",
+              "gap": "8px",
+              "min-height": "138px",
+              "height": "auto",
+              "padding": "16px",
+              "border": "1px solid var(--line)",
+              "border-radius": "18px",
+              "background": "var(--panel)",
+              "text-align": "start",
+              "color": "var(--text)"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace .creation-path",
+            "conditions": [],
+            "line": 155,
+            "declarations": {
+              "border-color": "color-mix(in srgb,var(--line) 65%,transparent)",
+              "box-shadow": "0 6px 20px rgba(53,92,147,.035)"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .composer",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer",
+            "conditions": [],
+            "line": 57,
+            "declarations": {
+              "backdrop-filter": "none",
+              "transform": "none",
+              "filter": "none",
+              "display": "block",
+              "position": "relative",
+              "width": "100%",
+              "max-width": "none",
+              "min-width": "0",
+              "padding": "10px",
+              "border": "1px solid var(--line)",
+              "border-radius": "20px",
+              "background": "var(--panel-solid)",
+              "box-shadow": "0 6px 24px rgba(0,0,0,.06)"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer",
+            "conditions": [],
+            "line": 165,
+            "declarations": {
+              "box-shadow": "0 12px 32px rgba(51,85,132,.1)"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .composer-send",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer-send",
+            "conditions": [],
+            "line": 62,
+            "declarations": {
+              "background": "var(--accent)",
+              "color": "var(--bg)"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer-send",
+            "conditions": [],
+            "line": 167,
+            "declarations": {
+              "border": "0",
+              "border-radius": "50%",
+              "background": "linear-gradient(145deg,#278cff,#1167ec)",
+              "color": "#fff",
+              "box-shadow": "0 4px 12px rgba(29,104,234,.2)"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .composer-send.stop",
+        "conditions": [],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer-send.stop",
+            "conditions": [],
+            "line": 64,
+            "declarations": {
+              "background": "var(--panel-2)",
+              "color": "var(--text)"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .chat-workspace .composer-send.stop",
+            "conditions": [],
+            "line": 168,
+            "declarations": {
+              "background": "var(--danger)",
+              "color": "var(--bg)"
+            }
+          }
+        ]
+      }
+    ],
     "dimensions": [
       {
         "selector": ".responsive-workspace:has(.chat-workspace)",
@@ -39264,6 +39523,60 @@
         "line": 103,
         "property": "min-height",
         "value": "100px"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .chat-home-hero",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 194,
+        "property": "width",
+        "value": "min(860px,calc(100% - 48px))"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .creation-paths",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 199,
+        "property": "width",
+        "value": "min(800px,100%)"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .creation-path",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 200,
+        "property": "min-height",
+        "value": "136px"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace.is-welcome .composer-wrap",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 204,
+        "property": "width",
+        "value": "min(640px,calc(100% - 48px))"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace.has-messages .composer",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 207,
+        "property": "width",
+        "value": "min(900px,100%)"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .composer-model-button",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 208,
+        "property": "width",
+        "value": "180px"
       }
     ],
     "smallTargets": [
@@ -39273,6 +39586,24 @@
         "line": 53,
         "property": "min-height",
         "value": "40px"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .popular-model-set button",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 192,
+        "property": "min-height",
+        "value": "36px"
+      },
+      {
+        "selector": ".responsive-workspace .chat-workspace .popular-model-set button",
+        "conditions": [
+          "@media (min-width:901px)"
+        ],
+        "line": 192,
+        "property": "height",
+        "value": "36px"
       }
     ],
     "queries": [
@@ -39295,8 +39626,30 @@
         "type": "media",
         "condition": "(prefers-reduced-motion:reduce)",
         "line": 137
+      },
+      {
+        "type": "media",
+        "condition": "(min-width:901px)",
+        "line": 171
+      },
+      {
+        "type": "media",
+        "condition": "(min-width:901px) and (max-height:650px)",
+        "line": 219
+      },
+      {
+        "type": "media",
+        "condition": "(min-width:901px) and (prefers-reduced-motion:reduce)",
+        "line": 225
       }
     ]
+  },
+  {
+    "file": "src/components/generation-center.css",
+    "repeated": [],
+    "dimensions": [],
+    "smallTargets": [],
+    "queries": []
   },
   {
     "file": "src/components/image-studio.css",
@@ -44336,7 +44689,75 @@
   },
   {
     "file": "src/components/workspace-shell.css",
-    "repeated": [],
+    "repeated": [
+      {
+        "selector": ".responsive-workspace .mobile-nav",
+        "conditions": [
+          "@media (max-width:900px)"
+        ],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .mobile-nav",
+            "conditions": [
+              "@media (max-width:900px)"
+            ],
+            "line": 51,
+            "declarations": {
+              "left": "max(8px,env(safe-area-inset-left))",
+              "right": "max(8px,env(safe-area-inset-right))",
+              "bottom": "max(7px,env(safe-area-inset-bottom))",
+              "height": "62px",
+              "padding": "4px"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .mobile-nav",
+            "conditions": [
+              "@media (max-width:900px)"
+            ],
+            "line": 88,
+            "declarations": {
+              "display": "grid",
+              "grid-template-columns": "repeat(5,minmax(0,1fr))",
+              "gap": "2px"
+            }
+          }
+        ]
+      },
+      {
+        "selector": ".responsive-workspace .mobile-nav :is(a,button)",
+        "conditions": [
+          "@media (max-width:900px)"
+        ],
+        "rules": [
+          {
+            "selector": ".responsive-workspace .mobile-nav :is(a,button)",
+            "conditions": [
+              "@media (max-width:900px)"
+            ],
+            "line": 52,
+            "declarations": {
+              "min-height": "48px",
+              "min-width": "0"
+            }
+          },
+          {
+            "selector": ".responsive-workspace .mobile-nav :is(a,button)",
+            "conditions": [
+              "@media (max-width:900px)"
+            ],
+            "line": 89,
+            "declarations": {
+              "display": "grid",
+              "place-items": "center",
+              "align-content": "center",
+              "gap": "3px",
+              "transition": "background .18s ease,color .18s ease"
+            }
+          }
+        ]
+      }
+    ],
     "dimensions": [
       {
         "selector": ".responsive-workspace .generation-drawer",
@@ -44383,9 +44804,42 @@
         "line": 37,
         "property": "min-height",
         "value": "108px"
+      },
+      {
+        "selector": ".workspace-mobile-account-layer",
+        "conditions": [],
+        "line": 105,
+        "property": "position",
+        "value": "fixed"
+      },
+      {
+        "selector": ".workspace-mobile-account-panel",
+        "conditions": [],
+        "line": 107,
+        "property": "width",
+        "value": "min(300px,calc(100vw - 16px))"
       }
     ],
-    "smallTargets": [],
+    "smallTargets": [
+      {
+        "selector": ".responsive-workspace .workspace-topbar .command-trigger > svg,.responsive-workspace .workspace-topbar .wallet-chip > svg",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 84,
+        "property": "width",
+        "value": "20px"
+      },
+      {
+        "selector": ".responsive-workspace .workspace-topbar .command-trigger > svg,.responsive-workspace .workspace-topbar .wallet-chip > svg",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 84,
+        "property": "height",
+        "value": "20px"
+      }
+    ],
     "queries": [
       {
         "type": "media",
@@ -44406,6 +44860,21 @@
         "type": "media",
         "condition": "(prefers-reduced-motion:reduce)",
         "line": 60
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 70
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:900px)",
+        "line": 87
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion:reduce)",
+        "line": 114
       }
     ]
   }

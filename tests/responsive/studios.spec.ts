@@ -3,7 +3,8 @@ import type {Locator,Page} from '@playwright/test';
 const test=safeTest.extend<{studioDiagnostics:void}>({studioDiagnostics:[async({page},use)=>{const errors:string[]=[],apis:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('response',r=>{if(r.status()>=400)errors.push(`HTTP ${r.status()}: ${new URL(r.url()).pathname}`)});page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});await use();expect(errors).toEqual([]);expect(apis,'local studio must not contact application APIs').toEqual([])},{auto:true}]});
 async function open(page:Page,studio:string,state='idle',theme='light'){
  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(`/responsive-fixture?studio=${studio}&state=${state}`,{waitUntil:'networkidle'});
- await expect(page.locator('.theme-toggle')).toHaveAttribute('aria-label',/Switch to/);
+ await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
+ await expect(page.locator('.workspace-topbar')).toHaveAttribute('data-workspace-ready','true');
 }
 async function fits(page:Page){expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)}
 async function reachable(page:Page,control:Locator){

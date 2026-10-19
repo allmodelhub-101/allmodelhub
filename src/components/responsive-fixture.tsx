@@ -5,7 +5,7 @@ import { WorkspaceTopbar } from "./workspace-topbar";
 import { WorkspaceFrame } from "./workspace-frame";
 import { ModelPicker } from "./model-picker";
 import { PremiumSelect } from "./premium-select";
-export function ResponsiveFixture({ chatChrome = false }: { chatChrome?: boolean }) {
+export function ResponsiveFixture({ chatChrome = false, navigationDemo = false }: { chatChrome?: boolean; navigationDemo?: boolean }) {
   const rootRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     const timer = window.setTimeout(() => { if(rootRef.current) rootRef.current.dataset.ready = "true"; }, 0);
@@ -29,7 +29,7 @@ export function ResponsiveFixture({ chatChrome = false }: { chatChrome?: boolean
     const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
     if(link?.getAttribute("href")?.startsWith("/")) { event.preventDefault();setActivePath(new URL(link.href).pathname); }
   }}><WorkspaceFrame sidebar={<AppSidebar balance={1234.5} displayName="Layout reviewer" email="fixture@example.invalid" isAdmin={false} language={language} activePath={activePath} />}
-    topbar={<WorkspaceTopbar balance={1234.5} identity="Layout reviewer" offline language={language} />}>
+    topbar={<WorkspaceTopbar balance={1234.5} identity="Layout reviewer" offline language={language} fixtureData={navigationDemo ? {projects:[{id:"project-56",name:"56"},{id:"long-project",name:"Research project with an exceptionally descriptive unbroken_identifier_abcdefghijklmnopqrstuvwxyz"}], notifications:[{id:"sample-notification",title:"Sample workspace update",body:"Synthetic unread notification",read_at:null,created_at:"2026-10-19T00:00:00Z"}],jobs:[{id:"sample-chat",public_id:"sample-chat",conversation_id:"sample-conversation",modality:"text",model_id:"sample-model",status:"processing",prompt:"Synthetic chat activity",source:"chat-session"}]} : undefined} />}>
     <section ref={rootRef} className={`responsive-fixture ${chatChrome ? "premium-chat-page" : ""}`} dir={language === "ur" ? "rtl" : "ltr"}>
       <p className="kicker">Synthetic local workspace / no account or backend</p><h1>Workspace foundation</h1>
       <p>Exercise real navigation, menus, drawers and model library with synthetic content.</p>

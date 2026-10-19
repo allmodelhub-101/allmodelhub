@@ -1,0 +1,15 @@
+
+Running 20 tests using 1 worker
+
+(node:21808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell light: chrome, overflow, touch targets, screenshots (27.3s)
+(node:11796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium-390x844] › tests\responsive\workspace.spec.ts:9:7 › synthetic shell dark: chrome, overflow, touch targets, screenshots (7.2s)
+(node:22080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium-390x844] › tests\responsive\workspace.spec.ts:40:5 › workspace overlays trap focus, dismiss and restore scroll/focus (10.5s)
+  ok  4 [chromium-390x844] › tests\responsive\workspace.spec.ts:55:5 › navigation drawer or desktop account keyboard and persistence (11.9s)
+  ok  5 [chromium-390x844] › tests\responsive\workspace.spec.ts:70:5 › document model shortcut owns Ctrl K; nested overlay closes only topmost (17.2s)
+  ok  6 [chromium-390x844] › tests\responsive\workspace.spec.ts:80:5 › shared selector and languages, keyboard-reduced viewport (17.9s)
