@@ -4,7 +4,7 @@ Branch: feat/premium-mobile-navigation. Draft PR150. Integration base: 75258ac92
 
 ## Executed local checks
 
-- 328 Node tests PASS: 301 retained tests plus 27 integration-base source/handler/store checks. 156 billing and four security tests are included, not additional counts.
+- 328 Node tests PASS: 301 retained tests plus 27 integration-base source/handler/store checks. The final command-level breakdown is 161 billing, four security and 163 UI/contracts; these are included, not additional counts.
 - Focused shell/navigation run: 56 PASS, zero failures, no retries, across Chromium 320/768/1366 and WebKit390. It includes all eight real presentation surfaces in both themes. This run preceded the final passive-effect handoff/readiness/avatar refinement; final Linux CI must verify the final head.
 - Final handoff/motion regression: ten PASS (five explicit diagnostic repetitions per Chromium320/WebKit390), zero failures. Normal/reduced-motion behavior, Escape, scroll restoration, current Chat entry and focus return remain asserted. These repetitions are not extra full-matrix coverage or automatic retries.
 - Navigation dialog axe subset: eight scans PASS, zero violations (More/account x two themes x Chromium/WebKit). Incomplete/full assistive-technology and physical-device acceptance remain manual.
