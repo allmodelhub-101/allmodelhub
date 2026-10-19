@@ -3,7 +3,7 @@
 import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, GearSix, SignOut, Wallet, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import { createPortal } from "react-dom";
-import { useCompactWorkspaceHeader, useWorkspaceHydrated, workspaceGenerationStatus } from "./workspace-navigation";
+import { useCompactWorkspaceHeader, useWorkspaceHydrated, workspaceGenerationStatus, openWorkspaceNavigationPanel, workspaceNavigationShortcut, type WorkspaceNavigationPanel } from "./workspace-navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -54,11 +54,6 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
     media.addEventListener("change", closeOnWide);
     return () => media.removeEventListener("change", closeOnWide);
   }, []);
-  useEffect(() => {
-    const openGenerations = () => setOpen(true);
-    window.addEventListener("amh-open-generation-center", openGenerations);
-    return () => window.removeEventListener("amh-open-generation-center", openGenerations);
-  }, []);
   const [palette, setPalette] = useState(false);
   const [query, setQuery] = useState("");
   const [notifications,setNotifications]=useState<Notification[]>(offline ? fixtureData?.notifications || [] : []);
@@ -72,6 +67,17 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
   const helpRef = useRef<HTMLDivElement | null>(null);
   const paletteRef = useRef<HTMLDivElement | null>(null);
   const projectRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const openPanel = (event: Event) => {
+      const panel = (event as CustomEvent<WorkspaceNavigationPanel>).detail;
+      setAccountOpen(false);
+      if (panel === "generations") setOpen(true);
+      if (panel === "command") { setQuery(""); setPalette(true); }
+      if (panel === "help") setKeyboardHelp(true);
+    };
+    window.addEventListener("amh-open-navigation-panel", openPanel);
+    return () => window.removeEventListener("amh-open-navigation-panel", openPanel);
+  }, []);
   useWorkspaceOverlay(open, generationRef, () => setOpen(false));
   useWorkspaceOverlay(notificationsOpen, notificationsRef, () => setNotificationsOpen(false));
   useWorkspaceOverlay(keyboardHelp, helpRef, () => setKeyboardHelp(false));
@@ -151,7 +157,7 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
         <button className="mobile-profile-trigger topbar-profile" type="button" aria-label="Open mobile account menu" aria-haspopup="dialog" aria-expanded={accountOpen} onClick={event => { event.currentTarget.focus(); setAccountOpen(true); }}><span>{identity.slice(0, 1).toUpperCase()}</span></button>
       </div>
     </header>
-    {accountOpen && compactHeader && createPortal(<div className="workspace-mobile-account-layer"><button className="workspace-mobile-account-backdrop" type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)} /><div ref={accountRef} className="workspace-mobile-account-panel" role="dialog" aria-modal="true" aria-label="Account" tabIndex={-1}><div className="workspace-mobile-account-heading"><strong>Account</strong><button type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)}><X size={18} aria-hidden="true" /></button></div><Link href="/settings" prefetch={false} onClick={() => setAccountOpen(false)}><GearSix size={19} aria-hidden="true" />Account & settings</Link><div className="workspace-mobile-account-theme"><span>Appearance</span><ThemeToggle /></div><form action="/auth/logout" method="post"><button type="submit"><SignOut size={19} aria-hidden="true" />Sign out</button></form></div></div>, document.body)}
+    {accountOpen && compactHeader && createPortal(<div className="workspace-mobile-account-layer"><button className="workspace-mobile-account-backdrop" type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)} /><div ref={accountRef} onKeyDown={event => { const panel = workspaceNavigationShortcut(event); if (!panel) return; event.preventDefault(); event.stopPropagation(); event.nativeEvent.stopImmediatePropagation(); openWorkspaceNavigationPanel(panel); }} className="workspace-mobile-account-panel" role="dialog" aria-modal="true" aria-label="Account" tabIndex={-1}><div className="workspace-mobile-account-heading"><strong>Account</strong><button type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)}><X size={18} aria-hidden="true" /></button></div><Link href="/settings" prefetch={false} onClick={() => setAccountOpen(false)}><GearSix size={19} aria-hidden="true" />Account & settings</Link><div className="workspace-mobile-account-theme"><span>Appearance</span><ThemeToggle /></div><form action="/auth/logout" method="post"><button type="submit"><SignOut size={19} aria-hidden="true" />Sign out</button></form></div></div>, document.body)}
     {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside ref={generationRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll">
       <div className="generation-refresh"><span role="status">{offline ? "Offline · showing last loaded status" : jobsRefreshing ? "Refreshing statuses…" : jobsCheckedAt ? `Updated ${jobsCheckedAt.toLocaleTimeString()}` : "Waiting for first update"}</span><button type="button" disabled={offline || jobsRefreshing} onClick={() => void loadJobs()}>Refresh</button></div>
       {jobsRefreshError && <p className="generation-refresh-error" role="alert">{jobsRefreshError}</p>}

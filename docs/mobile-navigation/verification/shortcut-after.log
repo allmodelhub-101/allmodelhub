@@ -1,0 +1,5 @@
+{
+  dialogs: [ 'Command palette' ],
+  hit: 'command-input',
+  focused: '<input aria-label="Search workspace" placeholder="Search chats, generations, files, projects, or models…" value="">'
+}

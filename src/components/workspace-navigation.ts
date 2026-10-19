@@ -29,4 +29,11 @@ export const workspaceGenerationStatus = {
   getSnapshot: () => activeCount,
   getServerSnapshot: () => 0,
 };
-export const openWorkspaceGenerations = () => window.dispatchEvent(new Event("amh-open-generation-center"));
+export type WorkspaceNavigationPanel = "generations" | "command" | "help";
+export const openWorkspaceNavigationPanel = (panel: WorkspaceNavigationPanel) => window.dispatchEvent(new CustomEvent("amh-open-navigation-panel", {detail:panel}));
+export function workspaceNavigationShortcut(event: Pick<KeyboardEvent, "key" | "metaKey" | "ctrlKey" | "altKey" | "defaultPrevented">): "command" | "help" | null {
+  if (event.defaultPrevented) return null;
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") return "command";
+  if (event.key === "?" && !event.metaKey && !event.ctrlKey && !event.altKey) return "help";
+  return null;
+}

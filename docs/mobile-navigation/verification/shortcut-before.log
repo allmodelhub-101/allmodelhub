@@ -1,0 +1,5 @@
+{
+  dialogs: [ 'Account', 'model-picker-title' ],
+  hit: 'workspace-mobile-account-backdrop',
+  focused: '<input placeholder="Model, provider, or capability" value="">'
+}

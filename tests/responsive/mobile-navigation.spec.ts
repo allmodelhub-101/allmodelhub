@@ -39,6 +39,7 @@ for(const theme of ['light','dark'])test(`mobile navigation ${theme}: compact ro
   const avatar=page.getByRole('button',{name:'Open mobile account menu'});await avatar.click();const account=page.getByRole('dialog',{name:'Account',exact:true});
   await expect(account.getByRole('link',{name:'Account & settings'})).toHaveAttribute('href','/settings');await expect(account.getByRole('button',{name:'Sign out'})).toBeVisible();
   await account.locator('.theme-toggle').click();await expect(page.locator('html')).toHaveAttribute('data-theme',theme==='light'?'dark':'light');await account.locator('.theme-toggle').click();
+  for(const [key,label]of [['Control+k','Command palette'],['Shift+Slash','Keyboard shortcuts']]){await page.keyboard.press(key);await expect(account).toHaveCount(0);const overlay=page.getByRole('dialog',{name:label,exact:true});await expect(overlay).toBeVisible();await page.keyboard.press('Escape');await expect(avatar).toBeFocused();await avatar.click();}
   for(let i=0;i<8;i++)await page.keyboard.press('Tab');expect(await account.evaluate(el=>el.contains(document.activeElement))).toBe(true);
   await page.keyboard.press('Escape');await expect(avatar).toBeFocused();
   await avatar.click();await page.locator('.workspace-mobile-account-backdrop').click({position:{x:2,y:2}});await expect(account).toHaveCount(0);await expect(avatar).toBeFocused();
@@ -64,6 +65,7 @@ test('mobile navigation: grouped More, generation handoff, active destinations a
  await info.attach('more-sheet',{body:await page.screenshot({animations:'disabled'}),contentType:'image/png'});
  await generation.click();await expect(sheet).toHaveCount(0);const drawer=page.getByRole('dialog',{name:'Generation center',exact:true});await expect(drawer).toBeVisible();await expect(drawer.getByText('Synthetic chat activity')).toBeVisible();await expect(drawer.getByRole('link').filter({hasText:'Synthetic chat activity'})).toHaveAttribute('href','/chat?conversation=sample-conversation');
  await page.keyboard.press('Escape');await expect(more).toBeFocused();await expect.poll(()=>page.evaluate(()=>document.body.style.overflow)).not.toBe('hidden');
+ for(const [key,label]of [['Control+k','Command palette'],['Shift+Slash','Keyboard shortcuts']]){await more.click();await page.keyboard.press(key);await expect(sheet).toHaveCount(0);const overlay=page.getByRole('dialog',{name:label,exact:true});await expect(overlay).toBeVisible();await page.keyboard.press('Escape');await expect(more).toBeFocused();}
  await more.click();await sheet.getByRole('link',{name:'Settings',exact:true}).click();await expect(sheet).toHaveCount(0);await expect(more).toHaveClass(/active/);
  await more.click();await expect(sheet.getByRole('link',{name:'Settings',exact:true})).toHaveAttribute('aria-current','page');
  for(let i=0;i<25;i++)await page.keyboard.press('Tab');expect(await sheet.evaluate(el=>el.contains(document.activeElement))).toBe(true);
