@@ -76,6 +76,7 @@ test('mobile navigation: real presentation surfaces preserve content and clearan
  for(const theme of ['light','dark'])for(const [name,query]of [['chat','chat=welcome'],['image','studio=image'],['video','studio=video'],['audio','studio=audio'],['projects','surface=projects'],['library','surface=history'],['wallet','surface=wallet'],['settings','surface=settings']]){
   const page=await context.newPage();
   await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto('/responsive-fixture?'+query,{waitUntil:'networkidle'});
+  await expect(page.locator('.workspace-topbar')).toHaveAttribute('data-workspace-ready','true');
   await expect(page.locator('html')).toHaveAttribute('data-theme',theme);await fits(page);
   await expect(page.locator('.command-trigger')).toBeInViewport();
   if(page.viewportSize()!.width<=600)expect(await page.locator('.workspace-topbar').evaluate(el=>el.getBoundingClientRect().height)).toBe(56);

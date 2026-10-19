@@ -4,6 +4,7 @@ const test=safeTest.extend<{studioDiagnostics:void}>({studioDiagnostics:[async({
 async function open(page:Page,studio:string,state='idle',theme='light'){
  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto(`/responsive-fixture?studio=${studio}&state=${state}`,{waitUntil:'networkidle'});
  await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
+ await expect(page.locator('.workspace-topbar')).toHaveAttribute('data-workspace-ready','true');
 }
 async function fits(page:Page){expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)}
 async function reachable(page:Page,control:Locator){
