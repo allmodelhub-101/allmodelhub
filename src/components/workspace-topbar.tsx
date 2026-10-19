@@ -1,7 +1,9 @@
 "use client";
 
-import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, Wallet, X } from "@phosphor-icons/react";
+import { Bell, CaretDown, CaretRight, Check, Command, FolderSimple, MagnifyingGlass, GearSix, SignOut, Wallet, X } from "@phosphor-icons/react";
 import Link from "next/link";
+import { createPortal } from "react-dom";
+import { useCompactWorkspaceHeader, workspaceGenerationStatus } from "./workspace-navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useWorkspaceOverlay } from "./use-workspace-overlay";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -32,17 +34,33 @@ const destinations = [
   { label: "Help", detail: "Guidance and support", href: "/support" }
 ];
 
-export function WorkspaceTopbar({ balance, identity, language = "en", offline = false }: { balance: number; identity: string; language?: string; offline?: boolean }) {
+export function WorkspaceTopbar({ balance, identity, language = "en", offline = false, fixtureData }: { balance: number; identity: string; language?: string; offline?: boolean; fixtureData?: { projects: Project[]; notifications: Notification[]; jobs: Job[] } }) {
   const [liveBalance, setLiveBalance] = useState(balance);
   const [walletRefreshing, setWalletRefreshing] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(offline ? fixtureData?.projects || [] : []);
   const [models, setModels] = useState<Model[]>([]);
   const [projectId, setProjectId] = useState("");
   const [open, setOpen] = useState(false);
-  const { jobs, refreshing: jobsRefreshing, refreshError: jobsRefreshError, checkedAt: jobsCheckedAt, refresh: loadJobs } = useGenerationCenter(open, offline);
+  const { jobs: liveJobs, refreshing: jobsRefreshing, refreshError: jobsRefreshError, checkedAt: jobsCheckedAt, refresh: loadJobs } = useGenerationCenter(open, offline);
+  const jobs = offline && fixtureData ? fixtureData.jobs : liveJobs;
+  const compactHeader = useCompactWorkspaceHeader();
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement | null>(null);
+  useWorkspaceOverlay(accountOpen, accountRef, () => setAccountOpen(false));
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 600px)");
+    const closeOnWide = () => { if (!media.matches) setAccountOpen(false); };
+    media.addEventListener("change", closeOnWide);
+    return () => media.removeEventListener("change", closeOnWide);
+  }, []);
+  useEffect(() => {
+    const openGenerations = () => setOpen(true);
+    window.addEventListener("amh-open-generation-center", openGenerations);
+    return () => window.removeEventListener("amh-open-generation-center", openGenerations);
+  }, []);
   const [palette, setPalette] = useState(false);
   const [query, setQuery] = useState("");
-  const [notifications,setNotifications]=useState<Notification[]>([]);
+  const [notifications,setNotifications]=useState<Notification[]>(offline ? fixtureData?.notifications || [] : []);
   const [notificationsOpen,setNotificationsOpen]=useState(false);
   const [keyboardHelp,setKeyboardHelp]=useState(false);
   const [projectOpen,setProjectOpen]=useState(false);
@@ -88,6 +106,10 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
   }, [offline, loadNotifications, refreshWallet]);
 
   const activeCount = jobs.filter(isActiveGeneration).length;
+  useEffect(() => {
+    workspaceGenerationStatus.publish(activeCount);
+    return () => workspaceGenerationStatus.publish(0);
+  }, [activeCount]);
   const activeProjectName=projects.find(project=>project.id===projectId)?.name||"Personal";
   const unreadCount=notifications.filter(item=>!item.read_at).length;
   const normalizedQuery = query.trim().toLowerCase();
@@ -117,16 +139,18 @@ export function WorkspaceTopbar({ balance, identity, language = "en", offline = 
 
   return <>
     <header className="app-topbar workspace-topbar">
-      <div className="global-project-wrap"><button className="global-project" type="button" onClick={(event)=>{event.currentTarget.focus();setProjectOpen(value=>!value)}} aria-haspopup="dialog" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div ref={projectRef} className="project-popover" role="dialog" tabIndex={-1} aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" aria-pressed={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
-      <button className="command-trigger" type="button" onClick={(event) => { event.currentTarget.focus(); setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>{language==="ur"?"تلاش کریں یا جائیں…":language==="roman-ur"?"Talash karein ya jayein…":"Search or jump to…"}</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
+      <div className="global-project-wrap"><button className="global-project" aria-label={`Active project: ${activeProjectName}`} title={activeProjectName} type="button" onClick={(event)=>{event.currentTarget.focus();setProjectOpen(value=>!value)}} aria-haspopup="dialog" aria-expanded={projectOpen}><FolderSimple size={15} aria-hidden="true"/><span>{activeProjectName}</span><CaretDown size={13} aria-hidden="true"/></button>{projectOpen&&<><button className="project-popover-scrim" type="button" aria-label="Close project menu" onClick={()=>setProjectOpen(false)}/><div ref={projectRef} className="project-popover" role="dialog" tabIndex={-1} aria-label="Select project"><span className="project-popover-label">Active project</span><button type="button" className={!projectId?"active":""} onClick={()=>{selectProject("");setProjectOpen(false)}}><span><b>Personal workspace</b><small>Default private workspace</small></span>{!projectId&&<Check size={15}/>}</button>{projects.map(project=><button type="button" aria-pressed={projectId===project.id} className={projectId===project.id?"active":""} key={project.id} onClick={()=>{selectProject(project.id);setProjectOpen(false)}}><span><b>{project.name}</b><small>Persistent project context</small></span>{projectId===project.id&&<Check size={15}/>}</button>)}<Link href="/projects" onClick={()=>setProjectOpen(false)}>Manage projects <CaretRight size={13}/></Link></div></>}</div>
+      <button className="command-trigger" aria-label="Search or jump to workspace" type="button" onClick={(event) => { event.currentTarget.focus(); setQuery(""); setPalette(true); }}><MagnifyingGlass size={17} aria-hidden="true" /><span>{language==="ur"?"تلاش کریں یا جائیں…":language==="roman-ur"?"Talash karein ya jayein…":"Search or jump to…"}</span><kbd><Command size={11} aria-hidden="true" />K</kbd></button>
       <div className="topbar-actions">
         <button className="generation-trigger" type="button" onClick={(event) => { event.currentTarget.focus(); setOpen(true); }} aria-label="Open generation center"><span className={activeCount ? "status-dot" : "status-dot idle"} />{activeCount ? `${activeCount} ${language==="ur"?"جاری":language==="roman-ur"?"jaari":"working"}` : language==="ur"?"تخلیقات":language==="roman-ur"?"Generations":"Generations"}</button>
         <button className="topbar-icon-trigger" type="button" onClick={(event)=>{event.currentTarget.focus();setNotificationsOpen(true);void loadNotifications()}} aria-label={`Notifications${unreadCount?`, ${unreadCount} unread`:""}`}><Bell size={17} aria-hidden="true" />{unreadCount>0&&<b>{unreadCount>9?"9+":unreadCount}</b>}</button>
         <Link href="/wallet" className={`wallet-chip wallet-chip-live ${walletRefreshing ? "is-refreshing" : ""}`} aria-label={`${liveBalance.toFixed(2)} credits available. Balance refreshes automatically.`}><span className="wallet-live-signal" aria-hidden="true" /><Wallet size={14} aria-hidden="true" /><span>{liveBalance.toFixed(2)} Credits</span><small>Live</small></Link>
-        <ThemeToggle />
-        <Link href="/settings" className="topbar-profile" aria-label="Open account settings"><span>{identity.slice(0, 1).toUpperCase()}</span><CaretDown size={12} weight="bold" aria-hidden="true" /></Link>
+        {!compactHeader && <ThemeToggle />}
+        <Link href="/settings" className="topbar-profile desktop-account-link" aria-label="Open account settings"><span>{identity.slice(0, 1).toUpperCase()}</span><CaretDown size={12} weight="bold" aria-hidden="true" /></Link>
+        <button className="mobile-profile-trigger" type="button" aria-label="Open mobile account menu" aria-haspopup="dialog" aria-expanded={accountOpen} onClick={event => { event.currentTarget.focus(); setAccountOpen(true); }}><span>{identity.slice(0, 1).toUpperCase()}</span></button>
       </div>
     </header>
+    {accountOpen && compactHeader && createPortal(<div className="workspace-mobile-account-layer"><button className="workspace-mobile-account-backdrop" type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)} /><div ref={accountRef} className="workspace-mobile-account-panel" role="dialog" aria-modal="true" aria-label="Account" tabIndex={-1}><div className="workspace-mobile-account-heading"><strong>Account</strong><button type="button" aria-label="Close account menu" onClick={() => setAccountOpen(false)}><X size={18} aria-hidden="true" /></button></div><Link href="/settings" prefetch={false} onClick={() => setAccountOpen(false)}><GearSix size={19} aria-hidden="true" />Account & settings</Link><div className="workspace-mobile-account-theme"><span>Appearance</span><ThemeToggle /></div><form action="/auth/logout" method="post"><button type="submit"><SignOut size={19} aria-hidden="true" />Sign out</button></form></div></div>, document.body)}
     {open && <><button className="workspace-scrim" aria-label="Close generation center" onClick={() => setOpen(false)} /><aside ref={generationRef} role="dialog" aria-modal="true" tabIndex={-1} className="generation-drawer" aria-label="Generation center"><div className="drawer-head"><div><div className="kicker">Background work</div><h2>Generation Center</h2></div><button className="icon-button" onClick={() => setOpen(false)} aria-label="Close"><X size={18} /></button></div><div className="drawer-scroll">
       <div className="generation-refresh"><span role="status">{offline ? "Offline · showing last loaded status" : jobsRefreshing ? "Refreshing statuses…" : jobsCheckedAt ? `Updated ${jobsCheckedAt.toLocaleTimeString()}` : "Waiting for first update"}</span><button type="button" disabled={offline || jobsRefreshing} onClick={() => void loadJobs()}>Refresh</button></div>
       {jobsRefreshError && <p className="generation-refresh-error" role="alert">{jobsRefreshError}</p>}
