@@ -2,6 +2,9 @@
 
 import { useSyncExternalStore } from "react";
 
+const subscribeHydration = () => () => {};
+export const useWorkspaceHydrated = () => useSyncExternalStore(subscribeHydration, () => true, () => false);
+
 const compactQuery = "(max-width: 600px)";
 function subscribeCompact(listener: () => void) {
   const media = window.matchMedia(compactQuery);

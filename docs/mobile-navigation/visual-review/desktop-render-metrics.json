@@ -1,0 +1,194 @@
+[
+  {
+    "image": "chromium-1366-dark-audio.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-chat.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-image.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-library.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-projects.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-settings.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-video.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-dark-wallet.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-light-audio.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-light-chat.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "chromium-1366-light-image.png",
+    "meanAbsoluteChannelDelta": 5e-05,
+    "headerIdentical": false,
+    "maxChannelDelta": 2
+  },
+  {
+    "image": "chromium-1366-light-library.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "chromium-1366-light-projects.png",
+    "meanAbsoluteChannelDelta": 3e-05,
+    "headerIdentical": false,
+    "maxChannelDelta": 2
+  },
+  {
+    "image": "chromium-1366-light-settings.png",
+    "meanAbsoluteChannelDelta": 9e-05,
+    "headerIdentical": false,
+    "maxChannelDelta": 10
+  },
+  {
+    "image": "chromium-1366-light-video.png",
+    "meanAbsoluteChannelDelta": 0.00014,
+    "headerIdentical": false,
+    "maxChannelDelta": 14
+  },
+  {
+    "image": "chromium-1366-light-wallet.png",
+    "meanAbsoluteChannelDelta": 0.00012,
+    "headerIdentical": false,
+    "maxChannelDelta": 13
+  },
+  {
+    "image": "webkit-1366-dark-audio.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-dark-chat.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-dark-image.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "webkit-1366-dark-library.png",
+    "meanAbsoluteChannelDelta": 0.00674,
+    "headerIdentical": true,
+    "maxChannelDelta": 2
+  },
+  {
+    "image": "webkit-1366-dark-projects.png",
+    "meanAbsoluteChannelDelta": 0.00498,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "webkit-1366-dark-settings.png",
+    "meanAbsoluteChannelDelta": 0.04252,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "webkit-1366-dark-video.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-dark-wallet.png",
+    "meanAbsoluteChannelDelta": 0.02907,
+    "headerIdentical": true,
+    "maxChannelDelta": 2
+  },
+  {
+    "image": "webkit-1366-light-audio.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-light-chat.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-light-image.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-light-library.png",
+    "meanAbsoluteChannelDelta": 0.01857,
+    "headerIdentical": true,
+    "maxChannelDelta": 2
+  },
+  {
+    "image": "webkit-1366-light-projects.png",
+    "meanAbsoluteChannelDelta": 0.01035,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "webkit-1366-light-settings.png",
+    "meanAbsoluteChannelDelta": 0.04645,
+    "headerIdentical": true,
+    "maxChannelDelta": 1
+  },
+  {
+    "image": "webkit-1366-light-video.png",
+    "meanAbsoluteChannelDelta": 0.0,
+    "headerIdentical": true,
+    "maxChannelDelta": 0
+  },
+  {
+    "image": "webkit-1366-light-wallet.png",
+    "meanAbsoluteChannelDelta": 0.03978,
+    "headerIdentical": true,
+    "maxChannelDelta": 2
+  }
+]

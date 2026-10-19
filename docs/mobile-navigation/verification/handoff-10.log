@@ -1,0 +1,35 @@
+
+Running 10 tests using 1 worker
+
+(node:11836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.1s)
+(node:12644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (5.3s)
+(node:17288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (7.1s)
+(node:17336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.3s)
+(node:17724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  5 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (5.8s)
+(node:19568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (7.6s)
+(node:20148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (7.0s)
+(node:19748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  8 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (7.3s)
+(node:8764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.8s)
+(node:6628) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:52:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.7s)
+
+  10 passed (1.3m)

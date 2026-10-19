@@ -111,7 +111,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | src/components/video-studio.module.css | 23171 | 97 | 10 | 70 | 1 |
 | src/components/wallet-workspace.module.css | 3794 | 31 | 3 | 0 | 0 |
 | src/components/workspace-data.module.css | 18118 | 220 | 7 | 0 | 2 |
-| src/components/workspace-shell.css | 12727 | 118 | 7 | 0 | 5 |
+| src/components/workspace-shell.css | 12737 | 118 | 7 | 0 | 5 |
 
 ## Auxiliary routes and states
 

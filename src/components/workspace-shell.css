@@ -66,7 +66,7 @@
 .responsive-workspace .kicker{color:color-mix(in srgb,var(--accent) 75%,var(--text))}
 
 /* Phone navigation only. Tablet/desktop retain the existing two-row/wide chrome. */
-.responsive-workspace .workspace-topbar .mobile-profile-trigger { display:none; }
+.responsive-workspace .app-main .workspace-topbar .mobile-profile-trigger { display:none; }
 @media (max-width:600px) {
   .responsive-workspace .app-main { grid-template-rows:calc(56px + env(safe-area-inset-top)) minmax(0,1fr); }
   .responsive-workspace .app-main .app-topbar.workspace-topbar { height:calc(56px + env(safe-area-inset-top));min-height:calc(56px + env(safe-area-inset-top));grid-template-columns:minmax(0,1fr) 44px auto;grid-template-rows:44px;gap:4px;padding:calc(6px + env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) 6px max(8px,env(safe-area-inset-left)); }

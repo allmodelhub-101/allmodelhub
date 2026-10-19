@@ -1,0 +1,379 @@
+
+Running 16 tests using 1 worker
+
+(node:10204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (14.1s)
+(node:18928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (4.8s)
+(node:18716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (17.9m)
+(node:4004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  4 [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance (54.1s)
+(node:3368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (16ms)
+(node:16472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (7.0s)
+(node:8688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (5.1s)
+  x   8 [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance (33.1s)
+(node:18548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [chromium-1366x768] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (5.7s)
+  ok 10 [chromium-1366x768] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (4.3s)
+  ok 11 [chromium-1366x768] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (3.4s)
+  ok 12 [chromium-1366x768] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance (42.3s)
+(node:10180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  13 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account (6.1s)
+(node:6840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account (4.9s)
+(node:276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 15 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus (6.4s)
+  x  16 [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance (16.6s)
+
+
+  1) [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 4
+
+      33 |   const controls=header.locator('.global-project,.command-trigger,.topbar-icon-trigger,.wallet-chip,.mobile-profile-trigger');
+      34 |   const boxes=await controls.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}}));
+    > 35 |   for(let i=0;i<boxes.length;i++){expect(boxes[i].width).toBeGreaterThanOrEqual(44);expect(boxes[i].height).toBeGreaterThanOrEqual(44);expect(boxes[i].right).toBeLessThanOrEqual(width);expect(boxes[i].y).toBe(boxes[0].y);if(i)expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i-1].right);}
+         |                                                                                                                                                                                                             ^
+      36 |   await expect(search.locator('span')).toBeHidden();await expect(header.locator('.generation-trigger')).toBeHidden();
+      37 |   const avatar=page.getByRole('button',{name:'Open mobile account menu'});await avatar.click();const account=page.getByRole('dialog',{name:'Account',exact:true});
+      38 |   await expect(account.getByRole('link',{name:'Account & settings'})).toHaveAttribute('href','/settings');await expect(account.getByRole('button',{name:'Sign out'})).toBeVisible();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:35:205
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-320x568\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-320x568\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-320x568\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-320x568\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 4
+
+      33 |   const controls=header.locator('.global-project,.command-trigger,.topbar-icon-trigger,.wallet-chip,.mobile-profile-trigger');
+      34 |   const boxes=await controls.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}}));
+    > 35 |   for(let i=0;i<boxes.length;i++){expect(boxes[i].width).toBeGreaterThanOrEqual(44);expect(boxes[i].height).toBeGreaterThanOrEqual(44);expect(boxes[i].right).toBeLessThanOrEqual(width);expect(boxes[i].y).toBe(boxes[0].y);if(i)expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i-1].right);}
+         |                                                                                                                                                                                                             ^
+      36 |   await expect(search.locator('span')).toBeHidden();await expect(header.locator('.generation-trigger')).toBeHidden();
+      37 |   const avatar=page.getByRole('button',{name:'Open mobile account menu'});await avatar.click();const account=page.getByRole('dialog',{name:'Account',exact:true});
+      38 |   await expect(account.getByRole('link',{name:'Account & settings'})).toHaveAttribute('href','/settings');await expect(account.getByRole('button',{name:'Sign out'})).toBeVisible();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:35:205
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-320x568\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-320x568\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-320x568\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-320x568\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.nav-backdrop')
+        - locator resolved to <button type="button" class="nav-backdrop" aria-label="Close navigation"></button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+
+
+      64 |  await more.click();await expect(sheet.getByRole('link',{name:'Settings',exact:true})).toHaveAttribute('aria-current','page');
+      65 |  for(let i=0;i<25;i++)await page.keyboard.press('Tab');expect(await sheet.evaluate(el=>el.contains(document.activeElement))).toBe(true);
+    > 66 |  await sheet.getByRole('button',{name:'Close navigation'}).click();await expect(more).toBeFocused();await more.click();await page.locator('.nav-backdrop').click({position:{x:2,y:2}});await expect(sheet).toHaveCount(0);await fits(page);
+         |                                                                                                                                                            ^
+      67 | });
+      68 | test('mobile navigation: real presentation surfaces preserve content and clearance',async({page},info)=>{
+      69 |  test.setTimeout(180000);
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:66:156
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-02d87-tive-destinations-and-focus-chromium-320x568\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-02d87-tive-destinations-and-focus-chromium-320x568\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-02d87-tive-destinations-and-focus-chromium-320x568\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-02d87-tive-destinations-and-focus-chromium-320x568\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+
+    TimeoutError: browserType.launch: Timeout 180000ms exceeded.
+    Call log:
+      - <launching> C:\Users\The Perfect Point\AppData\Local\ms-playwright\chromium_headless_shell-1248\chrome-headless-shell-win64\chrome-headless-shell.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\THEPER~1\AppData\Local\Temp\playwright_chromiumdev_profile-fVLdBO --remote-debugging-pipe --no-startup-window
+      - <launched> pid=17564
+      - [pid=17564][err] [1019/130832.788:WARNING:net\dns\dns_config_service_win.cc:607] Failed to read DnsConfig.
+      - [pid=17564][err] [1019/133256.624:WARNING:net\dns\dns_config_service_win.cc:607] Failed to read DnsConfig.
+
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-390x844\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 4
+
+      33 |   const controls=header.locator('.global-project,.command-trigger,.topbar-icon-trigger,.wallet-chip,.mobile-profile-trigger');
+      34 |   await page.mouse.move(0,page.viewportSize()!.height/2);
+    > 35 |   await expect.poll(()=>controls.evaluateAll(els=>els.map(el=>Math.round(el.getBoundingClientRect().y)))).toEqual([6,6,6,6,6]);
+         |                                                                                                                                ^
+      36 |   const boxes=await controls.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}}));
+      37 |   for(let i=0;i<boxes.length;i++){expect(boxes[i].width).toBeGreaterThanOrEqual(44);expect(boxes[i].height).toBeGreaterThanOrEqual(44);expect(boxes[i].right).toBeLessThanOrEqual(width);expect(boxes[i].y).toBe(boxes[0].y);if(i)expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i-1].right);}
+      38 |   await expect(search.locator('span')).toBeHidden();await expect(header.locator('.generation-trigger')).toBeHidden();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:35:205
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance 
+
+    Error: page.goto: net::ERR_NETWORK_IO_SUSPENDED at http://127.0.0.1:3100/responsive-fixture?studio=image
+    Call log:
+      - navigating to "http://127.0.0.1:3100/responsive-fixture?studio=image", waiting until "networkidle"
+
+
+      69 | });
+      70 | test('mobile navigation: real presentation surfaces preserve content and clearance',async({page},info)=>{
+    > 71 |  test.setTimeout(180000);
+         |                          ^
+      72 |  for(const theme of ['light','dark'])for(const [name,query]of [['chat','chat=welcome'],['image','studio=image'],['video','studio=video'],['audio','studio=audio'],['projects','surface=projects'],['library','surface=history'],['wallet','surface=wallet'],['settings','surface=settings']]){
+      73 |   await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto('/responsive-fixture?'+query,{waitUntil:'networkidle'});
+      74 |   await expect(page.locator('html')).toHaveAttribute('data-theme',theme);await fits(page);
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:71:85
+
+    Error: runtime/console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 13
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:3100/_next/hmr?id=lX4pX2bxVv1qBFIy9mU_a' failed: Error in connection establishment: net::ERR_NETWORK_IO_SUSPENDED",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    +   "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.",
+    + ]
+
+       5 |  page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+       6 |  page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});
+    >  7 |  await use();expect(errors,'runtime/console errors').toEqual([]);expect(apis,'presentation fixtures never access APIs').toEqual([]);
+         |                                                      ^
+       8 | },{auto:true}]});
+       9 | async function open(page:Page,theme='light'){
+      10 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);
+        at Object._safety.test.extend.navigationDiagnostics.auto (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:7:54)
+
+    attachment #10: screenshot (image/png) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-chromium-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-chromium-390x844\error-context.md
+
+    attachment #12: trace (application/zip) ────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-chromium-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-chromium-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 4
+
+      33 |   const controls=header.locator('.global-project,.command-trigger,.topbar-icon-trigger,.wallet-chip,.mobile-profile-trigger');
+      34 |   await page.mouse.move(0,page.viewportSize()!.height/2);
+    > 35 |   await expect.poll(()=>controls.evaluateAll(els=>els.map(el=>Math.round(el.getBoundingClientRect().y)))).toEqual([6,6,6,6,6]);
+         |                                                                                                                                ^
+      36 |   const boxes=await controls.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}}));
+      37 |   for(let i=0;i<boxes.length;i++){expect(boxes[i].width).toBeGreaterThanOrEqual(44);expect(boxes[i].height).toBeGreaterThanOrEqual(44);expect(boxes[i].right).toBeLessThanOrEqual(width);expect(boxes[i].y).toBe(boxes[0].y);if(i)expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i-1].right);}
+      38 |   await expect(search.locator('span')).toBeHidden();await expect(header.locator('.generation-trigger')).toBeHidden();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:35:205
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-5b434-ontrols-project-and-account-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 4
+
+      33 |   const controls=header.locator('.global-project,.command-trigger,.topbar-icon-trigger,.wallet-chip,.mobile-profile-trigger');
+      34 |   await page.mouse.move(0,page.viewportSize()!.height/2);
+    > 35 |   await expect.poll(()=>controls.evaluateAll(els=>els.map(el=>Math.round(el.getBoundingClientRect().y)))).toEqual([6,6,6,6,6]);
+         |                                                                                                                                ^
+      36 |   const boxes=await controls.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}}));
+      37 |   for(let i=0;i<boxes.length;i++){expect(boxes[i].width).toBeGreaterThanOrEqual(44);expect(boxes[i].height).toBeGreaterThanOrEqual(44);expect(boxes[i].right).toBeLessThanOrEqual(width);expect(boxes[i].y).toBe(boxes[0].y);if(i)expect(boxes[i].x).toBeGreaterThanOrEqual(boxes[i-1].right);}
+      38 |   await expect(search.locator('span')).toBeHidden();await expect(header.locator('.generation-trigger')).toBeHidden();
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:35:205
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-webkit-390x844\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-77126-ontrols-project-and-account-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance 
+
+    Error: page.goto: Navigation to "http://127.0.0.1:3100/responsive-fixture?surface=wallet" is interrupted by another navigation to "http://127.0.0.1:3100/responsive-fixture?surface=history"
+    Call log:
+      - navigating to "http://127.0.0.1:3100/responsive-fixture?surface=wallet", waiting until "networkidle"
+
+
+      69 | });
+      70 | test('mobile navigation: real presentation surfaces preserve content and clearance',async({page},info)=>{
+    > 71 |  test.setTimeout(180000);
+         |                          ^
+      72 |  for(const theme of ['light','dark'])for(const [name,query]of [['chat','chat=welcome'],['image','studio=image'],['video','studio=video'],['audio','studio=audio'],['projects','surface=projects'],['library','surface=history'],['wallet','surface=wallet'],['settings','surface=settings']]){
+      73 |   await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);await page.goto('/responsive-fixture?'+query,{waitUntil:'networkidle'});
+      74 |   await expect(page.locator('html')).toHaveAttribute('data-theme',theme);await fits(page);
+        at C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:71:85
+
+    Error: runtime/console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 7
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:3100/responsive-fixture?surface=history&_rsc=iexHqoqbYveaJmZU due to access control checks.",
+    +   "Failed to fetch RSC payload for http://127.0.0.1:3100/responsive-fixture?surface=history. Falling back to browser navigation. TypeError: Load failed",
+    +   "/127.0.0.1:3100/__nextjs_original-stack-frames due to access control checks.",
+    +   "/127.0.0.1:3100/responsive-fixture?surface=history&_rsc=iexHqoqbYveaJmZU due to access control checks.",
+    +   "Internal Next.js error: Router action dispatched before initialization.",
+    + ]
+
+       5 |  page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+       6 |  page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/'))apis.push(r.url())});
+    >  7 |  await use();expect(errors,'runtime/console errors').toEqual([]);expect(apis,'presentation fixtures never access APIs').toEqual([]);
+         |                                                      ^
+       8 | },{auto:true}]});
+       9 | async function open(page:Page,theme='light'){
+      10 |  await page.addInitScript(t=>localStorage.setItem('amh-theme',t),theme);
+        at Object._safety.test.extend.navigationDiagnostics.auto (C:\Users\The Perfect Point\Documents\Codex\2026-10-16\models-suite-mobile-first-transformation-phase\work\allmodelhub\tests\responsive\mobile-navigation.spec.ts:7:54)
+
+    attachment #7: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-webkit-390x844\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-webkit-390x844\error-context.md
+
+    attachment #9: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-webkit-390x844\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\navigation-focused\mobile-navigation-mobile-n-396c0-serve-content-and-clearance-webkit-390x844\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9 failed
+    [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+    [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+    [chromium-320x568] › tests\responsive\mobile-navigation.spec.ts:50:1 › mobile navigation: grouped More, generation handoff, active destinations and focus 
+    [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+    [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+    [chromium-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance 
+    [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation light: compact row, controls, project and account 
+    [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:20:37 › mobile navigation dark: compact row, controls, project and account 
+    [webkit-390x844] › tests\responsive\mobile-navigation.spec.ts:68:1 › mobile navigation: real presentation surfaces preserve content and clearance 
+  7 passed (1.1h)
