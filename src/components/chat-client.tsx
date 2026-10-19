@@ -4,6 +4,7 @@ import { FormEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useS
 import { useSearchParams } from "next/navigation";
 import { chatComposerKeyAction, chatPromptWithContext, pastedChatContext } from "@/lib/chat-composer-events";
 import { ChatWorkspace } from "./chat-workspace";
+import { useChatGenerationActivity } from "./use-chat-generation-activity";
 
 import { PickerModel } from "@/components/model-picker";
 import { createClient as createBrowserSupabaseClient } from "@/lib/supabase/client";
@@ -182,6 +183,7 @@ export function ChatClient({ initialModels = [] }: { initialModels?: Model[] }) 
     }).slice(0, 6);
   }, [models]);
   const selectedProject = useMemo(() => projects.find((project) => project.id === projectId), [projectId, projects]);
+  useChatGenerationActivity({ busy, messages, modelName: activeModelName || exact?.name || "", conversationId, privateMode, error });
   const supportsReasoning = !exact || Boolean(exact.capabilities?.includes("reasoning"));
 
   useEffect(() => {

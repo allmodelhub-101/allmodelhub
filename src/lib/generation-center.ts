@@ -3,12 +3,14 @@ export type GenerationCenterJob = {
   status: string; prompt?: string; result_urls?: string[]; error_message?: string;
   charged_credits?: number | null; estimated_credits?: number | null;
   created_at?: string; updated_at?: string; completed_at?: string | null;
+  source?: "chat-session"; conversation_id?: string; billing_pending?: boolean;
 };
 
 export const isActiveGeneration = (job: GenerationCenterJob) => ["queued", "submitted", "processing", "settling"].includes(job.status);
 
 export function generationChargeLabel(job: GenerationCenterJob) {
   if (job.charged_credits != null && Number.isFinite(Number(job.charged_credits))) return `Charged ${Number(job.charged_credits).toFixed(2)} credits`;
+  if (job.source === "chat-session") return job.billing_pending ? "Billing pending" : "See usage & receipts";
   if (isActiveGeneration(job) && job.estimated_credits != null && Number.isFinite(Number(job.estimated_credits))) return `Estimated ${Number(job.estimated_credits).toFixed(2)} credits`;
   return "Final charge not recorded";
 }

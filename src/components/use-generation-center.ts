@@ -1,10 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { loadGenerationSnapshot, type GenerationCenterJob } from "@/lib/generation-center";
+import { chatActivity, emptyChatActivity } from "@/lib/chat-generation-activity";
 
 export function useGenerationCenter(open: boolean, offline: boolean) {
   const [jobs, setJobs] = useState<GenerationCenterJob[]>([]);
+  const chatJobs = useSyncExternalStore(chatActivity.subscribe, offline ? emptyChatActivity : chatActivity.getSnapshot, emptyChatActivity);
+  const combinedJobs = useMemo(() => [...chatJobs, ...jobs], [chatJobs, jobs]);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshError, setRefreshError] = useState("");
   const [checkedAt, setCheckedAt] = useState<Date | null>(null);
@@ -41,5 +44,5 @@ export function useGenerationCenter(open: boolean, offline: boolean) {
     };
   }, [refresh]);
   useEffect(() => { if (open) { const timer = window.setTimeout(() => void refresh(), 0); return () => window.clearTimeout(timer); } }, [open, refresh]);
-  return { jobs, refreshing, refreshError, checkedAt, refresh };
+  return { jobs: combinedJobs, refreshing, refreshError, checkedAt, refresh };
 }
