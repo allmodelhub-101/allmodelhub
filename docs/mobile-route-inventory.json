@@ -111,6 +111,22 @@
       ]
     },
     {
+      "route": "/android",
+      "file": "src/app/android/page.tsx",
+      "access": "public",
+      "redirect": [],
+      "components": [
+        "src/components/android-install-button.tsx",
+        "src/components/brand.tsx",
+        "src/components/pwa-register.tsx",
+        "src/components/theme-toggle.tsx"
+      ],
+      "styles": [
+        "src/app/android/android.module.css",
+        "src/app/globals.css"
+      ]
+    },
+    {
       "route": "/audio",
       "file": "src/app/audio/page.tsx",
       "access": "authenticated",
@@ -1198,6 +1214,14 @@
       "mediaQueries": 6,
       "important": 0,
       "viewportUnits": 0
+    },
+    {
+      "file": "src/app/android/android.module.css",
+      "bytes": 5239,
+      "lines": 6,
+      "mediaQueries": 2,
+      "important": 0,
+      "viewportUnits": 1
     },
     {
       "file": "src/app/auth/login/auth-premium.css",

@@ -13,6 +13,15 @@ Run `pnpm audit:css`. PostCSS parses every stylesheet. Repetition and dimensions
 
 Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
 
+## src/app/android/android.module.css
+
+2 media/container conditions; 0 repeated exact selector + condition groups; 5 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
 ## src/app/auth/login/auth-premium.css
 
 6 media/container conditions; 0 repeated exact selector + condition groups; 15 dimension/overflow candidates; 8 small-control declarations.

@@ -38,6 +38,13 @@ const nextConfig: NextConfig = {
       securityHeaders.push({ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" });
     }
     return [
+      { source: "/sw.js", headers: [
+        { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+        { key: "Service-Worker-Allowed", value: "/" }
+      ] },
+      { source: "/.well-known/assetlinks.json", headers: [
+        { key: "Cache-Control", value: "public, max-age=300" }
+      ] },
       {
         source: "/(.*)",
         headers: securityHeaders

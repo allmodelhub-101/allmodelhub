@@ -1,0 +1,12 @@
+App Bundle information
+------------
+Feature modules:
+	Feature module: base
+		File: dex/classes.dex
+		File: res/anim-v21/fragment_fast_out_extra_slow_in.xml
+		File: res/anim/abc_fade_in.xml
+		File: res/anim/abc_fade_out.xml
+		File: res/anim/abc_grow_fade_in_from_bottom.xml
+		File: res/anim/abc_popup_enter.xml
+		File: res/anim/abc_popup_exit.xml
+		File: res/anim/abc_shrink_fade_out_from_bottom.xml

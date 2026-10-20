@@ -2,7 +2,7 @@
 
 Run `pnpm audit:routes` from the repository root. Counts are source routes, not authenticated browser passes. Root layout globals apply to every page.
 
-32 page routes; 43 HTTP handlers; 21 CSS files. No Pages Router exists.
+33 page routes; 43 HTTP handlers; 22 CSS files. No Pages Router exists.
 
 | Route | Access | Source / redirect | Components (transitive) | Styles (transitive) |
 |---|---|---|---|---|
@@ -13,6 +13,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /admin/profits | admin | src/app/admin/profits/page.tsx → /admin?tab=jobs | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/settings | admin | src/app/admin/settings/page.tsx → /admin?tab=settings | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/users | admin | src/app/admin/users/page.tsx → /admin?tab=users | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
+| /android | public | src/app/android/page.tsx | android-install-button.tsx, brand.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/android/android.module.css, src/app/globals.css |
 | /audio | authenticated | src/app/audio/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, audio-generation-client.tsx, audio-stage.tsx, audio-studio.module.css, audio-studio.tsx, feature-unavailable.tsx, generation-center.css, premium-select.tsx, pwa-register.tsx, speech-script-editor.tsx, theme-toggle.tsx, tts-client.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/audio-studio.module.css, src/components/generation-center.css, src/components/workspace-shell.css |
 | /auth/login | public | src/app/auth/login/page.tsx | auth-page.tsx, login-form.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
 | /auth/signup | public | src/app/auth/signup/page.tsx | auth-page.tsx, login-form.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
@@ -92,6 +93,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | File | Bytes | Lines | Media queries | Important declarations | Viewport units |
 |---|---:|---:|---:|---:|---:|
 | src/app/admin/admin-premium.css | 9376 | 11 | 6 | 0 | 0 |
+| src/app/android/android.module.css | 5239 | 6 | 2 | 0 | 1 |
 | src/app/auth/login/auth-premium.css | 24512 | 434 | 6 | 0 | 2 |
 | src/app/files/files.css | 16104 | 10 | 6 | 2 | 0 |
 | src/app/globals.css | 635714 | 2386 | 832 | 131 | 69 |

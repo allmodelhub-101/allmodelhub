@@ -202,6 +202,64 @@
     ]
   },
   {
+    "file": "src/app/android/android.module.css",
+    "repeated": [],
+    "dimensions": [
+      {
+        "selector": ".page",
+        "conditions": [],
+        "line": 1,
+        "property": "min-height",
+        "value": "100dvh"
+      },
+      {
+        "selector": ".appCard img",
+        "conditions": [],
+        "line": 3,
+        "property": "width",
+        "value": "140px"
+      },
+      {
+        "selector": ".appCard img",
+        "conditions": [],
+        "line": 3,
+        "property": "height",
+        "value": "140px"
+      },
+      {
+        "selector": ".appCard img",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 5,
+        "property": "width",
+        "value": "100px"
+      },
+      {
+        "selector": ".appCard img",
+        "conditions": [
+          "@media (max-width:600px)"
+        ],
+        "line": 5,
+        "property": "height",
+        "value": "100px"
+      }
+    ],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(max-width:800px)",
+        "line": 4
+      },
+      {
+        "type": "media",
+        "condition": "(max-width:600px)",
+        "line": 5
+      }
+    ]
+  },
+  {
     "file": "src/app/auth/login/auth-premium.css",
     "repeated": [],
     "dimensions": [

@@ -1,0 +1,11 @@
+{
+  "name": "models-suite-android-tools",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.3",
+  "dependencies": {
+    "@bubblewrap/core": "1.27.0",
+    "sharp": "0.34.5"
+  },
+  "pnpm": { "onlyBuiltDependencies": ["sharp"] }
+}

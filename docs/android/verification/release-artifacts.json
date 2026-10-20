@@ -1,0 +1,17 @@
+{
+  "applicationId": "com.modelssuite.app",
+  "artifacts": [
+    {
+      "sha256": "5dc67fe37c8958daeaf9647acb9b804ae44b91409ee260706c689c202c46c6bc",
+      "bytes": 1606234,
+      "file": "models-suite-1.0.0.apk"
+    },
+    {
+      "sha256": "ae9e28130ef95e11e733936f462e5906b7f8cb7702022f7ff2d805f06cd3e730",
+      "bytes": 1711127,
+      "file": "models-suite-1.0.0.aab"
+    }
+  ],
+  "version": "1.0.0",
+  "versionCode": 1
+}
