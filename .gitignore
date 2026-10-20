@@ -8,3 +8,18 @@ playwright-report/
 test-results/
 blob-report/
 playwright/.auth/
+
+# Android outputs, local toolchains and private signing material
+android/.gradle/
+android/**/build/
+android/local.properties
+android/artifacts/
+android/tools/node_modules/
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.dpapi
+*.msbackup
+keystore.properties
+android-signing*.json

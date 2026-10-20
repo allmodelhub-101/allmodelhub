@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { PwaRegister } from "@/components/pwa-register";
 import { BRAND } from "@/lib/brand";
 import Script from "next/script";
+
+export const viewport: Viewport = { themeColor: "#05070a" };
 
 export const metadata: Metadata = {
   title: { default: `${BRAND.name} — ${BRAND.tagline}`, template: `%s | ${BRAND.name}` },
   description: "Use leading AI chat, image, video and audio models from one premium PKR-first workspace.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   verification: { google: "0lKNfQyh03-c0buhXWXSDz8zeSYO25qKzK_tlnbWkao" },
-  icons: { icon: BRAND.logoPath, apple: BRAND.logoPath },
+  icons: { icon: BRAND.logoPath, apple: "/pwa/apple-180.png" },
   openGraph: { title: `${BRAND.name} — ${BRAND.tagline}`, siteName: BRAND.name, images: [BRAND.logoPath] }
 };
 

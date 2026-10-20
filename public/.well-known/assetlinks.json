@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.modelssuite.app",
+      "sha256_cert_fingerprints": [
+        "84:82:92:09:A6:45:9A:F6:E3:C0:90:C8:21:FF:A3:00:B3:7A:35:E7:48:B3:4E:E2:55:8A:37:8B:E7:A8:9E:5D"
+      ]
+    }
+  }
+]

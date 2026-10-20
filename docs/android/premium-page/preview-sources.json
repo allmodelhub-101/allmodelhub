@@ -1,0 +1,42 @@
+[
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-light-chat.png",
+    "output": "public/android/previews/chat-light.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-light-image.png",
+    "output": "public/android/previews/image-light.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-light-video.png",
+    "output": "public/android/previews/video-light.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-light-audio.png",
+    "output": "public/android/previews/audio-light.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-dark-chat.png",
+    "output": "public/android/previews/chat-dark.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-dark-image.png",
+    "output": "public/android/previews/image-dark.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-dark-video.png",
+    "output": "public/android/previews/video-dark.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  },
+  {
+    "source": "docs/mobile-navigation/after/webkit-390-dark-audio.png",
+    "output": "public/android/previews/audio-dark.webp",
+    "kind": "Existing approved workspace interface capture; demonstration content, not a customer session"
+  }
+]

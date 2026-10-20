@@ -1,0 +1,64 @@
+.discovery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 14px;
+  margin-top: 20px;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--panel));
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 750;
+  text-decoration: none;
+  transition: border-color .2s ease, transform .2s ease, background .2s ease;
+}
+.link svg:first-child { color: var(--accent); }
+.link:focus-visible, .dismissButton:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.link:active { transform: scale(.98); }
+.note { color: var(--muted); font-size: 11px; }
+.discovery[data-android="true"] .link { border-color: var(--accent); }
+
+/* Reserved reusable surface for a future owner-approved, dismissible notice.
+   No component mounts this surface and no automatic announcement is enabled. */
+.announcementSurface {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel-solid);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+.dismissButton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .link:hover { transform: translateY(-2px); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, var(--panel)); }
+}
+@media (display-mode: standalone) {
+  .discovery, .announcementSurface { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link { transition: none; }
+  .link:hover, .link:active { transform: none; }
+}

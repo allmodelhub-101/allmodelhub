@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "base": "http://localhost:3105",
+  "checks": [
+    "Manifest and explicit-sized icon endpoints pass; unpublished APK CTA absent.",
+    "Production service worker controls page; CacheStorage contains only public offline HTML.",
+    "Install button calls one-shot browser prompt and reports acceptance (synthetic browser event, not device installation).",
+    "Offline navigation shows reconnect page; API and auth navigation are not replaced by cached app/private responses.",
+    "Public download, homepage and sign-in screenshot candidates captured; mobile/desktop download has no overflow or page errors."
+  ],
+  "errors": [],
+  "manifest": {
+    "id": "/",
+    "name": "Models Suite",
+    "short_name": "Models Suite",
+    "description": "Every Leading AI. One PKR Wallet.",
+    "lang": "en",
+    "start_url": "/chat",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#05070a",
+    "theme_color": "#05070a",
+    "icons": [
+      {
+        "src": "/pwa/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "/pwa/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "/pwa/maskable-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      }
+    ],
+    "categories": [
+      "productivity",
+      "utilities"
+    ],
+    "prefer_related_applications": false
+  },
+  "cacheEntries": {
+    "models-suite-public-offline-v1": [
+      "/offline.html"
+    ]
+  },
+  "deviceInstall": "UNAVAILABLE: no connected Android device/emulator",
+  "screenshots": "Real public web renders; not installed Android app screenshots"
+}
