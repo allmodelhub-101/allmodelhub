@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MarketingNav } from "@/components/marketing-nav";
 import { CinematicStoryController } from "@/components/cinematic-story-controller";
+import { AndroidAppLink } from "@/components/android-app-link";
 
 const modelNodes = [
   { name: "GPT", className: "cin-node-one" },
@@ -71,6 +72,7 @@ export function CinematicHome() {
               <li><strong>Auto</strong><span>Best routing</span></li>
               <li><strong>5-in-1</strong><span>Creative workspace</span></li>
             </ul>
+            <AndroidAppLink />
           </div>
 
           <div className="cin-hub-wrap" aria-hidden="true">

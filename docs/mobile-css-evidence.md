@@ -15,7 +15,7 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 
 ## src/app/android/android.module.css
 
-2 media/container conditions; 0 repeated exact selector + condition groups; 5 dimension/overflow candidates; 0 small-control declarations.
+6 media/container conditions; 0 repeated exact selector + condition groups; 13 dimension/overflow candidates; 0 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|
@@ -100,6 +100,24 @@ Full candidates and declarations are in `mobile-css-evidence.json`; this table s
 ## src/components/admin-workspace.module.css
 
 3 media/container conditions; 0 repeated exact selector + condition groups; 2 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/android-install-button.module.css
+
+3 media/container conditions; 0 repeated exact selector + condition groups; 0 dimension/overflow candidates; 0 small-control declarations.
+
+| Repeated selector | Condition | Lines |
+|---|---|---|
+
+Full candidates and declarations are in `mobile-css-evidence.json`; this table shows at most 30 groups per stylesheet.
+
+## src/components/android-promotion.module.css
+
+3 media/container conditions; 0 repeated exact selector + condition groups; 0 dimension/overflow candidates; 0 small-control declarations.
 
 | Repeated selector | Condition | Lines |
 |---|---|---|

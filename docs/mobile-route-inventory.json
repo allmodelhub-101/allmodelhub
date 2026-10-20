@@ -116,6 +116,8 @@
       "access": "public",
       "redirect": [],
       "components": [
+        "src/components/android-app-preview.tsx",
+        "src/components/android-install-button.module.css",
         "src/components/android-install-button.tsx",
         "src/components/brand.tsx",
         "src/components/pwa-register.tsx",
@@ -123,7 +125,8 @@
       ],
       "styles": [
         "src/app/android/android.module.css",
-        "src/app/globals.css"
+        "src/app/globals.css",
+        "src/components/android-install-button.module.css"
       ]
     },
     {
@@ -464,6 +467,8 @@
       "access": "public",
       "redirect": [],
       "components": [
+        "src/components/android-app-link.tsx",
+        "src/components/android-promotion.module.css",
         "src/components/brand.tsx",
         "src/components/cinematic-home.tsx",
         "src/components/cinematic-story-controller.tsx",
@@ -474,6 +479,7 @@
       ],
       "styles": [
         "src/app/globals.css",
+        "src/components/android-promotion.module.css",
         "src/components/marketing-nav.module.css"
       ]
     },
@@ -1217,11 +1223,11 @@
     },
     {
       "file": "src/app/android/android.module.css",
-      "bytes": 5239,
-      "lines": 6,
-      "mediaQueries": 2,
+      "bytes": 20547,
+      "lines": 270,
+      "mediaQueries": 6,
       "important": 0,
-      "viewportUnits": 1
+      "viewportUnits": 2
     },
     {
       "file": "src/app/auth/login/auth-premium.css",
@@ -1267,6 +1273,22 @@
       "file": "src/components/admin-workspace.module.css",
       "bytes": 3002,
       "lines": 28,
+      "mediaQueries": 3,
+      "important": 0,
+      "viewportUnits": 0
+    },
+    {
+      "file": "src/components/android-install-button.module.css",
+      "bytes": 2020,
+      "lines": 58,
+      "mediaQueries": 3,
+      "important": 0,
+      "viewportUnits": 0
+    },
+    {
+      "file": "src/components/android-promotion.module.css",
+      "bytes": 1918,
+      "lines": 65,
       "mediaQueries": 3,
       "important": 0,
       "viewportUnits": 0

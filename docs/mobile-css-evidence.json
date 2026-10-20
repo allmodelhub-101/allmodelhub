@@ -213,49 +213,139 @@
         "value": "100dvh"
       },
       {
-        "selector": ".appCard img",
+        "selector": ".topGlow",
         "conditions": [],
-        "line": 3,
-        "property": "width",
-        "value": "140px"
+        "line": 16,
+        "property": "height",
+        "value": "min(1100px, 140svh)"
       },
       {
-        "selector": ".appCard img",
+        "selector": ".phoneFloat",
         "conditions": [],
-        "line": 3,
-        "property": "height",
-        "value": "140px"
-      },
-      {
-        "selector": ".appCard img",
-        "conditions": [
-          "@media (max-width:600px)"
-        ],
-        "line": 5,
+        "line": 51,
         "property": "width",
-        "value": "100px"
+        "value": "270px"
       },
       {
-        "selector": ".appCard img",
-        "conditions": [
-          "@media (max-width:600px)"
-        ],
-        "line": 5,
+        "selector": ".featurePreview",
+        "conditions": [],
+        "line": 93,
         "property": "height",
-        "value": "100px"
+        "value": "200px"
+      },
+      {
+        "selector": ".phoneFloat",
+        "conditions": [
+          "@media (max-width: 1050px)"
+        ],
+        "line": 139,
+        "property": "width",
+        "value": "242px"
+      },
+      {
+        "selector": ".featurePreview",
+        "conditions": [
+          "@media (max-width: 1050px)"
+        ],
+        "line": 147,
+        "property": "height",
+        "value": "210px"
+      },
+      {
+        "selector": ".phoneFloat",
+        "conditions": [
+          "@media (max-width: 760px)"
+        ],
+        "line": 159,
+        "property": "width",
+        "value": "212px"
+      },
+      {
+        "selector": ".showcase",
+        "conditions": [
+          "@media (max-width: 600px)"
+        ],
+        "line": 199,
+        "property": "width",
+        "value": "min(100%, 370px)"
+      },
+      {
+        "selector": ".phoneFloat",
+        "conditions": [
+          "@media (max-width: 600px)"
+        ],
+        "line": 200,
+        "property": "width",
+        "value": "230px"
+      },
+      {
+        "selector": ".feature > p",
+        "conditions": [
+          "@media (max-width: 600px)"
+        ],
+        "line": 227,
+        "property": "min-height",
+        "value": "126px"
+      },
+      {
+        "selector": ".featurePreview",
+        "conditions": [
+          "@media (max-width: 600px)"
+        ],
+        "line": 228,
+        "property": "height",
+        "value": "135px"
+      },
+      {
+        "selector": ".feature > p",
+        "conditions": [
+          "@media (max-width: 350px)"
+        ],
+        "line": 259,
+        "property": "min-height",
+        "value": "147px"
+      },
+      {
+        "selector": ".featurePreview",
+        "conditions": [
+          "@media (max-width: 350px)"
+        ],
+        "line": 260,
+        "property": "height",
+        "value": "112px"
       }
     ],
     "smallTargets": [],
     "queries": [
       {
         "type": "media",
-        "condition": "(max-width:800px)",
-        "line": 4
+        "condition": "(hover: hover)",
+        "line": 133
       },
       {
         "type": "media",
-        "condition": "(max-width:600px)",
-        "line": 5
+        "condition": "(max-width: 1050px)",
+        "line": 137
+      },
+      {
+        "type": "media",
+        "condition": "(max-width: 760px)",
+        "line": 150
+      },
+      {
+        "type": "media",
+        "condition": "(max-width: 600px)",
+        "line": 177
+      },
+      {
+        "type": "media",
+        "condition": "(max-width: 350px)",
+        "line": 250
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion: reduce)",
+        "line": 264
       }
     ]
   },
@@ -36002,6 +36092,52 @@
         "type": "media",
         "condition": "(max-width:620px)",
         "line": 25
+      }
+    ]
+  },
+  {
+    "file": "src/components/android-install-button.module.css",
+    "repeated": [],
+    "dimensions": [],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(hover: hover)",
+        "line": 43
+      },
+      {
+        "type": "media",
+        "condition": "(max-width: 600px)",
+        "line": 48
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion: reduce)",
+        "line": 53
+      }
+    ]
+  },
+  {
+    "file": "src/components/android-promotion.module.css",
+    "repeated": [],
+    "dimensions": [],
+    "smallTargets": [],
+    "queries": [
+      {
+        "type": "media",
+        "condition": "(hover: hover)",
+        "line": 55
+      },
+      {
+        "type": "media",
+        "condition": "(display-mode: standalone)",
+        "line": 58
+      },
+      {
+        "type": "media",
+        "condition": "(prefers-reduced-motion: reduce)",
+        "line": 61
       }
     ]
   },

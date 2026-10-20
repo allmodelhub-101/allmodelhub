@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test';
+import { chromium, devices } from '@playwright/test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 const base = process.env.ANDROID_WEB_BASE || 'http://localhost:3105';
@@ -7,13 +7,13 @@ const out = 'docs/android/verification';
 const screenshots = 'docs/android/store/assets/screenshots';
 await fs.mkdir(out,{recursive:true}); await fs.mkdir(screenshots,{recursive:true});
 const browser = await chromium.launch();
-const context = await browser.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true,serviceWorkers:'allow'});
+const context = await browser.newContext({viewport:{width:360,height:640},deviceScaleFactor:3,isMobile:true,hasTouch:true,userAgent:devices['Pixel 7'].userAgent,serviceWorkers:'allow'});
 const page = await context.newPage();
 const errors=[]; page.on('pageerror',error=>errors.push(error.message));
 const checks=[];
 try {
   await page.goto(`${base}/android`,{waitUntil:'networkidle'});
-  await page.getByRole('heading',{name:/Your AI workspace/}).waitFor();
+  await page.getByRole('heading',{name:/Your AI universe/}).waitFor();
   assert.equal(await page.getByRole('link',{name:/Download APK/}).count(),0);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   const manifest=await (await context.request.get(`${base}/manifest.webmanifest`)).json();

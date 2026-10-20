@@ -1,0 +1,53 @@
+# Premium Android page — exact changed files
+
+Relative to b23650653a3c0cdaa018f7d301d9873c356e1ea9. This manifest lists the web presentation follow-up only; the Android project and binaries are unchanged.
+
+- docs/android/README.md
+- docs/android/premium-page/README.md
+- docs/android/premium-page/page-checks.log
+- docs/android/premium-page/page-results.json
+- docs/android/premium-page/preview-sources.json
+- docs/android/premium-page/screenshots/chromium-1366-dark.png
+- docs/android/premium-page/screenshots/chromium-1366-light.png
+- docs/android/premium-page/screenshots/chromium-320-dark-hero.png
+- docs/android/premium-page/screenshots/chromium-320-dark.png
+- docs/android/premium-page/screenshots/chromium-320-light-hero.png
+- docs/android/premium-page/screenshots/chromium-320-light.png
+- docs/android/premium-page/screenshots/chromium-390-dark-hero.png
+- docs/android/premium-page/screenshots/chromium-390-dark.png
+- docs/android/premium-page/screenshots/chromium-390-light-hero.png
+- docs/android/premium-page/screenshots/chromium-390-light.png
+- docs/android/premium-page/screenshots/chromium-430-dark.png
+- docs/android/premium-page/screenshots/chromium-430-light.png
+- docs/android/premium-page/screenshots/chromium-768-dark.png
+- docs/android/premium-page/screenshots/chromium-768-light.png
+- docs/android/premium-page/screenshots/homepage-entry-390-dark.png
+- docs/android/premium-page/screenshots/webkit-390-dark-hero.png
+- docs/android/premium-page/screenshots/webkit-390-dark.png
+- docs/android/premium-page/screenshots/webkit-390-light-hero.png
+- docs/android/premium-page/screenshots/webkit-390-light.png
+- docs/android/premium-page/web-build.log
+- docs/mobile-css-evidence.json
+- docs/mobile-css-evidence.md
+- docs/mobile-route-inventory.json
+- docs/mobile-route-inventory.md
+- public/android/previews/audio-dark.webp
+- public/android/previews/audio-light.webp
+- public/android/previews/chat-dark.webp
+- public/android/previews/chat-light.webp
+- public/android/previews/image-dark.webp
+- public/android/previews/image-light.webp
+- public/android/previews/video-dark.webp
+- public/android/previews/video-light.webp
+- scripts/android-download-page-check.mjs
+- scripts/android-pwa-check.mjs
+- src/app/android/android.module.css
+- src/app/android/page.tsx
+- src/components/android-app-link.tsx
+- src/components/android-app-preview.tsx
+- src/components/android-install-button.module.css
+- src/components/android-install-button.tsx
+- src/components/android-promotion.module.css
+- src/components/cinematic-home.tsx
+- src/lib/android-install-environment.ts
+- docs/android/premium-page/changed-files.md

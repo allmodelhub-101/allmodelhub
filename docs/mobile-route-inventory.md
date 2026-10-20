@@ -2,7 +2,7 @@
 
 Run `pnpm audit:routes` from the repository root. Counts are source routes, not authenticated browser passes. Root layout globals apply to every page.
 
-33 page routes; 43 HTTP handlers; 22 CSS files. No Pages Router exists.
+33 page routes; 43 HTTP handlers; 24 CSS files. No Pages Router exists.
 
 | Route | Access | Source / redirect | Components (transitive) | Styles (transitive) |
 |---|---|---|---|---|
@@ -13,7 +13,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /admin/profits | admin | src/app/admin/profits/page.tsx → /admin?tab=jobs | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/settings | admin | src/app/admin/settings/page.tsx → /admin?tab=settings | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
 | /admin/users | admin | src/app/admin/users/page.tsx → /admin?tab=users | pwa-register.tsx | src/app/admin/admin-premium.css, src/app/globals.css |
-| /android | public | src/app/android/page.tsx | android-install-button.tsx, brand.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/android/android.module.css, src/app/globals.css |
+| /android | public | src/app/android/page.tsx | android-app-preview.tsx, android-install-button.module.css, android-install-button.tsx, brand.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/android/android.module.css, src/app/globals.css, src/components/android-install-button.module.css |
 | /audio | authenticated | src/app/audio/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, audio-generation-client.tsx, audio-stage.tsx, audio-studio.module.css, audio-studio.tsx, feature-unavailable.tsx, generation-center.css, premium-select.tsx, pwa-register.tsx, speech-script-editor.tsx, theme-toggle.tsx, tts-client.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/audio-studio.module.css, src/components/generation-center.css, src/components/workspace-shell.css |
 | /auth/login | public | src/app/auth/login/page.tsx | auth-page.tsx, login-form.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
 | /auth/signup | public | src/app/auth/signup/page.tsx | auth-page.tsx, login-form.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/auth/login/auth-premium.css, src/app/globals.css |
@@ -26,7 +26,7 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | /images | authenticated | src/app/images/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, generation-center.css, image-studio.css, image-studio.tsx, model-brand.tsx, model-picker.css, model-picker.tsx, pwa-register.tsx, theme-toggle.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/generation-center.css, src/components/image-studio.css, src/components/model-picker.css, src/components/workspace-shell.css |
 | /models | authenticated | src/app/models/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, generation-center.css, model-brand.tsx, models-marketplace.tsx, pwa-register.tsx, theme-toggle.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-data.module.css, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/generation-center.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
 | /notifications | authenticated | src/app/notifications/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, generation-center.css, pwa-register.tsx, theme-toggle.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-clients.tsx, workspace-data.module.css, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/generation-center.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
-| / | public | src/app/page.tsx | brand.tsx, cinematic-home.tsx, cinematic-story-controller.tsx, marketing-nav.module.css, marketing-nav.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/marketing-nav.module.css |
+| / | public | src/app/page.tsx | android-app-link.tsx, android-promotion.module.css, brand.tsx, cinematic-home.tsx, cinematic-story-controller.tsx, marketing-nav.module.css, marketing-nav.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/android-promotion.module.css, src/components/marketing-nav.module.css |
 | /privacy | public | src/app/privacy/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
 | /projects | authenticated | src/app/projects/page.tsx | app-shell.tsx, app-sidebar.css, app-sidebar.tsx, generation-center.css, premium-select.tsx, pwa-register.tsx, simple-forms.tsx, theme-toggle.tsx, use-generation-center.ts, use-workspace-overlay.ts, workspace-data.module.css, workspace-frame.tsx, workspace-navigation.ts, workspace-network-status.tsx, workspace-onboarding.tsx, workspace-shell.css, workspace-topbar.tsx | src/app/globals.css, src/components/app-sidebar.css, src/components/generation-center.css, src/components/workspace-data.module.css, src/components/workspace-shell.css |
 | /refunds | public | src/app/refunds/page.tsx | brand.tsx, legal-page.module.css, legal-page.tsx, pwa-register.tsx, theme-toggle.tsx | src/app/globals.css, src/components/legal-page.module.css |
@@ -93,13 +93,15 @@ Run `pnpm audit:routes` from the repository root. Counts are source routes, not 
 | File | Bytes | Lines | Media queries | Important declarations | Viewport units |
 |---|---:|---:|---:|---:|---:|
 | src/app/admin/admin-premium.css | 9376 | 11 | 6 | 0 | 0 |
-| src/app/android/android.module.css | 5239 | 6 | 2 | 0 | 1 |
+| src/app/android/android.module.css | 20547 | 270 | 6 | 0 | 2 |
 | src/app/auth/login/auth-premium.css | 24512 | 434 | 6 | 0 | 2 |
 | src/app/files/files.css | 16104 | 10 | 6 | 2 | 0 |
 | src/app/globals.css | 635714 | 2386 | 832 | 131 | 69 |
 | src/app/wallet/wallet-premium.css | 88 | 2 | 0 | 0 | 0 |
 | src/components/account-workspace.module.css | 6018 | 59 | 3 | 0 | 0 |
 | src/components/admin-workspace.module.css | 3002 | 28 | 3 | 0 | 0 |
+| src/components/android-install-button.module.css | 2020 | 58 | 3 | 0 | 0 |
+| src/components/android-promotion.module.css | 1918 | 65 | 3 | 0 | 0 |
 | src/components/app-sidebar.css | 4316 | 37 | 3 | 1 | 1 |
 | src/components/audio-studio.module.css | 38185 | 125 | 11 | 4 | 0 |
 | src/components/chat-workspace.css | 25830 | 228 | 7 | 0 | 5 |

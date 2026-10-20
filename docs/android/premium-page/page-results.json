@@ -1,0 +1,321 @@
+{
+  "status": "PASS",
+  "base": "http://localhost:3107",
+  "scope": "Full page-only checks",
+  "results": [
+    {
+      "engine": "chromium",
+      "width": 320,
+      "height": 568,
+      "theme": "light",
+      "geometry": {
+        "client": 320,
+        "scroll": 320,
+        "inner": 320,
+        "button": {
+          "x": 16,
+          "y": 337.0631103515625,
+          "width": 288,
+          "height": 52,
+          "top": 337.0631103515625,
+          "right": 304,
+          "bottom": 389.0631103515625,
+          "left": 16
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 320,
+      "height": 568,
+      "theme": "dark",
+      "geometry": {
+        "client": 320,
+        "scroll": 320,
+        "inner": 320,
+        "button": {
+          "x": 16,
+          "y": 337.09869384765625,
+          "width": 288,
+          "height": 52,
+          "top": 337.09869384765625,
+          "right": 304,
+          "bottom": 389.09869384765625,
+          "left": 16
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "geometry": {
+        "client": 390,
+        "scroll": 390,
+        "inner": 390,
+        "button": {
+          "x": 20,
+          "y": 356.30072021484375,
+          "width": 350,
+          "height": 52,
+          "top": 356.30072021484375,
+          "right": 370,
+          "bottom": 408.30072021484375,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "geometry": {
+        "client": 390,
+        "scroll": 390,
+        "inner": 390,
+        "button": {
+          "x": 20,
+          "y": 356.3131408691406,
+          "width": 350,
+          "height": 52,
+          "top": 356.3131408691406,
+          "right": 370,
+          "bottom": 408.3131408691406,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "PASS"
+    },
+    {
+      "engine": "chromium",
+      "width": 430,
+      "height": 844,
+      "theme": "light",
+      "geometry": {
+        "client": 430,
+        "scroll": 430,
+        "inner": 430,
+        "button": {
+          "x": 20,
+          "y": 340.70404052734375,
+          "width": 390,
+          "height": 52,
+          "top": 340.70404052734375,
+          "right": 410,
+          "bottom": 392.70404052734375,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 430,
+      "height": 844,
+      "theme": "dark",
+      "geometry": {
+        "client": 430,
+        "scroll": 430,
+        "inner": 430,
+        "button": {
+          "x": 20,
+          "y": 340.7039489746094,
+          "width": 390,
+          "height": 52,
+          "top": 340.7039489746094,
+          "right": 410,
+          "bottom": 392.7039489746094,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "height": 900,
+      "theme": "light",
+      "geometry": {
+        "client": 768,
+        "scroll": 768,
+        "inner": 768,
+        "button": {
+          "x": 36,
+          "y": 519.5415649414062,
+          "width": 228.734375,
+          "height": 54,
+          "top": 519.5415649414062,
+          "right": 264.734375,
+          "bottom": 573.5415649414062,
+          "left": 36
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 768,
+      "height": 900,
+      "theme": "dark",
+      "geometry": {
+        "client": 768,
+        "scroll": 768,
+        "inner": 768,
+        "button": {
+          "x": 36,
+          "y": 519.535400390625,
+          "width": 228.734375,
+          "height": 54,
+          "top": 519.535400390625,
+          "right": 264.734375,
+          "bottom": 573.535400390625,
+          "left": 36
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 1366,
+      "height": 900,
+      "theme": "light",
+      "geometry": {
+        "client": 1366,
+        "scroll": 1366,
+        "inner": 1366,
+        "button": {
+          "x": 119,
+          "y": 582.707275390625,
+          "width": 228.734375,
+          "height": 54,
+          "top": 582.707275390625,
+          "right": 347.734375,
+          "bottom": 636.707275390625,
+          "left": 119
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "chromium",
+      "width": 1366,
+      "height": 900,
+      "theme": "dark",
+      "geometry": {
+        "client": 1366,
+        "scroll": 1366,
+        "inner": 1366,
+        "button": {
+          "x": 119,
+          "y": 582.72265625,
+          "width": 228.734375,
+          "height": 54,
+          "top": 582.72265625,
+          "right": 347.734375,
+          "bottom": 636.72265625,
+          "left": 119
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "check": "Android Chrome one-shot install event",
+      "status": "PASS",
+      "scope": "Synthetic browser event; not OS installation"
+    },
+    {
+      "check": "Normal showcase motion runs visibly and pauses offscreen",
+      "status": "PASS"
+    },
+    {
+      "check": "Unsupported-device guidance and homepage entry",
+      "status": "PASS"
+    },
+    {
+      "check": "Standalone suppresses promotion and switches to open-workspace action",
+      "status": "PASS"
+    },
+    {
+      "check": "Other Android browser has explicit Chrome guidance",
+      "status": "PASS"
+    },
+    {
+      "check": "Reduced motion disables showcase animations",
+      "status": "PASS"
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "geometry": {
+        "client": 390,
+        "scroll": 390,
+        "inner": 390,
+        "button": {
+          "x": 20,
+          "y": 356.2579040527344,
+          "width": 350,
+          "height": 52,
+          "top": 356.2579040527344,
+          "right": 370,
+          "bottom": 408.2579040527344,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    },
+    {
+      "engine": "webkit",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "geometry": {
+        "client": 390,
+        "scroll": 390,
+        "inner": 390,
+        "button": {
+          "x": 20,
+          "y": 356.25115966796875,
+          "width": 350,
+          "height": 52,
+          "top": 356.25115966796875,
+          "right": 370,
+          "bottom": 408.25115966796875,
+          "left": 20
+        }
+      },
+      "tabs": "PASS",
+      "unpublishedApkHidden": true,
+      "axe": "not repeated"
+    }
+  ],
+  "errors": []
+}

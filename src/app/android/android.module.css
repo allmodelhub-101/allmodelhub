@@ -1,5 +1,269 @@
-.page{--android-bg:#f5f8fc;--android-text:#102235;--android-muted:#546779;--android-line:#d9e4ef;--android-card:#ffffffd9;min-height:100dvh;background:radial-gradient(ellipse at 85% 15%,#c7eeff80,transparent 45%),var(--android-bg);color:var(--android-text);padding:24px max(20px,calc((100% - 1160px)/2));font-family:var(--font-geist-sans,Arial,sans-serif)}
-:global([data-theme="dark"]) .page{--android-bg:#050a12;--android-text:#eef7ff;--android-muted:#a5b8ca;--android-line:#24384d;--android-card:#101c2be6;background:radial-gradient(ellipse at 85% 15%,#10446155,transparent 45%),var(--android-bg)}
-.page a:focus-visible,.page button:focus-visible,.page summary:focus-visible{outline:3px solid #168bcd;outline-offset:5px}.header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--android-line)}.header>div{display:flex;align-items:center;gap:18px}.header a{color:var(--android-text);text-decoration:none}.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:64px;align-items:center;padding:88px 0 64px}.eyebrow{font-size:11px;letter-spacing:.15em;font-weight:800;color:#168ac2}.copy h1{font-size:clamp(36px,4.5vw,60px);line-height:1.08;letter-spacing:-.05em;margin:24px 0}.copy em{font-style:normal;color:#168ac2}.copy>p,.guide>div>p{font-size:17px;line-height:1.7;color:var(--android-muted);max-width:540px}.install{margin-top:30px;max-width:430px}.install a,.install button,.download{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:14px 24px;border:0;border-radius:16px;background:linear-gradient(120deg,#39c9ee,#386bf7);color:white;text-decoration:none;font-family:inherit;font-size:15px;font-weight:700;line-height:1.3;box-shadow:0 10px 35px #189cda25;cursor:pointer}.install button:disabled{opacity:.65;cursor:wait}.install p{font-size:12px;line-height:1.6;color:var(--android-muted)}.meta{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:11px;color:var(--android-muted);margin-top:20px}.appCard{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 20px;border:1px solid var(--android-line);border-radius:36px;background:var(--android-card);box-shadow:0 28px 80px #09344e15}.halo{position:absolute;z-index:-1;inset:15% 10%;background:radial-gradient(ellipse,#30bfff22,transparent 70%);pointer-events:none}.appCard img{border-radius:32px;width:140px;height:140px}.appCard>strong{font-size:28px;letter-spacing:-.04em;margin-top:24px}.appCard>span{font-size:12px;color:var(--android-muted);margin-top:8px}.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:28px 0}.pills span{border:1px solid var(--android-line);border-radius:20px;padding:7px 14px;font-size:12px}.appCard small{color:var(--android-muted);font-size:11px}.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-bottom:64px}.features article{padding:24px;border:1px solid var(--android-line);border-radius:24px;background:var(--android-card)}.features article>span{font-size:11px;color:#168ac2;font-weight:700}.features h2{font-size:17px;margin:20px 0 12px}.features p,.steps p,.steps li{font-size:14px;line-height:1.75;color:var(--android-muted)}.guide{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;padding:50px 0;border-top:1px solid var(--android-line);scroll-margin-top:24px}.guide h2{font-size:32px;letter-spacing:-.04em;margin:18px 0}.steps{display:grid;gap:18px}.steps article{padding:26px;border:1px solid var(--android-line);border-radius:24px;background:var(--android-card)}.steps h3{margin:0 0 18px}.steps ol{padding-left:22px}.steps li{padding-left:6px;margin-bottom:10px}.pending{display:inline-block;padding:9px 14px;border-radius:12px;background:#168ac212;color:#168ac2;font-size:13px;font-weight:700}.steps code{display:block;overflow-wrap:anywhere;font-size:12px;line-height:1.8;margin-top:10px}.steps summary{cursor:pointer;font-size:13px;min-height:44px;align-content:center}.footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--android-line);padding:26px 0;color:var(--android-muted);font-size:12px}.footer nav{display:flex;flex-wrap:wrap;gap:20px}.footer a{color:inherit}.header :global(.brand){font-size:18px}.header :global(.brand-logo){width:36px;height:36px}
-@media(max-width:800px){.hero{gap:28px;padding-top:56px}.guide{gap:28px}.features{gap:10px}.features article{padding:20px}.header>div{gap:10px;font-size:12px}}
-@media(max-width:600px){.page{padding:18px}.header{gap:8px}.header :global(.brand){font-size:15px;gap:7px}.header :global(.brand-logo){width:28px;height:28px}.header>div{gap:7px;font-size:11px}.hero{grid-template-columns:1fr;padding:44px 0 32px;gap:28px}.copy h1{font-size:38px}.copy>p{font-size:15px}.appCard{padding:30px 18px}.appCard img{width:100px;height:100px;border-radius:24px}.appCard>strong{font-size:24px}.pills{margin:20px 0}.features{grid-template-columns:1fr;padding-bottom:32px}.features article{padding:20px}.features h2{margin-top:10px}.guide{grid-template-columns:1fr;gap:16px;padding:32px 0}.guide h2{font-size:28px}.guide>div>p{font-size:15px}.steps article{padding:22px}.footer{flex-wrap:wrap}.install a,.install button{width:100%}}
+.page {
+  --download-blue: #71d9ff;
+  --download-heading: linear-gradient(110deg, #90e8ff, #55b7ff 42%, #a1a4ff);
+  --download-line: color-mix(in srgb, var(--accent) 12%, var(--line));
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+:global([data-theme="light"]) .page {
+  --download-blue: #086f96;
+  --download-heading: linear-gradient(110deg, #067fa9, #3065ce 65%, #6054c6);
+  background: linear-gradient(180deg, #f4fbff, var(--bg) 60%, var(--bg-2));
+}
+.topGlow { position: absolute; z-index: -1; inset: 0 0 auto; height: min(1100px, 140svh); background: radial-gradient(ellipse at 80% 34%, #158be629, transparent 49%), radial-gradient(ellipse at 18% 0, #6875ff12, transparent 48%); pointer-events: none; }
+.shell { max-width: 1200px; margin: auto; padding: 0 36px; }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 88px; border-bottom: 1px solid var(--download-line); }
+.headerActions { display: flex; align-items: center; gap: 20px; }
+.header :global(.brand) { font-size: 19px; gap: 10px; min-height: 44px; }
+.header :global(.brand-logo) { width: 34px; height: 34px; }
+.header :global(.theme-toggle) { width: 44px; height: 44px; }
+.workspaceLink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; font-weight: 650; }
+.page a:focus-visible, .page button:focus-visible, .page summary:focus-visible, .phoneScreen:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.hero { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 28px; padding: 76px 0 68px; }
+.copy { position: relative; z-index: 2; min-width: 0; }
+.copy > * { animation: reveal .65s cubic-bezier(.2,.7,.2,1) both; }
+.copy > :nth-child(2) { animation-delay: .06s; }
+.copy > :nth-child(3) { animation-delay: .12s; }
+.copy > :nth-child(4) { animation-delay: .18s; }
+.copy > :nth-child(5) { animation-delay: .24s; }
+.appIdentity { display: flex; align-items: center; gap: 14px; }
+.iconWell { width: 56px; height: 56px; border-radius: 17px; padding: 2px; background: linear-gradient(140deg, #56cfff80, #7491ff12); box-shadow: 0 10px 30px #087cb21c; }
+.iconWell img { width: 52px; height: 52px; border-radius: 15px; }
+.appIdentity > div:last-child { display: grid; gap: 8px; }
+.eyebrow { font-size: 10px; line-height: 1.5; font-weight: 800; letter-spacing: .16em; color: var(--download-blue); }
+.androidBadge { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
+.androidBadge svg { color: var(--download-blue); }
+.copy h1 { font-size: clamp(44px, 5.7vw, 72px); line-height: 1.04; font-weight: 800; letter-spacing: -.065em; margin: 25px 0 22px; }
+.copy h1 span, .sectionHeading h2 span, .guideIntro h2 span { background: var(--download-heading); background-clip: text; -webkit-background-clip: text; color: transparent; }
+.intro { max-width: 435px; font-size: 16px; line-height: 1.8; color: var(--muted); }
+.install { margin-top: 28px; }
+.meta { list-style: none; display: flex; flex-wrap: wrap; gap: 7px 18px; margin: 18px 0 0; padding: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.meta li + li::before { content: ""; display: inline-block; vertical-align: middle; width: 3px; height: 3px; margin-right: 14px; border-radius: 50%; background: var(--download-blue); }
+.exploreLink { display: inline-flex; gap: 9px; align-items: center; min-height: 44px; margin-top: 24px; color: var(--muted); font-size: 11px; }
+.showcase { position: relative; display: grid; place-items: center; min-width: 0; perspective: 1200px; }
+.orbit, .orbitInner { position: absolute; inset: 17% 0 16%; border: 1px solid color-mix(in srgb, var(--accent) 10%, transparent); border-radius: 50%; transform: rotate(-8deg) scale(.83); pointer-events: none; }
+.orbitInner { inset: 22% 4% 20%; transform: rotate(8deg) scale(.85); border-style: dashed; opacity: .6; }
+.showcase::before { content: ""; position: absolute; inset: 4% -3% 18%; background: radial-gradient(ellipse, #2b8cef33, #1866b90a 57%, transparent 72%); pointer-events: none; animation: glow 9s ease-in-out infinite alternate; }
+.phoneFigure { position: relative; z-index: 1; margin: 0; width: 100%; display: grid; justify-items: center; }
+.phoneFloat { width: 270px; animation: float 7s ease-in-out infinite; }
+.phone { position: relative; padding: 18px 7px 10px; border: 1px solid #6a7e95; border-radius: 37px; background: linear-gradient(120deg, #091019, #202d3e 45%, #0a101a); box-shadow: 1px 1px 0 #a5c5e566, -4px 1px 0 #29384a, 0 30px 65px #0013274d, 12px 20px 45px #0074ff1a; transform: rotateY(-9deg) rotateZ(5deg); }
+.phone::before, .phone::after { content: ""; position: absolute; width: 3px; right: -4px; top: 23%; height: 42px; border-radius: 0 4px 4px 0; background: #59687c; }
+.phone::after { top: 34%; height: 65px; }
+.camera { height: 12px; position: absolute; top: 5px; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 40px; }
+.camera span { width: 7px; height: 7px; background: radial-gradient(circle at 35% 35%, #1d3b55, #02050b 65%); border-radius: 50%; box-shadow: 0 0 0 1px #52647c55; }
+.phoneScreen { position: relative; border-radius: 25px; background: #05070a; overflow: hidden; aspect-ratio: 390 / 844; }
+.phoneScreen img { width: 100%; height: auto; }
+.screenDark { display: block; }
+.screenLight { display: none; }
+:global([data-theme="light"]) .screenLight { display: block; }
+:global([data-theme="light"]) .screenDark { display: none; }
+.gesture { width: 64px; height: 3px; border-radius: 5px; background: #c2cedc88; margin: 7px auto 0; }
+.previewTabs { display: flex; align-items: center; justify-content: center; gap: 3px; margin-top: 30px; padding: 5px; border: 1px solid var(--download-line); border-radius: 16px; background: var(--panel); box-shadow: 0 8px 30px #0022330a; }
+.previewTabs button { display: flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 11px; background: transparent; color: var(--muted); font: inherit; font-size: 10px; font-weight: 700; min-height: 44px; padding: 9px 11px; cursor: pointer; transition: background .2s, color .2s; }
+.previewTabs button[aria-selected="true"] { color: var(--text); background: color-mix(in srgb, var(--accent) 12%, var(--panel-solid)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 16%, transparent); }
+.phoneFigure figcaption { margin-top: 14px; color: var(--muted); font-size: 9px; line-height: 1.6; text-align: center; }
+.floatingNote, .floatingIcon { position: absolute; z-index: 2; display: flex; align-items: center; gap: 11px; padding: 14px; border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line)); border-radius: 18px; background: var(--panel); backdrop-filter: blur(14px); box-shadow: 0 12px 40px #00172e19; pointer-events: none; }
+.floatingNote { top: 17%; left: -8%; animation: floatNote 8s ease-in-out infinite; }
+.floatingNote > svg { color: var(--download-blue); }
+.floatingNote div { display: grid; gap: 4px; }
+.floatingNote strong { font-size: 10px; font-weight: 700; }
+.floatingNote span { font-size: 9px; color: var(--muted); }
+.floatingIcon { right: -3%; bottom: 23%; animation: floatNote 7s -3s ease-in-out infinite; }
+.floatingIcon img { border-radius: 13px; width: 42px; height: 42px; }
+.floatingIcon span { font-size: 10px; line-height: 1.7; color: var(--muted); }
+.floatingIcon strong { color: var(--text); }
+.showcase[data-moving="false"]::before, .showcase[data-moving="false"] .phoneFloat, .showcase[data-moving="false"] .floatingNote, .showcase[data-moving="false"] .floatingIcon { animation-play-state: paused; }
+.reassurance { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 20px 52px; border-block: 1px solid var(--download-line); padding: 24px 0; color: var(--muted); font-size: 11px; }
+.reassurance span { display: inline-flex; gap: 9px; align-items: center; }
+.reassurance svg { color: var(--download-blue); }
+.experience { padding: 90px 0 72px; scroll-margin-top: 30px; }
+.sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 38px; }
+.sectionHeading h2, .guideIntro h2 { margin: 17px 0 0; font-size: clamp(32px, 3.5vw, 44px); font-weight: 750; line-height: 1.12; letter-spacing: -.045em; }
+.sectionHeading > p { max-width: 315px; color: var(--muted); font-size: 13px; line-height: 1.8; margin: 0; }
+.features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.feature { position: relative; min-width: 0; overflow: hidden; padding: 20px 18px 0; border: 1px solid var(--download-line); border-radius: 24px; background: linear-gradient(150deg, color-mix(in srgb, var(--accent) 5%, var(--panel-solid)), var(--panel)); transition: transform .25s ease, border-color .25s ease; }
+.featureTop { display: flex; align-items: center; gap: 9px; }
+.featureTop > span:last-child { color: var(--muted); font-size: 9px; }
+.featureIcon { display: grid; place-items: center; width: 39px; height: 39px; border: 1px solid color-mix(in srgb, var(--accent) 14%, transparent); border-radius: 13px; color: var(--download-blue); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.feature h3 { margin: 23px 0 12px; font-size: 17px; line-height: 1.3; letter-spacing: -.025em; min-height: 44px; }
+.feature > p { color: var(--muted); font-size: 11px; line-height: 1.8; margin: 0; min-height: 80px; }
+.featurePreview { position: relative; height: 200px; margin: 26px 0 -6px; border: 1px solid var(--download-line); border-radius: 15px 15px 0 0; background: var(--bg-2); overflow: hidden; mask-image: linear-gradient(black 55%, transparent); }
+.featurePreview img { width: 100%; height: auto; }
+.previewDisclaimer { margin: 20px 0 0; font-size: 10px; line-height: 1.7; color: var(--muted); }
+.guide { display: grid; grid-template-columns: 1fr 1.15fr; align-items: start; gap: 72px; border-top: 1px solid var(--download-line); padding: 75px 0 84px; scroll-margin-top: 24px; }
+.guideIntro > p { color: var(--muted); font-size: 14px; line-height: 1.9; max-width: 320px; margin: 22px 0 30px; }
+.guideMark { display: flex; align-items: center; gap: 12px; }
+.guideMark img { border-radius: 12px; }
+.guideMark > span { display: grid; gap: 5px; font-size: 13px; font-weight: 700; }
+.guideMark strong { color: var(--muted); font-size: 10px; font-weight: 400; }
+.steps { display: grid; gap: 16px; }
+.chromeCard, .apkCard { padding: 26px; border: 1px solid var(--download-line); border-radius: 24px; background: var(--panel); }
+.chromeCard { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 6%, var(--panel-solid)), var(--panel)); }
+.methodHeading { display: flex; align-items: center; gap: 11px; }
+.methodIcon { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--download-line); border-radius: 13px; color: var(--download-blue); background: var(--panel-2); }
+.methodKicker { color: var(--muted); letter-spacing: .1em; font-size: 8px; font-weight: 700; }
+.methodHeading h3 { margin: 5px 0 0; font-size: 16px; line-height: 1.3; letter-spacing: -.02em; }
+.recommended, .releasePill { margin-left: auto; flex: 0 0 auto; padding: 6px 9px; border-radius: 8px; color: var(--download-blue); background: color-mix(in srgb, var(--accent) 9%, transparent); font-size: 9px; font-weight: 700; }
+.releasePill { color: var(--muted); background: var(--panel-2); }
+.chromeCard ol { list-style: none; margin: 28px 0 0; padding: 0; }
+.chromeCard li { display: flex; align-items: flex-start; gap: 14px; margin-top: 22px; }
+.chromeCard li > span { display: grid; place-items: center; width: 27px; height: 27px; flex: 0 0 auto; border: 1px solid var(--download-line); border-radius: 50%; font-size: 9px; color: var(--download-blue); background: var(--panel-solid); }
+.chromeCard li strong { font-size: 12px; }
+.chromeCard li p { color: var(--muted); font-size: 11px; line-height: 1.8; margin: 6px 0 0; }
+.chromeCard li b { color: var(--text); font-weight: 600; }
+.methodNote { color: var(--muted); font-size: 10px; line-height: 1.8; border-top: 1px solid var(--download-line); margin: 24px 0 0; padding-top: 17px; }
+.apkCard > p, .apkCard details p { font-size: 11px; line-height: 1.9; color: var(--muted); margin: 18px 0 0; }
+.apkCard summary { display: flex; align-items: center; min-height: 44px; font-size: 11px; cursor: pointer; }
+.apkCard code { display: block; overflow-wrap: anywhere; font-size: 10px; line-height: 1.8; color: var(--muted); }
+.download { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 12px 20px; margin-top: 22px; border: 1px solid var(--download-line); border-radius: 13px; color: var(--text); background: var(--panel-2); font-size: 12px; font-weight: 750; }
+.footer { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 30px; border-top: 1px solid var(--download-line); padding: 36px 0 25px; }
+.footer :global(.brand) { font-size: 17px; gap: 9px; }
+.footer :global(.brand-logo) { width: 28px; height: 28px; }
+.footer p { font-size: 10px; color: var(--muted); margin: 12px 0 0; }
+.footer nav { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: 11px; }
+.footer nav a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; }
+.footerMeta { grid-column: 1 / -1; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 20px; border-top: 1px solid var(--download-line); color: var(--muted); font-size: 9px; }
+@keyframes reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -10px, 0); } }
+@keyframes floatNote { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 7px, 0); } }
+@keyframes glow { from { opacity: .55; } to { opacity: 1; } }
+@media (hover: hover) {
+  .feature:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 32%, var(--line)); }
+  .workspaceLink:hover, .exploreLink:hover, .footer nav a:hover { color: var(--download-blue); }
+}
+@media (max-width: 1050px) {
+  .hero { gap: 10px; padding: 58px 0; }
+  .phoneFloat { width: 242px; }
+  .floatingNote { left: -4%; padding: 11px; }
+  .floatingNote span { display: none; }
+  .floatingIcon { right: -4%; padding: 11px; }
+  .features { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .feature { padding-inline: 22px; }
+  .feature h3 { min-height: 0; }
+  .feature > p { min-height: 44px; }
+  .featurePreview { height: 210px; max-width: 250px; margin-inline: auto; }
+  .guide { gap: 35px; }
+}
+@media (max-width: 760px) {
+  .shell { padding-inline: 24px; }
+  .header { min-height: 74px; }
+  .header :global(.brand) { font-size: 16px; }
+  .headerActions { gap: 10px; }
+  .workspaceLink { font-size: 10px; }
+  .hero { gap: 18px; padding: 48px 0; }
+  .copy h1 { font-size: 43px; }
+  .intro { font-size: 14px; }
+  .phoneFloat { width: 212px; }
+  .floatingNote { display: none; }
+  .floatingIcon { bottom: 26%; right: -3%; padding: 9px; }
+  .floatingIcon img { width: 30px; height: 30px; }
+  .floatingIcon span { font-size: 8px; }
+  .previewTabs { gap: 0; }
+  .previewTabs button { padding: 8px; gap: 4px; }
+  .previewTabs button span { font-size: 9px; }
+  .reassurance { gap: 15px 25px; font-size: 10px; }
+  .experience { padding-top: 60px; }
+  .sectionHeading { align-items: start; gap: 24px; }
+  .sectionHeading > p { max-width: 240px; font-size: 12px; }
+  .guide { grid-template-columns: 1fr; padding-block: 55px; gap: 30px; }
+  .guideIntro { display: grid; grid-template-columns: 1fr auto; gap: 0 24px; }
+  .guideIntro > .eyebrow { grid-column: 1 / -1; }
+  .guideIntro > p { grid-column: 1; margin-bottom: 0; }
+  .guideMark { grid-column: 2; grid-row: 2 / 4; align-self: center; }
+}
+@media (max-width: 600px) {
+  .shell { padding-inline: 20px; }
+  .header { min-height: 66px; gap: 10px; }
+  .header :global(.brand) { font-size: 15px; gap: 7px; }
+  .header :global(.brand-logo) { width: 29px; height: 29px; }
+  .headerActions { gap: 10px; }
+  .header :global(.theme-toggle) { width: 44px; height: 44px; }
+  .workspaceLink { font-size: 10px; gap: 3px; }
+  .workspaceLink svg { width: 12px; }
+  .hero { grid-template-columns: 1fr; gap: 38px; padding: 28px 0 38px; }
+  .appIdentity { gap: 11px; }
+  .iconWell { width: 46px; height: 46px; border-radius: 14px; }
+  .iconWell img { width: 42px; height: 42px; border-radius: 12px; }
+  .appIdentity > div:last-child { gap: 6px; }
+  .eyebrow { font-size: 9px; }
+  .androidBadge { font-size: 10px; }
+  .copy h1 { font-size: clamp(35px, 10.7vw, 46px); margin: 19px 0 15px; letter-spacing: -.055em; }
+  .intro { font-size: 14px; line-height: 1.75; max-width: 370px; margin-block: 0; }
+  .install { margin-top: 22px; }
+  .meta { font-size: 9px; gap: 7px 12px; margin-top: 10px; }
+  .meta li + li::before { margin-right: 9px; }
+  .exploreLink { font-size: 10px; margin-top: 10px; }
+  .showcase { width: min(100%, 370px); margin-inline: auto; padding-top: 12px; }
+  .phoneFloat { width: 230px; }
+  .phone { transform: rotateY(-5deg) rotateZ(4deg); border-radius: 33px; }
+  .phoneScreen { border-radius: 24px; }
+  .orbit { inset: 18% 2% 20%; }
+  .orbitInner { inset: 22% 6% 24%; }
+  .floatingNote { display: flex; top: 12%; left: -1%; padding: 10px; }
+  .floatingNote strong { font-size: 8px; }
+  .floatingNote > svg { width: 15px; }
+  .floatingIcon { right: -1%; bottom: 29%; padding: 10px; }
+  .previewTabs { margin-top: 26px; gap: 3px; }
+  .previewTabs button { padding: 8px 10px; gap: 6px; font-size: 10px; }
+  .previewTabs button span { font-size: 10px; }
+  .phoneFigure figcaption { font-size: 9px; }
+  .reassurance { gap: 14px 20px; justify-content: flex-start; padding-block: 22px; }
+  .reassurance span { font-size: 10px; }
+  .reassurance svg { width: 16px; }
+  .experience { padding: 48px 0 42px; }
+  .sectionHeading { display: block; margin-bottom: 26px; }
+  .sectionHeading h2, .guideIntro h2 { font-size: 34px; margin-top: 13px; }
+  .sectionHeading > p { max-width: 330px; margin-top: 18px; font-size: 12px; line-height: 1.9; }
+  .features { gap: 12px; }
+  .feature { padding: 16px 13px 0; border-radius: 19px; }
+  .featureTop { flex-wrap: wrap; gap: 9px; }
+  .featureTop > span:last-child { font-size: 8px; }
+  .featureIcon { width: 34px; height: 34px; border-radius: 11px; }
+  .featureIcon svg { width: 19px; }
+  .feature h3 { font-size: 17px; line-height: 1.35; margin: 18px 0 10px; min-height: 69px; }
+  .feature > p { font-size: 12px; line-height: 1.75; min-height: 126px; }
+  .featurePreview { height: 135px; margin-top: 18px; border-radius: 9px 9px 0 0; }
+  .previewDisclaimer { font-size: 9px; margin-top: 18px; }
+  .guide { padding: 42px 0; gap: 26px; }
+  .guideIntro { display: block; }
+  .guideIntro > p { margin: 18px 0 22px; font-size: 13px; max-width: 350px; }
+  .guideMark img { width: 34px; height: 34px; border-radius: 10px; }
+  .guideMark > span { font-size: 12px; }
+  .guideMark strong { font-size: 9px; }
+  .chromeCard, .apkCard { padding: 22px 18px; border-radius: 20px; }
+  .methodHeading { gap: 9px; flex-wrap: wrap; }
+  .methodIcon { width: 36px; height: 36px; border-radius: 11px; }
+  .methodHeading h3 { font-size: 15px; }
+  .methodKicker { font-size: 7px; }
+  .recommended, .releasePill { font-size: 8px; padding: 5px 7px; }
+  .chromeCard li { gap: 11px; }
+  .chromeCard li p { font-size: 11px; }
+  .footer { gap: 20px; padding-top: 28px; }
+  .footer :global(.brand) { font-size: 15px; }
+  .footer p { max-width: 180px; font-size: 9px; line-height: 1.7; }
+  .footer nav { gap: 13px; font-size: 10px; flex-wrap: wrap; }
+  .footerMeta { font-size: 8px; gap: 10px; }
+}
+@media (max-width: 350px) {
+  .shell { padding-inline: 16px; }
+  .header :global(.brand) { font-size: 13px; }
+  .headerActions { gap: 8px; }
+  .workspaceLink { font-size: 9px; }
+  .copy h1 { font-size: 35px; }
+  .intro { font-size: 13px; }
+  .featureTop { display: grid; }
+  .feature h3 { font-size: 16px; }
+  .feature > p { min-height: 147px; }
+  .featurePreview { height: 112px; }
+  .methodIcon { display: none; }
+  .footer { grid-template-columns: 1fr; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .copy > *, .phoneFloat, .floatingNote, .floatingIcon, .showcase::before { animation: none; }
+  .phone { transform: none; }
+  .feature, .previewTabs button { transition: none; }
+  .feature:hover { transform: none; }
+}

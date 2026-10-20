@@ -4,6 +4,8 @@
 
 Branch: `feat/android-twa-app`, based on main `48a9aea996c174bcbbf32c1895b2157e888ead95` (merged premium navigation PR #150). Open work #121/#117/#106 was observed and not incorporated or changed. No existing Chat, shell/navigation, AI, wallet, billing, auth, upload or database implementation was edited. Source preservation was checked against that main commit.
 
+Premium download-page follow-up: see `premium-page/README.md` for the redesigned `/android`, public homepage entry, focused production page checks and mobile screenshots. The original Android artifacts and foundation evidence below remain unchanged; this follow-up does not rebuild or publish the app.
+
 ## Delivered
 
 - PWA manifest: stable `/` ID, canonical scope, `/chat` launch, standalone display, official opaque 192/512 icons, safe-zone maskable 512 icon, Apple icon, dark brand splash/theme.

@@ -1,0 +1,57 @@
+.controls { max-width: 470px; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.primary, .secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 54px;
+  border-radius: 16px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.primary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 14px 22px;
+  border: 1px solid #70d7ff88;
+  background: linear-gradient(115deg, #067bac, #2859e7 75%, #5565ef);
+  color: white;
+  box-shadow: 0 12px 30px #126dca2b, inset 0 1px 0 #ffffff3b;
+  cursor: pointer;
+}
+.primary::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 15%, #ffffff26 45%, transparent 70%);
+  transform: translateX(-115%);
+  transition: transform .65s ease;
+  pointer-events: none;
+}
+.primary > svg:last-child { margin-left: 6px; }
+.primary:disabled { opacity: .7; cursor: wait; }
+.secondary { min-height: 44px; padding: 10px 2px; color: var(--text); font-size: 12px; }
+.hint { min-height: 36px; margin: 12px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; max-width: 400px; }
+.primary:focus-visible, .secondary:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.primary:active { transform: scale(.98); }
+@media (hover: hover) {
+  .primary:hover { transform: translateY(-2px); box-shadow: 0 16px 38px #126dca4a, inset 0 1px 0 #ffffff3b; }
+  .primary:hover::after { transform: translateX(115%); }
+  .secondary:hover { color: var(--accent); }
+}
+@media (max-width: 600px) {
+  .actions { align-items: stretch; }
+  .primary { width: 100%; min-height: 52px; }
+  .hint { max-width: 340px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primary, .primary::after, .secondary { transition: none; }
+  .primary:hover, .primary:active { transform: none; }
+  .primary::after { display: none; }
+}
