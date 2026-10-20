@@ -87,5 +87,14 @@ try {
   const checksum = (await (await fetch('https://services.gradle.org/distributions/gradle-8.11.1-bin.zip.sha256')).text()).trim();
   if (!/^[a-f0-9]{64}$/.test(checksum)) throw new Error('Invalid Gradle checksum');
   await fs.writeFile(path.join(android,'gradle/wrapper/gradle-wrapper.properties'), wrapper + `\ndistributionSha256Sum=${checksum}\n`);
+  async function trimGenerated(directory) {
+    for (const entry of await fs.readdir(directory,{withFileTypes:true})) {
+      const file=path.join(directory,entry.name);
+      if (entry.isDirectory()) await trimGenerated(file);
+      else if (/\.(xml|java)$/.test(entry.name)) await fs.writeFile(file,(await fs.readFile(file,'utf8')).replace(/[ \t]+(?=\r?$)/gm,''));
+    }
+  }
+  await trimGenerated(path.join(android,'app/src'));
+  await fs.writeFile(path.join(android,'app/build.gradle'),(await fs.readFile(path.join(android,'app/build.gradle'),'utf8')).replace(/[ \t]+(?=\r?$)/gm,''));
   console.log('Bubblewrap Android project generated with API 36 and external release signing.');
 } finally { server.close(); }
